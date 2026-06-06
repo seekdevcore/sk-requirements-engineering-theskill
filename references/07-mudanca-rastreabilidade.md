@@ -1,295 +1,295 @@
-# 07 — Gestão de Mudança + Rastreabilidade
+# 07 — Change Management + Traceability
 
-> Como manter coerência conforme requisitos mudam (e eles SEMPRE mudam). Combina Sommerville 4.6 (mudança de requisitos) + boas práticas de rastreabilidade. Sem processo formal de mudança, especificação e implementação ficam descompassados em meses.
+> How to keep coherence as requirements change (and they ALWAYS change). Combines Sommerville 4.6 (requirements change) + traceability best practices. Without a formal change process, specification and implementation drift apart in months.
 
 ---
 
-## 1. Por que mudança é inevitável
+## 1. Why change is inevitable
 
 Sommerville (4.6):
 
-> Os requisitos dos sistemas de software grandes **sempre estão mudando**. Uma razão para as mudanças frequentes é que esses sistemas são desenvolvidos para tratar de problemas **"traiçoeiros" (wicked problems)** — problemas que não podem ser definidos completamente.
+> The requirements of large software systems **are always changing**. One reason for the frequent changes is that these systems are developed to address **"wicked problems"** — problems that cannot be completely defined.
 
-**3 fontes principais de mudança** (Sommerville):
+**3 main sources of change** (Sommerville):
 
-1. **Ambiente muda**: novo hardware, integração com outros sistemas, novas leis (LGPD, BACEN), prioridades de negócio mudam
-2. **Quem paga ≠ quem usa**: clientes impõem requisitos com base em orçamento/política; usuários querem outra coisa. Após entrega, novos requisitos emergem para atender usuário
-3. **Stakeholders diversos com prioridades conflitantes**: equilibrio precisa ser revisto à medida que se descobre que algum grupo foi sub-representado
+1. **The environment changes**: new hardware, integration with other systems, new laws (*"LGPD"*, *"BACEN"*), business priorities shift
+2. **Whoever pays ≠ whoever uses**: clients impose requirements based on budget/policy; users want something else. After delivery, new requirements emerge to serve the user
+3. **Diverse stakeholders with conflicting priorities**: balance must be revisited as you discover that some group was under-represented
 
-Modelo da evolução (Fig 4.18 Sommerville):
+Evolution model (Sommerville Fig 4.18):
 
 ```
-Compreensão inicial      →     Compreensão melhor
-do problema                    do problema
+Initial problem            →     Better problem
+understanding                    understanding
      │                              │
      ▼                              ▼
-Requisitos iniciais       →    Requisitos atualizados
-                                                 → tempo →
+Initial requirements       →    Updated requirements
+                                                 → time →
 ```
 
 ---
 
-## 2. Requisitos duradouros vs voláteis (Sommerville)
+## 2. Enduring vs. volatile requirements (Sommerville)
 
-| Tipo | Característica | Como diferenciar |
+| Type | Characteristic | How to distinguish |
 |---|---|---|
-| **Duradouros** | Associados a atividades centrais da organização. Mudam lentamente | "Cobrança de imposto" (governo), "Cadastrar paciente" (hospital), "Publicar artigo" (editora) |
-| **Voláteis** | Associados a atividades de **apoio** que refletem **como** a organização trabalha. Mudam frequentemente | "Layout do recibo", "Workflow de aprovação interna", "Relatórios gerenciais customizados" |
+| **Enduring** | Tied to core organizational activities. Change slowly | "Tax collection" (government), "Register patient" (hospital), "Publish article" (publisher) |
+| **Volatile** | Tied to **support** activities reflecting **how** the organization works. Change frequently | "Receipt layout", "Internal approval workflow", "Custom managerial reports" |
 
-**Decisão arquitetural**: codifique **duradouros** no core do sistema; isole **voláteis** atrás de pontos de extensão (plugins, templates, config). Senão, cada mudança volátil quebra o core.
+**Architectural decision**: encode **enduring** in the system core; isolate **volatile** behind extension points (plugins, templates, config). Otherwise, every volatile change breaks the core.
 
 ---
 
-## 3. Processo de gerenciamento de mudança (Sommerville Fig 4.19)
+## 3. Change-management process (Sommerville Fig 4.19)
 
 ```
 ┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐
-│  Problema /    │     │  Análise do    │     │  Análise da    │     │  Implementação │
-│  proposta      │ ──→ │  problema +    │ ──→ │  mudança +     │ ──→ │  da mudança    │
-│  identificada  │     │  especificação │     │  estimativa de │     │                │
-│                │     │  da mudança    │     │  custo         │     │                │
+│  Problem /     │     │  Problem       │     │  Change        │     │  Change        │
+│  proposal      │ ──→ │  analysis +    │ ──→ │  analysis +    │ ──→ │  implementation│
+│  identified    │     │  change        │     │  cost          │     │                │
+│                │     │  specification │     │  estimation    │     │                │
 └────────────────┘     └────────────────┘     └────────────────┘     └────────────────┘
 ```
 
-### 3.1 Estágio 1 — Análise do problema + especificação da mudança
+### 3.1 Stage 1 — Problem analysis + change specification
 
-Identifica problema OU proposta de mudança específica. Analista avalia se é válido. Transmite de volta ao solicitante.
+Identifies a problem OR a specific change proposal. The analyst assesses whether it is valid. Reports back to the requester.
 
-**Saída**: ou proposta refinada, ou desistência.
+**Output**: either a refined proposal, or withdrawal.
 
-### 3.2 Estágio 2 — Análise da mudança + estimativa de custo
+### 3.2 Stage 2 — Change analysis + cost estimation
 
-Avalia **impacto** com base em:
-- Rastreabilidade (quais requisitos dependem deste?)
-- Conhecimento geral do sistema
-- Quais artefatos serão tocados (docs, projeto, código, testes)
+Evaluates **impact** based on:
+- Traceability (which requirements depend on this one?)
+- General system knowledge
+- Which artifacts will be touched (docs, design, code, tests)
 
-**Saída**: decisão **prosseguir ou não**. Critério: benefício > custo + risco.
+**Output**: decision to **proceed or not**. Criterion: benefit > cost + risk.
 
-### 3.3 Estágio 3 — Implementação
+### 3.3 Stage 3 — Implementation
 
-Modificar:
-- Documento de requisitos
-- Projeto (design)
-- Código
-- Testes
-- Comunicação aos stakeholders afetados
+Modify:
+- Requirements document
+- Design
+- Code
+- Tests
+- Communication to affected stakeholders
 
-**Regra de organização**: documento de requisitos deve ser **modular** — cada seção pode ser modificada sem reescrever tudo. Minimize referências externas.
+**Organization rule**: the requirements document must be **modular** — each section can be modified without rewriting everything. Minimize external references.
 
-### 3.4 Tentação perigosa (citada por Sommerville)
+### 3.4 Dangerous temptation (cited by Sommerville)
 
-> Se um novo requisito tiver de ser implementado com **urgência**, sempre existe a tentação de mudar o sistema e depois modificar **retrospectivamente** o documento de requisitos. Quase inevitavelmente isso coloca em **descompasso** a especificação dos requisitos e a implementação.
+> If a new requirement must be implemented **urgently**, there is always a temptation to change the system and then **retroactively** modify the requirements document. Almost inevitably, this puts the requirements specification and the implementation **out of step**.
 
-**Regra**: se você implementar antes de atualizar o doc (mudança emergencial), atualize o doc **dentro de 24h**. Senão, esqueçam.
-
----
-
-## 4. Planejamento do gerenciamento de requisitos (Sommerville 4.6.1)
-
-4 decisões para tomar logo no início do projeto:
-
-### 4.1 Identificação dos requisitos
-
-Cada requisito deve ter **ID único**. Esquemas comuns:
-
-```
-RF-001       → Requisito Funcional 001
-RNF-PERF-01  → RNF de Performance 01
-CA-LOGIN-05  → Critério de Aceitação 05 da feature Login
-US-1247      → User Story 1247 (do tracking system)
-```
-
-ID é estável (não muda quando requisito muda). Versão do requisito muda.
-
-### 4.2 Processo de gerenciamento de mudança
-
-Quem aprova mudança? Em que prazo? Qual SLA? Cobertura por CCB (Change Control Board)? Definir antes da primeira mudança.
-
-### 4.3 Políticas de rastreabilidade
-
-Quais relações devem ser registradas? Entre:
-- Requisito ↔ requisito (depende-de)
-- Requisito ↔ design
-- Requisito ↔ código
-- Requisito ↔ teste
-- Requisito ↔ stakeholder
-
-E **como** registrar (planilha, ferramenta, links no Jira/OpenProject).
-
-### 4.4 Apoio de ferramentas
-
-- Armazenamento dos requisitos (repositório acessível a todos)
-- Gerenciamento de mudança (ferramenta acompanha sugestões e respostas)
-- Gerenciamento de rastreabilidade (links entre artefatos)
-
-Sistemas grandes: **DOORS, Jama, OpenProject, Polarion**. Sistemas pequenos: planilhas + wiki + links no Git/Issue tracker.
+**Rule**: if you implement before updating the doc (emergency change), update the doc **within 24h**. Otherwise, you will forget.
 
 ---
 
-## 5. Rastreabilidade — o conceito
+## 4. Requirements-management planning (Sommerville 4.6.1)
+
+4 decisions to make at the project's start:
+
+### 4.1 Requirement identification
+
+Each requirement must have a **unique ID**. Common schemes:
+
+```
+RF-001       → Functional Requirement 001
+RNF-PERF-01  → Performance NFR 01
+CA-LOGIN-05  → AC 05 of the Login feature
+US-1247      → User Story 1247 (from the tracking system)
+```
+
+The ID is stable (does not change when the requirement changes). The requirement's version changes.
+
+### 4.2 Change-management process
+
+Who approves a change? Within what timeframe? What SLA? Covered by a CCB (Change Control Board)? Define before the first change.
+
+### 4.3 Traceability policies
+
+Which relations must be recorded? Among:
+- Requirement ↔ requirement (depends-on)
+- Requirement ↔ design
+- Requirement ↔ code
+- Requirement ↔ test
+- Requirement ↔ stakeholder
+
+And **how** to record them (spreadsheet, tool, links in Jira/OpenProject).
+
+### 4.4 Tool support
+
+- Storage of requirements (repository accessible to all)
+- Change management (tool tracks proposals and responses)
+- Traceability management (links between artifacts)
+
+Large systems: **DOORS, Jama, OpenProject, Polarion**. Small systems: spreadsheets + wiki + links in Git/issue tracker.
+
+---
+
+## 5. Traceability — the concept
 
 Sommerville:
 
-> Você precisa acompanhar as relações entre os requisitos, suas fontes e o projeto do sistema para que possa analisar as **razões das alterações propostas** e o **impacto** que essas mudanças tendem a ter em outras partes do sistema.
+> You need to keep track of the relations between requirements, their sources, and the system design so that you can analyze the **reasons for proposed changes** and the **impact** these changes are likely to have on other parts of the system.
 
-### 5.1 Tipos de rastreabilidade
+### 5.1 Traceability types
 
-| Direção | Pergunta que responde |
+| Direction | Question it answers |
 |---|---|
-| **Pré-rastreabilidade** | De onde veio este requisito? (Quem? Por quê?) |
-| **Pós-rastreabilidade** | Onde este requisito está implementado? (Quais módulos, classes, testes?) |
-| **Horizontal** | Que outros requisitos dependem deste? |
+| **Pre-traceability** | Where did this requirement come from? (Who? Why?) |
+| **Post-traceability** | Where is this requirement implemented? (Which modules, classes, tests?) |
+| **Horizontal** | Which other requirements depend on this one? |
 
-### 5.2 Matriz de rastreabilidade clássica (RTM — Requirements Traceability Matrix)
+### 5.2 Classical Requirements Traceability Matrix (RTM)
 
 |  | RF-01 | RF-02 | RF-03 | RNF-01 |
 |---|---|---|---|---|
-| **Stakeholder origem** | Sec.Vendas | Sec.Vendas | Diretor | LGPD |
-| **Design doc** | DD §3.1 | DD §3.1 | DD §3.2 | DD §5 (privacidade) |
-| **Código** | `OrderController` | `OrderItem` | `ReportService` | `audit/*` |
-| **Teste** | `OrderSpec` | `OrderSpec`, `ItemSpec` | `ReportSpec` | `AuditSpec` |
+| **Origin stakeholder** | Sales Dept. | Sales Dept. | Director | *"LGPD"* |
+| **Design doc** | DD §3.1 | DD §3.1 | DD §3.2 | DD §5 (privacy) |
+| **Code** | `OrderController` | `OrderItem` | `ReportService` | `audit/*` |
+| **Test** | `OrderSpec` | `OrderSpec`, `ItemSpec` | `ReportSpec` | `AuditSpec` |
 | **Status** | DONE | DONE | IN PROGRESS | DONE |
 
-Esta matriz vive em planilha ou ferramenta. **Sem ela, mudar 1 requisito vira "que módulos eu mexo?" sem resposta.**
+This matrix lives in a spreadsheet or tool. **Without it, changing 1 requirement becomes "which modules do I touch?" with no answer.**
 
-### 5.3 Rastreabilidade no modelo ágil (Backlog + Git)
+### 5.3 Traceability in the agile model (Backlog + Git)
 
-A hierarquia do backlog já é parte da rastreabilidade:
+The backlog hierarchy is already part of traceability:
 
 ```
 Epic
   └─ Feature
-       ├─ CAs
+       ├─ ACs
        └─ User Story
-            ├─ BDD (cenários)
+            ├─ BDD (scenarios)
             ├─ Tasks
             │    └─ Pull Requests (Git)
             │         └─ Commits
-            │              └─ Arquivos modificados
+            │              └─ Modified files
             └─ Test results (CI)
 ```
 
-**Boas práticas no Git**:
+**Best practices in Git**:
 
 - Branch name: `feature/US-1247-listagem-basica-atletas`
 - Commit message: `feat(atletas): adiciona listagem básica [US-1247]`
-- PR description: link para a US no OpenProject/Jira
+- PR description: link to the US in OpenProject/Jira
 - Test name: `describe('US-1247: Listagem básica de Atletas', ...)`
 
-Assim, dado um arquivo, você descobre o requisito que justifica sua existência. Dado um requisito, você descobre todo o código que o implementa.
+This way, given a file, you discover the requirement that justifies its existence. Given a requirement, you discover all the code that implements it.
 
-### 5.4 Rastreabilidade reversa (caso real)
+### 5.4 Reverse traceability (real case)
 
-**Cenário**: dev abre `OrderController.java` 6 meses depois. Pergunta: "Posso remover este método? Quem o usa?"
+**Scenario**: dev opens `OrderController.java` 6 months later. Question: "Can I remove this method? Who uses it?"
 
-**Sem rastreabilidade**: grep no código (pode pegar uso direto, mas não regra de negócio que o exige).
-**Com rastreabilidade**: linha do método → commit → PR → US → CA → Feature → Stakeholder. Em 5min você sabe: "Não pode remover; está cumprindo CA-ORDER-12 que vem do regulamento da Anvisa".
-
----
-
-## 6. CA + BDD + teste = rastreabilidade quase automática
-
-A camada **BDD** (ver [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)) faz parte da rastreabilidade end-to-end:
-
-```
-Feature .feature file       ──→  CAs implementados
-  Cenário Gherkin           ──→  Step definitions (código de teste)
-     Steps DADO/QUANDO/ENTÃO ──→  Chamadas ao código de produção
-```
-
-Cada cenário Gherkin é um **link executável** entre requisito e código. O teste passa = requisito implementado. O teste quebra = ou código está errado, ou requisito mudou e ninguém atualizou o cenário.
+**Without traceability**: grep across the code (may catch direct usage, but not the business rule requiring it).
+**With traceability**: method line → commit → PR → US → AC → Feature → Stakeholder. In 5min you know: "Cannot remove; it satisfies CA-ORDER-12 coming from the *"Anvisa"* regulation."
 
 ---
 
-## 7. Ferramentas de gerenciamento de mudança (escolha por escala)
+## 6. AC + BDD + test = nearly automatic traceability
 
-| Escala | Ferramenta |
+The **BDD** layer (see [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)) is part of end-to-end traceability:
+
+```
+Feature .feature file       ──→  Implemented ACs
+  Gherkin scenario          ──→  Step definitions (test code)
+     Given/When/Then steps  ──→  Calls into production code
+```
+
+Each Gherkin scenario is an **executable link** between requirement and code. The test passes = the requirement is implemented. The test breaks = either the code is wrong, or the requirement changed and nobody updated the scenario.
+
+---
+
+## 7. Change-management tools (choose by scale)
+
+| Scale | Tool |
 |---|---|
-| Pequena (1-3 devs, MVP) | Trello + Markdown no repo |
-| Média (5-15 devs) | Jira / Linear / GitHub Projects + documentação no Notion / Confluence |
-| Grande (50+ devs, vários times) | Jira + Confluence + Polarion ou Jama |
-| Sistemas críticos (saúde, finanças, aeroespacial) | DOORS, Polarion, Jama (auditoria + rastreabilidade obrigatória) |
+| Small (1–3 devs, MVP) | Trello + Markdown in the repo |
+| Medium (5–15 devs) | Jira / Linear / GitHub Projects + documentation in Notion / Confluence |
+| Large (50+ devs, multiple teams) | Jira + Confluence + Polarion or Jama |
+| Critical systems (health, finance, aerospace) | DOORS, Polarion, Jama (mandatory audit + traceability) |
 
-**Princípio**: ferramenta serve ao processo, não o contrário. Comece simples.
-
----
-
-## 8. Processos ágeis e mudança (Sommerville)
-
-> Os processos de desenvolvimento ágil foram concebidos para **lidar com requisitos que mudam durante o processo de desenvolvimento**. Nesses processos, quando um usuário propõe uma mudança nos requisitos, ela **não passa por um processo formal** de gerenciamento de mudanças. Em vez disso, o usuário tem de priorizar a mudança e, se for de alta prioridade, decidir quais características do sistema que foram planejadas para a próxima iteração devem ser abandonadas para que ela seja implementada.
-
-**Vantagem**: agilidade.
-**Risco**: usuário não é necessariamente quem decide melhor o trade-off custo-benefício. Em sistemas com múltiplos stakeholders, mudança beneficia uns, prejudica outros.
-
-**Mitigação**: ter **autoridade independente** (Steering Committee, CCB simplificado) que equilibra interesses, especialmente para mudanças que afetam stakeholders ausentes do daily.
+**Principle**: the tool serves the process, not the other way around. Start simple.
 
 ---
 
-## 9. Versionamento de requisitos
+## 8. Agile processes and change (Sommerville)
 
-Como código tem Git, requisitos têm versão.
+> Agile development processes were designed to **deal with requirements that change during the development process**. In these processes, when a user proposes a change to the requirements, it **does not go through a formal** change-management process. Instead, the user must prioritize the change and, if it is high priority, decide which planned features for the next iteration should be dropped so it can be implemented.
 
-**Esquema simples**:
+**Advantage**: agility.
+**Risk**: the user is not necessarily the best decider of the cost-benefit trade-off. In systems with multiple stakeholders, a change benefits some and harms others.
+
+**Mitigation**: have an **independent authority** (Steering Committee, simplified CCB) that balances interests, especially for changes affecting stakeholders absent from the daily.
+
+---
+
+## 9. Requirements versioning
+
+Just as code has Git, requirements have versions.
+
+**Simple scheme**:
 
 ```
-RF-001 v1.0   → versão inicial
-RF-001 v1.1   → ajuste de wording (não muda comportamento)
-RF-001 v2.0   → mudança comportamental (revisão necessária)
-RF-001 DEPRECATED → não usado mais; mantido por histórico
+RF-001 v1.0   → initial version
+RF-001 v1.1   → wording tweak (does not change behaviour)
+RF-001 v2.0   → behavioural change (review needed)
+RF-001 DEPRECATED → no longer used; kept for history
 ```
 
-**Histórico do requisito** registra:
-- Quem alterou
-- Quando
-- O que mudou (diff)
-- Por quê (motivação)
-- Quem aprovou
+**Requirement history** records:
+- Who changed it
+- When
+- What changed (diff)
+- Why (motivation)
+- Who approved
 
 ---
 
 ## 10. Anti-patterns
 
-### 10.1 "Mudança verbal" (sem registro)
+### 10.1 "Verbal change" (without record)
 
-Cliente diz no corredor "preciso disto outro". Dev implementa. Documento nunca atualizado. **Em 6 meses ninguém lembra por quê está assim.**
+The client says in the corridor "I need this changed". The dev implements. The document is never updated. **In 6 months no one remembers why it is like that.**
 
-### 10.2 Refatoração "limpa" sem rastreabilidade
+### 10.2 "Clean" refactor without traceability
 
-Dev renomeia classe, "limpa" código, remove comentário que dizia "atende CA-LOGIN-05 (LGPD)". 1 ano depois, auditor pergunta "como atendem LGPD?" → ninguém sabe responder.
+The dev renames a class, "cleans" code, removes a comment saying "satisfies CA-LOGIN-05 (*"LGPD"*)". 1 year later, the auditor asks "how do you comply with *"LGPD"*?" → nobody can answer.
 
-### 10.3 Aceitar toda mudança proposta
+### 10.3 Accepting every proposed change
 
-PO diz sim para tudo. Backlog vira lista infinita. Velocity cai. Nada é entregue. **Mudança precisa de critério de aceite**: prioridade + custo + impacto.
+The PO says yes to everything. The backlog becomes an infinite list. Velocity drops. Nothing ships. **A change needs acceptance criteria**: priority + cost + impact.
 
-### 10.4 Rejeitar toda mudança
+### 10.4 Rejecting every change
 
-"Já especificamos, agora não muda mais." Sistema entregue não resolve problema real. **Rigidez = projeto falhado**. Equilibrar com gestão formal.
+"We've specified, no more changes." The delivered system does not solve the real problem. **Rigidity = failed project.** Balance with formal management.
 
-### 10.5 Rastreabilidade sem atualização
+### 10.5 Traceability without updates
 
-Matriz existe. Não é atualizada há 2 anos. Pior que não ter — induz a falsa segurança. **Política**: rastreabilidade é atualizada no mesmo PR que muda o requisito ou código.
+The matrix exists. It has not been updated in 2 years. Worse than not having one — induces false security. **Policy**: traceability is updated in the same PR that changes the requirement or code.
 
-### 10.6 ID mutável
+### 10.6 Mutable ID
 
-Requisito é renumerado a cada release. Rastreabilidade quebra. **Regra**: ID é eterno. Versão muda; ID nunca.
+A requirement is renumbered each release. Traceability breaks. **Rule**: the ID is eternal. The version changes; the ID never.
 
 ---
 
-## 11. Quando mudar requisito vs quando renegociar prazo
+## 11. When to change a requirement vs. renegotiate the deadline
 
-| Situação | Ação |
+| Situation | Action |
 |---|---|
-| Cliente entendeu errado o que pediu | Mudar requisito; prazo pode mudar |
-| Dev descobriu impossibilidade técnica | Renegociar (ou mudar tecnologia, ou mudar requisito) |
-| Nova lei muda regra | Mudar requisito (não há escolha); priorizar acima de tudo |
-| Concorrente lançou feature | NÃO mudar requisito sem reanálise; pode ser miragem |
-| Stakeholder novo apareceu | Mudar requisito + revisar prioridades |
-| Tecnologia disponibilizou recurso novo | Avaliar se requisito original ainda é melhor opção |
+| Client misunderstood what they asked for | Change the requirement; the deadline may shift |
+| Dev discovered a technical impossibility | Renegotiate (change tech or change requirement) |
+| New law changes the rule | Change the requirement (no choice); prioritize above all |
+| Competitor launched a feature | DO NOT change the requirement without reanalysis; may be a mirage |
+| New stakeholder appeared | Change the requirement + revisit priorities |
+| Technology now offers a new resource | Evaluate whether the original requirement is still the best option |
 
 ---
 
-## 12. Conexão com as próximas references
+## 12. Connection with the next references
 
-- **Camada acima — análise de negócios (BABOK)**: [08-analista-negocios.md](08-analista-negocios.md)
-- **Ética em mudança (especialmente descontinuação)**: [09-etica-sbc.md](09-etica-sbc.md) §3.6 (cuidado ao modificar/encerrar operação de sistemas)
+- **Layer above — business analysis (BABOK)**: [08-analista-negocios.md](08-analista-negocios.md)
+- **Ethics in change (especially decommissioning)**: [09-etica-sbc.md](09-etica-sbc.md) §3.6 (care when modifying/shutting down system operation)

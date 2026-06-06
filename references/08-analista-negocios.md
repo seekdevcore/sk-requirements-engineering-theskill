@@ -1,140 +1,140 @@
-# 08 — Analista de Negócios (Business Analyst)
+# 08 — Business Analyst
 
-> A camada acima da engenharia de requisitos. Combina BABOK Guide v3 (IIBA — International Institute of Business Analysis) com a prática do mercado brasileiro. **Engenharia de requisitos responde "quais requisitos o sistema deve ter?"; análise de negócios responde "estamos resolvendo o problema certo?".** As duas se cruzam, mas o BA olha o domínio inteiro, não só o software.
+> The layer above requirements engineering. Combines BABOK Guide v3 (IIBA — International Institute of Business Analysis) with Brazilian-market practice. **Requirements engineering answers "which requirements should the system have?"; business analysis answers "are we solving the right problem?".** The two intersect, but the BA looks at the entire domain, not only the software.
 
 ---
 
-## 1. Diferença entre Engenheiro de Requisitos e Analista de Negócios
+## 1. Difference between Requirements Engineer and Business Analyst
 
-| Aspecto | Eng. de Requisitos | Analista de Negócios |
+| Aspect | Requirements Eng. | Business Analyst |
 |---|---|---|
-| Foco | O **sistema de software** a ser construído | O **processo / negócio** a ser melhorado |
-| Escopo | RF + RNF + restrições técnicas | Processos, pessoas, políticas, sistemas (incluindo manual) |
-| Saída | Backlog, RTM, especificação | Análise de viabilidade, cases de negócio, mapeamento AS-IS / TO-BE |
-| Pergunta-chave | Que sistema construir? | Que problema resolver? Vale a pena? |
-| Em times pequenos | Mesma pessoa | Mesma pessoa |
-| Em times grandes | Especialista técnico próximo ao dev | Especialista de negócio próximo ao stakeholder |
+| Focus | The **software system** to be built | The **process / business** to be improved |
+| Scope | FR + NFR + technical constraints | Processes, people, policies, systems (including manual ones) |
+| Output | Backlog, RTM, specification | Feasibility analysis, business cases, AS-IS / TO-BE mapping |
+| Key question | What system to build? | What problem to solve? Is it worth it? |
+| In small teams | Same person | Same person |
+| In large teams | Technical specialist close to the dev | Business specialist close to the stakeholder |
 
-**Em projetos pequenos, dev + PO acumulam o papel de BA.** Em projetos grandes, há analista dedicado.
+**In small projects, dev + PO accumulate the BA role.** In large projects, there is a dedicated analyst.
 
 ---
 
-## 2. BABOK Guide v3 — as 6 áreas de conhecimento
+## 2. BABOK Guide v3 — the 6 knowledge areas
 
-O **Business Analysis Body of Knowledge** (publicado pelo IIBA, padrão internacional) organiza a profissão em 6 áreas:
+The **Business Analysis Body of Knowledge** (published by IIBA, international standard) organizes the profession into 6 areas:
 
-| Área | O que faz |
+| Area | What it does |
 |---|---|
-| **Planejamento e monitoramento de análise de negócios** | Define como, por quem e quando a análise será feita |
-| **Elicitação e colaboração** | Coleta informações de stakeholders (cruza com [02-elicitacao.md](02-elicitacao.md)) |
-| **Gerenciamento do ciclo de vida dos requisitos** | Rastrear, manter, priorizar, aprovar requisitos (cruza com [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)) |
-| **Análise da estratégia** | Identificar problemas/oportunidades; avaliar capacidades atuais; definir estratégia de mudança |
-| **Análise de requisitos e design de solução** | Modelar requisitos, especificar, validar (cruza com [03](03-especificacao.md), [04](04-bdd-criterios-aceitacao.md), [06](06-validacao.md)) |
-| **Avaliação da solução** | Após implantação, medir se a solução resolve o problema de negócio |
+| **Business analysis planning and monitoring** | Defines how, by whom, and when the analysis will be done |
+| **Elicitation and collaboration** | Collects information from stakeholders (crosses with [02-elicitacao.md](02-elicitacao.md)) |
+| **Requirements lifecycle management** | Track, maintain, prioritize, approve requirements (crosses with [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)) |
+| **Strategy analysis** | Identify problems/opportunities; assess current capabilities; define change strategy |
+| **Requirements analysis and solution design** | Model, specify, validate requirements (crosses with [03](03-especificacao.md), [04](04-bdd-criterios-aceitacao.md), [06](06-validacao.md)) |
+| **Solution evaluation** | After deployment, measure whether the solution solves the business problem |
 
-**Insight do BABOK**: a análise de requisitos é **apenas 1 das 6 áreas**. As outras 5 contextualizam — sem elas, requisitos são tecnicamente bons mas resolvem o problema errado.
+**BABOK insight**: requirements analysis is **only 1 of the 6 areas**. The other 5 contextualize — without them, requirements are technically good but solve the wrong problem.
 
 ---
 
-## 3. Fluxo central — AS-IS → TO-BE → GAP
+## 3. Central flow — AS-IS → TO-BE → GAP
 
-A prática mais difundida em consultoria. Não está nominalmente no BABOK, mas atravessa quase todas as áreas.
+The most widespread consulting practice. Not nominally in BABOK, but crosses almost all areas.
 
-### 3.1 AS-IS (estado atual)
+### 3.1 AS-IS (current state)
 
-**Mapeamento do processo atual** — como é hoje, com suas dores, gargalos, retrabalhos.
+**Map of the current process** — how it is today, with its pains, bottlenecks, rework.
 
-Técnicas:
-- **BPMN** (Business Process Model and Notation) — diagrama formal de processo
-- **Mapas de fluxo de valor** (lean) — destaca tempo de espera vs tempo de valor
-- **Service Blueprint** — adiciona camada de experiência do usuário
-- Entrevistas + observação (etnografia, ver [02-elicitacao.md](02-elicitacao.md))
-- Análise de documentos (POPs, regulamentos)
+Techniques:
+- **BPMN** (Business Process Model and Notation) — formal process diagram
+- **Value-stream maps** (lean) — highlights wait time vs. value time
+- **Service Blueprint** — adds a user-experience layer
+- Interviews + observation (ethnography, see [02-elicitacao.md](02-elicitacao.md))
+- Document analysis (SOPs/*"POPs"*, regulations)
 
-**Output**: diagrama AS-IS + lista de dores quantificadas.
+**Output**: AS-IS diagram + list of quantified pains.
 
-Exemplo (caso fictício de RU universitário, AULA 06):
-
-```
-AS-IS — Processo de atendimento ao usuário do RU
-
-[Usuário chega] → [Apresenta ID em papel] → [Atendente confere lista] → 
-[Atendente registra manualmente em caderno] → [Usuário passa pela catraca manual] →
-[Recebe refeição] → [Em caso de reclamação, registra em livro físico]
-
-DORES:
-- Filas longas (registro manual leva 30-45s por pessoa)
-- Erros no cadastro (caderno físico, sem validação)
-- Sem visibilidade de cardápio (usuário chega e descobre que não pode comer por restrição alimentar)
-- Reclamações no livro físico raramente são endereçadas
-```
-
-### 3.2 TO-BE (estado desejado)
-
-**Como queremos que seja** — desenho do processo após a solução.
-
-**Cuidado**: TO-BE não é "AS-IS + sistema". É **um processo redesenhado** que pode envolver:
-- Eliminar passos desnecessários
-- Reorganizar responsabilidades
-- Automatizar onde faz sentido
-- Manter manual onde faz mais sentido
-
-Exemplo do RU:
+Example (fictional case of a university *"RU"* — *"Restaurante Universitário"*, LECTURE 06):
 
 ```
-TO-BE — Processo de atendimento ao usuário do RU
+AS-IS — RU user-attendance process
 
-[Usuário consulta cardápio no app na véspera] → 
-[Usuário escolhe horário menos congestionado mostrado no app] →
-[Apresenta QR code no celular ou cartão magnético] →
-[Catraca eletrônica valida + registra automaticamente] →
-[Recebe refeição] →
-[App permite avaliar refeição + registrar reclamação]
+[User arrives] → [Shows paper ID] → [Attendant checks list] →
+[Attendant records manually in notebook] → [User passes manual turnstile] →
+[Receives meal] → [In case of complaint, registers in physical log]
+
+PAINS:
+- Long queues (manual registration takes 30–45s per person)
+- Errors in registration (physical notebook, no validation)
+- No menu visibility (user arrives and discovers they cannot eat due to a dietary restriction)
+- Complaints in the physical log are rarely addressed
+```
+
+### 3.2 TO-BE (desired state)
+
+**How we want it to be** — drawing of the process after the solution.
+
+**Care**: TO-BE is not "AS-IS + system". It is **a redesigned process** that may involve:
+- Eliminating unnecessary steps
+- Reorganizing responsibilities
+- Automating where it makes sense
+- Keeping manual where that makes more sense
+
+*"RU"* example:
+
+```
+TO-BE — RU user-attendance process
+
+[User checks the menu in the app the day before] →
+[User picks the less-crowded time shown in the app] →
+[Shows QR code on phone or magnetic card] →
+[Electronic turnstile validates + records automatically] →
+[Receives meal] →
+[App allows rating the meal + filing a complaint]
 ```
 
 ### 3.3 GAP analysis
 
-**Diferença AS-IS → TO-BE** = oportunidades de melhoria.
+**Difference AS-IS → TO-BE** = improvement opportunities.
 
-Cada gap vira **requisito** (do sistema OU do processo):
+Each gap becomes a **requirement** (of the system OR of the process):
 
-| Gap | Tipo de solução | Requisito |
+| Gap | Solution type | Requirement |
 |---|---|---|
-| Visibilidade de cardápio | Sistema | RF: app mostra cardápio do dia/semana |
-| Restrição alimentar não identificada | Sistema | RF: app filtra opções por restrição registrada no perfil |
-| Filas longas | Sistema | RF: app mostra horários de pico em tempo real |
-| Reclamação não endereçada | Processo + Sistema | RF: sistema notifica coordenação + processo: SLA de resposta em 48h |
-| Erro no cadastro manual | Sistema | RF: catraca eletrônica + RNF: precisão ≥99,5% no registro |
+| Menu visibility | System | FR: app shows daily/weekly menu |
+| Dietary restriction not identified | System | FR: app filters options by restriction registered in the profile |
+| Long queues | System | FR: app shows peak times in real time |
+| Complaint not addressed | Process + System | FR: system notifies coordination + process: 48h response SLA |
+| Manual-registration error | System | FR: electronic turnstile + NFR: ≥99.5% recording accuracy |
 
-**Nem todo gap vira software.** Alguns viram mudança de processo, treinamento, política.
+**Not every gap becomes software.** Some become process change, training, or policy.
 
 ---
 
-## 4. Modelos canônicos de análise (e quando usar)
+## 4. Canonical analysis models (and when to use them)
 
-| Modelo | Uso |
+| Model | Use |
 |---|---|
-| **Business Model Canvas** (Osterwalder) | Visão estratégica do negócio (proposta de valor, segmentos, canais, receita) |
-| **Value Proposition Canvas** | Detalhar fit entre produto e dor do cliente |
-| **SWOT** | Análise estratégica (forças, fraquezas, oportunidades, ameaças) |
-| **PESTEL** | Contexto macro (político, econômico, social, tecnológico, ambiental, legal) |
-| **Diagrama de Ishikawa (fishbone)** | Causa-raiz de problema do negócio |
-| **5 Whys** | Aprofundar até a causa real (versão simples do Ishikawa) |
-| **MoSCoW** | Priorização (Must, Should, Could, Won't) |
-| **RICE scoring** | Priorização quantitativa (Reach × Impact × Confidence ÷ Effort) |
-| **Kano model** | Categorizar features (básico, desempenho, encantamento) |
-| **Stakeholder map** | Identificar e classificar stakeholders por influência × interesse |
+| **Business Model Canvas** (Osterwalder) | Strategic business view (value proposition, segments, channels, revenue) |
+| **Value Proposition Canvas** | Detail the fit between product and customer pain |
+| **SWOT** | Strategic analysis (Strengths, Weaknesses, Opportunities, Threats) |
+| **PESTEL** | Macro context (Political, Economic, Social, Technological, Environmental, Legal) |
+| **Ishikawa diagram (fishbone)** | Root cause of a business problem |
+| **5 Whys** | Drill down to the real cause (simple version of Ishikawa) |
+| **MoSCoW** | Prioritization (Must, Should, Could, Won't) |
+| **RICE scoring** | Quantitative prioritization (Reach × Impact × Confidence ÷ Effort) |
+| **Kano model** | Categorize features (basic, performance, delight) |
+| **Stakeholder map** | Identify and classify stakeholders by influence × interest |
 
-### 4.1 MoSCoW em detalhe
+### 4.1 MoSCoW in detail
 
-| Categoria | Significado | Critério |
+| Category | Meaning | Criterion |
 |---|---|---|
-| **M**ust have | Obrigatório | Release não vai sem isto |
-| **S**hould have | Deveria ter | Importante mas pode adiar 1-2 sprints sem matar a release |
-| **C**ould have | Poderia ter | Bom ter; primeiro corte se faltar tempo |
-| **W**on't have (this time) | Não terá agora | Decisão consciente de não fazer neste ciclo |
+| **M**ust have | Mandatory | The release does not ship without it |
+| **S**hould have | Should have | Important but can be deferred 1–2 sprints without killing the release |
+| **C**ould have | Could have | Nice to have; the first to cut if time runs short |
+| **W**on't have (this time) | Will not have now | Conscious decision not to do this in this cycle |
 
-**Erro comum**: 80% das features marcadas como "Must". Sinal de que não houve priorização real.
+**Common mistake**: 80% of features marked as "Must". Sign that no real prioritization occurred.
 
 ### 4.2 RICE scoring
 
@@ -142,137 +142,137 @@ Cada gap vira **requisito** (do sistema OU do processo):
 Score = (Reach × Impact × Confidence) / Effort
 ```
 
-| Fator | Como medir |
+| Factor | How to measure |
 |---|---|
-| **Reach** | Quantos usuários afetados / trimestre |
-| **Impact** | 0.25 (mínimo) / 0.5 / 1 / 2 / 3 (massivo) |
-| **Confidence** | % de certeza (100%, 80%, 50%) |
-| **Effort** | Pessoa-meses |
+| **Reach** | How many users affected / quarter |
+| **Impact** | 0.25 (minimal) / 0.5 / 1 / 2 / 3 (massive) |
+| **Confidence** | % certainty (100%, 80%, 50%) |
+| **Effort** | Person-months |
 
-**Exemplo**:
-- Feature A: 1000 usuários × 1 (impacto médio) × 0.8 (confiança alta) / 2 PM = **400**
-- Feature B: 100 usuários × 3 (impacto massivo) × 0.5 (incerto) / 1 PM = **150**
+**Example**:
+- Feature A: 1000 users × 1 (medium impact) × 0.8 (high confidence) / 2 PM = **400**
+- Feature B: 100 users × 3 (massive impact) × 0.5 (uncertain) / 1 PM = **150**
 
-Feature A tem score mais alto → entra primeiro.
+Feature A has the higher score → ships first.
 
 ---
 
-## 5. Documentos típicos do BA (BABOK)
+## 5. Typical BA documents (BABOK)
 
 ### 5.1 Business Requirements Document (BRD)
 
-**Foco**: o que o negócio precisa (não como o sistema vai fazer).
+**Focus**: what the business needs (not how the system will do it).
 
-Estrutura típica:
-- Sumário executivo
-- Contexto e oportunidade
-- Objetivos de negócio + métricas de sucesso (KPIs)
+Typical structure:
+- Executive summary
+- Context and opportunity
+- Business objectives + success metrics (KPIs)
 - Stakeholders
-- Restrições (orçamento, prazo, regulatórias)
-- Premissas
-- Riscos
-- Análise AS-IS
-- Visão TO-BE de alto nível
-- Critérios de aceitação do projeto
+- Constraints (budget, schedule, regulatory)
+- Assumptions
+- Risks
+- AS-IS analysis
+- High-level TO-BE vision
+- Project acceptance criteria
 
 ### 5.2 Functional Requirements Specification (FRS)
 
-**Foco**: o que o sistema deve fazer. Próximo do "documento de requisitos" de Sommerville.
+**Focus**: what the system must do. Close to Sommerville's "requirements document".
 
 ### 5.3 Use Case Document
 
-Cada caso de uso documentado com:
-- Atores
-- Pré-condição
-- Pós-condição
-- Fluxo principal (numerado)
-- Fluxos alternativos
-- Exceções
+Each use case documented with:
+- Actors
+- Pre-condition
+- Post-condition
+- Main flow (numbered)
+- Alternative flows
+- Exceptions
 
-(Em time ágil, o caso de uso é substituído por User Story + BDD.)
+(In an agile team, the use case is replaced by User Story + BDD.)
 
 ### 5.4 Process Map (BPMN)
 
-Notação formal: piscinas (organizações), raias (papéis), atividades (retângulos), gateways (losangos), eventos (círculos).
+Formal notation: pools (organizations), lanes (roles), activities (rectangles), gateways (diamonds), events (circles).
 
 ### 5.5 Stakeholder Register
 
-Tabela com colunas:
-- Nome / Papel
-- Interesses
-- Nível de poder
-- Nível de influência
-- Estratégia de engajamento
+Table with columns:
+- Name / Role
+- Interests
+- Power level
+- Influence level
+- Engagement strategy
 
 ---
 
-## 6. Stakeholder Map (poder × interesse)
+## 6. Stakeholder Map (power × interest)
 
-Matriz 2x2 para priorizar engajamento:
+2×2 matrix to prioritize engagement:
 
 ```
-              ALTO INTERESSE              BAIXO INTERESSE
+              HIGH INTEREST              LOW INTEREST
             ┌──────────────────────┬──────────────────────┐
-ALTO PODER  │  GERENCIAR DE PERTO  │  MANTER SATISFEITOS  │
+HIGH POWER  │  MANAGE CLOSELY      │  KEEP SATISFIED      │
             │                      │                      │
-            │  CEO, regulador,     │  Diretoria distante  │
-            │  patrocinador        │  do dia-a-dia        │
+            │  CEO, regulator,     │  Distant directorate │
+            │  sponsor             │  from the day-to-day │
             ├──────────────────────┼──────────────────────┤
-BAIXO PODER │  MANTER INFORMADOS   │  MONITORAR           │
+LOW POWER   │  KEEP INFORMED       │  MONITOR             │
             │                      │                      │
-            │  Usuários finais,    │  Funcionários sem    │
-            │  comunidade técnica  │  vínculo direto      │
+            │  End users,          │  Employees without   │
+            │  technical community │  direct ties         │
             └──────────────────────┴──────────────────────┘
 ```
 
-Estratégia diferente por quadrante. **Gerenciar de perto** = participam de cada decisão. **Monitorar** = só informo o estritamente necessário.
+Different strategy per quadrant. **Manage closely** = participate in every decision. **Monitor** = only inform strictly when necessary.
 
 ---
 
-## 7. Conexão com o método ágil
+## 7. Connection with the agile method
 
-BABOK não é incompatível com Scrum/SAFe/LeSS. Ao contrário:
+BABOK is not incompatible with Scrum/SAFe/LeSS. On the contrary:
 
-| Atividade BABOK | Equivalente ágil |
+| BABOK activity | Agile equivalent |
 |---|---|
-| Análise da estratégia | Discovery + Product Vision |
-| Elicitação | Refinamento do backlog + Three Amigos |
-| Análise de requisitos | Story writing + sizing |
-| Design de solução | Sprint planning + arquitetura |
-| Gerenciamento do ciclo | Sprint review + retrospective |
-| Avaliação da solução | Métricas pós-release + experimentação |
+| Strategy analysis | Discovery + Product Vision |
+| Elicitation | Backlog refinement + Three Amigos |
+| Requirements analysis | Story writing + sizing |
+| Solution design | Sprint planning + architecture |
+| Lifecycle management | Sprint review + retrospective |
+| Solution evaluation | Post-release metrics + experimentation |
 
-**Em times ágeis, o BA pode atuar como Product Owner ou como facilitador entre stakeholders e o PO técnico.**
+**In agile teams, the BA can act as Product Owner or as a facilitator between stakeholders and the technical PO.**
 
 ---
 
-## 8. Bibliografia canônica de análise de negócios
+## 8. Canonical business-analysis bibliography
 
-- **IIBA.** *BABOK Guide* v3 — referência padrão internacional
-- **Wiegers & Beatty.** *Software Requirements* 3rd ed. — base prática
+- **IIBA.** *BABOK Guide* v3 — international standard reference
+- **Wiegers & Beatty.** *Software Requirements* 3rd ed. — practical base
 - **Osterwalder.** *Business Model Generation* — Canvas
-- **Christensen.** *The Innovator's Dilemma* / *Jobs to be Done* — perspectiva estratégica
-- **Patton.** *User Story Mapping* — bridge entre BA e user stories
-- **Hammer & Champy.** *Reengineering the Corporation* — para projetos de transformação radical (BPR)
+- **Christensen.** *The Innovator's Dilemma* / *Jobs to be Done* — strategic perspective
+- **Patton.** *User Story Mapping* — bridge between BA and user stories
+- **Hammer & Champy.** *Reengineering the Corporation* — for radical-transformation projects (BPR)
 
 ---
 
-## 9. Quando esta camada é necessária (sinalizadores)
+## 9. When this layer is needed (signals)
 
-Você precisa de análise de negócio formal (não só ER) quando:
+You need formal business analysis (not only RE) when:
 
-- O projeto tem **vários sistemas envolvidos** (não é app único)
-- Há **mudança organizacional** (não só software)
-- **Stakeholders são heterogêneos** (vendas, jurídico, ops, TI)
-- O **problema de negócio não está claro** (só a vontade de "ter um app")
-- **Regulação muda o negócio** (LGPD, BACEN, ANS)
-- Investimento alto (>R$ 500k) — comitê quer **caso de negócio** com ROI
-- Equipe entrega features sem mover os **KPIs de negócio** (sinal de que requisitos estão certos tecnicamente mas errados estrategicamente)
+- The project involves **multiple systems** (not a single app)
+- There is **organizational change** (not only software)
+- **Stakeholders are heterogeneous** (sales, legal, ops, IT)
+- The **business problem is not clear** (only the desire to "have an app")
+- **Regulation changes the business** (*"LGPD"*, *"BACEN"*, *"ANS"*)
+- High investment (>*"R$"* 500k) — committee wants a **business case** with ROI
+- The team ships features without moving **business KPIs** (sign that requirements are technically right but strategically wrong)
 
-Em projetos simples (MVP de SaaS, feature isolada), pular esta camada é OK — mas mantenha em mente o **risco de fazer a coisa certa errado**.
+In simple projects (SaaS MVP, isolated feature), skipping this layer is OK — but keep in mind the **risk of doing the wrong thing well**.
 
 ---
 
-## 10. Conexão com as próximas references
+## 10. Connection with the next references
 
-- **Ética em decisões de negócio (especialmente quando algo afeta os menos favorecidos)**: [09-etica-sbc.md](09-etica-sbc.md)
+- **Ethics in business decisions (especially when something affects the less favoured)**: [09-etica-sbc.md](09-etica-sbc.md)

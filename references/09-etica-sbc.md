@@ -1,309 +1,311 @@
-# 09 — Ética Profissional aplicada à Engenharia de Requisitos
+# 09 — Professional Ethics applied to Requirements Engineering
 
-> Camada **transversal e inegociável**. Baseada no Código de Ética e Conduta Profissional da SBC — Resolução 002/2024 (assinada pela Profa. Thais Vasconcelos Batista, presidente SBC, em 21/03/2024). É uma tradução do código IFIP, que por sua vez é adaptação do ACM Code of Ethics. **Não está acima das outras camadas; está embaixo de todas — toda decisão de ER passa por ela.**
-
----
-
-## 1. Estrutura do documento SBC 002/2024
-
-| Seção | O que cobre |
-|---|---|
-| **1. Princípios Éticos Gerais** | 7 princípios fundamentais (bem-estar, evitar danos, honestidade, justiça, propriedade intelectual, privacidade, confidencialidade) |
-| **2. Responsabilidades Profissionais** | 9 deveres (qualidade, competência, leis, peer review, avaliação, áreas de competência, conscientização pública, acesso autorizado, sistemas seguros) |
-| **3. Princípios de Liderança Profissional** | 7 deveres de quem lidera (bem público, responsabilidade social, qualidade de vida no trabalho, políticas, oportunidades, cuidado ao mudar/encerrar, sistemas integrados à sociedade) |
-| **4. Conformidade com o Código** | Apoiar, promover, respeitar; tratar violações como incompatíveis |
-
-> "Este código **não é um algoritmo para resolver problemas éticos**. Em vez disso, serve como base para a tomada de decisões éticas. Ao pensar em um problema específico, um profissional da Computação pode achar que vários princípios devem ser levados em consideração e que princípios diferentes terão relevâncias diferentes para o problema."
-
----
-
-## 2. Princípios que mais incidem em ER (mapeamento)
-
-### 2.1 §1.1 — Contribuir para a sociedade e bem-estar humano
-
-> Esse princípio afirma a obrigação dos profissionais da Computação de usar suas habilidades em benefício da sociedade. Inclui promoção de **direitos humanos** e proteção do direito à **autonomia** de cada indivíduo. Quando os interesses de vários grupos entram em conflito, **as necessidades dos menos favorecidos devem receber maior atenção e prioridade**.
-
-**Aplicação em ER**:
-
-- Toda priorização de backlog deve perguntar: "Quem é prejudicado se isto não for entregue?". Se a resposta inclui grupo vulnerável, esse item sobe na ordem
-- RFs e RNFs devem garantir **acessibilidade** (WCAG, leitor de tela, navegação por teclado)
-- "Falha em projetar para inclusão é uma discriminação injusta" (§1.4 do código)
-
-**Exemplo**: feature de cadastro online. Se ela exige smartphone moderno e há população-alvo sem acesso (vulnerável), o requisito deve **incluir** alternativa (atendimento presencial, ligação telefônica), não excluir essa população silenciosamente.
-
-### 2.2 §1.2 — Evitar danos
-
-> "Dano" significa consequências negativas, especialmente quando significativas e injustas. Ações **bem-intencionadas**, incluindo as em cumprimento a tarefas atribuídas, podem causar danos. Quando esse dano não é intencional, os responsáveis são obrigados a **desfazer ou mitigar** o dano tanto quanto possível.
-
-**Obrigação adicional**:
-
-> Um profissional da Computação tem a obrigação adicional de **relatar quaisquer sinais de riscos** do sistema que possam resultar em danos. Se os líderes não agirem para reduzir ou mitigar tais riscos, **pode ser necessário denunciar** essas situações para reduzir possíveis danos.
-
-**Aplicação em ER**:
-
-- Identificar **RNFs de segurança e safety** desde a fase de elicitação
-- Levantar **cenários de mau uso** (não só uso correto) na fase de análise — quem pode tentar abusar do sistema?
-- Toda mudança de requisito deve incluir avaliação de **risco residual**
-- Se um requisito do cliente vai causar dano (a usuários, terceiros, ambiente), **profissional deve recusar ou contestar** — não pode "só implementar porque foi pedido"
-
-**Exemplo**: cliente pede "queremos um botão que envia mensagem para todos os contatos do usuário sem confirmação". Ético profissional **recusa esse requisito** ou exige redesenho — abre a chance de assédio/spam/abuso.
-
-### 2.3 §1.3 — Ser honesto e confiável
-
-> Profissional da Computação deve ser **transparente** e fornecer divulgação completa de todos os recursos, limitações e problemas potenciais do sistema para as partes apropriadas. Devem ser honestos sobre suas **qualificações** e sobre quaisquer **limitações em sua competência**.
-
-**Aplicação em ER**:
-
-- Estimativas de Story Points devem refletir incerteza real, não pressão política
-- Limitações do sistema (não vai funcionar offline, não escala além de N usuários, latência mínima Xms) devem estar **explicitamente** documentadas como RNFs
-- Quando você não sabe responder uma pergunta técnica de stakeholder, fale "não sei, vou pesquisar" — não invente
-
-### 2.4 §1.4 — Ser justo e adotar ações não discriminatórias
-
-> A discriminação preconceituosa com base em idade, cor, deficiência, etnia, situação familiar, identidade de gênero, filiação sindical, situação militar, nacionalidade, raça, religião ou crença, sexo, orientação sexual ou qualquer outro fator inadequado é **uma violação explícita** deste código.
+> **Cross-cutting, non-negotiable** layer. Based on the *"SBC"* (*"Sociedade Brasileira de Computação"*) Code of Ethics and Professional Conduct — *"Resolução 002/2024"* (signed by *"Profa. Thais Vasconcelos Batista"*, *"SBC"* president, on 21/03/2024). It is a translation of the IFIP code, which in turn is an adaptation of the ACM Code of Ethics. **It is not above the other layers; it is below all of them — every RE decision passes through it.**
 >
-> O uso da informação e da tecnologia pode causar novas desigualdades ou aumentar as já existentes. As tecnologias e práticas devem ser **tão inclusivas e acessíveis quanto possível** e os profissionais da Computação devem tomar medidas para evitar a criação de sistemas ou tecnologias que privem de direitos ou oprimam as pessoas. **A falha em projetar para inclusão e acessibilidade pode constituir discriminação injusta.**
-
-**Aplicação em ER**:
-
-- WCAG 2.2 AA é **piso**, não topo. RNFs de acessibilidade explícitos em **toda** feature
-- Decisões automatizadas (ML/IA) que afetam pessoas precisam de **auditoria de viés**
-- Linguagem dos sistemas deve evitar gendered defaults, deve permitir nome social, deve respeitar identidades
-- Personas usadas em design não podem assumir um único perfil socioeconômico/educacional/etário
-
-### 2.5 §1.6 — Respeitar a privacidade
-
-> A responsabilidade de respeitar a privacidade se aplica aos profissionais da Computação **de maneira particularmente profunda**. Novas tecnologias permitem a coleta, monitoramento e troca de informações pessoais de forma rápida, barata e muitas vezes **sem o conhecimento das pessoas afetadas**.
-
-**Princípios operacionais**:
-
-- Informações pessoais usadas apenas **para fins legítimos e sem violar direitos**
-- **Apenas a quantidade mínima** de informação pessoal necessária deve ser coletada
-- **Períodos de retenção e eliminação** claramente definidos
-- Consentimento informado para coleta automática
-- Permitir revisar, obter, **corrigir** e **excluir** dados pessoais
-- Cuidado especial ao **mesclar conjuntos de dados** (privacidade pode ser comprometida pela agregação)
-
-**Aplicação em ER (LGPD inclusa)**:
-
-- RNFs explícitos para **minimização de coleta**: cada campo de cadastro precisa justificativa
-- RNF: **retenção limitada** com prazo definido + processo de exclusão automática
-- RNF: **portabilidade** (usuário exporta seus dados)
-- RNF: **direito ao esquecimento** (delete profile + cascade nos dados associados)
-- Logs de auditoria: o que fazem? quem acessa? por quanto tempo guarda?
-- Dados sensíveis (saúde, biometria, orientação política) sempre exigem fundamentação extra
-
-### 2.6 §1.7 — Honrar a confidencialidade
-
-Aplicação em ER:
-- Documentos de requisitos contendo segredos comerciais não vazam em PRs públicos
-- Análise de mercado / inteligência competitiva tratadas como confidenciais
-- **Exceção**: violação de lei → reportar às autoridades competentes (whistleblower)
-
-### 2.7 §2.5 — Avaliação abrangente, especialmente para ML/IA
-
-> **Cuidados extraordinários devem ser tomados para identificar e mitigar riscos potenciais em sistemas de aprendizado de máquina.** Um sistema para o qual os riscos futuros não podem ser previstos de forma confiável **requer reavaliação frequente do risco à medida que o uso do sistema evolui, ou não deve ser implantado.**
-
-**Aplicação em ER de sistemas com ML**:
-
-- RNFs explícitos para:
-  - **Reavaliação periódica do risco** (cadência mínima por trimestre)
-  - **Drift detection** (distribuição de dados em produção ≠ treino)
-  - **Explicabilidade** das decisões aos usuários afetados
-  - **Direito de contestação** (humano-no-loop para casos críticos)
-  - **Auditoria de viés** por grupos demográficos
-- RF: **logging completo** das decisões automatizadas (para análise post-hoc)
-
-### 2.8 §2.6 — Trabalhar somente em áreas de competência
-
-> Se a qualquer momento, antes ou durante o trabalho, o profissional identificar a falta de competências necessárias, deve **comunicá-la ao empregador ou cliente**.
-
-Aplicação em ER:
-- Engenheiro sem conhecimento de domínio crítico (saúde, jurídico, finanças) **deve declarar** e exigir especialista no time
-- "Eu sei TI mas não conheço medicina" não é vergonha — vergonha é fingir que sabe
-
-### 2.9 §2.9 — Projetar e implementar sistemas robustos e seguros
-
-> **Nos casos em que o uso indevido ou danos são previstos ou inevitáveis, a melhor opção pode ser não implementar o sistema.**
-
-**Princípio do veto profissional**. O profissional pode (e deve) recusar contribuir para sistema que vai gerar dano significativo.
-
-**Aplicação em ER**:
-
-- Análise de **threat model** desde a elicitação
-- Cenários de **abuso intencional** especificados (não só "fluxo feliz")
-- **Recurso à recusa de implementar** quando análise mostra dano inevitável
-
-Exemplos clássicos onde a recusa profissional foi aplicada:
-- Engenheiros do Google se recusam a trabalhar no Project Maven (drones militares com IA)
-- Engenheiros do Microsoft contestam contrato com ICE
-- Engenheiros do Facebook recusam features de microtargeting político
-
-### 2.10 §3.1 — Bem público como preocupação central — **CITA ER EXPLICITAMENTE**
-
-> As pessoas — incluindo usuários, clientes, colegas e outros afetados direta ou indiretamente — sempre devem ser a preocupação central da Computação. O bem público deve sempre ser uma preocupação **explícita** ao se avaliar tarefas associadas a: pesquisa, **análise de requisitos**, projeto, implementação, teste, validação, implantação, manutenção, retirada e descarte de sistemas.
-
-ER é citada nominalmente como momento de avaliação ética. **Toda revisão de requisito deve perguntar: "Como isto serve o bem público?"**
-
-### 2.11 §3.6 — Cuidado ao modificar ou encerrar a operação de sistemas
-
-> Mudanças de interface, remoção de recursos e até atualizações de software impactam na produtividade dos usuários e na qualidade de seu trabalho. Os líderes devem tomar **cuidado ao alterar ou descontinuar o suporte para recursos do sistema dos quais as pessoas ainda dependem**. Os líderes devem investigar minuciosamente alternativas viáveis para remover o suporte para um sistema legado. **Se essas alternativas forem inaceitavelmente arriscadas ou impraticáveis, o desenvolvedor deve ajudar na migração tranquila** das partes interessadas do sistema para uma alternativa.
-
-**Aplicação em ER de mudança**:
-
-- Antes de remover feature usada → analisar quem depende, comunicar com **antecedência ampla**, oferecer **caminho de migração**
-- Quando descontinuar produto inteiro → planejar exportação de dados, prazo de transição, suporte mínimo durante migração
-- Em ER (ver [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) §3.4), atualizar documentação retrospectivamente em ≤24h após mudança emergencial
-
-### 2.12 §3.7 — Sistemas integrados à infraestrutura da sociedade
-
-> Mesmo os sistemas computacionais mais simples têm o potencial de impactar todos os aspectos da sociedade quando integrados às atividades cotidianas, como comércio, turismo, governo, saúde e educação. Quando organizações e grupos desenvolvem sistemas que se tornam uma **parte importante da infraestrutura da sociedade**, seus líderes têm a **responsabilidade adicional de serem bons administradores** desses sistemas.
-
-**Aplicação em ER**:
-
-- Sistemas críticos (saúde, finanças, energia, transporte) exigem RNFs adicionais de:
-  - **Resiliência** (continuar funcionando sob carga anômala)
-  - **Acesso justo** (não excluir populações marginalizadas)
-  - **Monitoramento contínuo** do nível de adoção e impacto social
-  - **Padrões adequados** desenvolvidos quando não existem
+> **Note on translation**: the citations of the *"SBC"* Code below are non-official English renderings of the pt-BR text for skill consumption. The authoritative version is in pt-BR (see [translations/pt-BR/references/09-etica-sbc.md](../translations/pt-BR/references/09-etica-sbc.md) for the verbatim citations, or the official text at https://www.sbc.org.br). When in doubt about wording in compliance or audit contexts, refer to the original pt-BR.
 
 ---
 
-## 3. Como integrar ética no processo de ER (não como anexo)
+## 1. Structure of the *"SBC"* 002/2024 document
 
-### 3.1 Como NÃO fazer
-
-❌ Anexo "Considerações éticas" no fim do documento de requisitos que ninguém lê.
-❌ Reunião isolada sobre ética uma vez por ano.
-❌ "Privacy by design" como slogan sem RNFs concretos.
-
-### 3.2 Como fazer
-
-✅ **Cada feature passa por checkpoint ético** na revisão (sim/não para perguntas concretas).
-✅ **Critérios de Aceitação incluem RNFs éticos** quando relevante (acessibilidade, privacidade).
-✅ **Three Amigos inclui ética** — uma das vozes é "quem pode ser prejudicado?".
-✅ **Cenários BDD incluem mau-uso intencional** ao lado dos felizes.
-✅ **Métricas pós-release acompanham impacto demográfico** (não só agregados).
-
-### 3.3 Checkpoint ético — perguntas concretas (faça em toda feature substantiva)
-
-```
-[ ] Quem é afetado por esta feature, direta e indiretamente?
-[ ] Há grupo vulnerável (menores, idosos, baixa renda, deficiência)
-    que pode ser excluído ou prejudicado?
-[ ] Quais dados pessoais coletamos? Por quê? Por quanto tempo
-    retemos? Quem acessa?
-[ ] Há decisão automatizada? Usuário pode contestar?
-[ ] Há cenário de mau-uso plausível? Como prevenimos?
-[ ] WCAG 2.2 AA está atendido?
-[ ] Logs de auditoria adequados ao impacto da feature?
-[ ] Documentamos limitações conhecidas?
-[ ] Stakeholder vulnerável teve voz no design?
-```
-
-Falhou em qualquer um → discussão Three Amigos + ajuste de requisito ou recusa.
-
----
-
-## 4. Cenários éticos típicos em ER (com tratamento)
-
-### 4.1 Cliente pede coleta excessiva de dados
-
-**Situação**: cliente quer coletar CPF, RG, endereço, telefone, e-mail, profissão, renda, estado civil para "qualificar lead".
-
-**Tratamento**:
-- §1.6 — coleta mínima necessária
-- Questionar: cada campo justificado para a finalidade declarada?
-- Renegociar: coletar mínimo agora, expandir só se necessário com consentimento
-- Se cliente insiste sem justificativa → escalar ou recusar
-
-### 4.2 Sistema vai automatizar decisão crítica sobre pessoas
-
-**Situação**: ML decide aprovação de crédito / matrícula escolar / atendimento médico.
-
-**Tratamento**:
-- §2.5 — reavaliação contínua de risco; auditoria de viés
-- §1.4 — auditoria por grupos demográficos (mesmo erro afeta todos igualmente?)
-- §2.6 — equipe tem competência em ML responsável?
-- RNFs: explicabilidade + direito de contestação + humano-no-loop para borderline
-
-### 4.3 Feature pode ser usada para vigilância
-
-**Situação**: gestor pede dashboard com produtividade individual em tempo real (key strokes, screen captures).
-
-**Tratamento**:
-- §1.1 — autonomia individual; vigilância corrói autonomia
-- §1.2 — danos psicológicos previsíveis (ansiedade, gaming do sistema)
-- Renegociar: foco em métricas de equipe, não individuais; granularidade temporal mais grossa
-- Se insiste → escalar ou recusar (§2.9 — não implementar)
-
-### 4.4 Mudança vai prejudicar grupo dependente
-
-**Situação**: app vai descontinuar suporte a navegadores antigos. Usuários idosos / baixa renda dependem desses navegadores.
-
-**Tratamento**:
-- §3.6 — investigar alternativas; ajudar migração tranquila
-- Estender prazo de suporte
-- Oferecer caminho alternativo (versão lite, atendimento presencial)
-- Comunicar antecipadamente com canais que esses usuários efetivamente usam
-
-### 4.5 Pressão para entregar sem validar
-
-**Situação**: prazo apertado, gestor pede para "pular testes" ou "validar depois".
-
-**Tratamento**:
-- §2.1 — qualidade no trabalho profissional
-- §1.3 — honestidade sobre limitações
-- §2.5 — riscos identificados devem ser relatados
-- Documentar formalmente: "se entregarmos sem teste X, o risco é Y, com impacto Z em N usuários"
-- Se gestor mantém decisão → continuar trabalho sob direção, mas com paper trail
-
----
-
-## 5. Conexão entre ética e as demais references
-
-| Reference | Conexão ética |
+| Section | What it covers |
 |---|---|
-| [01-fundamentos.md](01-fundamentos.md) | RNFs externos incluem requisitos éticos (LGPD, acessibilidade) |
-| [02-elicitacao.md](02-elicitacao.md) | Etnografia exige informar pessoas antes (§1.3 honestidade) |
-| [03-especificacao.md](03-especificacao.md) | CAs devem cobrir cenários de exclusão; US devem ter persona vulnerável testada |
-| [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md) | Cenários BDD incluem cases de mau-uso intencional |
-| [05-estimativa.md](05-estimativa.md) | Estimativa honesta (§1.3) — sem inflar nem reduzir sob pressão |
-| [06-validacao.md](06-validacao.md) | Stakeholder vulnerável tem voz na validação |
-| [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) | §3.6 — cuidado ao descontinuar; rastreabilidade ética |
-| [08-analista-negocios.md](08-analista-negocios.md) | Análise estratégica avalia bem público (§3.1) |
+| **1. General Ethical Principles** | 7 fundamental principles (well-being, avoid harm, honesty, fairness, intellectual property, privacy, confidentiality) |
+| **2. Professional Responsibilities** | 9 duties (quality, competence, laws, peer review, evaluation, areas of competence, public awareness, authorized access, secure systems) |
+| **3. Professional Leadership Principles** | 7 duties of those who lead (public good, social responsibility, quality of work life, policies, opportunities, care when changing/discontinuing, systems integrated into society) |
+| **4. Compliance with the Code** | Support, promote, respect; treat violations as incompatible |
+
+> "This code **is not an algorithm for solving ethical problems**. Instead, it serves as a basis for ethical decision-making. When thinking about a specific problem, a Computing professional may find that several principles must be taken into account and that different principles will have different relevance to the problem."
 
 ---
 
-## 6. O artigo §4 — Conformidade
+## 2. Principles most relevant to RE (mapping)
 
-> Os profissionais da Computação devem aderir aos princípios deste código e contribuir para aprimorá-los. Os profissionais da Computação que reconhecerem violações deste código devem tomar medidas para resolver as questões éticas que reconheçam, incluindo, quando razoável, a expressão de sua preocupação à pessoa ou pessoas que estejam violando este código.
+### 2.1 §1.1 — Contribute to society and human well-being
 
-**Mecanismo**: violação observada → relato ao Comitê de Ética SBC. Ação corretiva conforme Regimento da Comissão de Ética.
+> This principle states the obligation of Computing professionals to use their skills for the benefit of society. It includes the promotion of **human rights** and the protection of each individual's right to **autonomy**. When the interests of several groups conflict, **the needs of the less favoured must receive greater attention and priority**.
+
+**Application in RE**:
+
+- Every backlog prioritization must ask: "Who is harmed if this is not delivered?". If the answer includes a vulnerable group, that item rises in the order
+- FRs and NFRs must guarantee **accessibility** (WCAG, screen reader, keyboard navigation)
+- "Failure to design for inclusion is unfair discrimination" (§1.4 of the code)
+
+**Example**: online-registration feature. If it requires a modern smartphone and there is a target population without access (vulnerable), the requirement must **include** an alternative (in-person service, phone call), not silently exclude that population.
+
+### 2.2 §1.2 — Avoid harm
+
+> "Harm" means negative consequences, especially when significant and unfair. **Well-intentioned** actions, including those carrying out assigned tasks, may cause harm. When that harm is unintentional, those responsible are obliged to **undo or mitigate** the harm as much as possible.
+
+**Additional obligation**:
+
+> A Computing professional has the additional obligation to **report any signs of system risks** that could result in harm. If leaders fail to act to reduce or mitigate such risks, **it may be necessary to denounce** these situations to reduce potential harm.
+
+**Application in RE**:
+
+- Identify **security and safety NFRs** from the elicitation phase
+- Raise **misuse scenarios** (not only correct use) in the analysis phase — who might try to abuse the system?
+- Every requirement change must include an evaluation of **residual risk**
+- If a client requirement will cause harm (to users, third parties, the environment), **the professional must refuse or contest** — they cannot "just implement because it was requested"
+
+**Example**: client asks "we want a button that sends a message to all the user's contacts without confirmation". The ethical professional **refuses this requirement** or demands a redesign — it opens the door to harassment/spam/abuse.
+
+### 2.3 §1.3 — Be honest and trustworthy
+
+> A Computing professional must be **transparent** and provide full disclosure of all system resources, limitations, and potential problems to the appropriate parties. They must be honest about their **qualifications** and about any **limitations in their competence**.
+
+**Application in RE**:
+
+- Story Point estimates must reflect real uncertainty, not political pressure
+- System limitations (will not work offline, does not scale beyond N users, minimum latency Xms) must be **explicitly** documented as NFRs
+- When you cannot answer a stakeholder's technical question, say "I don't know, I will research it" — do not make it up
+
+### 2.4 §1.4 — Be fair and adopt non-discriminatory actions
+
+> Prejudiced discrimination based on age, colour, disability, ethnicity, family status, gender identity, union membership, military status, nationality, race, religion or belief, sex, sexual orientation, or any other inappropriate factor is **an explicit violation** of this code.
+>
+> The use of information and technology may cause new inequalities or amplify existing ones. Technologies and practices must be **as inclusive and accessible as possible** and Computing professionals must take measures to avoid creating systems or technologies that disenfranchise or oppress people. **Failure to design for inclusion and accessibility may constitute unfair discrimination.**
+
+**Application in RE**:
+
+- WCAG 2.2 AA is the **floor**, not the ceiling. Explicit accessibility NFRs in **every** feature
+- Automated decisions (ML/AI) affecting people require **bias auditing**
+- System language must avoid gendered defaults, must allow social name, must respect identities
+- Personas used in design cannot assume a single socio-economic/educational/age profile
+
+### 2.5 §1.6 — Respect privacy
+
+> The responsibility to respect privacy applies to Computing professionals **in a particularly deep way**. New technologies allow the collection, monitoring, and exchange of personal information quickly, cheaply, and often **without the knowledge of the affected people**.
+
+**Operational principles**:
+
+- Personal information used only **for legitimate purposes and without violating rights**
+- **Only the minimum amount** of personal information necessary must be collected
+- **Retention and deletion periods** clearly defined
+- Informed consent for automatic collection
+- Allow reviewing, obtaining, **correcting**, and **erasing** personal data
+- Particular care when **merging datasets** (privacy can be compromised by aggregation)
+
+**Application in RE (*"LGPD"* included)**:
+
+- Explicit NFRs for **minimization of collection**: each registration field needs justification
+- NFR: **limited retention** with defined deadline + automatic deletion process
+- NFR: **portability** (user exports their data)
+- NFR: **right to be forgotten** (delete profile + cascade across associated data)
+- Audit logs: what do they do? who accesses them? for how long are they kept?
+- Sensitive data (health, biometrics, political orientation) always requires extra justification
+
+### 2.6 §1.7 — Honour confidentiality
+
+Application in RE:
+- Requirements documents containing trade secrets do not leak in public PRs
+- Market analysis / competitive intelligence treated as confidential
+- **Exception**: violation of law → report to the competent authorities (whistleblower)
+
+### 2.7 §2.5 — Comprehensive evaluation, especially for ML/AI
+
+> **Extraordinary care must be taken to identify and mitigate potential risks in machine-learning systems.** A system whose future risks cannot be reliably predicted **requires frequent risk re-evaluation as system use evolves, or should not be deployed.**
+
+**Application in RE for ML systems**:
+
+- Explicit NFRs for:
+  - **Periodic risk re-evaluation** (minimum quarterly cadence)
+  - **Drift detection** (production data distribution ≠ training)
+  - **Explainability** of decisions to affected users
+  - **Right of contestation** (human-in-the-loop for critical cases)
+  - **Bias audit** by demographic group
+- FR: **comprehensive logging** of automated decisions (for post-hoc analysis)
+
+### 2.8 §2.6 — Work only in areas of competence
+
+> If at any time, before or during the work, the professional identifies the lack of necessary competencies, they must **communicate this to the employer or client**.
+
+Application in RE:
+- Engineer without critical domain knowledge (health, legal, finance) **must declare it** and demand a specialist on the team
+- "I know IT but not medicine" is not shameful — what is shameful is pretending to know
+
+### 2.9 §2.9 — Design and implement robust and secure systems
+
+> **In cases where misuse or harm is foreseen or unavoidable, the best option may be not to implement the system.**
+
+**The professional-veto principle**. The professional may (and should) refuse to contribute to a system that will generate significant harm.
+
+**Application in RE**:
+
+- **Threat-model analysis** from elicitation
+- **Intentional-abuse scenarios** specified (not only "happy path")
+- **Recourse to refusing to implement** when analysis shows unavoidable harm
+
+Classic examples where professional refusal was applied:
+- Google engineers refuse to work on Project Maven (military AI drones)
+- Microsoft engineers contest the ICE contract
+- Facebook engineers refuse political microtargeting features
+
+### 2.10 §3.1 — Public good as central concern — **CITES RE EXPLICITLY**
+
+> People — including users, clients, colleagues, and others affected directly or indirectly — must always be the central concern of Computing. The public good must always be an **explicit** concern when evaluating tasks associated with: research, **requirements analysis**, design, implementation, testing, validation, deployment, maintenance, withdrawal, and disposal of systems.
+
+RE is named explicitly as a moment of ethical evaluation. **Every requirement review must ask: "How does this serve the public good?"**
+
+### 2.11 §3.6 — Care when modifying or discontinuing system operation
+
+> Interface changes, feature removal, and even software updates impact user productivity and the quality of their work. Leaders must take **care when changing or discontinuing support for system features people still depend on**. Leaders must thoroughly investigate viable alternatives to removing support for a legacy system. **If these alternatives are unacceptably risky or impractical, the developer must help with the smooth migration** of stakeholders from the system to an alternative.
+
+**Application in change RE**:
+
+- Before removing a used feature → analyze who depends on it, communicate with **ample advance notice**, offer a **migration path**
+- When discontinuing a whole product → plan data export, transition deadline, minimum support during migration
+- In RE (see [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) §3.4), update documentation retroactively within ≤24h after an emergency change
+
+### 2.12 §3.7 — Systems integrated into society's infrastructure
+
+> Even the simplest computing systems have the potential to impact all aspects of society when integrated into everyday activities such as commerce, tourism, government, health, and education. When organizations and groups develop systems that become a **major part of society's infrastructure**, their leaders have the **additional responsibility to be good stewards** of these systems.
+
+**Application in RE**:
+
+- Critical systems (health, finance, energy, transport) require additional NFRs of:
+  - **Resilience** (continue working under anomalous load)
+  - **Fair access** (do not exclude marginalized populations)
+  - **Continuous monitoring** of adoption level and social impact
+  - **Adequate standards** developed when none exist
 
 ---
 
-## 7. Bibliografia adicional sobre ética em computação
+## 3. How to integrate ethics into the RE process (not as an annex)
 
-- **SBC.** Resolução 002/2024 — texto oficial em https://www.sbc.org.br
-- **ACM Code of Ethics** — código de origem (https://www.acm.org/code-of-ethics)
-- **IFIP Code of Ethics** — versão intermediária (https://www.ipthree.org/ifip-code-of-ethics)
-- **IEEE Code of Ethics** — complementar (https://www.ieee.org/about/corporate/governance/p7-8.html)
-- **Vallor, S.** *Technology and the Virtues*, Oxford 2016 — fundamentação filosófica
-- **O'Neil, C.** *Weapons of Math Destruction*, 2016 — casos de viés algorítmico
-- **Eubanks, V.** *Automating Inequality*, 2018 — sistemas que prejudicam vulneráveis
-- **Crawford, K.** *Atlas of AI*, 2021 — ética em ML
+### 3.1 How NOT to do it
+
+❌ Annex "Ethical considerations" at the end of the requirements document that nobody reads.
+❌ Isolated meeting on ethics once a year.
+❌ "Privacy by design" as a slogan without concrete NFRs.
+
+### 3.2 How to do it
+
+✅ **Every feature goes through an ethical checkpoint** at review (yes/no to concrete questions).
+✅ **Acceptance Criteria include ethical NFRs** when relevant (accessibility, privacy).
+✅ **Three Amigos includes ethics** — one of the voices is "who could be harmed?".
+✅ **BDD scenarios include intentional misuse** alongside the happy ones.
+✅ **Post-release metrics track demographic impact** (not just aggregates).
+
+### 3.3 Ethical checkpoint — concrete questions (do for every substantive feature)
+
+```
+[ ] Who is affected by this feature, directly and indirectly?
+[ ] Is there a vulnerable group (minors, elders, low income, disability)
+    that may be excluded or harmed?
+[ ] Which personal data do we collect? Why? For how long do we retain
+    it? Who accesses it?
+[ ] Is there an automated decision? Can the user contest it?
+[ ] Is there a plausible misuse scenario? How do we prevent it?
+[ ] Is WCAG 2.2 AA met?
+[ ] Are audit logs adequate to the feature's impact?
+[ ] Did we document known limitations?
+[ ] Did the vulnerable stakeholder have a voice in the design?
+```
+
+Failed any → Three Amigos discussion + requirement adjustment or refusal.
 
 ---
 
-## 8. Resumo executivo (caso você não tenha tempo de ler tudo)
+## 4. Typical ethical scenarios in RE (with treatment)
 
-**3 perguntas a fazer a cada decisão importante de ER**:
+### 4.1 Client requests excessive data collection
 
-1. **Quem é prejudicado?** Especialmente os menos favorecidos (§1.1)
-2. **Quais danos são previsíveis?** Inclusive os não intencionais (§1.2)
-3. **Posso recusar contribuir?** Se uso indevido é inevitável, talvez deva (§2.9)
+**Situation**: client wants to collect *"CPF"*, *"RG"*, address, phone, email, profession, income, marital status to "qualify the lead".
 
-Se as 3 respostas forem aceitáveis → siga. Se uma delas levanta bandeira vermelha → discussão Three Amigos + escalar para liderança + documentar a decisão.
+**Treatment**:
+- §1.6 — minimum necessary collection
+- Question: is every field justified for the declared purpose?
+- Renegotiate: collect the minimum now, expand only if necessary with consent
+- If the client insists without justification → escalate or refuse
 
-**Princípio síntese**: requisitos não são tecnicalidade. Cada requisito é uma escolha sobre como nossa tecnologia molda a vida das pessoas. Tratemos com a gravidade que merece.
+### 4.2 System will automate a critical decision about people
+
+**Situation**: ML decides credit approval / school enrollment / medical care.
+
+**Treatment**:
+- §2.5 — continuous risk re-evaluation; bias audit
+- §1.4 — audit by demographic groups (does the same error affect all equally?)
+- §2.6 — does the team have competence in responsible ML?
+- NFRs: explainability + right of contestation + human-in-the-loop for borderline cases
+
+### 4.3 Feature can be used for surveillance
+
+**Situation**: manager requests a dashboard with individual real-time productivity (keystrokes, screen captures).
+
+**Treatment**:
+- §1.1 — individual autonomy; surveillance erodes autonomy
+- §1.2 — foreseeable psychological harms (anxiety, gaming the system)
+- Renegotiate: focus on team metrics, not individual; coarser time granularity
+- If they insist → escalate or refuse (§2.9 — do not implement)
+
+### 4.4 Change will harm a dependent group
+
+**Situation**: the app will discontinue support for old browsers. Elderly / low-income users depend on those browsers.
+
+**Treatment**:
+- §3.6 — investigate alternatives; help smooth migration
+- Extend the support deadline
+- Offer an alternative path (lite version, in-person service)
+- Communicate early through the channels those users actually use
+
+### 4.5 Pressure to deliver without validating
+
+**Situation**: tight deadline, the manager asks to "skip the tests" or "validate later".
+
+**Treatment**:
+- §2.1 — quality in professional work
+- §1.3 — honesty about limitations
+- §2.5 — identified risks must be reported
+- Document formally: "if we deliver without test X, the risk is Y, with impact Z on N users"
+- If the manager maintains the decision → continue work under direction, but with a paper trail
+
+---
+
+## 5. Connection between ethics and the other references
+
+| Reference | Ethical connection |
+|---|---|
+| [01-fundamentos.md](01-fundamentos.md) | External NFRs include ethical requirements (*"LGPD"*, accessibility) |
+| [02-elicitacao.md](02-elicitacao.md) | Ethnography requires informing people beforehand (§1.3 honesty) |
+| [03-especificacao.md](03-especificacao.md) | ACs must cover exclusion scenarios; US must have a vulnerable persona tested |
+| [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md) | BDD scenarios include intentional-misuse cases |
+| [05-estimativa.md](05-estimativa.md) | Honest estimation (§1.3) — neither inflated nor reduced under pressure |
+| [06-validacao.md](06-validacao.md) | Vulnerable stakeholder has a voice in validation |
+| [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) | §3.6 — care when discontinuing; ethical traceability |
+| [08-analista-negocios.md](08-analista-negocios.md) | Strategic analysis evaluates the public good (§3.1) |
+
+---
+
+## 6. Article §4 — Compliance
+
+> Computing professionals must adhere to the principles of this code and contribute to improving them. Computing professionals who recognize violations of this code must take measures to resolve the ethical issues they recognize, including, when reasonable, expressing their concern to the person or persons violating this code.
+
+**Mechanism**: observed violation → report to the *"SBC"* Ethics Committee. Corrective action per the Ethics Committee's Regulations.
+
+---
+
+## 7. Additional bibliography on computing ethics
+
+- ***"SBC"*.** *"Resolução 002/2024"* — official text at https://www.sbc.org.br
+- **ACM Code of Ethics** — origin code (https://www.acm.org/code-of-ethics)
+- **IFIP Code of Ethics** — intermediate version (https://www.ipthree.org/ifip-code-of-ethics)
+- **IEEE Code of Ethics** — complementary (https://www.ieee.org/about/corporate/governance/p7-8.html)
+- **Vallor, S.** *Technology and the Virtues*, Oxford 2016 — philosophical foundation
+- **O'Neil, C.** *Weapons of Math Destruction*, 2016 — algorithmic-bias cases
+- **Eubanks, V.** *Automating Inequality*, 2018 — systems that harm the vulnerable
+- **Crawford, K.** *Atlas of AI*, 2021 — ethics in ML
+
+---
+
+## 8. Executive summary (in case you have no time to read everything)
+
+**3 questions to ask of every important RE decision**:
+
+1. **Who is harmed?** Especially the less favoured (§1.1)
+2. **Which harms are foreseeable?** Including the unintended ones (§1.2)
+3. **Can I refuse to contribute?** If misuse is unavoidable, perhaps you should (§2.9)
+
+If the 3 answers are acceptable → proceed. If any raises a red flag → Three Amigos discussion + escalate to leadership + document the decision.
+
+**Synthesis principle**: requirements are not a technicality. Each requirement is a choice about how our technology shapes people's lives. Treat them with the gravity they deserve.
