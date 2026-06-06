@@ -1,182 +1,182 @@
-# 03 — Especificação de Requisitos (Backlog, Epic → Feature → User Story → Task)
+# 03 — Requirements Specification (Backlog, Epic → Feature → User Story → Task)
 
-> Como documentar requisitos descobertos. Combina AULAS 07-09 IFPB + Sommerville 4.4. Foco no modelo ágil hierárquico — backlog estruturado em Epic, Feature, User Story, Critério de Aceitação, Task, Bug, Melhoria. User Stories integradas com BDD (ver [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)).
-
----
-
-## 1. Propósito da especificação (Pfleeger 2004)
-
-A especificação serve dois propósitos:
-
-1. **Base para entendimento e concordância entre clientes e desenvolvedores** sobre o que o sistema deve fazer
-2. **Guia para os desenvolvedores** nas demais etapas (projeto, implementação, testes)
-
-Sem especificação clara, projeto vira "telefone sem fio": cliente quer X, dev entende Y, entrega Z.
+> How to document discovered requirements. Combines LECTURES 07-09 *"IFPB"* + Sommerville 4.4. Focus on the hierarchical agile model — backlog structured into Epic, Feature, User Story, Acceptance Criterion, Task, Bug, Improvement. User Stories integrated with BDD (see [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)).
 
 ---
 
-## 2. Notações para escrever requisitos (Sommerville Fig 4.11)
+## 1. Purpose of the specification (Pfleeger 2004)
 
-| Notação | Descrição |
+The specification serves two purposes:
+
+1. **Basis of understanding and agreement between clients and developers** on what the system must do
+2. **Guide for the developers** in the remaining stages (design, implementation, testing)
+
+Without a clear specification, the project becomes a "telephone game": client wants X, dev understands Y, delivers Z.
+
+---
+
+## 2. Notations for writing requirements (Sommerville Fig 4.11)
+
+| Notation | Description |
 |---|---|
-| **Linguagem natural** | Frases numeradas; cada frase = 1 requisito |
-| **Linguagem natural estruturada** | Template/formulário; cada campo informa um aspecto |
-| **Notações gráficas** | UML (casos de uso, sequência) + anotações textuais |
-| **Especificações matemáticas** | Máquinas de estado finitas, conjuntos. Inequívocas mas a maioria dos clientes não compreende |
+| **Natural language** | Numbered sentences; each sentence = 1 requirement |
+| **Structured natural language** | Template/form; each field reports one aspect |
+| **Graphical notations** | UML (use cases, sequence) + textual annotations |
+| **Mathematical specifications** | Finite state machines, sets. Unambiguous, but most clients do not understand |
 
-**Regra prática**: requisitos de **usuário** sempre em linguagem natural + diagramas simples. Requisitos de **sistema** podem usar estruturado/UML/matemático conforme criticidade.
+**Practical rule**: **user** requirements always in natural language + simple diagrams. **System** requirements may use structured/UML/mathematical depending on criticality.
 
-### 2.1 Diretrizes para linguagem natural (Sommerville 4.4.1)
+### 2.1 Natural-language guidelines (Sommerville 4.4.1)
 
-1. **Formato padrão** para todas as definições (reduz omissões, facilita conferência). Use 1-2 frases por requisito
-2. **Linguagem coerente** para distinguir obrigatório (`deve`) de desejável (`pode`)
-3. **Realce de texto** (negrito, itálico) para partes importantes
-4. **Não pressupor** que leitor entende jargão técnico (evite "arquitetura", "módulo"; explique acrônimos)
-5. **Associar racional** a cada requisito (por que existe, quem propôs) — útil quando mudar
+1. **Standard format** for all definitions (reduces omissions, eases checking). Use 1–2 sentences per requirement
+2. **Consistent wording** to distinguish mandatory (`shall`) from desirable (`may`)
+3. **Text highlighting** (bold, italics) for important parts
+4. **Do not assume** the reader understands technical jargon (avoid "architecture", "module"; explain acronyms)
+5. **Associate rationale** with each requirement (why it exists, who proposed it) — useful when it changes
 
-### 2.2 Linguagem natural estruturada (template VOLERE — Robertson & Robertson)
+### 2.2 Structured natural language (VOLERE template — Robertson & Robertson)
 
-Cada requisito em **cartão** com campos:
+Each requirement on a **card** with fields:
 
-- Função
-- Descrição
-- Entradas + fonte
-- Saídas + destino
-- Ação
-- Requer (dependências)
-- Pré-condição
-- Pós-condição
-- Efeitos colaterais
-- **Racional** (por que existe)
+- Function
+- Description
+- Inputs + source
+- Outputs + destination
+- Action
+- Requires (dependencies)
+- Pre-condition
+- Post-condition
+- Side effects
+- **Rationale** (why it exists)
 
-Reduz variabilidade e organiza melhor. Use quando computações complexas precisam ser especificadas.
+Reduces variability and organizes better. Use when complex computations must be specified.
 
 ---
 
-## 3. O documento de requisitos (estrutura IEEE 830, Sommerville Fig 4.17)
+## 3. The requirements document (IEEE 830 structure, Sommerville Fig 4.17)
 
-| Capítulo | Descrição |
+| Chapter | Description |
 |---|---|
-| Prefácio | Público-alvo + histórico de versões + mudanças |
-| Introdução | Necessidade do sistema; visão das funções; encaixe nos objetivos de negócio |
-| Glossário | Termos técnicos definidos (sem pressupor expertise) |
-| Definição dos requisitos de usuário | Serviços ao usuário + RNFs do sistema + padrões a seguir |
-| Arquitetura do sistema | Visão de alto nível + componentes reusados |
-| Especificação dos requisitos de sistema | RFs + RNFs detalhados + interfaces |
-| Modelos do sistema | Modelos gráficos (objetos, fluxo, dados) |
-| Evolução do sistema | Pressupostos fundamentais + mudanças previstas |
-| Apêndices | Hardware, BD, restrições específicas |
-| Índice | Alfabético + diagramas + funções |
+| Preface | Target audience + version history + changes |
+| Introduction | System need; vision of functions; fit with business objectives |
+| Glossary | Defined technical terms (without presupposing expertise) |
+| User-requirements definition | User-facing services + system NFRs + standards to follow |
+| System architecture | High-level view + reused components |
+| System-requirements specification | Detailed FRs + NFRs + interfaces |
+| System models | Graphical models (object, flow, data) |
+| System evolution | Fundamental assumptions + planned changes |
+| Appendices | Hardware, DB, specific constraints |
+| Index | Alphabetical + diagrams + functions |
 
-**Use quando**: sistema complexo, terceirizado, regulado, longa vida útil. Em produto interno/SaaS ágil, document menor + backlog vivo no Jira/OpenProject.
+**Use when**: complex system, outsourced, regulated, long lifespan. In an internal/agile SaaS product, a smaller document + a living backlog in Jira/OpenProject.
 
 ---
 
-## 4. O Backlog (modelo ágil)
+## 4. The Backlog (agile model)
 
-### 4.1 Definição (AULA 07)
+### 4.1 Definition (LECTURE 07)
 
-> Lista **priorizada**, **dinâmica** e **evolutiva** de tudo o que deve ser desenvolvido no produto.
+> A **prioritized**, **dynamic**, **evolutionary** list of everything that must be developed in the product.
 
-Mecanismo principal de planejamento e organização em desenvolvimento ágil. **Artefato estratégico** — traduz visão do produto em itens concretos.
+The primary mechanism for planning and organization in agile development. **Strategic artifact** — it translates the product vision into concrete items.
 
-### 4.2 Origens (cross-framework)
+### 4.2 Origins (cross-framework)
 
-| Framework | Nome / particularidade |
+| Framework | Name / particularity |
 |---|---|
-| **Scrum** | Product Backlog (o conceito principal vem daqui) |
-| **XP** | Histórias de usuário + tarefas técnicas |
-| **Kanban** | Coluna "to do" como fila de itens não iniciados |
-| **Lean** | Fila de trabalho priorizada por valor |
+| **Scrum** | Product Backlog (the primary concept comes from here) |
+| **XP** | User stories + technical tasks |
+| **Kanban** | "To do" column as a queue of uninitiated items |
+| **Lean** | Work queue prioritized by value |
 
-**Três invariantes em todos os frameworks**: centraliza trabalho · evolui continuamente · permite priorização por valor.
+**Three invariants across all frameworks**: centralizes work · evolves continuously · enables prioritization by value.
 
-### 4.3 Propósitos (AULA 07)
+### 4.3 Purposes (LECTURE 07)
 
-1. **Organizar visível e transparente** — stakeholders veem o que está planejado
-2. **Priorizar por valor** — maior impacto no usuário aparece primeiro
-3. **Comunicação contínua** entre equipe e stakeholders — mecanismo vivo para feedback
-4. **Apoiar desenvolvimento incremental** — cada sprint consome parte refinada
+1. **Organize visibly and transparently** — stakeholders see what is planned
+2. **Prioritize by value** — greater impact on the user appears first
+3. **Continuous communication** between team and stakeholders — living feedback mechanism
+4. **Support incremental development** — each sprint consumes a refined portion
 
-### 4.4 Elementos típicos
+### 4.4 Typical elements
 
-- **Funcionalidades** — desejadas pelo usuário
-- **Requisitos técnicos** — identificados pela equipe (dívida técnica, refactor, infra)
-- **Melhorias** — complementares
-- **Defeitos / Bugs** — a corrigir
-- **Requisitos não funcionais** — performance, segurança, disponibilidade, usabilidade
-- **Itens exploratórios (spikes)** — investigação para reduzir incerteza
+- **Features** — desired by the user
+- **Technical requirements** — identified by the team (tech debt, refactor, infra)
+- **Improvements** — complementary
+- **Defects / Bugs** — to fix
+- **Non-functional requirements** — performance, security, availability, usability
+- **Exploratory items (spikes)** — investigation to reduce uncertainty
 
 ---
 
-## 5. Hierarquia do Backlog (modelo IFPB / OpenProject)
+## 5. Backlog hierarchy (*"IFPB"* / OpenProject model)
 
 ```
-📄 Documento de Requisitos (FONTE DA VERDADE — sempre cheque antes de mexer no backlog)
+📄 Requirements Document (SOURCE OF TRUTH — always check before touching the backlog)
     │
     ▼
-PROJETO (= repositório/contexto no OpenProject — NÃO é um EPIC)
+PROJECT (= repository/context in OpenProject — NOT an EPIC)
     │
-    ├─ EPIC raiz #1                       ← uma frente do projeto
-    │   ├─ EPIC (sub-epic)                ← decomposição em vários níveis se necessário
-    │   │   └─ EPIC (sub-sub-epic)        ← exemplo IFPB Dopagem chega a 4 níveis
-    │   └─ FEATURE                        ← funcionalidade entregável (várias sprints)
-    │        ├─ Descrição em pt-BR de negócio   ← parágrafo lido por stakeholder não-técnico
-    │        ├─ CA grupo "CA - <Tema A>"        ← CAs sempre agrupados sob tema
-    │        │    ├─ CA01 - regra autossuficiente
-    │        │    ├─ CA02 - regra autossuficiente
-    │        │    └─ CA03 - regra com sub-regras [...]   ← convenção [...] para detalhamento
-    │        ├─ CA grupo "CA - <Tema B>"
+    ├─ ROOT EPIC #1                       ← one front of the project
+    │   ├─ EPIC (sub-epic)                ← decomposition in several levels if needed
+    │   │   └─ EPIC (sub-sub-epic)        ← IFPB Doping example reaches 4 levels
+    │   └─ FEATURE                        ← deliverable feature (across several sprints)
+    │        ├─ Business-language description  ← paragraph read by non-technical stakeholder
+    │        ├─ AC group "CA - <Theme A>"       ← ACs always grouped under a theme
+    │        │    ├─ CA01 - self-sufficient rule
+    │        │    ├─ CA02 - self-sufficient rule
+    │        │    └─ CA03 - rule with sub-rules [...]   ← [...] convention for sub-detail
+    │        ├─ AC group "CA - <Theme B>"
     │        │    └─ CA04 - ...
-    │        └─ USER STORY                ← incremento que cabe em UMA sprint
-    │             ├─ BDD                  ← DADO/QUANDO/ENTÃO no campo descrição da US
-    │             ├─ CAs associados       ← relações (rastreabilidade)
-    │             └─ TASK                 ← menor unidade de trabalho (termos técnicos OK)
+    │        └─ USER STORY                ← increment that fits in ONE sprint
+    │             ├─ BDD                  ← Given/When/Then in the US Description field
+    │             ├─ Associated ACs       ← relations (traceability)
+    │             └─ TASK                 ← smallest unit of work (technical terms OK)
     │
-    ├─ EPIC raiz #2                       ← outra frente do projeto (irmão)
-    │   └─ ... (própria sub-hierarquia)
+    ├─ ROOT EPIC #2                       ← another front of the project (sibling)
+    │   └─ ... (own sub-hierarchy)
     │
-    └─ EPIC raiz #N                       ← outras frentes (irmãs)
+    └─ ROOT EPIC #N                       ← other fronts (siblings)
         └─ ...
 ```
 
-> **Regra zero**: o documento de requisitos é a fonte da verdade. Antes de mexer em qualquer Epic/Feature/CA do backlog, **verifique se houve alteração no documento**. Detalhamento em [SKILL.md §2.1](../SKILL.md) e [05-convencoes-interpop.md §2 Regra 0](05-convencoes-interpop.md).
+> **Rule zero**: the requirements document is the source of truth. Before touching any Epic/Feature/AC of the backlog, **check whether the document has changed**. Detail in [SKILL.md §2.1](../SKILL.md) and [05-convencoes-interpop.md §2 Rule 0](05-convencoes-interpop.md).
 
-> **Regra dos múltiplos Epics-raiz**: um projeto pode ter (e quase sempre tem) **vários Epics no nível mais alto, irmãos entre si**, sem um "Epic-projeto" único como pai. Cada Epic-raiz é uma frente independente (plataforma, área operacional, módulo transversal). Exemplo Controle Dopagem: `EPIC APLICAÇÃO WEB` + `EPIC APLICAÇÃO MOBILE` + `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` (três irmãos). Detalhamento em [`examples/template-backlog-openproject.md §3`](../examples/template-backlog-openproject.md).
+> **Rule of multiple root Epics**: a project may (and almost always does) have **several Epics at the top level, siblings to each other**, without a single "project-Epic" as the parent. Each root Epic is an independent front (platform, operational area, cross-cutting module). Example *"Controle de Dopagem"*: `EPIC APLICAÇÃO WEB` + `EPIC APLICAÇÃO MOBILE` + `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` (three siblings). Detail in [`examples/template-backlog-openproject.md §3`](../examples/template-backlog-openproject.md).
 
-> **Anti-padrão crítico**: colocar BDD na Feature em vez da User Story. Detalhamento e exemplos ❌/✅ em [04-bdd-criterios-aceitacao.md §7.7](04-bdd-criterios-aceitacao.md).
+> **Critical anti-pattern**: putting BDD in the Feature instead of the User Story. Detail and ❌/✅ examples in [04-bdd-criterios-aceitacao.md §7.7](04-bdd-criterios-aceitacao.md).
 
-### 5.1 Definições precisas
+### 5.1 Precise definitions
 
-#### 5.1.1 Artefatos do **documento de requisitos** (fonte da verdade)
+#### 5.1.1 **Requirements-document** artifacts (source of truth)
 
-| Tipo | Definição | Tamanho |
+| Type | Definition | Size |
 |---|---|---|
-| **RF — Requisito Funcional** | O que o sistema **deve fazer**. Entrada, regra, saída. Tem ID estável (`RF-NN`), descrição em pt-BR de negócio, `Fonte` (stakeholder), `Prioridade` e `Validação`. Sem termos técnicos no título nem na descrição (endpoint/lib só na Task). | Vários por documento |
-| **RNF — Requisito Não Funcional** | **Restrição** sobre como o sistema funciona: desempenho, segurança, acessibilidade, conformidade, organizacional. Sempre **quantificado com métrica** + `Como verificar`. Mesma estrutura de campos do RF. | Vários por documento |
-| **G — Regra de Negócio** | Restrição do **domínio** (regulação, política editorial, regulamento WADA, LGPD). Não é RF nem RNF — é invariante do negócio que o sistema deve respeitar. Tem ID `G-NN`. | Vários por documento |
+| **FR — Functional Requirement (`RF`)** | What the system **must do**. Input, rule, output. Has a stable ID (`RF-NN`), business-language description, `Source` (stakeholder), `Priority`, and `Validation`. No technical terms in the title or description (endpoint/lib only in the Task). | Several per document |
+| **NFR — Non-Functional Requirement (`RNF`)** | **Constraint** on how the system functions: performance, security, accessibility, compliance, organizational. Always **quantified with a metric** + `How to verify`. Same field structure as the FR. | Several per document |
+| **G — Business Rule** | Constraint from the **domain** (regulation, editorial policy, *"WADA"* regulation, *"LGPD"*). It is neither FR nor NFR — it is a business invariant the system must respect. Has ID `G-NN`. | Several per document |
 
-#### 5.1.2 Artefatos do **backlog** (materialização incremental dos requisitos)
+#### 5.1.2 **Backlog** artifacts (incremental materialization of requirements)
 
-| Tipo | Definição | Tamanho |
+| Type | Definition | Size |
 |---|---|---|
-| **Epic** | Produto, sub-produto, agrupamento, módulo, macro-funcionalidade. Pode ter sub-Epics aninhados. **Tem descrição em pt-BR de negócio.** Cada Epic referencia os RF/RNF/G de origem via campo `Origem (requisitos)`. | Várias features |
-| **Feature** | Funcionalidade de produto/módulo a ser disponibilizada ao cliente. **Tem descrição em pt-BR de negócio.** Geralmente disponibilizada após várias sprints. NUNCA tem BDD. Referencia os RF/RNF de origem. | Várias US |
-| **Grupo de CA (`CA - <Tema>`)** | Agrupador de Critérios de Aceitação por tema. **Sempre obrigatório**, mesmo Feature com 1 só CA. No OpenProject, item do tipo "Critério de Aceitação" sem ID `CANN`, só título descritivo. | Vários CAs |
-| **Critério de Aceitação (CA)** | Condições (regras) para a funcionalidade ser considerada **concluída / aceita**. Frase declarativa em linguagem de negócio. **Convenção `[...]` no fim do título** quando tem sub-regras (detalhamento no corpo do item, abrindo com `Regras a serem aplicadas:`). | Várias por feature |
-| **User Story (US)** | Incremento funcional desenvolvido para disponibilizar **parte de uma feature**. **Deve iniciar e terminar em UMA sprint**. **Tem BDD em pt-BR no próprio campo Descrição** (cenários `Dado/Quando/Então`) + CAs herdados via rastreabilidade. | Várias tasks |
-| **Task** | Menor unidade de trabalho para implementar US (ações). Termos técnicos PERMITIDOS aqui. | **Quanto menor, melhor** |
-| **Bug** | Problema a corrigir. Tem descrição. | Atômico |
-| **Melhoria** | Aprimoramento de funcionalidade existente. Tem descrição. | Atômico |
-| **Spike** | Item **investigativo/exploratório** time-boxed para reduzir incerteza antes de estimar/iniciar uma US. Termina com um artefato (relatório, PoC, ADR) e fecha — não entrega feature por si só. AULA 07 IFPB. | Time-boxed (1-3 dias) |
+| **Epic** | Product, sub-product, grouping, module, macro-feature. May have nested sub-Epics. **Has a business-language description.** Each Epic references the source FR/NFR/G via the `Origin (requirements)` field. | Several features |
+| **Feature** | Product/module feature to be delivered to the client. **Has a business-language description.** Usually delivered after several sprints. NEVER has BDD. References the source FR/NFR. | Several US |
+| **AC group (`CA - <Theme>`)** | Grouper of Acceptance Criteria by theme. **Always mandatory**, even for a Feature with a single AC. In OpenProject, an item of type "Acceptance Criterion" without an ID `CANN`, only a descriptive title. | Several ACs |
+| **Acceptance Criterion (AC — `CA`)** | Conditions (rules) for the feature to be considered **finished / accepted**. Declarative sentence in business language. **`[...]` convention at the end of the title** when it has sub-rules (detail in the item body, opening with `Rules to be applied:`). | Several per feature |
+| **User Story (US)** | Functional increment developed to deliver **part of a feature**. **Must start and end within ONE sprint**. **Has BDD in the Description field itself** (`Given/When/Then` scenarios) + ACs inherited via traceability. | Several tasks |
+| **Task** | Smallest unit of work to implement a US (actions). Technical terms ALLOWED here. | **The smaller, the better** |
+| **Bug** | Problem to fix. Has a description. | Atomic |
+| **Improvement** | Enhancement of an existing feature. Has a description. | Atomic |
+| **Spike** | **Investigative/exploratory** time-boxed item to reduce uncertainty before estimating/starting a US. Ends with an artifact (report, PoC, ADR) and closes — does not deliver a feature on its own. LECTURE 07 *"IFPB"*. | Time-boxed (1–3 days) |
 
-> **Relação documento ↔ backlog**: um RF/RNF gera **uma ou várias Features**; uma Feature implementa **um ou vários RF/RNF**. A rastreabilidade vive no campo `Origem (requisitos)` de cada Epic/Feature/CA (vai para os IDs `RF-NN`/`RNF-NN`/`G-NN` do documento) — e no campo `Histórico de revisões` do documento (cada mudança no documento aponta o impacto no backlog). Sem essa ponte bidirecional, é **scope creep silencioso**.
+> **Document ↔ backlog relationship**: an FR/NFR generates **one or several Features**; a Feature implements **one or several FR/NFR**. Traceability lives in the `Origin (requirements)` field of each Epic/Feature/AC (pointing to the `RF-NN`/`RNF-NN`/`G-NN` IDs of the document) — and in the `Revision history` field of the document (every change in the document indicates the impact on the backlog). Without this bidirectional bridge, it is **silent scope creep**.
 
-> **Spike — quando usar**: "não sei estimar essa US porque não sei se a lib X aguenta esse volume" → vira `SPIKE: validar throughput da lib X com dataset N (3 dias)`. Não confundir com US: spike **investiga**; US **entrega valor ao cliente**. Resultado do spike alimenta refinamento da US verdadeira na próxima rodada.
+> **Spike — when to use**: "I can't estimate this US because I don't know whether lib X holds this load" → becomes `SPIKE: validate throughput of lib X with dataset N (3 days)`. Do not confuse with US: a spike **investigates**; a US **delivers value to the client**. The spike result feeds refinement of the real US in the next round.
 
-> **Regra dura derivada**: TODOS os artefatos (Epic, Feature, US, CA, RNF, Bug, Melhoria) **têm descrição em linguagem de negócio**. Detalhamento em [05-convencoes-interpop.md §2 Regra 8](05-convencoes-interpop.md). Templates trabalhados em [examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md) e [examples/template-documento-requisitos.md](../examples/template-documento-requisitos.md).
+> **Derived hard rule**: ALL artifacts (Epic, Feature, US, AC, NFR, Bug, Improvement) **have descriptions in business language**. Detail in [05-convencoes-interpop.md §2 Rule 8](05-convencoes-interpop.md). Worked templates in [examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md) and [examples/template-documento-requisitos.md](../examples/template-documento-requisitos.md).
 
-### 5.2 Exemplo concreto (IFPB Controle Dopagem, AULA 07)
+### 5.2 Concrete example (*"IFPB Controle de Dopagem"*, LECTURE 07)
 
 ```
 EPIC   APLICAÇÃO WEB
@@ -201,220 +201,220 @@ EPIC   APLICAÇÃO WEB
         FEATURE  Relação de Atletas por Confederação
 ```
 
-**Note**: hierarquia profunda (5+ níveis de Epic) é normal para sistemas grandes. Em SaaS pequeno, 2-3 níveis bastam.
+**Note**: deep hierarchy (5+ Epic levels) is normal for large systems. In a small SaaS, 2–3 levels suffice. Item titles kept in pt-BR because they are the actual identifiers used in the original *"IFPB"* project — translating would break traceability with OpenProject and existing documentation.
 
 ---
 
 ## 6. User Stories (US)
 
-### 6.1 História completa (AULA 09)
+### 6.1 Full history (LECTURE 09)
 
-- **1997 — Kent Beck** introduz "histórias de usuários" no projeto Chrysler C3 (Detroit) — "peças de jogo no planejamento"
-- **1998 — Alistair Cockburn**: *"Uma história de usuário é uma promessa de uma conversa"*
-- **1999 — Beck publica** Extreme Programming Explained
+- **1997 — Kent Beck** introduces "user stories" in the Chrysler C3 project (Detroit) — "playing pieces in planning"
+- **1998 — Alistair Cockburn**: *"A user story is a promise of a conversation"*
+- **1999 — Beck publishes** Extreme Programming Explained
 - **2001 — Ron Jeffries**: **3 Cs** (Card, Conversation, Confirmation)
-- **2001 — Equipe XP da Connextra (Londres)** concebe o formato clássico: `Como [persona], eu quero [funcionalidade] para que [benefício]`
-- **2004 — Mike Cohn** publica *User Stories Applied* — referência padrão
+- **2001 — Connextra XP team (London)** conceives the classical format: `As [persona], I want [feature] so that [benefit]`
+- **2004 — Mike Cohn** publishes *User Stories Applied* — the standard reference
 
-### 6.2 Os 3 Cs (Jeffries 2001)
+### 6.2 The 3 Cs (Jeffries 2001)
 
-| C | Significado |
+| C | Meaning |
 |---|---|
-| **Card** | Cartão físico curto — placeholder e símbolo |
-| **Conversation** | A história é uma promessa de conversa (Cockburn). Detalhes vêm na conversa entre dev/PO/QA, não no card |
-| **Confirmation** | Critérios de aceitação que confirmam que a história foi entregue corretamente |
+| **Card** | Short physical card — placeholder and symbol |
+| **Conversation** | The story is a promise of a conversation (Cockburn). Details come in the conversation between dev/PO/QA, not on the card |
+| **Confirmation** | Acceptance criteria that confirm the story was delivered correctly |
 
-### 6.3 ⚠️ Regra crítica do título no backlog
+### 6.3 ⚠️ Critical rule for the title in the backlog
 
-**No card/backlog, use TÍTULO CURTO descritivo**, não o template Connextra inteiro.
+**On the card/backlog, use a SHORT DESCRIPTIVE TITLE**, not the entire Connextra template.
 
 ```
-✅ BOM (forma reduzida)
+✅ GOOD (short form)
    US Busca de Livros para Pronta Entrega
    US Visualização de filmes disponíveis para reserva
    US Listagem BÁSICA de Atletas
 
-❌ RUIM (Connextra no título)
+❌ BAD (Connextra in the title)
    "Como um vendedor responsável pelo setor de livros eu quero
     procurar por livros filtrando por nome para que seja possível
     verificar se o livro X está disponível para pronta entrega"
 ```
 
-O formato Connextra serve para **conversa exploratória**, não para card. No card é poluição visual e ilegível. O conteúdo do formato Connextra (persona/funcionalidade/benefício) vai no campo de **descrição** ou na **conversa**, não no título.
+The Connextra format is for **exploratory conversation**, not for the card. On the card it is visual pollution and unreadable. The Connextra content (persona/feature/benefit) goes in the **description** field or in the **conversation**, not in the title.
 
-### 6.4 Por que User Stories no backlog
+### 6.4 Why User Stories in the backlog
 
-Desenvolvimento ágil = funcionalidades disponibilizadas **iterativa e incrementalmente**. Usuário valida pequenas partes em curtos espaços de tempo.
+Agile development = features delivered **iteratively and incrementally**. The user validates small parts in short timeframes.
 
-**Princípio de fatiamento**: CAs especificados para FEATURES são **distribuídos** em várias US a serem desenvolvidas em uma ou várias sprints. Ao término de cada sprint, um sub-conjunto da feature é disponibilizado para usuário validar.
+**Slicing principle**: ACs specified for FEATURES are **distributed** across several US to be developed over one or several sprints. At the end of each sprint, a sub-set of the feature is delivered for the user to validate.
 
-### 6.5 Fluxo para criar User Stories de uma Feature (AULA 09)
+### 6.5 Flow for creating User Stories of a Feature (LECTURE 09)
 
-1. **Analisar os CAs da feature**
-2. **Definir os CAs que devem ser entregues de forma agrupada em cada sprint** (priorização incremental)
-3. **Criar uma US para cada grupo de CA definido**. Para cada US:
-   - **3.1 Especificar BDD** (no campo descrição)
-   - **3.2 Associar CAs** (rastreabilidade no OpenProject via "Relações")
+1. **Analyze the ACs of the feature**
+2. **Define the ACs that should be delivered together in each sprint** (incremental prioritization)
+3. **Create one US for each defined AC group**. For each US:
+   - **3.1 Specify BDD** (in the description field)
+   - **3.2 Associate ACs** (traceability in OpenProject via "Relations")
 
-### 6.6 Exemplo concreto de fatiamento (Feature CONSULTA DE ATLETAS, AULA 09)
+### 6.6 Concrete slicing example (Feature CONSULTA DE ATLETAS, LECTURE 09)
 
-A feature tem 15 CAs (CA01..CA15). Em vez de implementar tudo numa sprint gigante, fatie em **3 US incrementais**:
+The feature has 15 ACs (CA01..CA15). Instead of implementing everything in one giant sprint, slice into **3 incremental US**:
 
-**Sprint 1** — entregar consulta básica, mais simples possível:
-- Controle de acesso (CA01)
-- Filtro implícito por federação do usuário (CA02)
-- Layout conforme protótipo (CA03)
-- Listagem em ordem alfabética por default (CA13)
-- Exibir todos os atletas (CA15)
+**Sprint 1** — deliver basic, simplest-possible listing:
+- Access control (CA01)
+- Implicit filter by user's federation (CA02)
+- Layout per prototype (CA03)
+- Listing in alphabetical order by default (CA13)
+- Display all athletes (CA15)
 → **US Listagem BÁSICA de Atletas**
 
-**Sprint 2** — evoluir para ordenação interativa + paginação:
-- Reordenação por clique no título (CA14a)
-- Paginação 10/50/100/todos (CA14b)
+**Sprint 2** — evolve to interactive sorting + pagination:
+- Re-sort by clicking the header (CA14a)
+- Pagination 10/50/100/all (CA14b)
 → **US Listagem com ordenação e paginação (sem busca)**
 
-**Sprint 3** — evoluir com opções de busca:
-- Filtros aplicados (CA04, CA05, CA06, CA07)
-- Comboboxes ativos + alfabéticos (CA08-CA12)
+**Sprint 3** — evolve with search options:
+- Applied filters (CA04, CA05, CA06, CA07)
+- Active + alphabetical comboboxes (CA08-CA12)
 → **US Listagem Avançada com opções de busca (filtro)**
 
-Cada US é **entregável** ao usuário (ele vê valor parcial em cada sprint), **NÃO bloqueia a próxima** (independente quanto a release), e **cabe em UMA sprint**.
+Each US is **deliverable** to the user (they see partial value each sprint), **NOT a blocker for the next** (independent regarding release), and **fits in ONE sprint**.
 
-### 6.7 INVEST (Mike Cohn — checklist clássico de boa US)
+### 6.7 INVEST (Mike Cohn — classical good-US checklist)
 
-Toda US bem escrita atende:
+A well-written US satisfies:
 
-| Letra | Critério | O que verificar |
+| Letter | Criterion | What to check |
 |---|---|---|
-| **I**ndependent | Independente | Pode ser desenvolvida sem depender de outra US do backlog |
-| **N**egotiable | Negociável | Não é contrato fechado; detalhes vêm na conversa |
-| **V**aluable | Valiosa | Entrega valor para o usuário (não só técnica) |
-| **E**stimable | Estimável | Equipe consegue dar story points |
-| **S**mall | Pequena | Cabe em uma sprint |
-| **T**estable | Testável | Há critérios de aceitação verificáveis |
+| **I**ndependent | Independent | Can be developed without depending on another US in the backlog |
+| **N**egotiable | Negotiable | Not a closed contract; details come in conversation |
+| **V**aluable | Valuable | Delivers user value (not just technical) |
+| **E**stimable | Estimable | Team can assign story points |
+| **S**mall | Small | Fits in one sprint |
+| **T**estable | Testable | There are verifiable acceptance criteria |
 
-Falhou em ≥1 → quebrar / reescrever / mover para conversa com PO.
+Failed ≥1 → break / rewrite / move to a conversation with the PO.
 
-### 6.8 Conteúdo da US no OpenProject (modelo IFPB)
+### 6.8 US content in OpenProject (*"IFPB"* model)
 
 ```
-Tipo:        User Story
-Título:      US Listagem BÁSICA de Atletas
-Descrição:   DADO que o usuário esteja logado na aplicação e
-             tenha permissão de acesso
-             QUANDO acessar o menu administrativo > ATLETAS
-             ENTÃO deve-se exibir a relação básica de atletas
-Relações:    [#21429] CA01 - Apenas usuários autorizados podem ter acesso...
-             [#21430] CA02 - A consulta deve exibir apenas os atletas das...
-             [#21431] CA03 - A tela de consulta deve conter os campos e layout...
-             [#21441] CA13 - A listagem geral deverá ser exibida em ordem alfabética...
+Type:        User Story
+Title:       US Listagem BÁSICA de Atletas
+Description: GIVEN the user is logged into the application and
+             has access permission
+             WHEN they access the admin menu > ATLETAS
+             THEN the system shall display the basic list of athletes
+Relations:   [#21429] CA01 - Only authorized users may access...
+             [#21430] CA02 - The query shall display only athletes from...
+             [#21431] CA03 - The query screen must contain the fields and layout...
+             [#21441] CA13 - The general listing shall be displayed in alphabetical order...
 ```
 
-O **BDD** vai no campo de descrição da US. Os **CAs** ficam linkados via "Relações". Isso preserva rastreabilidade: ao executar a US, dev/QA sabem exatamente quais regras devem ser cobertas.
+The **BDD** goes in the US description field. The **ACs** are linked via "Relations". This preserves traceability: when running the US, dev/QA know exactly which rules must be covered.
 
 ---
 
-## 7. Critérios de Aceitação (CAs)
+## 7. Acceptance Criteria (ACs)
 
-> Detalhamento completo + estilo declarativo vs Gherkin/BDD em [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md).
+> Full detail + declarative style vs. Gherkin/BDD in [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md).
 
-**Resumo**: CAs são **regras testáveis especificadas POR FEATURE** (não por US). Cada CA é uma frase declarativa que descreve um invariante.
+**Summary**: ACs are **testable rules specified PER FEATURE** (not per US). Each AC is a declarative sentence describing an invariant.
 
 ```
-CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá
-       ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir
-       mensagem de erro.
+CA05 - The CPF field is not mandatory. But if filled, it must be in
+       the XXX.XXX.XXX-XX format. If the CPF is invalid, emit an
+       error message.
 
-CA07 - Os campos NOME, TÉCNICO, PATROCINADOR e MÉDICO NÃO são
-       obrigatórios. Mas se for preenchido deve ter no mínimo 5
-       letras. Devendo a aplicação realizar uma busca PARCIAL pelo
-       conteúdo digitado.
+CA07 - The fields NOME, TÉCNICO, PATROCINADOR, and MÉDICO are NOT
+       mandatory. But if filled, must contain at least 5 letters.
+       The application shall perform a PARTIAL search by the typed
+       content.
 
-CA13 - A listagem geral de atletas deverá ser exibida em ordem
-       alfabética, por default.
+CA13 - The general athlete listing shall be displayed in
+       alphabetical order by default.
 ```
 
-**Regra IFPB**: **TODA feature DEVE ter CAs especificados.** Sem CAs, a feature é desejo, não requisito.
+**Rule *"IFPB"***: **EVERY feature MUST have specified ACs.** Without ACs, the feature is a wish, not a requirement.
 
 ---
 
 ## 8. Tasks
 
-Menores unidades de trabalho para implementar uma US. **Quanto menor, melhor** — tipicamente 1-8h cada.
+Smallest units of work to implement a US. **The smaller, the better** — typically 1–8h each.
 
-Exemplos:
+Examples:
 
 ```
 US Listagem BÁSICA de Atletas
-  ├─ Task: Criar endpoint GET /api/atletas
-  ├─ Task: Implementar middleware de autorização
-  ├─ Task: Criar componente <ListaAtletas/>
-  ├─ Task: Adicionar paginação default no backend
-  ├─ Task: Escrever testes unitários do endpoint
-  └─ Task: Escrever testes E2E do fluxo
+  ├─ Task: Create endpoint GET /api/atletas
+  ├─ Task: Implement authorization middleware
+  ├─ Task: Create component <ListaAtletas/>
+  ├─ Task: Add default pagination in the backend
+  ├─ Task: Write unit tests for the endpoint
+  └─ Task: Write E2E tests for the flow
 ```
 
-Tasks são **ferramenta da equipe técnica**, não do PO. PO não negocia task; negocia US.
+Tasks are the **technical team's tool**, not the PO's. The PO does not negotiate tasks; they negotiate US.
 
 ---
 
-## 9. Ordem operacional (qual usar quando)
+## 9. Operational order (which to use when)
 
-| Momento | Foco | Artefato |
+| Moment | Focus | Artifact |
 |---|---|---|
-| Início do projeto / domínio novo | Visão alto nível | **Epic** macros |
-| Decomposição de Epic | Funcionalidades entregáveis | **Features** |
-| Especificação de Feature | Regras testáveis | **Critérios de Aceitação** |
-| Planning meeting | Fatiamento por sprint | **User Stories** com BDD + CAs |
-| Sprint planning detalhada | Quebra técnica | **Tasks** |
+| Project start / new domain | High-level vision | Macro **Epics** |
+| Epic decomposition | Deliverable features | **Features** |
+| Feature specification | Testable rules | **Acceptance Criteria** |
+| Planning meeting | Sprint slicing | **User Stories** with BDD + ACs |
+| Detailed sprint planning | Technical breakdown | **Tasks** |
 
 ---
 
-## 10. Sinalizadores de especificação ruim
+## 10. Smells of poor specification
 
-- Backlog tem só "features" sem hierarquia (vira lista plana de 200 itens)
-- Features sem CAs definidos
-- User Stories com Connextra no título
-- User Stories que demoram >1 sprint (não atendem **S** de INVEST)
-- CAs ambíguos ("deve ser amigável", "deve ser responsivo") — não testáveis
-- US sem BDD nem CAs associados — dev adivinha o critério de pronto
-- Backlog sem priorização (impossível negociar trade-off)
-- Tasks com >1 dia de trabalho — esconde complexidade não revelada
-- **Títulos com infinitivo** (`Listar X`, `Buscar Y`) — viola convenção Interpop
-- **Termos técnicos em Epic/Feature/US** (`Endpoint /api/...`, `Migration tabela X`) — viola convenção Interpop
-- **Configurações técnicas como Feature** (ESLint, env vars, criação de pastas) — devem ser Tasks transversais, não Features
-- **Feature carregando BDD** ou **US sem BDD** — confusão de responsabilidade. Feature tem descrição; só US tem BDD.
+- Backlog has only "features" without hierarchy (becomes a flat list of 200 items)
+- Features without defined ACs
+- User Stories with Connextra in the title
+- User Stories that take >1 sprint (fail **S** in INVEST)
+- Ambiguous ACs ("must be friendly", "must be responsive") — not testable
+- US without BDD nor associated ACs — dev guesses the done criterion
+- Backlog without prioritization (impossible to negotiate trade-offs)
+- Tasks with >1 day of work — hides unrevealed complexity
+- **Titles with an infinitive verb** (`List X`, `Search Y`) — violates *"Interpop"* convention
+- **Technical terms in Epic/Feature/US** (`Endpoint /api/...`, `Migration of table X`) — violates *"Interpop"* convention
+- **Technical configuration as a Feature** (ESLint, env vars, folder creation) — must be cross-cutting Tasks, not Features
+- **Feature carrying BDD** or **US without BDD** — responsibility confusion. Feature has a description; only US has BDD.
 
 ---
 
-## 11. Materialização: o artefato `BACKLOG.md`
+## 11. Materialization: the `BACKLOG.md` artifact
 
-Toda especificação substantiva produz dois artefatos pareados:
+Every substantive specification produces two paired artifacts:
 
-| Artefato | Produz | Consome |
+| Artifact | Produced by | Consumes |
 |---|---|---|
-| `DESIGN.md` | `design-orchestrator` (ou main loop) | Decisões arquiteturais (6 layers + ADRs) |
-| **`BACKLOG.md`** | **`documentation-engineer`** (via skill `engenharia-de-requisitos`) | **Hierarquia Epic → Feature → CA · US → BDD · Task em pt-BR** |
+| `DESIGN.md` | `design-orchestrator` (or main loop) | Architectural decisions (6 layers + ADRs) |
+| **`BACKLOG.md`** | **`documentation-engineer`** (via skill `engenharia-de-requisitos`) | **Hierarchy Epic → Feature → AC · US → BDD · Task in business language** |
 
-**Regra dura**: nenhum `DESIGN.md` é considerado completo sem `BACKLOG.md` pareado no mesmo diretório.
+**Hard rule**: no `DESIGN.md` is considered complete without a paired `BACKLOG.md` in the same directory.
 
-### Por que pareado
+### Why paired
 
-- DESIGN traz **decisões** (CQRS, ts_rank_cd, cursor pagination)
-- BACKLOG traz **execução** (Task IDs que o `code-implementer` pega um por vez)
-- Sem BACKLOG, o DESIGN vira teoria desconectada de implementação
-- Cada linha de código vai trace para um Task ID; cada teste vai trace para uma CA ou BDD cenário
+- DESIGN brings **decisions** (CQRS, ts_rank_cd, cursor pagination)
+- BACKLOG brings **execution** (Task IDs the `code-implementer` picks one at a time)
+- Without BACKLOG, the DESIGN becomes theory disconnected from implementation
+- Every line of code traces to a Task ID; every test traces to an AC or BDD scenario
 
-### Template + exemplos detalhados
+### Template + detailed examples
 
-Template completo do `BACKLOG.md`, exemplos do projeto **SIRA** (Sistema de Reserva de Salas IFPB) e **Interpop** (Busca Editorial), regras de naming, escala de prioridade Immediate/High/Normal/Low, IDs estáveis — **tudo em [05-convencoes-interpop.md](05-convencoes-interpop.md)**.
+Full `BACKLOG.md` template, examples from the ***"SIRA"*** project (*"Sistema de Reserva de Salas IFPB"*) and ***"Interpop"*** (*"Busca Editorial"*), naming rules, Immediate/High/Normal/Low priority scale, stable IDs — **all in [05-convencoes-interpop.md](05-convencoes-interpop.md)**.
 
 ---
 
-## 12. Conexão com as próximas references
+## 12. Connection with the next references
 
-- **BDD + CA + estilo**: [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)
-- **Convenções Interpop + template BACKLOG.md**: [05-convencoes-interpop.md](05-convencoes-interpop.md) ⭐ novo
-- **Estimativa Planning Poker**: [05-estimativa.md](05-estimativa.md) → renumerado para [06-estimativa.md](06-estimativa.md) (re-numbering pending)
-- **Validação (Falbo 7 dimensões)**: [06-validacao.md](06-validacao.md)
-- **Rastreabilidade end-to-end**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
+- **BDD + AC + style**: [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)
+- ***"Interpop"* conventions + `BACKLOG.md` template**: [05-convencoes-interpop.md](05-convencoes-interpop.md) ⭐ new
+- **Planning Poker estimation**: [05-estimativa.md](05-estimativa.md) → renumbered to [06-estimativa.md](06-estimativa.md) (re-numbering pending)
+- **Validation (Falbo 7 dimensions)**: [06-validacao.md](06-validacao.md)
+- **End-to-end traceability**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)

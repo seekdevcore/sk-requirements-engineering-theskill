@@ -1,380 +1,380 @@
-# 01 — Fundamentos de Engenharia de Requisitos
+# 01 — Requirements Engineering Fundamentals
 
-> Base teórica que precede qualquer atividade prática. Combina Sommerville 10e (Cap. 4), Pressman 9e (7 etapas), Wiegers 3e, Thayer (IEEE Computer Society Press), e as definições conceituais que aparecem repetidas em todas as 11 aulas IFPB.
+> Theoretical base that precedes any practical activity. Combines Sommerville 10e (Ch. 4), Pressman 9e (7 stages), Wiegers 3e, Thayer (IEEE Computer Society Press), and the conceptual definitions that recur across all 11 *"IFPB"* lectures.
 
 ---
 
-## 1. O que é um requisito
+## 1. What a requirement is
 
-**Não há consenso na indústria sobre a definição.** Davis (1993) explica por quê: numa licitação, o requisito precisa ser abstrato (vários fornecedores podem competir); no contrato assinado, precisa ser detalhado o suficiente para que o cliente valide a entrega. As duas necessidades coexistem no mesmo documento.
+**There is no industry consensus on the definition.** Davis (1993) explains why: in a tender, the requirement must be abstract (so several suppliers can compete); in the signed contract, it must be detailed enough for the client to validate delivery. Both needs coexist in the same document.
 
-Três definições canônicas que valem ler juntas:
+Three canonical definitions worth reading together:
 
-**Sommerville (10e, cap. 4)**:
-> Os requisitos de um sistema são as **descrições dos serviços que ele deve prestar e as restrições à sua operação**. Refletem as necessidades dos clientes para um propósito específico.
+**Sommerville (10e, Ch. 4)**:
+> The requirements of a system are the **descriptions of the services it must provide and the constraints on its operation**. They reflect customer needs for a specific purpose.
 
 **Pressman (9e)**:
-> Requisito é uma **especificação do que deve ser implementado**, ou algum tipo de **restrição** do sistema.
+> A requirement is a **specification of what must be implemented**, or some form of **constraint** on the system.
 
-**IEEE Std (Glossary of SE Terminology)** — apresenta 3 sentidos complementares:
-1. Uma condição ou capacidade **necessária a um usuário** para resolver um problema ou alcançar um objetivo.
-2. Uma condição ou capacidade que deve ser **alcançada ou possuída por um sistema** (ou componente do sistema) para satisfazer um contrato, padrão, especificação ou outros documentos formalmente expostos.
-3. Uma **representação documentada** de uma condição ou capacidade como nos itens 1 e 2.
+**IEEE Std (Glossary of SE Terminology)** — presents 3 complementary senses:
+1. A condition or capability **needed by a user** to solve a problem or achieve an objective.
+2. A condition or capability that must be **achieved or possessed by a system** (or system component) to satisfy a contract, standard, specification, or other formally imposed documents.
+3. A **documented representation** of a condition or capability as in 1 and 2.
 
-Note como Sommerville foca em "o que o sistema faz/restringe", Pressman foca em "o que deve ser implementado/restringido", e o IEEE separa o requisito **conceitual** (1 e 2) do requisito **documentado** (3). Os três sentidos convivem.
+Note how Sommerville focuses on "what the system does/restricts", Pressman focuses on "what must be implemented/restricted", and IEEE separates the **conceptual** requirement (1 and 2) from the **documented** requirement (3). All three senses coexist.
 
-**Engenharia de Requisitos (ER)** é o processo de descobrir, analisar, documentar e conferir esses serviços e restrições. Thayer formula que ER fornece o mecanismo para "**entender aquilo que o cliente deseja**, analisando as **necessidades**, avaliando a **viabilidade**, **negociando soluções**, **especificando-as sem ambiguidade** e **gerenciando suas mudanças**".
+**Requirements Engineering (RE)** is the process of discovering, analyzing, documenting, and checking these services and constraints. Thayer puts it: RE provides the mechanism for "**understanding what the client wants**, analyzing **needs**, assessing **feasibility**, **negotiating solutions**, **specifying them unambiguously**, and **managing their changes**".
 
 ---
 
-## 1.5 Requisitos no ciclo de vida do software (Sommerville Figs 2.1–2.3)
+## 1.5 Requirements across the software lifecycle (Sommerville Figs 2.1–2.3)
 
-**Independente do modelo de processo escolhido**, requisitos são sempre a etapa inicial. Sommerville (cap. 2) mostra três modelos clássicos com a mesma observação:
+**Regardless of the chosen process model**, requirements are always the initial stage. Sommerville (Ch. 2) presents three classical models with the same observation:
 
-| Modelo | Etapa inicial obrigatória |
+| Model | Mandatory initial stage |
 |---|---|
-| **Cascata (Fig 2.1)** | Definição dos requisitos → projeto → implementação/teste → integração/teste → operação/manutenção |
-| **Incremental (Fig 2.2)** | Descrição geral → especificação → desenvolvimento → validação (ciclos) → versões intermediárias → versão final |
-| **Orientado a reúso (Fig 2.3)** | Especificação dos requisitos → descoberta/avaliação do software → refinamento dos requisitos → configuração/adaptação/desenvolvimento → integração |
+| **Waterfall (Fig 2.1)** | Requirements definition → design → implementation/test → integration/test → operation/maintenance |
+| **Incremental (Fig 2.2)** | General description → specification → development → validation (cycles) → intermediate versions → final version |
+| **Reuse-oriented (Fig 2.3)** | Requirements specification → software discovery/evaluation → requirements refinement → configuration/adaptation/development → integration |
 
-> Em **qualquer fluxo de desenvolvimento** — cascata clássica, incremental, ágil/Scrum, reúso, dirigido a modelos —, a primeira atividade é **entender e especificar o que precisa ser construído**. Muda a granularidade (cascata = doc detalhado upfront; ágil = backlog incremental refinado por sprint), mas não a posição na cadeia: **sem requisito, não há o que projetar**.
+> In **any development flow** — classical waterfall, incremental, agile/Scrum, reuse, model-driven —, the first activity is **understanding and specifying what needs to be built**. Granularity changes (waterfall = detailed upfront document; agile = incremental backlog refined per sprint), but position in the chain does not: **no requirement, nothing to design**.
 
-### Por que essa observação é importante (analogia profissional — AULA 01 IFPB)
+### Why this observation matters (professional engineering analogy — LECTURE 01 *"IFPB"*)
 
-A AULA 01 abre com uma reflexão: **em outras engenharias, ninguém produz sem projeto antes**:
+LECTURE 01 opens with a reflection: **in other engineering disciplines, nobody produces without a project first**:
 
-- **Engenheiros mecânicos fazem desenhos** antes de produzirem máquinas (furadeira, motor).
-- **Engenheiros eletrônicos fazem esquemas** antes de produzirem equipamentos (placa Arduino).
-- **Engenheiros civis fazem plantas** antes de produzirem prédios.
+- **Mechanical engineers draft drawings** before producing machines (drill, motor).
+- **Electronic engineers draft schematics** before producing equipment (Arduino board).
+- **Civil engineers draft blueprints** before producing buildings.
 
-**Engenheiros de software**, frequentemente, partem direto para o código — como se fossem "superdotados pela Mãe Natureza" que dispensariam projeto. Resultado: **software construído como casa de cachorro** — pode até segurar a chuva, mas não suporta crescimento, não é manutenível, e quando o cliente pede uma sala extra a estrutura desaba.
+**Software engineers**, frequently, jump straight to code — as if they were "endowed by Mother Nature" with no need for projects. The result: **software built like a doghouse** — it may hold off the rain, but it does not support growth, is not maintainable, and when the client asks for one extra room the whole structure collapses.
 
-A profissão de software tem ~70 anos (Sommerville). É a mais nova das engenharias. A imaturidade explica — não justifica — a permanência da prática "codar sem requisito". ER é o que coloca SW no mesmo patamar das outras engenharias.
+The software profession is ~70 years old (Sommerville). It is the youngest engineering discipline. Immaturity explains — does not justify — the persistence of the "code without requirements" practice. RE is what puts software on the same level as the other engineering disciplines.
 
-### A charge canônica (referência cultural)
+### The canonical cartoon (cultural reference)
 
-A imagem icônica do **balanço na árvore em 12 painéis** ("Como o cliente explicou / Como o líder de projeto entendeu / Como o analista planejou / Como o programador codificou / Como os beta testers receberam / Como o consultor de negócios descreveu / Valor que o cliente pagou / Como o projeto foi documentado / O que a assistência técnica instalou / Como foi suportado / Quando foi entregue / **O que o cliente realmente queria**") é a referência cultural mais usada para explicar a importância da ER. Cada caixa representa uma camada de tradução — e cada tradução perde informação.
+The iconic image of the **tree-swing in 12 panels** ("As the customer explained it / As the project leader understood it / As the analyst designed it / As the programmer coded it / As the beta testers received it / As the business consultant described it / Value the customer paid for / As the project was documented / As tech support installed it / How it was supported / When it was delivered / **What the customer really wanted**") is the most-used cultural reference to explain why RE matters. Each panel represents a translation layer — and every translation loses information.
 
-ER existe justamente para **comprimir a perda entre as caixas**, validando o entendimento em cada elo da cadeia.
-
----
-
-## 1.5.1 Técnicas modernas complementares — MVP e Testes A/B (Valente 2020)
-
-Marco Tulio Valente em *Engenharia de Software Moderna* (cap. 3, disponível em [engsoftmoderna.info](https://engsoftmoderna.info)) acrescenta às técnicas clássicas duas que vieram do mundo ágil e do lean startup, e que pertencem ao conjunto de ferramentas do engenheiro de requisitos contemporâneo:
-
-### MVP — Produto Mínimo Viável
-
-**Definição**: a menor versão funcional de um produto capaz de **gerar aprendizado validado** sobre o cliente com o mínimo de esforço. É um instrumento de **descoberta de requisitos por experimentação no mundo real** — em vez de só elicitar o que o cliente diz que quer, observe o que ele faz com uma versão básica e ajuste o backlog.
-
-**Como conecta com a skill**:
-- Substitui parte da elicitação clássica em **projetos com alta incerteza** (produto novo, mercado novo, persona não-validada) — onde entrevistas e questionários falham porque ninguém sabe responder.
-- Não substitui CAs, BDD ou stakeholders identificados — apenas **comprime o ciclo descoberta → especificação → validação** em iterações de semanas em vez de meses.
-- Anti-padrão: confundir MVP com "primeira versão crua sem qualidade". MVP é mínimo em **escopo**, não em qualidade dos requisitos especificados para esse escopo mínimo.
-
-### Testes A/B
-
-**Definição**: experimento controlado em que dois grupos de usuários recebem versões diferentes de uma feature (variante A vs variante B), e métricas de negócio (conversão, retenção, tempo de tarefa) decidem qual fica.
-
-**Como conecta com a skill**:
-- Ferramenta de **validação quantitativa de requisitos** quando há ambiguidade entre stakeholders ("o botão deve ser azul ou vermelho?" → teste A/B decide com dados).
-- Combina com **RNFs de produto** (taxa de conversão, tempo p95, abandono no formulário) — o A/B mede impacto real, não estimado.
-- Anti-padrão: A/B testar tudo. Funciona quando há **hipótese clara + métrica direta + volume estatisticamente significativo**. Sem essas 3, é teatro de dados.
-
-### Fontes Valente (livros digitais gratuitos)
-
-- *Engenharia de Software Moderna* — [engsoftmoderna.info](https://engsoftmoderna.info), cap. 3 cobre Requisitos com foco em histórias, casos de uso, MVP e A/B.
-- *Fundamentos de Manutenção de Software* — [manutencaosoftware.org](https://manutencaosoftware.org), relevante para a fase pós-entrega (cap. 4 breaking changes, cap. 7 dívida técnica, cap. 8 descontinuação) — conecta com [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) e §3.6 de [09-etica-sbc.md](09-etica-sbc.md).
+RE exists precisely to **compress the loss between the panels**, validating understanding at every link of the chain.
 
 ---
 
-## 1.6 Casos reais de falha por requisitos mal feitos
+## 1.5.1 Modern complementary techniques — MVP and A/B Testing (Valente 2020)
 
-A AULA 01 IFPB monta o argumento com sete casos públicos. Todos são exemplos de **erro que não foi de código** — foi de requisito incompleto, ambíguo, mal validado ou ignorado.
+Marco Tulio Valente, in *Engenharia de Software Moderna* (Ch. 3, available at [engsoftmoderna.info](https://engsoftmoderna.info)), adds to the classical techniques two that came from the agile and lean-startup worlds, and which belong in the contemporary requirements engineer's toolbox:
 
-| Caso | Ano | Custo / impacto | Causa-raiz de requisito |
+### MVP — Minimum Viable Product
+
+**Definition**: the smallest functional version of a product capable of **generating validated learning** about the customer with the least effort. It is an instrument for **requirements discovery via real-world experimentation** — instead of only eliciting what the customer says they want, observe what they do with a basic version and adjust the backlog.
+
+**How it connects to this skill**:
+- Replaces part of classical elicitation in **projects with high uncertainty** (new product, new market, unvalidated persona) — where interviews and questionnaires fail because nobody can answer.
+- Does not replace ACs, BDD, or identified stakeholders — it merely **compresses the discovery → specification → validation cycle** into iterations of weeks rather than months.
+- Anti-pattern: confusing MVP with "first crude version without quality". MVP is minimum in **scope**, not in the quality of the requirements specified for that minimum scope.
+
+### A/B Testing
+
+**Definition**: a controlled experiment in which two groups of users receive different versions of a feature (variant A vs. variant B), and business metrics (conversion, retention, time-on-task) decide which one ships.
+
+**How it connects to this skill**:
+- A tool for **quantitative validation of requirements** when there is ambiguity between stakeholders ("should the button be blue or red?" → A/B test decides with data).
+- Combines with **product NFRs** (conversion rate, p95 latency, form-abandonment) — A/B measures real, not estimated, impact.
+- Anti-pattern: A/B-testing everything. Works when there is a **clear hypothesis + direct metric + statistically significant volume**. Without those three, it is data theatre.
+
+### Valente sources (free digital books)
+
+- *Engenharia de Software Moderna* — [engsoftmoderna.info](https://engsoftmoderna.info), Ch. 3 covers Requirements focusing on stories, use cases, MVP and A/B.
+- *Fundamentos de Manutenção de Software* — [manutencaosoftware.org](https://manutencaosoftware.org), relevant for the post-delivery phase (Ch. 4 breaking changes, Ch. 7 technical debt, Ch. 8 decommissioning) — connects with [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md) and §3.6 of [09-etica-sbc.md](09-etica-sbc.md).
+
+---
+
+## 1.6 Real-world failure cases caused by bad requirements
+
+LECTURE 01 *"IFPB"* builds the argument with seven public cases. All are examples of **errors that were not code errors** — they were incomplete, ambiguous, badly validated, or ignored requirements.
+
+| Case | Year | Cost / impact | Requirements root cause |
 |---|---|---|---|
-| **Mariner 1** (NASA) | 1962 | US$ 18,5 milhões | Fórmula transcrita errada para o código; **especificação não exigia smoothing function**. Foguete destruído 293s após decolagem. |
-| **Hartford Coliseum Collapse** | 1978 | US$ 70M + US$ 20M de danos | Software estrutural não considerou neve real; **requisito de carga foi mal especificado**. |
-| **Citibank** | 2021 | US$ 500M perdidos (queria pagar US$ 7,8M, mandou US$ 900M) | **Design de UI mal especificado**: o operador clicou "ok" achando que confirmava o juros, na verdade pagou o principal. |
-| **UEFA Champions League** | 2021 | Sorteio anulado (vergonha pública) | Erro de software no sistema que define duelos das oitavas. Requisito de regras de cabeças-de-chave mal implementado. |
-| **INSS aposentadoria** | 2020 | Trabalhadora com direito não conseguia pedir | Site do INSS apresenta erro genérico ("Tente novamente mais tarde"). Requisitos de fluxo de exceção mal especificados. |
-| **IPTU São Paulo** | 2019 | 90 mil imóveis com aumento de até 50% indevido | Falha de cálculo no sistema da Secretaria da Fazenda — **regra de negócio mal especificada**. |
-| **Boeing 737 MAX** | 2018–2019 | 300+ mortes em 2 quedas | MCAS (sistema de estabilização) com **requisitos de segurança incompletos**: confiava num único sensor de ângulo de ataque, sem redundância. Resultado: bug fatal. |
+| **Mariner 1** (NASA) | 1962 | USD 18.5 million | Formula mistranscribed into the code; **specification did not require a smoothing function**. Rocket destroyed 293s after liftoff. |
+| **Hartford Coliseum Collapse** | 1978 | USD 70M + USD 20M of damage | Structural software did not account for real snow loads; **load requirement was badly specified**. |
+| **Citibank** | 2021 | USD 500M lost (intended to pay USD 7.8M, sent USD 900M) | **Badly specified UI design**: the operator clicked "ok" thinking they were confirming interest; in fact paid the principal. |
+| **UEFA Champions League** | 2021 | Draw annulled (public embarrassment) | Software bug in the system defining the round-of-16 fixtures. Seeding-rule requirement badly implemented. |
+| ***"INSS"* retirement** | 2020 | Worker with the legal right could not file | The *"INSS"* website returned a generic error ("Try again later"). Exception-flow requirements badly specified. |
+| ***"IPTU São Paulo"*** | 2019 | 90 000 properties wrongly billed up to 50% more | Calculation failure in the *"Secretaria da Fazenda"* system — **business rule badly specified**. |
+| **Boeing 737 MAX** | 2018–2019 | 300+ deaths in 2 crashes | MCAS (stabilization system) with **incomplete safety requirements**: relied on a single angle-of-attack sensor without redundancy. Result: a fatal bug. |
 
-Estes casos viraram a frase de Brooks: *"the hardest single part of building a software system is deciding precisely what to build"*. Pressman ecoa: "Os bons projetos não saem da cabeça do engenheiro; saem da **conversa rigorosa** com quem vai usar."
+These cases became Brooks's sentence: *"the hardest single part of building a software system is deciding precisely what to build"*. Pressman echoes: "Good designs do not come out of the engineer's head; they come out of **rigorous conversation** with those who will use the system."
 
-> **Lição prática para o backlog**: cada CA mal especificado é um vetor latente desse tipo de catástrofe. Por isso a regra dura da skill: CA testável, com métrica, validado pelo stakeholder.
+> **Practical lesson for the backlog**: every badly specified AC is a latent vector for this kind of catastrophe. Hence the skill's hard rule: ACs must be testable, with metrics, and validated by the stakeholder.
 
 ---
 
-## 2. Dois níveis: usuário e sistema
+## 2. Two levels: user and system
 
-| Aspecto | Requisito de **Usuário** | Requisito de **Sistema** |
+| Aspect | **User** requirement | **System** requirement |
 |---|---|---|
-| Audiência | Cliente, gerente, usuário final, regulador | Dev, arquiteto, tester, equipe de manutenção |
-| Linguagem | Natural + diagramas + tabelas simples | Natural estruturada / templates / UML / fórmulas |
-| Nível de detalhe | Abstrato, alto-nível | Preciso, exato, contratual |
-| Exemplo (Mentcare) | "O sistema deve gerar relatórios mensais de custo de medicamentos por clínica." | "1.1 No último dia útil do mês, gerar resumo com nome do medicamento, quantidade de prescrições, dose total e custo. 1.5 Acesso restrito a usuários autorizados conforme lista de controle." |
+| Audience | Client, manager, end user, regulator | Dev, architect, tester, maintenance team |
+| Language | Natural + diagrams + simple tables | Structured natural / templates / UML / formulas |
+| Detail level | Abstract, high-level | Precise, exact, contractual |
+| Example (Mentcare) | "The system shall generate monthly reports of medication costs per clinic." | "1.1 On the last business day of the month, generate a summary with medication name, prescription quantity, total dose, and cost. 1.5 Access restricted to authorized users per access-control list." |
 
-**Ambos coexistem no mesmo documento.** Stakeholder leigo lê o de cima; dev implementa o de baixo. Sem o nível usuário, o cliente não valida; sem o de sistema, o dev adivinha.
+**Both coexist in the same document.** The lay stakeholder reads the top one; the dev implements the bottom one. Without the user level, the client cannot validate; without the system level, the dev is guessing.
 
 ---
 
-## 3. RF vs RNF: a distinção crítica
+## 3. FR vs. NFR: the critical distinction
 
-### 3.1 Requisito Funcional (RF)
+### 3.1 Functional Requirement (FR — `RF` in the conventions)
 
-Descreve **o que** o sistema faz: serviços, entradas, saídas, comportamento, exceções. Em alguns casos, declara também o que o sistema **não deve fazer**.
+Describes **what** the system does: services, inputs, outputs, behaviour, exceptions. In some cases it also declares what the system **must not** do.
 
-Exemplos (Mentcare):
-- "Um usuário deve poder fazer uma busca na lista de consultas de todas as clínicas."
-- "O sistema deve gerar, a cada dia e para cada clínica, uma lista de pacientes que devam comparecer naquele dia."
-- "Cada membro da equipe que utiliza o sistema deve ser identificado exclusivamente por seu número de funcionário de oito dígitos."
+Examples (Mentcare):
+- "A user shall be able to search the consultation lists across all clinics."
+- "The system shall generate, for each day and each clinic, a list of patients due to attend that day."
+- "Every staff member using the system shall be uniquely identified by their eight-digit employee number."
 
-### 3.2 Requisito Não Funcional (RNF)
+### 3.2 Non-Functional Requirement (NFR — `RNF` in the conventions)
 
-Restrição **sobre** os serviços ou funções. Frequentemente se aplica ao sistema **inteiro**, não a uma feature isolada.
+A constraint **on** the services or functions. Frequently applies to the **whole** system, not to an isolated feature.
 
-**Classificação Sommerville (Fig 4.3):**
+**Sommerville classification (Fig 4.3):**
 
 ```
-                          RNFs
+                          NFRs
         ┌──────────────────┼──────────────────┐
         │                  │                  │
-     PRODUTO        ORGANIZACIONAL          EXTERNO
+     PRODUCT        ORGANIZATIONAL          EXTERNAL
         │                  │                  │
-    ┌───┼───┐         ┌────┼────┐         ┌───┼───┐
- Desemp.  Confiab.  Processo  Padrão  Regulatório  Legal
- Segurança Usabil.  Operac.   de dev. (LGPD, BACEN) Ético
+    ┌───┼───┐         ┌────┼────┐         ┌───┼────┐
+ Perf.    Reliab.   Process   Standard  Regulatory  Legal
+ Security Usabil.   Operat.   of dev.   (*"LGPD"*, *"BACEN"*) Ethical
 ```
 
-**Exemplos Mentcare (Fig 4.4):**
-- **Produto**: "Disponível para todas as clínicas em expediente (seg-sex, 8h30-17h30), com indisponibilidade máxima 5s/dia."
-- **Organizacional**: "Usuários se identificam pelo cartão de identificação da autoridade de saúde."
-- **Externo**: "Implementar providências para privacidade do paciente conforme HStan-03-2006-priv."
+**Mentcare examples (Fig 4.4):**
+- **Product**: "Available across all clinics during business hours (Mon–Fri, 08:30–17:30), with maximum downtime 5s/day."
+- **Organizational**: "Users identify themselves with the health authority identity card."
+- **External**: "Implement privacy measures for patient data per HStan-03-2006-priv."
 
-### 3.3 Por que RNFs são MAIS críticos que RFs
+### 3.3 Why NFRs are MORE critical than FRs
 
-Sommerville (4.1.2): *"Descumprir um requisito não funcional pode significar a inutilização total do sistema."*
+Sommerville (4.1.2): *"Failure to meet a non-functional requirement may mean that the entire system becomes unusable."*
 
-- Sistema funciona, mas é lento → usuários abandonam
-- Sistema funciona, mas vaza dados → multa LGPD + reputação destruída
-- Sistema funciona, mas não passa em homologação → não pode entrar em produção
-- Avião funciona, mas não atende confiabilidade → não pode voar
+- System works, but is slow → users abandon it
+- System works, but leaks data → *"LGPD"* fine + reputation destroyed
+- System works, but does not pass homologation → cannot enter production
+- Aircraft works, but does not meet reliability → cannot fly
 
-**RFs individuais podem ter workaround. RNFs raramente.**
+**Individual FRs can have a workaround. NFRs rarely.**
 
-### 3.4 Regra de ouro: RNF tem que ser quantificável
+### 3.4 Golden rule: NFR must be quantifiable
 
-**Errado**: "O sistema deve ser fácil de usar."
-**Certo**: "Após 2h de treinamento, usuário experiente deve cometer ≤2 erros/h ao executar tarefas T1, T2, T3."
+**Wrong**: "The system shall be easy to use."
+**Right**: "After 2h of training, an experienced user shall make ≤2 errors/h while executing tasks T1, T2, T3."
 
-**Métricas para RNFs (Sommerville Fig 4.5):**
+**NFR metrics (Sommerville Fig 4.5):**
 
-| Propriedade | Métrica |
+| Property | Metric |
 |---|---|
-| Velocidade | Transações/s; tempo de resposta; tempo de atualização da tela |
-| Tamanho | MB; chips ROM |
-| Facilidade de uso | Tempo de treinamento; nº de quadros de ajuda |
-| Confiabilidade | MTBF (tempo médio até falha); probabilidade de indisponibilidade; taxa de falhas |
-| Robustez | Tempo para reinício; % eventos causando falha; probabilidade de corromper dados |
-| Portabilidade | % de código dependente da plataforma; nº de plataformas-alvo |
+| Speed | Transactions/s; response time; screen refresh time |
+| Size | MB; ROM chips |
+| Ease of use | Training time; number of help frames |
+| Reliability | MTBF (mean time between failures); probability of unavailability; failure rate |
+| Robustness | Restart time; % events causing failure; probability of data corruption |
+| Portability | % platform-dependent code; number of target platforms |
 
 ---
 
-## 4. Requisitos de domínio
+## 4. Domain requirements
 
-Sub-categoria atravessada. **Derivados do domínio de aplicação, não dos usuários.** Podem ser novos RFs, restrições sobre RFs existentes, ou regras de cálculo específicas.
+A cross-cutting sub-category. **Derived from the application domain, not from the users.** They can be new FRs, constraints on existing FRs, or specific calculation rules.
 
-**Problema crítico**: o engenheiro de software pode desconhecer características do domínio → requisito passa despercebido OU entra em conflito silencioso com outro.
+**Critical problem**: the software engineer may be unaware of the domain's characteristics → the requirement is missed OR enters into silent conflict with another.
 
-**Exemplo IFPB-Controle Dopagem**: regra G14 — "ATLETA classificado tem prioridade automática em sorteio para teste antidoping". Esse não veio do usuário, veio do **código da WADA** (World Anti-Doping Agency) que rege o domínio.
+**Example *"IFPB"*-*"Controle de Dopagem"***: rule G14 — "A classified ATHLETE has automatic priority in the draw for an anti-doping test". This did not come from a user — it came from the *"WADA"* (World Anti-Doping Agency) code that governs the domain.
 
-**Estratégia**: sempre que possível, ter um especialista do domínio (médico, advogado, contador, esportista) participando da revisão.
+**Strategy**: whenever possible, have a domain specialist (physician, lawyer, accountant, athlete) participating in the review.
 
 ---
 
 ## 5. Stakeholders
 
-**Todos os afetados pelo sistema, direta ou indiretamente.** Não restringir a "usuário final".
+**Everyone affected by the system, directly or indirectly.** Do not restrict to "end user".
 
-**Exemplo Sommerville-Mentcare — 8 categorias:**
-1. Pacientes (dados registrados) e familiares
-2. Médicos (avaliação/tratamento)
-3. Profissionais de enfermagem (coordenação/admin. de tratamentos)
-4. Recepcionistas (agenda)
-5. Equipe de TI (instalação/manutenção)
-6. Gestor de ética médica (conformidade ética)
-7. Gestores de saúde (informação gerencial)
-8. Controle de prontuário (auditoria/retenção)
+**Sommerville-Mentcare example — 8 categories:**
+1. Patients (recorded data) and family members
+2. Physicians (assessment/treatment)
+3. Nursing staff (treatment coordination/administration)
+4. Receptionists (scheduling)
+5. IT staff (installation/maintenance)
+6. Medical ethics manager (ethical compliance)
+7. Health managers (managerial information)
+8. Records control (audit/retention)
 
-**Como mapear stakeholders (Wiegers 2003):**
+**How to map stakeholders (Wiegers 2003):**
 
-1. Identificar **classes de usuários** agrupando por:
-   - Frequência de uso
-   - Experiência no domínio
-   - Perícia com sistemas computadorizados
-   - Características do sistema que usam
-   - Tarefas que realizam no processo de negócio
-   - Níveis de privilégio de acesso e segurança
+1. Identify **user classes** grouping by:
+   - Frequency of use
+   - Domain experience
+   - Skill with computerized systems
+   - Characteristics of the system they use
+   - Tasks they perform in the business process
+   - Access and security privilege levels
 
-2. **Selecionar representantes** de cada classe (não todos — amostra gerenciável)
+2. **Select representatives** of each class (not all — a manageable sample)
 
-3. Estabelecer **acordo sobre quem decide** quando houver conflito de prioridade
+3. Establish **agreement on who decides** when priority conflict arises
 
-**Stakeholder esquecido = requisito esquecido.** Pior: aparece tarde no projeto (geralmente em homologação) e exige refactor.
-
----
-
-## 6. Estudo de viabilidade (FAÇA antes de qualquer planejamento)
-
-**Pré-requisito de qualquer projeto.** 3 perguntas (Sommerville):
-
-1. **O sistema contribui para os objetivos da organização?**
-2. **Pode ser implementado dentro do cronograma e orçamento usando tecnologia atual?**
-3. **Pode ser integrado com os outros sistemas em uso?**
-
-Qualquer "não" → projeto provavelmente não deve prosseguir. Saída saudável: cancelar agora custa baixo; cancelar em 6 meses custa altíssimo.
+**Forgotten stakeholder = forgotten requirement.** Worse: the stakeholder shows up late in the project (usually at homologation) and forces refactor.
 
 ---
 
-## 7. O processo de ER (a espiral)
+## 6. Feasibility study (DO this before any planning)
 
-**Sommerville Fig 4.6** — processo iterativo (não cascata):
+**Pre-requisite of any project.** 3 questions (Sommerville):
+
+1. **Does the system contribute to the organization's objectives?**
+2. **Can it be implemented within the schedule and budget using current technology?**
+3. **Can it be integrated with the other systems in use?**
+
+Any "no" → the project probably should not proceed. Healthy exit: cancelling now costs low; cancelling in 6 months costs sky-high.
+
+---
+
+## 7. The RE process (the spiral)
+
+**Sommerville Fig 4.6** — iterative process (not waterfall):
 
 ```
-                     ┌─→ Especificação ─→ Documento de
-                     │   de requisitos    requisitos
+                     ┌─→ Requirements ─→ Requirements
+                     │   specification    document
                      │                     │
-        Especific.   │                     │ retorno
-        inicial      │                     ↓
-                     │              Validação
-                     ↑                de requisitos
-                Elicitação                  │
-                e análise ←──────────────────┘
-                de requisitos
+        Initial      │                     │ return
+        specification│                     ↓
+                     │              Requirements
+                     ↑                validation
+                Requirements                │
+                elicitation ←────────────────┘
+                and analysis
                      ↑
                      │
-              decisão de viabilidade
-              + entradas externas
+              feasibility decision
+              + external inputs
 ```
 
-A quantidade de tempo dedicada a cada atividade varia por iteração. No início, foco em **negócio + RNFs + requisitos de usuário**. Em iterações mais avançadas, foco em **detalhamento técnico dos requisitos de sistema**.
+The amount of time spent on each activity varies per iteration. Early on, focus on **business + NFRs + user requirements**. In later iterations, focus on **technical detailing of system requirements**.
 
-**A espiral acomoda ágil**: cada volta da espiral pode coincidir com uma sprint, e o desenvolvimento incremental substitui a prototipação formal.
+**The spiral accommodates agile**: each loop of the spiral can coincide with a sprint, and incremental development replaces formal prototyping.
 
-### 7.1 Sub-processo dentro da Elicitação (Sommerville Fig 4.7)
+### 7.1 Sub-process inside Elicitation (Sommerville Fig 4.7)
 
 ```
    ┌──────────────────────┐
-   │ 1. Descoberta e      │
-   │    compreensão       │←─────────────────┐
+   │ 1. Discovery and     │
+   │    understanding     │←─────────────────┐
    │                      │                  │
    └──────────────────────┘                  │
               ↓                              │
    ┌──────────────────────┐                  │
-   │ 2. Classificação e   │                  │
-   │    organização       │                  │
+   │ 2. Classification    │                  │
+   │    and organization  │                  │
    └──────────────────────┘                  │
               ↓                              │
    ┌──────────────────────┐                  │
-   │ 3. Priorização e     │                  │
-   │    negociação        │                  │
+   │ 3. Prioritization    │                  │
+   │    and negotiation   │                  │
    └──────────────────────┘                  │
               ↓                              │
    ┌──────────────────────┐                  │
-   │ 4. Documentação      │──────────────────┘
-   │                      │   loop com feedback
-   └──────────────────────┘   contínuo
+   │ 4. Documentation     │──────────────────┘
+   │                      │   loop with continuous
+   └──────────────────────┘   feedback
 ```
 
-**É comum identificar novos requisitos durante o ciclo** — a espiral interna existe para acomodar isso sem reescrever do zero.
+**It is common to identify new requirements during the cycle** — the inner spiral exists to accommodate this without rewriting from scratch.
 
-### 7.2 Pressman: 7 etapas (visão complementar)
+### 7.2 Pressman: 7 stages (complementary view)
 
-1. **Concepção** — clarificar a natureza do problema
-2. **Levantamento** — coletar requisitos das fontes
-3. **Elaboração** — refinar, expandir, modelar
-4. **Negociação** — resolver conflitos entre stakeholders
-5. **Especificação** — escrever documento canônico
-6. **Validação** — verificar com cliente
-7. **Gestão** — controlar mudanças ao longo do ciclo
+1. **Inception** — clarify the nature of the problem
+2. **Elicitation** — collect requirements from the sources
+3. **Elaboration** — refine, expand, model
+4. **Negotiation** — resolve stakeholder conflicts
+5. **Specification** — write the canonical document
+6. **Validation** — verify with the client
+7. **Management** — control changes throughout the cycle
 
-Não é incompatível com Sommerville — é um corte diferente (mais granular) do mesmo processo.
+Not incompatible with Sommerville — it is a different (more granular) cut of the same process.
 
 ---
 
-## 8. Compreensão necessária ANTES de elicitar (AULA 02 IFPB)
+## 8. Understanding required BEFORE eliciting (LECTURE 02 *"IFPB"*)
 
-Antes de a equipe começar a entrevistar ninguém, deve-se:
+Before the team starts interviewing anyone, the following must be done:
 
-1. **Compreender os objetivos gerais do negócio** + restrições (orçamento, cronograma, interoperabilidade)
-2. **Levantar contexto de desenvolvimento** — organização onde o sistema será implantado, domínio da aplicação, sistemas existentes a serem substituídos
-3. **Organizar informações + descartar irrelevantes + priorizar metas organizacionais**
-4. **Identificar stakeholders + seus papéis**
+1. **Understand the general business objectives** + constraints (budget, schedule, interoperability)
+2. **Survey the development context** — organization where the system will be deployed, application domain, existing systems to be replaced
+3. **Organize information + discard irrelevant + prioritize organizational goals**
+4. **Identify stakeholders + their roles**
 
-Pular esta etapa → entrevista inicia sem foco, perde tempo do entrevistado (custo político), gera requisitos rasos.
+Skipping this stage → interview starts unfocused, wastes the interviewee's time (political cost), generates shallow requirements.
 
 ---
 
-## 9. As 4 dimensões da Descoberta/Compreensão (Falbo)
+## 9. The 4 dimensions of Discovery/Understanding (Falbo)
 
-Cada novo projeto precisa cobrir:
+Every new project must cover:
 
-1. **Domínio da Aplicação** — entendimento geral da área (saúde, esporte, educação, finanças)
-2. **Problema a ser solucionado** — detalhes do problema específico
-3. **Necessidades e restrições dos interessados** — o que cada stakeholder precisa, processos atuais que serão apoiados/substituídos
-4. **Contexto do negócio** — como o sistema afetará a organização, como contribuirá para objetivos estratégicos
+1. **Application Domain** — general understanding of the area (health, sport, education, finance)
+2. **Problem to be solved** — details of the specific problem
+3. **Stakeholders' needs and constraints** — what each stakeholder needs, current processes that will be supported/replaced
+4. **Business context** — how the system will affect the organization, how it will contribute to strategic objectives
 
-Frequentemente representadas como **quadrante**:
+Often represented as a **quadrant**:
 
 ```
-     Domínio da     │  Problema a ser
-     Aplicação      │  solucionado
+     Application    │  Problem to be
+     Domain         │  solved
      ───────────────┼──────────────────
-     Necessidades   │  Contexto
-     e restrições   │  do negócio
-     dos envolvidos │
+     Stakeholders'  │  Business
+     needs and      │  context
+     constraints    │
 ```
 
 ---
 
-## 10. Quando dispensar formalidade
+## 10. When to drop formalism
 
-Sistemas pequenos / startups / MVPs podem trabalhar com:
+Small systems / startups / MVPs can work with:
 
-- Cartões/wiki ao invés de documento ABNT
-- Histórias informais ao invés de SRS-IEEE
-- Conversa direta ao invés de entrevistas formais
+- Cards/wiki instead of an *"ABNT"* document
+- Informal stories instead of SRS-IEEE
+- Direct conversation instead of formal interviews
 
-**Mas as 4 dimensões + 3 perguntas de viabilidade + identificação de stakeholders permanecem.** O que muda é o formalismo do registro, não a substância.
+**But the 4 dimensions + 3 feasibility questions + stakeholder identification remain.** What changes is the formalism of the record, not the substance.
 
-**Antipattern**: usar "somos ágeis" como pretexto para pular elicitação. Manifesto Ágil prioriza "indivíduos e interações" — isso INCLUI análise dos stakeholders, não as exclui.
-
----
-
-## 11. Sinalizadores ("smells") de elicitação mal feita
-
-- Stakeholder fala em jargão técnico e o analista assente sem entender
-- Requisitos são todos do tipo "deve ser bom/rápido/fácil" (qualitativos, não testáveis)
-- Não há nenhum requisito não funcional na lista
-- Lista de stakeholders tem apenas "usuário final"
-- Não há requisitos derivados do domínio
-- Ninguém perguntou sobre os sistemas existentes que serão substituídos
-- A primeira reunião com o cliente já fala em telas/wireframes
-
-Qualquer um desses → volte para a Fase A.
+**Antipattern**: using "we're agile" as a pretext to skip elicitation. The Agile Manifesto prioritizes "individuals and interactions" — that INCLUDES stakeholder analysis, it does not exclude it.
 
 ---
 
-## 12. Conexão com as próximas references
+## 11. Smells of poorly done elicitation
 
-- **Como elicitar**: [02-elicitacao.md](02-elicitacao.md)
-- **Como especificar (Epic → Feature → US → CA)**: [03-especificacao.md](03-especificacao.md)
-- **CA + BDD**: [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)
-- **Como dimensionar**: [05-estimativa.md](05-estimativa.md)
-- **Como validar**: [06-validacao.md](06-validacao.md)
-- **Como gerenciar mudança**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
-- **Análise de negócio (camada acima)**: [08-analista-negocios.md](08-analista-negocios.md)
-- **Ética (camada transversal)**: [09-etica-sbc.md](09-etica-sbc.md)
+- Stakeholder speaks technical jargon and the analyst nods without understanding
+- Requirements are all of the "must be good/fast/easy" kind (qualitative, not testable)
+- There is no non-functional requirement in the list
+- Stakeholder list contains only "end user"
+- No requirements derived from the domain
+- Nobody asked about the existing systems that will be replaced
+- The first meeting with the client already talks about screens/wireframes
+
+Any of these → go back to Phase A.
+
+---
+
+## 12. Connection to the next references
+
+- **How to elicit**: [02-elicitacao.md](02-elicitacao.md)
+- **How to specify (Epic → Feature → US → AC)**: [03-especificacao.md](03-especificacao.md)
+- **AC + BDD**: [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)
+- **How to size**: [05-estimativa.md](05-estimativa.md)
+- **How to validate**: [06-validacao.md](06-validacao.md)
+- **How to manage change**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
+- **Business analysis (layer above)**: [08-analista-negocios.md](08-analista-negocios.md)
+- **Ethics (cross-cutting layer)**: [09-etica-sbc.md](09-etica-sbc.md)
