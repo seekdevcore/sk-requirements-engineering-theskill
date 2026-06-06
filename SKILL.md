@@ -11,7 +11,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-skill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.2.0
+version: 1.3.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics

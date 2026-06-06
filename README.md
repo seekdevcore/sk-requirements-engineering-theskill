@@ -251,7 +251,7 @@ This skill uses idiomatic English terminology for general technical concepts, bu
 | Funcionalidade | Feature | `F` |
 | Tarefa | Task | `T` |
 | Tarefa Transversal | Cross-cutting Task | `TX` |
-| Backlog do produto / da sprint | Product / Sprint Backlog | — |
+| Backlog do produto / da sprint | Product Backlog / Sprint Backlog | — |
 | DADO / QUANDO / ENTÃO | Given / When / Then | — |
 | Funcionalidade: (Gherkin) | Feature: (Gherkin) | — |
 | Cenário: (Gherkin) | Scenario: (Gherkin) | — |

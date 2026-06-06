@@ -38,5 +38,8 @@
   "MD048": { "style": "backtick" },
 
   "MD060": false,
-  "_MD060": "table-column-style — disabled. We use compact `|---|---|` pipe style throughout (no padding spaces). Visually equivalent to `| --- | --- |` once rendered; enforcing it would require touching every table in every file with no functional gain."
+  "_MD060": "table-column-style — disabled. We use compact `|---|---|` pipe style throughout (no padding spaces). Visually equivalent to `| --- | --- |` once rendered; enforcing it would require touching every table in every file with no functional gain.",
+
+  "MD049": { "style": "asterisk" },
+  "_MD049": "emphasis-style — force asterisk explicitly (the default `consistent` mode is fragile: if the first emphasis on a file happens to be `_underscore_` instead of `*asterisk*`, the rest of the file fails. Brazilian domain terms in *italic+quotes* throughout this repo all use asterisks, so codify that as the project standard)."
 }

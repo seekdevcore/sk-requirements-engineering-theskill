@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+*No changes yet. New entries will accrue here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.*
+
+---
+
+## [1.3.0] — 2026-06-06
+
 Operational maturity hardening after the v1.2.0 content milestone. **No content change** in `references/`, `examples/`, or `translations/pt-BR/` — only branding, community-health, CI, and branch-protection plumbing.
 
 ### Added
