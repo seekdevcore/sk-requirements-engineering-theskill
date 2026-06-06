@@ -7,6 +7,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] — 2026-06-06
+
+### Changed — Full en-CA content translation completed
+
+This release closes the translation roadmap announced in v1.1.0. **All `references/` (10 files) and `examples/` (5 files) now have en-CA content** alongside the previously translated entry point (SKILL.md, README.md, CHANGELOG.md). The original pt-BR source remains preserved at `translations/pt-BR/`.
+
+#### What got translated (Packages 2–6)
+
+| Package | Files | Lines processed |
+|---|---|---|
+| **2** | `references/01-fundamentos.md` + `02-elicitacao.md` + `03-especificacao.md` | ~1,266 |
+| **3** | `references/04-bdd-criterios-aceitacao.md` + `05-convencoes-interpop.md` + `05-estimativa.md` | ~1,221 |
+| **4** | `references/06-validacao.md` + `07-mudanca-rastreabilidade.md` + `08-analista-negocios.md` + `09-etica-sbc.md` | ~1,128 |
+| **5** | `examples/caso-controle-dopagem.md` + `caso-interpop-moderacao.md` | ~817 |
+| **6** | `examples/template-backlog-openproject.md` + `template-documento-requisitos.md` + `template-user-story.feature` | ~1,022 |
+
+**Total**: ~5,454 additional lines processed across 13 files. Including the v1.1.0 entry point (~750 lines), **~6,200+ lines** of content now have en-CA renderings.
+
+#### Translation principles applied (consistent across all 6 packages)
+
+1. **Idiomatic en-CA** for explanations, rules, headers, field labels, analysis.
+2. **Brazilian pt-BR siglas preserved verbatim** (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) for backward compatibility with real projects (*"Interpop"*, *"SIRA"*, *"Controle de Dopagem"*).
+3. **Brazilian domain terms in *italic + quotes*** throughout: *"IFPB"*, *"Interpop"*, *"SIRA"*, *"ABCD"*, *"COB"*, *"WADA"*, *"STJD"*, *"CNPq"*, *"LGPD"*, *"BACEN"*, *"ANS"*, *"DATAPREV"*, *"CESAR"*, *"CAGEPA"*, *"EMBRAPII"*, *"SBC"*, *"Bolsa Atleta"*, *"Controle de Dopagem"*, *"Busca Editorial"*, *"Sistema de Reserva de Salas IFPB"*, *"Soft Power"*, *"Hostinger"*, *"Gabriel"* (project owner), *"Gabriel Marques"*, *"Profa. Juliana Dantas Ribeiro Viana de Medeiros"*, *"Profa. Thais Vasconcelos Batista"*, etc.
+4. **Real-world worked examples preserved verbatim in pt-BR** when they reproduce identifiers from external systems:
+   - Original *"IFPB"* / *"Controle de Dopagem"* item titles (`EPIC APLICAÇÃO WEB`, `FEATURE Bolsa Atleta recebidas`, `CA09 — O combobox FEDERAÇÃO...`) — they appear verbatim in Redmine cards, *"SVN"* commits, and academic papers.
+   - Real *"Interpop"* artifacts (`EP-10 Busca Editorial`, `F-30 Busca de artigos por texto`, US BDD scenarios, Task descriptions with technical terms) — they are the actual cards in the *"Interpop"* OpenProject and the actual content of *"Busca Editorial"* `BACKLOG.md` v1.2.
+   - *"SBC"* 002/2024 Code citations — non-official English renderings only; authoritative pt-BR remains at `translations/pt-BR/references/09-etica-sbc.md`.
+   - *"Interpop Moderação"* commit `1e0241e` content (`Hierarquia de Banimento`, `can_be_banned_by`, mensagem `"Operação não permitida pela hierarquia editorial"`) — actual strings in the production code.
+5. **`examples/template-user-story.feature` kept as pt-BR Gherkin template by design** (with `# language: pt`) because it reproduces the format used by real teams; explicit en-CA dialect option documented in the header comment (drop the `# language: pt` line, use `Feature:`/`Scenario:`/`Given/When/Then`).
+6. **Cross-references between files preserved with pt-BR filenames** (`references/04-bdd-criterios-aceitacao.md`, `examples/caso-controle-dopagem.md`, etc.) to avoid breaking existing intra-skill links and external project references.
+
+#### Frontmatter changes
+
+- `version: 1.1.0` → `version: 1.2.0`
+- `content_status.en-CA: partial — entry point translated; references and examples in progress` → `content_status.en-CA: complete — all references and examples translated; pt-BR copy preserved at translations/pt-BR/`
+- `content_status.pt-BR: complete — full copy available at translations/pt-BR/` (unchanged)
+
+#### What did NOT change
+
+- All FR/NFR/G/CA/EP/F/US/T/TX numeric identifiers and item titles across the worked examples (`EP-10`, `F-30`, `US30.1`, `CA01..CA15`, `G-01`, `G-02`, etc.).
+- All `references/` and `examples/` filenames (still in pt-BR) — preserves cross-references and external project links.
+- The pt-BR Gherkin keywords in `template-user-story.feature` — by design.
+- LICENSE (CC BY-SA 4.0).
+- Frontmatter triggers (both English and Portuguese activation triggers retained).
+- The `translations/pt-BR/` snapshot (it is the authoritative pt-BR for compliance and audit reference).
+
+#### Six signed commits in this release sequence (after v1.1.0)
+
+| Tag | Commit | Description |
+|---|---|---|
+| v1.1.0 | `d9316de` | Entry point en-CA + `translations/pt-BR/` (Package 1) |
+| — | `46b108b` | Package 2 (references 01-03) |
+| — | `5bc2939` | Package 3 (references 04, 05-conv, 05-estim) |
+| — | `e1677aa` | Package 4 (references 06-09) |
+| — | `51630d8` | Package 5 (examples cases) |
+| **v1.2.0** | `d9e8ca9` | Package 6 (examples templates) + this CHANGELOG update |
+
+### Rationale
+
+The skill is now fully usable by English-speaking practitioners while remaining 100% loyal to the original *"IFPB"* course material, the *"Interpop"* / *"SIRA"* / *"Controle de Dopagem"* real projects, and the *"SBC"* 002/2024 Code authoritative wording — all preserved in `translations/pt-BR/` and selectively cited verbatim throughout the en-CA content where pedagogically necessary.
+
+---
+
 ## [1.1.0] — 2026-06-06
 
 ### Changed — Language switch: en-CA promoted to default content language
