@@ -50,7 +50,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainer responsible for enforcement:
 
-- **Email**: gabriel.santos.23@academico.ifpb.edu.br
+- **Email**: gabriel.intetsu.dev@gmail.com
 - **GitHub**: [@GabeMarques-Intetsu](https://github.com/GabeMarques-Intetsu) (private message via profile contact)
 
 All complaints will be reviewed and investigated promptly and fairly.

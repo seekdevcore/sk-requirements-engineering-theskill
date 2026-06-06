@@ -103,7 +103,7 @@ Use the PR template that opens automatically. The maintainer reviews within ~7 d
 
 ## 4. Code of Conduct
 
-Participation in this project is governed by the [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) — Contributor Covenant 2.1 augmented with the *"SBC"* 002/2024 Code of Ethics references. Reports of violations go to gabriel.santos.23@academico.ifpb.edu.br.
+Participation in this project is governed by the [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) — Contributor Covenant 2.1 augmented with the *"SBC"* 002/2024 Code of Ethics references. Reports of violations go to gabriel.intetsu.dev@gmail.com.
 
 ## 5. License of contributions
 
