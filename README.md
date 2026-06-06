@@ -280,6 +280,6 @@ See [`LICENSE`](./LICENSE) for the full legal code.
 
 ## 🏷 Maintainer
 
-Published by [**Seekdev**](https://github.com/seekdevcore) (`seekdevcore` on GitHub).
+Published by [**Seek**](https://github.com/seekdevcore) (`seekdevcore` on GitHub).
 
 Original author and curator: **Gabriel Marques** ([@GabeMarques-Intetsu](https://github.com/GabeMarques-Intetsu)).
