@@ -1,55 +1,57 @@
-# Template — Backlog no estilo OpenProject (exemplo trabalhado completo)
+# Template — Backlog in OpenProject style (complete worked example)
 
-> Template **preenchido com exemplo real**, não esqueleto vazio. Use-o como ponto de partida concreto para qualquer backlog do projeto. Reflete a hierarquia do OpenProject conforme o curso ERS do IFPB (AULA 07–09) e a convenção Interpop. Substitua o exemplo pelo seu domínio mantendo todas as convenções.
-
----
-
-## 0. Pré-requisito — o backlog se BASEIA no documento de requisitos
-
-**Regra zero (não negociável)**: o backlog **é uma materialização do documento de requisitos**. Tudo que vai ser construído nasce do documento de requisitos; o backlog apenas organiza, fatia e prioriza esse conteúdo.
-
-Por isso:
-
-- 🔁 **Antes de mexer no backlog, SEMPRE verifique se houve alteração no documento de requisitos.** Durante o projeto, o usuário/cliente pode pedir para alterar, adicionar ou remover requisitos — e essas mudanças têm que se propagar para o backlog (não no outro sentido).
-- 📎 **O topo do backlog deve apontar para o documento de requisitos** (link ou caminho relativo): `Documento de requisitos: ../docs/specs/<feature>/REQUISITOS.md (revisão de DD/MM/AAAA)`.
-- ⚠️ **Mudanças no backlog sem origem no documento de requisitos são suspeitas**: ou são *scope creep* (escopo crescendo sem aprovação) ou são refinamento puramente técnico (deve virar Task, não Feature). Em ambos os casos, **registrar a decisão no documento de requisitos antes**.
-- 🔗 **A rastreabilidade vai dos dois lados**: do documento de requisitos para o backlog (RF/RNF → Feature/CA) E do backlog para o documento (cada Feature/US/CA referencia qual RF/RNF da especificação que ela atende).
-
-> Quem segue essa disciplina nunca tem aquele momento "espera, mas isso a gente combinou ou alguém inventou?". Quem não segue paga em retrabalho.
+> Template **filled with a real example**, not an empty skeleton. Use it as a concrete starting point for any project backlog. Reflects the OpenProject hierarchy per the *"IFPB"* ERS course (LECTURES 07–09) and the *"Interpop"* convention. Replace the example with your domain while keeping all the conventions.
+>
+> **Note on language preservation**: explanations, table headers, and analysis are in **en-CA**. **Concrete artifact content** (Feature descriptions, ACs, BDD scenarios, Tasks) is preserved in **pt-BR** because these reproduce the actual *"Interpop"* and *"Controle de Dopagem"* backlog cards — translating would defeat the worked-example purpose.
 
 ---
 
-## 1. Regras duras (não negociáveis)
+## 0. Pre-requisite — the backlog is BASED on the requirements document
 
-Detalhamento em [05-convencoes-interpop.md](../references/05-convencoes-interpop.md) e [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md).
+**Rule zero (non-negotiable)**: the backlog **is a materialization of the requirements document**. Everything to be built is born in the requirements document; the backlog only organizes, slices, and prioritizes that content.
 
-1. **O documento de requisitos é a fonte da verdade.** Sempre cheque alterações nele antes de mexer no backlog (ver §0 acima).
-2. **Pt-BR sem infinitivo** nos títulos de Epic/Feature/US: `"Listagem de reservas"`, não `"Listar reservas"`.
-3. **Sem termos técnicos** em Epic/Feature/US/CA/RNF: endpoints REST, libs, frameworks, nomes de tabelas, comandos shell — tudo isso vai para **Tasks**.
-4. **TODOS os artefatos têm descrição em linguagem de negócio**: Epic, Feature, US, CA, RNF. Lida por qualquer stakeholder (PO, cliente, dev júnior recém-chegado). Sem URLs, sem nomes de método, sem stack.
-5. **Feature tem descrição (parágrafo) + CAs**. NUNCA tem BDD.
-6. **User Story tem BDD em pt-BR** (`Dado/Quando/Então`) **dentro do próprio campo "Descrição"** (não como itens filhos separados no OpenProject) + CAs herdados via rastreabilidade. Nunca tem CAs próprios.
-7. **CA é declarativo, atômico e testável**. Se a regra exige sub-regras, encerre o título com **`[...]`** e detalhe no corpo (ver §2 abaixo).
-8. **CAs ficam sempre agrupados** sob um agrupador `CA - <Tema>`, mesmo quando a Feature tem só 1 CA. O agrupamento mantém consistência visual e facilita inserção futura.
-9. **Epic aninhado** é usado quando o domínio tem sub-classificações (módulo → grupo → operação). É a forma fiel de organizar sistemas grandes no OpenProject.
+So:
+
+- 🔁 **Before touching the backlog, ALWAYS verify whether the requirements document was changed.** During the project, the user/client may ask to alter, add, or remove requirements — and those changes must propagate to the backlog (not the other way around).
+- 📎 **The top of the backlog must point to the requirements document** (link or relative path): `Requirements document: ../docs/specs/<feature>/REQUISITOS.md (rev. of DD/MM/YYYY)`.
+- ⚠️ **Backlog changes without origin in the requirements document are suspicious**: either *scope creep* (scope growing without approval), or purely technical refinement (should become a Task, not a Feature). In both cases, **record the decision in the requirements document first**.
+- 🔗 **Traceability runs both ways**: from the requirements document to the backlog (RF/RNF → Feature/CA) AND from the backlog to the document (every Feature/US/CA references which RF/RNF of the specification it satisfies).
+
+> Whoever follows this discipline never has that "wait, did we agree on this or did someone invent it?" moment. Whoever does not, pays in rework.
 
 ---
 
-## 2. Convenção `[...]` para CAs com detalhamento (regra dura)
+## 1. Hard rules (non-negotiable)
 
-Quando um CA precisa de sub-regras para ser totalmente testável, **encerre o título com `[...]`**. No corpo do item (campo "descrição" no OpenProject), abra com `Regras a serem aplicadas:` seguido de bullets.
+Detail in [05-convencoes-interpop.md](../references/05-convencoes-interpop.md) and [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md).
 
-**Por que existe**: quem lê o backlog em modo **lista** (visão padrão do OpenProject, com 50+ itens na tela) precisa decidir em 1 segundo se aquele CA é autossuficiente ou exige clique. O `[...]` sinaliza isso sem ambiguidade.
+1. **The requirements document is the source of truth.** Always check changes there before touching the backlog (see §0 above).
+2. **Pt-BR without infinitive** in Epic/Feature/US titles: `"Listagem de reservas"`, not `"Listar reservas"`.
+3. **No technical terms** in Epic/Feature/US/CA/NFR: REST endpoints, libs, frameworks, table names, shell commands — all of these go into **Tasks**.
+4. **ALL artifacts have business-language descriptions**: Epic, Feature, US, CA, NFR. Readable by any stakeholder (PO, client, junior dev just arriving). No URLs, no method names, no stack.
+5. **Feature has a description (paragraph) + ACs**. NEVER has BDD.
+6. **User Story has BDD in pt-BR** (`Dado/Quando/Então`) **inside the "Description" field itself** (not as separate child items in OpenProject) + ACs inherited via traceability. Never has its own ACs.
+7. **AC is declarative, atomic, and testable**. If the rule requires sub-rules, end the title with **`[...]`** and detail in the body (see §2 below).
+8. **ACs are always grouped** under a `CA - <Theme>` grouper, even when the Feature has only 1 AC. The grouping keeps visual consistency and eases future insertion.
+9. **Nested Epic** is used when the domain has sub-classifications (module → group → operation). This is the faithful way to organize large systems in OpenProject.
 
-### Exemplo concreto (caso real do curso IFPB)
+---
 
-**Título no card** (visível em modo lista):
+## 2. `[...]` convention for ACs with detail (hard rule)
+
+When an AC needs sub-rules to be fully testable, **end the title with `[...]`**. In the item body (the "description" field in OpenProject), open with `Regras a serem aplicadas:` followed by bullets.
+
+**Why it exists**: whoever reads the backlog in **list mode** (OpenProject default view, with 50+ items on screen) must decide in 1 second whether that AC is self-sufficient or requires a click. The `[...]` signals this unambiguously.
+
+### Concrete example (real case from the *"IFPB"* course)
+
+**Title on the card** (visible in list mode):
 
 ```
 CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento e validação conforme detalhamento [...]
 ```
 
-**Descrição (corpo do item, lida ao abrir)**:
+**Description (item body, read on opening)**:
 
 ```
 Regras a serem aplicadas:
@@ -60,111 +62,110 @@ Regras a serem aplicadas:
 - Deve permitir busca parcial ao digitar.
 ```
 
-**Contraste — CA autossuficiente (sem `[...]`)**:
+**Contrast — self-sufficient AC (without `[...]`)**:
 
 ```
 CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro.
 ```
 
-Não tem `[...]` porque o título já contém tudo que é necessário para testar.
+It does not need `[...]` because the title already contains everything required to test.
 
 ---
 
-## 3. Hierarquia visual completa (mapa do território)
+## 3. Complete visual hierarchy (territory map)
 
 ```
-📄 Documento de Requisitos (FONTE DA VERDADE — sempre cheque antes de mexer)
+📄 Requirements Document (SOURCE OF TRUTH — always check before touching anything)
     │
     ▼
-PROJETO (não é um nó no OpenProject — é o repositório/contexto do projeto)
+PROJECT (not a node in OpenProject — it is the project repository/context)
     │
-    ├─ 🟦 EPIC raiz #1                                  ← uma frente do projeto
-    │   └─ 🟦 EPIC sub                                  ← sub-domínio (módulo, área)
-    │       └─ 🟦 EPIC sub-sub                          ← sub-sub-domínio
-    │           └─ 🟦 EPIC sub-sub-sub                  ← exemplo IFPB chega a 4 níveis
-    │               └─ 🟩 FEATURE                       ← entregável ao cliente
-    │                   ├─ 📋 CA grupo "CA - <Tema A>"  ← CAs sempre agrupados
-    │                   │    ├─ ✅ CA01 - regra autossuficiente
-    │                   │    ├─ ✅ CA02 - regra autossuficiente
-    │                   │    └─ ✅ CA03 - regra com sub-regras [...]
-    │                   ├─ 📋 CA grupo "CA - <Tema B>"
+    ├─ 🟦 ROOT EPIC #1                                  ← one front of the project
+    │   └─ 🟦 SUB EPIC                                  ← sub-domain (module, area)
+    │       └─ 🟦 SUB-SUB EPIC                          ← sub-sub-domain
+    │           └─ 🟦 SUB-SUB-SUB EPIC                  ← IFPB example reaches 4 levels
+    │               └─ 🟩 FEATURE                       ← client-deliverable
+    │                   ├─ 📋 AC group "CA - <Theme A>" ← ACs always grouped
+    │                   │    ├─ ✅ CA01 - self-sufficient rule
+    │                   │    ├─ ✅ CA02 - self-sufficient rule
+    │                   │    └─ ✅ CA03 - rule with sub-rules [...]
+    │                   ├─ 📋 AC group "CA - <Theme B>"
     │                   │    └─ ✅ CA04 - ...
-    │                   └─ 🟦 USER STORY                ← fatia de 1 sprint
-    │                       ├─ 🎬 BDD: Cenário 1 (caminho feliz)   ┐
-    │                       ├─ 🎬 BDD: Cenário 2 (erro/borda)      │ ← conteúdo do
-    │                       └─ 🎬 BDD: Cenário 3 (alternativo)     ┘   campo "Descrição"
-    │                                                                  da US (NÃO são
-    │                                                                  cards filhos
-    │                                                                  no OpenProject)
-    │                       └─ 🔧 TASK                              ← unidade técnica
-    │                                                                  (termos técnicos OK)
+    │                   └─ 🟦 USER STORY                ← one-sprint slice
+    │                       ├─ 🎬 BDD: Scenario 1 (happy path)        ┐
+    │                       ├─ 🎬 BDD: Scenario 2 (error/edge)        │ ← content of the
+    │                       └─ 🎬 BDD: Scenario 3 (alternative)       ┘   US "Description"
+    │                                                                     field (NOT child
+    │                                                                     cards in OpenProject)
+    │                       └─ 🔧 TASK                              ← technical unit
+    │                                                                  (technical terms OK)
     │
-    ├─ 🟦 EPIC raiz #2                                  ← outra frente (irmão)
-    │   └─ ... (mesma estrutura interna)
+    ├─ 🟦 ROOT EPIC #2                                  ← another front (sibling)
+    │   └─ ... (same internal structure)
     │
-    └─ 🟦 EPIC raiz #N                                  ← outras frentes (irmãs)
+    └─ 🟦 ROOT EPIC #N                                  ← other fronts (siblings)
         └─ ...
 ```
 
-> **🔴 Regra importante sobre múltiplos Epics-raiz**: um projeto **pode ter (e quase sempre tem) múltiplos Epics-raiz no nível mais alto**, irmãos entre si, **sem um "Epic-projeto" único como pai**. Cada Epic-raiz representa uma **frente independente** do projeto: uma plataforma (Aplicação Web, Aplicação Mobile), uma família operacional (Atividades de Apoio, Qualidade e Investigação), ou um módulo transversal.
+> **🔴 Important rule about multiple root Epics**: a project **may (and almost always does) have multiple root Epics at the top level**, siblings to each other, **without a single "project-Epic" parent**. Each root Epic represents an **independent front** of the project: a platform (Web Application, Mobile Application), an operational family (Support, Quality and Investigation Activities), or a cross-cutting module.
 >
-> **Por que não criar um "Epic Produto" único como avô de tudo**: o "produto" como um todo é o **repositório / contexto do projeto** no OpenProject — não um item da hierarquia. Forçar tudo embaixo de um único "Epic Produto" cria um nó-pai vazio (sem descrição útil), atrapalha a navegação e gera ambiguidade ("este Epic raiz é o produto ou é uma frente?").
+> **Why not creating a single "Product Epic" as the grandparent of everything**: the "product" as a whole is the **OpenProject repository / project context** — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node (no useful description), hurts navigation, and creates ambiguity ("is this root Epic the whole product, or is it a front?").
 >
-> **Exemplos reais**:
-> - **Controle de Dopagem** (curso IFPB): `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` — três Epics-raiz, irmãos no nível mais alto.
-> - **Interpop**: `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` — vários Epics-raiz, irmãos. Não existe um Epic "Interpop" como pai.
+> **Real examples**:
+> - ***"Controle de Dopagem"*** (*"IFPB"* course): `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` — three root Epics, siblings at the top level.
+> - ***"Interpop"***: `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` — several root Epics, siblings. There is no "*"Interpop"*" Epic as parent.
 
-> **Nota sobre o BDD no OpenProject**: os cenários BDD são **conteúdo do campo "Descrição" da User Story**, não itens filhos da hierarquia (não viram cards próprios). O esquema acima mostra a relação **conceitual** (BDD pertence à US). Quem trabalha com Cucumber/Behave externamente pode espelhar cada cenário num arquivo `.feature` correspondente.
+> **Note on BDD in OpenProject**: BDD scenarios are **content of the User Story "Description" field**, not child items of the hierarchy (they do not become their own cards). The schema above shows the **conceptual** relation (BDD belongs to the US). Whoever works with Cucumber/Behave externally may mirror each scenario in a corresponding `.feature` file.
 
 ---
 
-## 4. EXEMPLO TRABALHADO A — Busca Editorial do Interpop (1 nível de Epic)
+## 4. WORKED EXAMPLE A — *"Interpop"* *"Busca Editorial"* (1 Epic level)
 
-Exemplo enxuto para sistemas de escala média. Reflete o que está em produção no Interpop.
+Lean example for medium-scale systems. Reflects what is in production at *"Interpop"*.
 
-> **Documento de requisitos:** [`../docs/specs/busca-editorial/REQUISITOS.md`](../../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/REQUISITOS.md) (revisão de 28/05/2026)
-> **Última verificação de alteração no documento:** 03/06/2026 — sem mudanças desde a última sprint.
+> **Requirements document:** [`../docs/specs/busca-editorial/REQUISITOS.md`](../../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/REQUISITOS.md) (rev. of 28/05/2026)
+> **Last requirements-document change check:** 03/06/2026 — no changes since the last sprint.
 
 ### 🟦 EP-10 — Busca Editorial
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `EP-10` |
-| **Prioridade** | 🟠 High |
+| **Priority** | 🟠 High |
 | **Status** | In Progress |
-| **Sprint alvo** | Sprint 3, Sprint 4 |
-| **Pertence a** | Aplicação Web |
-| **Features diretas** | `F-30`, `F-31`, `F-32` |
-| **Origem (requisitos)** | RF-08, RF-09, RF-10, RNF-04 |
+| **Target sprint** | Sprint 3, Sprint 4 |
+| **Belongs to** | Aplicação Web |
+| **Direct Features** | `F-30`, `F-31`, `F-32` |
+| **Origin (requirements)** | RF-08, RF-09, RF-10, RNF-04 |
 
-**Descrição:**
+**Description:**
 
-Conjunto de funcionalidades que permite ao leitor encontrar artigos do Interpop através de palavras-chave e filtros, com resultados ordenados por relevância. Inclui o compartilhamento da busca por link (a URL preserva o termo digitado e os filtros, permitindo que o leitor envie a busca pronta para outra pessoa). O Epic cobre desde a busca simples por texto (Feature `F-30`) até a busca por filtros temáticos (`F-31`) e o compartilhamento (`F-32`).
+Conjunto de funcionalidades que permite ao leitor encontrar artigos do *"Interpop"* através de palavras-chave e filtros, com resultados ordenados por relevância. Inclui o compartilhamento da busca por link (a URL preserva o termo digitado e os filtros, permitindo que o leitor envie a busca pronta para outra pessoa). O Epic cobre desde a busca simples por texto (Feature `F-30`) até a busca por filtros temáticos (`F-31`) e o compartilhamento (`F-32`).
 
 ---
 
 ### 🟩 F-30 — Busca de artigos por texto
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `F-30` |
-| **Tipo** | Feature |
-| **Epic pai** | `EP-10` |
-| **Prioridade** | 🟠 High |
+| **Type** | Feature |
+| **Parent Epic** | `EP-10` |
+| **Priority** | 🟠 High |
 | **Status** | In Progress |
-| **Sprint alvo** | Sprint 3 |
-| **Entregável ao cliente?** | Sim |
-| **Origem (requisitos)** | RF-08, RF-09, RNF-04 |
+| **Target sprint** | Sprint 3 |
+| **Client-deliverable?** | Yes |
+| **Origin (requirements)** | RF-08, RF-09, RNF-04 |
 
-**Descrição:**
+**Description:**
 
-Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os artigos do Interpop que contenham aquele termo no título, no resumo ou no corpo. Os resultados aparecem ordenados por relevância (artigos com o termo no título aparecem primeiro), com o termo buscado destacado em amarelo dentro de cada resultado. A lista é paginada (carrega 20 artigos por vez, com botão "Carregar mais" no fim) e respeita o tempo de resposta percebido pelo leitor como instantâneo.
+Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os artigos do *"Interpop"* que contenham aquele termo no título, no resumo ou no corpo. Os resultados aparecem ordenados por relevância (artigos com o termo no título aparecem primeiro), com o termo buscado destacado em amarelo dentro de cada resultado. A lista é paginada (carrega 20 artigos por vez, com botão "Carregar mais" no fim) e respeita o tempo de resposta percebido pelo leitor como instantâneo.
 
-#### Critérios de Aceitação da F-30
+#### F-30 Acceptance Criteria
 
 ##### 📋 CA - Acesso e visibilidade
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA01` | A busca é acessível a qualquer visitante do site, sem necessidade de login. | — |
 | `CA02` | A busca exibe apenas artigos com status **publicado**. Artigos em rascunho ou em moderação nunca aparecem nos resultados. | — |
@@ -172,7 +173,7 @@ Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os
 
 ##### 📋 CA - Comportamento da consulta
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA04` | A busca aceita termos com **mínimo de 2 caracteres** e **máximo de 100 caracteres**. Termos fora dessa faixa não disparam consulta — o campo exibe a mensagem "Digite entre 2 e 100 caracteres". | — |
 | `CA05` | A busca é **case-insensitive e diacritic-insensitive**: digitar "POP", "pop", "Pop" ou "póp" retorna os mesmos artigos. | — |
@@ -181,7 +182,7 @@ Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os
 
 ##### 📋 CA - Apresentação dos resultados
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA08` | Os resultados são apresentados em **cards verticais empilhados**, contendo título, resumo (primeiras 200 caracteres), data de publicação e autor. O termo buscado aparece destacado em amarelo. | — |
 | `CA09` | A lista carrega **20 artigos por página**. No fim da página, há o botão **"Carregar mais"** que adiciona os próximos 20. | — |
@@ -189,16 +190,16 @@ Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os
 
 ##### 📋 CA - Tempo de resposta
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA11` | A primeira tela de resultados deve aparecer em até **800ms (p95)** para acervo de até 5.000 artigos publicados. | — |
 | `CA12` | Quando a consulta passar de 800ms, o sistema exibe um **indicador visual de carregamento** (skeleton dos cards) para não dar impressão de tela travada. | — |
 
-#### Detalhamento dos CAs com `[...]`
+#### Detail of ACs with `[...]`
 
-##### CA06 — Detalhamento
+##### CA06 — Detail
 
-> **Aparece no corpo do item CA06 no OpenProject:**
+> **Appears in the CA06 item body in OpenProject:**
 
 ```
 Regras a serem aplicadas:
@@ -210,9 +211,9 @@ Regras a serem aplicadas:
 - Termos com letra maiúscula e minúscula são tratados como equivalentes ("KPOP" encontra "kpop").
 ```
 
-##### CA07 — Detalhamento
+##### CA07 — Detail
 
-> **Aparece no corpo do item CA07 no OpenProject:**
+> **Appears in the CA07 item body in OpenProject:**
 
 ```
 Regras a serem aplicadas:
@@ -223,21 +224,21 @@ Regras a serem aplicadas:
 - Se o leitor combinar termo + filtro e não houver resultados, a mensagem do CA03 deve mencionar tanto o termo quanto o filtro ativo.
 ```
 
-#### User Stories da F-30
+#### F-30 User Stories
 
 ##### 🟦 US30.1 — Apresentação básica e ordenação dos resultados da busca
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `US30.1` |
-| **Feature pai** | `F-30` |
-| **Prioridade** | 🟠 High |
+| **Parent Feature** | `F-30` |
+| **Priority** | 🟠 High |
 | **Status** | In Progress |
-| **Sprint alvo** | Sprint 3 |
-| **CAs cobertos** | `CA01`, `CA02`, `CA05`, `CA06`, `CA08`, `CA09`, `CA11` |
+| **Target sprint** | Sprint 3 |
+| **Covered ACs** | `CA01`, `CA02`, `CA05`, `CA06`, `CA08`, `CA09`, `CA11` |
 | **Story Points** | 8 |
 
-**Descrição da US (campo "Descrição" no OpenProject — BDD em pt-BR, todos os cenários ficam aqui):**
+**US Description (the "Description" field in OpenProject — pt-BR BDD, all scenarios live here):**
 
 ```gherkin
 # language: pt
@@ -269,9 +270,9 @@ Cenário: Leitor compartilha a busca por link
   E o termo "kpop" aparece preenchido no campo de busca
 ```
 
-**Tasks da US30.1** (termos técnicos PERMITIDOS):
+**US30.1 Tasks** (technical terms ALLOWED):
 
-| ID | Descrição da Task | Prioridade |
+| ID | Task description | Priority |
 |---|---|---|
 | `T30.1.1` | Implementar endpoint `GET /api/v1/search/articles?q=&tema=&cursor=` com paginação keyset assinada HMAC. | 🟠 |
 | `T30.1.2` | Indexar coluna `tsvector` (Postgres `to_tsvector('portuguese', title \|\| ' ' \|\| body)`) com weights A/B/C. | 🟠 |
@@ -283,17 +284,17 @@ Cenário: Leitor compartilha a busca por link
 
 ##### 🟦 US30.2 — Filtragem temática dos resultados da busca
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `US30.2` |
-| **Feature pai** | `F-30` |
-| **Prioridade** | 🟠 High |
+| **Parent Feature** | `F-30` |
+| **Priority** | 🟠 High |
 | **Status** | Refining |
-| **Sprint alvo** | Sprint 4 |
-| **CAs cobertos** | `CA07`, `CA10` |
+| **Target sprint** | Sprint 4 |
+| **Covered ACs** | `CA07`, `CA10` |
 | **Story Points** | 5 |
 
-**Descrição da US (campo "Descrição" no OpenProject — BDD em pt-BR):**
+**US Description (the "Description" field in OpenProject — pt-BR BDD):**
 
 ```gherkin
 # language: pt
@@ -313,9 +314,9 @@ Cenário: Leitor remove todos os filtros e mantém o termo
   E o termo "kpop" continua preenchido no campo de busca
 ```
 
-**Tasks da US30.2:**
+**US30.2 Tasks:**
 
-| ID | Descrição da Task | Prioridade |
+| ID | Task description | Priority |
 |---|---|---|
 | `T30.2.1` | Adicionar parâmetro `tema` ao endpoint de busca; aplicar `WHERE article.tema_id = ANY(:temas)`. | 🟠 |
 | `T30.2.2` | Implementar componente `<ChipFilter>` que sincroniza com query string via React Router. | 🟠 |
@@ -323,9 +324,9 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 
 ---
 
-## 📋 Tasks transversais (configurações técnicas que NÃO são Features)
+## 📋 Cross-cutting Tasks (technical configurations that are NOT Features)
 
-| ID | Descrição | Prioridade | Para qual US |
+| ID | Description | Priority | For which US |
 |---|---|---|---|
 | `TX-12` | Adicionar índice `idx_article_search_vector` na migration `0008_search_index.sql`. | 🟠 | `T30.1.2` |
 | `TX-13` | Configurar variável `SEARCH_DEBOUNCE_MS=250` no `.env.example` e em `config/settings/base.py`. | 🟡 | `T30.1.3` |
@@ -333,108 +334,108 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 
 ---
 
-## 📊 Resumo do backlog
+## 📊 Backlog summary
 
-| Nível | Quantidade |
+| Level | Count |
 |---|---|
-| Epics (incluindo sub-Epics) | 1 |
+| Epics (including sub-Epics) | 1 |
 | Features | 1 (`F-30`) |
-| CAs | 12 (em 4 grupos: Acesso, Comportamento, Apresentação, Tempo de resposta — **2 com `[...]` detalhado**: `CA06`, `CA07`) |
+| ACs | 12 (in 4 groups: Acesso, Comportamento, Apresentação, Tempo de resposta — **2 with `[...]` detail**: `CA06`, `CA07`) |
 | User Stories | 2 (`US30.1`, `US30.2`) |
-| BDD cenários | 5 |
+| BDD scenarios | 5 |
 | Tasks (US-bound) | 10 |
-| Tasks transversais | 3 |
-| **Story Points totais** | **8 (Sprint 3) + 5 (Sprint 4) = 13** |
+| Cross-cutting Tasks | 3 |
+| **Total Story Points** | **8 (Sprint 3) + 5 (Sprint 4) = 13** |
 
-### Plano de Sprints
+### Sprint plan
 
-| Sprint | Foco | Story Points | Features entregues |
+| Sprint | Focus | Story Points | Features delivered |
 |---|---|---|---|
-| Sprint 3 | Busca básica funcional ponta-a-ponta (US30.1) | 8 | — (Feature F-30 ainda não 100%) |
-| Sprint 4 | Filtros temáticos (US30.2) + revisão de relevância | 5 | `F-30` 100% |
+| Sprint 3 | Functional end-to-end basic search (US30.1) | 8 | — (Feature F-30 not yet 100%) |
+| Sprint 4 | Thematic filters (US30.2) + relevance review | 5 | `F-30` 100% |
 
 ---
 
-## 🔗 Rastreabilidade
+## 🔗 Traceability
 
-| Requisito (RF/RNF) | Origem (doc de requisitos) | Feature | US | CA | BDD | Task | Teste |
+| Requirement (RF/RNF) | Origin (requirements doc) | Feature | US | AC | BDD | Task | Test |
 |---|---|---|---|---|---|---|---|
 | RF-08: O leitor pode buscar artigos por texto livre | `REQUISITOS.md` §4.2 | `F-30` | `US30.1` | `CA01`, `CA05`, `CA06` | "Leitor realiza busca simples e visualiza resultados ordenados" | `T30.1.1`, `T30.1.2` | `backend/tests/test_search.py::test_busca_basica`, `e2e/search.spec.ts::busca-simples` |
-| RNF-04: A primeira tela de busca deve aparecer em ≤800ms (p95) | `REQUISITOS.md` §5.3 | `F-30` | `US30.1` | `CA11` | (mesmo cenário acima) | `T30.1.2` | `backend/tests/test_search_perf.py::test_p95_under_800ms` |
+| RNF-04: A primeira tela de busca deve aparecer em ≤800ms (p95) | `REQUISITOS.md` §5.3 | `F-30` | `US30.1` | `CA11` | (same scenario above) | `T30.1.2` | `backend/tests/test_search_perf.py::test_p95_under_800ms` |
 | RF-09: O leitor pode filtrar busca por tema editorial | `REQUISITOS.md` §4.3 | `F-30` | `US30.2` | `CA07`, `CA10` | "Leitor combina termo de busca com filtro de tema" | `T30.2.1`, `T30.2.2` | `e2e/search.spec.ts::filtro-tema` |
 
 ---
 
-## ⚖️ Validação Falbo (7 dimensões por Feature)
+## ⚖️ Falbo validation (7 dimensions per Feature)
 
-| Feature | Completo | Correto | Consistente | Realista | Necessário | Priorizável | Verificável |
+| Feature | Complete | Correct | Consistent | Realistic | Necessary | Prioritizable | Verifiable |
 |---|---|---|---|---|---|---|---|
-| `F-30` | ✅ entrada/regra/saída de cada CA | ✅ revisto com PO em 03/06 | ✅ CAs não se contradizem | ✅ Postgres + tsvector já dominado | ✅ leitor pediu em pesquisa de UX | ✅ 🟠 High | ✅ 12 testes cobrindo CAs |
+| `F-30` | ✅ input/rule/output of each AC | ✅ reviewed with PO on 03/06 | ✅ ACs do not contradict each other | ✅ Postgres + tsvector already mastered | ✅ reader requested in UX research | ✅ 🟠 High | ✅ 12 tests covering ACs |
 
 ---
 
-## 5. EXEMPLO TRABALHADO B — Epic profundamente aninhado (Cadastro de Atletas, sistema de Controle de Dopagem)
+## 5. WORKED EXAMPLE B — Deeply nested Epic (*"Cadastro de Atletas"*, Doping Control system)
 
-Exemplo para sistemas grandes. Reflete o print do OpenProject do curso ERS do IFPB.
+Example for large systems. Reflects the OpenProject screenshot from the *"IFPB"* ERS course.
 
-> **Documento de requisitos:** `docs/specs/controle-dopagem/REQUISITOS.md` (revisão de 12/11/2025)
+> **Requirements document:** `docs/specs/controle-dopagem/REQUISITOS.md` (rev. of 12/11/2025)
 
 ### 🟦 EP-100 — Aplicação Web
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `EP-100` |
-| **Prioridade** | 🟠 High |
-| **Pertence a** | Sistema de Controle de Dopagem (CNPq 487777/2013-1) |
-| **Origem (requisitos)** | RF-001 a RF-133 (escopo total) |
-| **Sub-Epics** | `EP-100.1` (Módulo Administrativo) e outros 9 módulos |
+| **Priority** | 🟠 High |
+| **Belongs to** | *"Sistema de Controle de Dopagem"* (*"CNPq"* 487777/2013-1) |
+| **Origin (requirements)** | RF-001 to RF-133 (total scope) |
+| **Sub-Epics** | `EP-100.1` (Módulo Administrativo) and 9 other modules |
 
-**Descrição:**
+**Description:**
 
-Toda a interface web do sistema nacional de controle antidopagem. Reúne dez módulos operacionais (Administrativo, Dopagem, STJD, OCD/Escoltas, Uso Geral, Financeiro, Estatístico, Técnico, Controle de Acesso) que atendem ABCD, COB, confederações esportivas, atletas e laboratórios credenciados.
+Toda a interface web do sistema nacional de controle antidopagem. Reúne dez módulos operacionais (Administrativo, Dopagem, *"STJD"*, *"OCD"*/*"Escoltas"*, Uso Geral, Financeiro, Estatístico, Técnico, Controle de Acesso) que atendem *"ABCD"*, *"COB"*, confederações esportivas, atletas e laboratórios credenciados.
 
 ---
 
 ### 🟦 EP-100.1 — Módulo Administrativo
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `EP-100.1` |
-| **Epic pai** | `EP-100` |
-| **Origem (requisitos)** | RF-001 a RF-040 |
+| **Parent Epic** | `EP-100` |
+| **Origin (requirements)** | RF-001 to RF-040 |
 | **Sub-Epics** | `EP-100.1.1` (Gestão de Atletas), `EP-100.1.2` (Gestão de Médicos), … |
 
-**Descrição:**
+**Description:**
 
-Módulo que reúne todas as operações de cadastro, consulta e relatório dos atores que participam de competições reguladas: atletas, médicos, confederações, federações, modalidades, competições, treinadores. É o módulo de **dados-mestres** do sistema — a partir dele os demais módulos (Dopagem, STJD, Financeiro) consomem dados.
+Módulo que reúne todas as operações de cadastro, consulta e relatório dos atores que participam de competições reguladas: atletas, médicos, confederações, federações, modalidades, competições, treinadores. É o módulo de **dados-mestres** do sistema — a partir dele os demais módulos (Dopagem, *"STJD"*, Financeiro) consomem dados.
 
 ---
 
 ### 🟦 EP-100.1.1 — Gestão de Atletas
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `EP-100.1.1` |
-| **Epic pai** | `EP-100.1` |
-| **Origem (requisitos)** | RF-001 a RF-020 |
+| **Parent Epic** | `EP-100.1` |
+| **Origin (requirements)** | RF-001 to RF-020 |
 | **Sub-Epics** | `EP-100.1.1.1` (Cadastro), `EP-100.1.1.2` (Consulta), `EP-100.1.1.3` (Relatório) |
 
-**Descrição:**
+**Description:**
 
-Conjunto de operações que dão ao operador da ABCD/confederação a visão completa de cada atleta: desde o cadastro inicial (dados pessoais, categorias, patrocinadores) até a consulta com filtros avançados e a geração de relatórios para fiscalização e prestação de contas.
+Conjunto de operações que dão ao operador da *"ABCD"*/confederação a visão completa de cada atleta: desde o cadastro inicial (dados pessoais, categorias, patrocinadores) até a consulta com filtros avançados e a geração de relatórios para fiscalização e prestação de contas.
 
 ---
 
 ### 🟦 EP-100.1.1.1 — Cadastro de Atletas
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `EP-100.1.1.1` |
-| **Epic pai** | `EP-100.1.1` |
-| **Origem (requisitos)** | RF-001 a RF-010 |
-| **Features diretas** | `F-200` Cadastro Básico, `F-201` Categorias Esportivas, `F-202` Patrocinadores, `F-203` Técnico, `F-204` Bolsa Atleta, `F-205` Equipe Médica, `F-206` Convocações, `F-207` Programas Especiais, `F-208` Clubes/Associações, `F-209` Resultados em Competições |
+| **Parent Epic** | `EP-100.1.1` |
+| **Origin (requirements)** | RF-001 to RF-010 |
+| **Direct Features** | `F-200` Cadastro Básico, `F-201` Categorias Esportivas, `F-202` Patrocinadores, `F-203` Técnico, `F-204` Bolsa Atleta, `F-205` Equipe Médica, `F-206` Convocações, `F-207` Programas Especiais, `F-208` Clubes/Associações, `F-209` Resultados em Competições |
 
-**Descrição:**
+**Description:**
 
 Conjunto de telas que permitem ao operador da confederação registrar e manter atualizado o cadastro completo de cada atleta nacional. O cadastro é segmentado em dez Features independentes, cada uma cobrindo um aspecto distinto da vida do atleta (dados pessoais, vínculos esportivos, suporte técnico, financeiro, médico e histórico competitivo). Cada Feature é entregue separadamente porque pode ser preenchida em momentos diferentes (não há ordem obrigatória além do cadastro básico vir antes dos demais).
 
@@ -442,31 +443,31 @@ Conjunto de telas que permitem ao operador da confederação registrar e manter 
 
 ### 🟩 F-200 — Cadastro Básico do Atleta
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `F-200` |
-| **Tipo** | Feature |
-| **Epic pai** | `EP-100.1.1.1` |
-| **Prioridade** | 🔴 Immediate |
-| **Origem (requisitos)** | RF-001 |
-| **Entregável ao cliente?** | Sim |
+| **Type** | Feature |
+| **Parent Epic** | `EP-100.1.1.1` |
+| **Priority** | 🔴 Immediate |
+| **Origin (requirements)** | RF-001 |
+| **Client-deliverable?** | Yes |
 
-**Descrição:**
+**Description:**
 
-Tela de cadastro com os dados pessoais essenciais do atleta: nome completo, data de nascimento, CPF, gênero, nacionalidade, RG e endereço residencial. É o ponto de entrada do sistema para um novo atleta — sem este cadastro, nenhuma das outras Features de Gestão de Atletas pode ser usada. O operador da confederação preenche, valida e salva; o atleta passa a constar no sistema nacional.
+Tela de cadastro com os dados pessoais essenciais do atleta: nome completo, data de nascimento, *"CPF"*, gênero, nacionalidade, *"RG"* e endereço residencial. É o ponto de entrada do sistema para um novo atleta — sem este cadastro, nenhuma das outras Features de Gestão de Atletas pode ser usada. O operador da confederação preenche, valida e salva; o atleta passa a constar no sistema nacional.
 
-#### Critérios de Aceitação da F-200
+#### F-200 Acceptance Criteria
 
 ##### 📋 CA - Cadastro dados pessoais
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
-| `CA01` | Apenas usuários autorizados (operador da confederação ou administrador ABCD) podem cadastrar atletas. | — |
+| `CA01` | Apenas usuários autorizados (operador da confederação ou administrador *"ABCD"*) podem cadastrar atletas. | — |
 | `CA02` | O sistema deve impedir o cadastro de dois atletas com o mesmo CPF. Caso já exista, exibir a mensagem "CPF já cadastrado para <nome do atleta>". | — |
 | `CA03` | A data de nascimento deve resultar em uma idade entre 5 e 80 anos no momento do cadastro. Fora dessa faixa, o sistema exibe alerta de revisão. | — |
 | `CA04` | O CPF deve ser validado quanto a formato e dígito verificador **[...]** | ✅ |
 
-##### CA04 — Detalhamento (no corpo do item)
+##### CA04 — Detail (in the item body)
 
 ```
 Regras a serem aplicadas:
@@ -477,22 +478,22 @@ Regras a serem aplicadas:
 - Não permitir o salvamento enquanto o CPF estiver inválido.
 ```
 
-> _Demais Features (F-201 a F-209) seguem o mesmo padrão. Em backlog real, cada Feature ocupa sua própria seção com descrição, CAs, US e Tasks._
+> _The remaining Features (F-201 to F-209) follow the same pattern. In a real backlog, each Feature has its own section with description, ACs, US, and Tasks._
 
 ---
 
-## ✅ Smell test (passe antes de mergear backlog)
+## ✅ Smell test (run before merging the backlog)
 
-- [ ] **Você verificou o documento de requisitos antes de mexer no backlog?** (data da última conferência registrada no topo do BACKLOG.md)
-- [ ] Toda Feature/US/CA tem **link de origem** (`Origem (requisitos)`) apontando para o item correspondente no documento de requisitos?
-- [ ] Todo Epic/Feature/US/CA/RNF tem **descrição** em pt-BR sem termo técnico?
-- [ ] Toda Feature é **entregável ao cliente** (sem ambiguidade)?
-- [ ] Toda US tem **BDD** em pt-BR com cenários nomeados (≥2 cenários: feliz + erro/borda) no campo "Descrição" da US?
-- [ ] Todo CA é **declarativo, atômico e testável**? CAs com sub-regras encerram em **`[...]`** e têm "Regras a serem aplicadas:" no corpo?
-- [ ] Todo CA está **dentro de um grupo `CA - <Tema>`** (mesmo Feature com 1 só CA)?
-- [ ] Epic está **aninhado** quando o domínio tem sub-classificações?
-- [ ] Toda Task transversal está em **`TX-NN`**, fora da hierarquia Epic/Feature/US?
-- [ ] **Prioridade** (🔴/🟠/🟡/⚪) em todos os nós?
-- [ ] **IDs estáveis** (não renumerados em mudanças posteriores)?
-- [ ] **Rastreabilidade** RF/RNF → Feature → US → CA → BDD → Task → Teste **completa** para cada Feature?
-- [ ] **Validação Falbo** preenchida com justificativa de 1 linha por dimensão?
+- [ ] **Did you check the requirements document before touching the backlog?** (date of the last check recorded at the top of BACKLOG.md)
+- [ ] Does every Feature/US/CA have an **origin link** (`Origin (requirements)`) pointing to the corresponding item in the requirements document?
+- [ ] Does every Epic/Feature/US/CA/RNF have a **description** in pt-BR without technical terms?
+- [ ] Is every Feature **client-deliverable** (unambiguously)?
+- [ ] Does every US have **BDD** in pt-BR with named scenarios (≥2 scenarios: happy + error/edge) in the US "Description" field?
+- [ ] Is every AC **declarative, atomic, and testable**? Do ACs with sub-rules end with **`[...]`** and have "Regras a serem aplicadas:" in the body?
+- [ ] Is every AC **inside a `CA - <Theme>` group** (even Features with only 1 AC)?
+- [ ] Is the Epic **nested** when the domain has sub-classifications?
+- [ ] Is every cross-cutting Task in **`TX-NN`**, outside the Epic/Feature/US hierarchy?
+- [ ] **Priority** (🔴/🟠/🟡/⚪) on every node?
+- [ ] **Stable IDs** (not renumbered on later changes)?
+- [ ] **Traceability** RF/RNF → Feature → US → AC → BDD → Task → Test **complete** for each Feature?
+- [ ] **Falbo validation** filled with a 1-line justification per dimension?

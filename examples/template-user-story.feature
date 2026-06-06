@@ -1,46 +1,55 @@
 # language: pt
 #
-# Template — arquivo .feature pronto para copiar (Gherkin pt-BR)
-# ---------------------------------------------------------------
+# Template — ready-to-copy .feature file (Gherkin pt-BR)
+# ------------------------------------------------------
 #
-# COMO USAR:
-#   1. Copie este arquivo para o repositório do projeto (Django: backend/features/<US-id>.feature;
+# NOTE ON LANGUAGE: this template uses **pt-BR Gherkin** (`# language: pt`,
+# `Funcionalidade:`, `Cenário:`, `Dado/Quando/Então`) because it reproduces
+# the actual format used by Interpop, SIRA, and Controle de Dopagem
+# projects, whose stakeholders read Portuguese. For projects in en-CA,
+# remove the `# language: pt` header at the top and use the English
+# keywords (`Feature:`, `Scenario:`, `Given/When/Then`). Gherkin
+# semantics are identical in both dialects (Cucumber, Behave, SpecFlow,
+# Behat all support both natively).
+#
+# HOW TO USE:
+#   1. Copy this file into the project repository (Django: backend/features/<US-id>.feature;
 #      React + Playwright: e2e/features/<US-id>.feature).
-#   2. Renomeie o arquivo refletindo o ID da User Story (ex.: US30-1-busca-editorial.feature).
-#   3. Substitua o exemplo da Busca Editorial pelo conteúdo real da SUA User Story.
-#   4. Cada `Cenário:` é executável separadamente. Cubra: caminho feliz + erro/borda + (se útil)
-#      caminho alternativo.
+#   2. Rename the file to reflect the User Story ID (e.g.: US30-1-busca-editorial.feature).
+#   3. Replace the Busca Editorial example with the real content of YOUR User Story.
+#   4. Each `Cenário:` runs separately. Cover: happy path + error/edge + (if useful)
+#      alternative path.
 #
-# COMO MAPEAR PARA O BACKLOG:
-#   - "Funcionalidade:" (palavra-chave Gherkin) NÃO é a Feature da hierarquia OpenProject!
-#     Em geral mapeia 1-para-1 com UMA User Story do backlog.
-#     Ver references/04-bdd-criterios-aceitacao.md §3.5 para o falso amigo terminológico.
+# HOW TO MAP TO THE BACKLOG:
+#   - "Funcionalidade:" (Gherkin keyword) is NOT the Feature of the OpenProject hierarchy!
+#     It generally maps 1-to-1 with ONE User Story of the backlog.
+#     See references/04-bdd-criterios-aceitacao.md §3.5 for the terminological false friend.
 #
-#   - "Cenário:" é o conteúdo do campo "Descrição" da User Story.
-#     Não cria card filho no OpenProject.
+#   - "Cenário:" is the content of the User Story "Description" field.
+#     Does not create a child card in OpenProject.
 #
-# REGRAS DURAS DOS CENÁRIOS (Liz Keogh — qualidade de cenário BDD):
-#   - Concreto — use valores reais ("R$ 100", "kpop", "joão@email.com"), não placeholders.
-#   - Curto — 3-7 steps por cenário. Mais que isso, fatie em múltiplos cenários.
-#   - Foco em UM comportamento — não teste 3 coisas no mesmo cenário.
-#   - Independente de UI — fale em termos de domínio ("leitor busca por X"),
-#     não de implementação ("usuário clica no botão #submit-search").
-#   - Determinístico — mesmo Dado+Quando → sempre o mesmo Então (sem Date.now(), sem random).
-#   - Não acopla — Dado de um cenário NÃO depende de execução de outro.
+# HARD RULES FOR SCENARIOS (Liz Keogh — BDD scenario quality):
+#   - Concrete — use real values ("CAD $100", "kpop", "joao@email.com"), not placeholders.
+#   - Short — 3-7 steps per scenario. More than that, split into multiple scenarios.
+#   - Focus on ONE behaviour — do not test 3 things in the same scenario.
+#   - UI-independent — talk in domain terms ("the reader searches for X"),
+#     not implementation ("the user clicks the #submit-search button").
+#   - Deterministic — same Dado+Quando → always the same Então (no Date.now(), no random).
+#   - Non-coupling — Dado of one scenario does NOT depend on execution of another.
 #
-# CONVENÇÃO DE STEP:
-#   Dado / Given  → ESTADO (pré-condição, sem ação, sem verificação)
-#   Quando / When → AÇÃO (sem verificação)
-#   Então / Then  → VERIFICAÇÃO (sem mudar estado)
-#   E / Mas       → conjunção/negação (de qualquer cláusula)
+# STEP CONVENTION:
+#   Dado / Given  → STATE (pre-condition, no action, no verification)
+#   Quando / When → ACTION (no verification)
+#   Então / Then  → VERIFICATION (no state change)
+#   E / Mas       → conjunction/negation (of any clause)
 #
-# RASTREABILIDADE OBRIGATÓRIA NO COMENTÁRIO DE TOPO:
-#   @US: ID da User Story do backlog
-#   @F:  ID da Feature pai
-#   @EP: ID do Epic
-#   @CAs: lista dos CAs cobertos
+# MANDATORY TRACEABILITY IN THE TOP COMMENT:
+#   @US: User Story ID from the backlog
+#   @F:  parent Feature ID
+#   @EP: Epic ID
+#   @CAs: list of covered ACs
 #   @SP: story points
-#   @Doc-Req: caminho relativo do documento de requisitos
+#   @Doc-Req: relative path to the requirements document
 #
 # ==============================================================================
 
@@ -57,7 +66,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
   Para encontrar conteúdo do meu interesse rapidamente
 
   # ----------------------------------------------------------------------------
-  # CONTEXTO — pré-condições comuns a todos os cenários abaixo
+  # CONTEXT — pre-conditions common to all scenarios below
   # ----------------------------------------------------------------------------
   Contexto:
     Dado que o sistema Interpop está acessível ao público
@@ -65,7 +74,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
     E não exijo login para realizar busca
 
   # ----------------------------------------------------------------------------
-  # CENÁRIO 1 — caminho feliz (CA01, CA02, CA05, CA06, CA08, CA09, CA11)
+  # SCENARIO 1 — happy path (CA01, CA02, CA05, CA06, CA08, CA09, CA11)
   # ----------------------------------------------------------------------------
   Cenário: Leitor realiza busca simples e visualiza resultados ordenados
     Dado que o leitor está na página principal do Interpop
@@ -80,7 +89,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
     E a primeira tela completa carrega em menos de 800ms
 
   # ----------------------------------------------------------------------------
-  # CENÁRIO 2 — caminho alternativo / ausência de resultado (CA03)
+  # SCENARIO 2 — alternative path / no result (CA03)
   # ----------------------------------------------------------------------------
   Cenário: Leitor não encontra resultados
     Dado que o leitor está na página de busca
@@ -90,7 +99,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
     E o campo de busca permanece preenchido com o termo digitado
 
   # ----------------------------------------------------------------------------
-  # CENÁRIO 3 — compartilhamento por link (CA10, conecta com US30.2)
+  # SCENARIO 3 — link sharing (CA10, connects with US30.2)
   # ----------------------------------------------------------------------------
   Cenário: Leitor compartilha a busca por link
     Dado que o leitor está vendo os resultados da busca por "kpop"
@@ -101,7 +110,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
     E o termo "kpop" aparece preenchido no campo de busca
 
   # ----------------------------------------------------------------------------
-  # CENÁRIO 4 — borda: termo curto demais (CA04)
+  # SCENARIO 4 — edge: term too short (CA04)
   # ----------------------------------------------------------------------------
   Cenário: Leitor digita termo abaixo do mínimo
     Dado que o leitor está na página de busca
@@ -111,7 +120,7 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
     E nenhum card é renderizado
 
   # ----------------------------------------------------------------------------
-  # ESQUEMA DO CENÁRIO — variações de input para CA05 (case + diacritic insensitive)
+  # SCENARIO OUTLINE — input variations for CA05 (case + diacritic insensitive)
   # ----------------------------------------------------------------------------
   Esquema do Cenário: Busca é case-insensitive e diacritic-insensitive
     Dado que existe 1 artigo publicado com o título "Pop coreano: o caso BTS"
@@ -127,11 +136,11 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
       | PÓP   |
 
 # ==============================================================================
-# NOTA TÉCNICA (para a equipe que vai automatizar)
+# TECHNICAL NOTE (for the team that will automate)
 # ==============================================================================
 #
-# Este arquivo .feature é EXECUTÁVEL via:
-#   - Backend Python  → pytest-bdd OU behave (recomendamos pytest-bdd no Interpop).
+# This .feature file is EXECUTABLE via:
+#   - Python backend  → pytest-bdd OR behave (we recommend pytest-bdd in Interpop).
 #   - Frontend E2E    → @cucumber/cucumber + Playwright (cucumber-playwright).
 #
 # Step definitions (Python — pytest-bdd):

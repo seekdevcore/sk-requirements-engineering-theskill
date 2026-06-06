@@ -1,351 +1,353 @@
-# Template — Documento de Requisitos (exemplo trabalhado completo)
+# Template — Requirements Document (complete worked example)
 
-> Template **preenchido com exemplo real**, não esqueleto vazio. Use-o como ponto de partida concreto para qualquer documento de requisitos do projeto. Estrutura combina IEEE 830 (clássico), Sommerville 10e cap. 4, Wiegers 3e (cap. 10) e a convenção Interpop. Substitua o exemplo pelo seu domínio mantendo todas as convenções.
-
----
-
-## 0. O documento de requisitos é a fonte da verdade
-
-**Regra zero (não negociável)**: este documento é a **base** do projeto. Tudo o que vai ser construído nasce daqui — backlog, planos de sprint, código, testes. Por isso:
-
-- 📌 **Toda alteração de escopo passa por este documento PRIMEIRO**, depois propaga para o backlog. Nunca o contrário.
-- 🔁 **Mudanças são versionadas** com data, autor, motivo e impacto (ver §11 Histórico de revisões).
-- 📎 **O backlog do projeto aponta de volta** para este documento (`Origem (requisitos)` em cada Epic/Feature/CA/RNF).
-- ✋ **Quando surge necessidade nova durante implementação** (refinamento técnico revela buraco, cliente pede ajuste em conversa), o fluxo correto é: **(1)** registrar a discussão; **(2)** atualizar este documento; **(3)** propagar para o backlog; **(4)** só então implementar. Pular passos cria scope creep silencioso.
+> Template **filled with a real example**, not an empty skeleton. Use it as a concrete starting point for any project requirements document. Structure combines IEEE 830 (classical), Sommerville 10e Ch. 4, Wiegers 3e (Ch. 10), and the *"Interpop"* convention. Replace the example with your domain while keeping all conventions.
+>
+> **Note on language preservation**: section headers, hard rules, explanations, and the smell test are in **en-CA**. The **worked example body** (RF/RNF/G descriptions, business rules, glossary) is preserved in **pt-BR** because it reproduces the real *"Interpop"* *"Busca Editorial"* requirements document — translating would defeat the worked-example purpose.
 
 ---
 
-## 1. Regras duras (não negociáveis)
+## 0. The requirements document is the source of truth
 
-1. **Linguagem de negócio em pt-BR** em todo o documento. Endpoints REST, libs, frameworks, nomes de tabelas, comandos shell, métodos — tudo isso **NÃO entra aqui**. Vai para o backlog (Tasks) ou para os ADRs técnicos. Quem lê este documento é o cliente, o PO, o analista, o dev júnior, o auditor — todos têm que entender sem glossário técnico.
-2. **TODOS os artefatos têm descrição**: RF, RNF, regras de negócio (G), classes de usuários, restrições. Não basta título; descrição explica o "porquê" e o "como o cliente vai sentir isso".
-3. **Toda regra é testável**. Se a frase contém adjetivos vagos ("rápido", "amigável", "intuitivo", "robusto"), não é requisito — é desejo. Reescreva com métrica ou comportamento observável.
-4. **IDs estáveis** (`RF-NN`, `RNF-NN`, `G-NN`). IDs não mudam quando o conteúdo evolui — só a versão.
-5. **Cada RF/RNF declara fonte** (stakeholder, documento normativo, observação) — para validar e justificar em revisão.
-6. **Cada RF/RNF declara prioridade** (🔴 Immediate, 🟠 High, 🟡 Normal, ⚪ Low) — para o backlog herdar a ordem.
+**Rule zero (non-negotiable)**: this document is the **basis** of the project. Everything to be built is born here — backlog, sprint plans, code, tests. So:
 
----
-
-# Documento de Requisitos — Busca Editorial do Interpop
-
-> **Projeto**: Interpop — editorial brasileiro de Soft Power (cultura pop crítica)
-> **Versão**: 1.2 (revisão de 28/05/2026)
-> **Autor**: Gabriel Marques
-> **Stakeholders aprovadores**: Gabriel Marques (dev/dono), equipe editorial (3 redatores)
-> **Backlog correspondente**: [`docs/specs/busca-editorial/BACKLOG.md`](../../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md)
+- 📌 **Every scope change goes through this document FIRST**, then propagates to the backlog. Never the other way around.
+- 🔁 **Changes are versioned** with date, author, reason, and impact (see §11 Revision history).
+- 📎 **The project backlog points back** to this document (`Origin (requirements)` in every Epic/Feature/CA/RNF).
+- ✋ **When a new need arises during implementation** (technical refinement reveals a gap, the client asks for an adjustment in conversation), the correct flow is: **(1)** record the discussion; **(2)** update this document; **(3)** propagate to the backlog; **(4)** only then implement. Skipping steps creates silent scope creep.
 
 ---
 
-## 2. Introdução
+## 1. Hard rules (non-negotiable)
 
-### 2.1 Propósito
+1. **Business language in pt-BR** across the whole document. REST endpoints, libs, frameworks, table names, shell commands, methods — none of this **goes here**. They go to the backlog (Tasks) or to technical ADRs. Whoever reads this document is the client, the PO, the analyst, the junior dev, the auditor — all must understand without a technical glossary.
+2. **ALL artifacts have descriptions**: RF, RNF, business rules (G), user classes, constraints. Title alone is not enough; the description explains the "why" and "how the client will perceive this".
+3. **Every rule is testable**. If the sentence contains vague adjectives ("fast", "friendly", "intuitive", "robust"), it is not a requirement — it is a wish. Rewrite with a metric or observable behaviour.
+4. **Stable IDs** (`RF-NN`, `RNF-NN`, `G-NN`). IDs do not change when content evolves — only the version does.
+5. **Every RF/RNF declares a source** (stakeholder, normative document, observation) — to validate and justify in review.
+6. **Every RF/RNF declares a priority** (🔴 Immediate, 🟠 High, 🟡 Normal, ⚪ Low) — so the backlog inherits the order.
 
-Especificar os requisitos para a funcionalidade de **busca editorial** do site Interpop. A busca permite que leitores encontrem artigos publicados por palavra-chave e por filtros temáticos, e que compartilhem o resultado da busca por link. Este documento é a base do backlog correspondente e a referência para validação ao final do desenvolvimento.
+---
 
-### 2.2 Escopo
+# Requirements Document — *"Interpop"* *"Busca Editorial"*
 
-A busca cobre **artigos publicados** (não rascunhos, não em moderação). Indexa três campos: título, resumo e corpo. Suporta filtragem por **temas editoriais** (definidos pela equipe editorial — atualmente: Música, Moda, Cinema, Literatura, Cultura Digital). Inclui ordenação por relevância (peso decrescente título > resumo > corpo, desempate por data) e compartilhamento por link.
+> **Project**: *"Interpop"* — Brazilian editorial of *"Soft Power"* (critical pop culture)
+> **Version**: 1.2 (rev. of 28/05/2026)
+> **Author**: *"Gabriel Marques"*
+> **Approving stakeholders**: *"Gabriel Marques"* (dev/owner), editorial team (3 writers)
+> **Corresponding backlog**: [`docs/specs/busca-editorial/BACKLOG.md`](../../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md)
 
-**Fora do escopo (versão 1.2)**: busca por autor, busca dentro de comentários, busca semântica via embeddings, sugestões de termo enquanto o leitor digita ("autocomplete"). Estes podem virar Epics futuros.
+---
 
-### 2.3 Definições, acrônimos e abreviações
+## 2. Introduction
 
-| Termo | Significado |
+### 2.1 Purpose
+
+Specify the requirements for the **editorial search** feature of the *"Interpop"* site. Search lets readers find published articles by keyword and by thematic filters, and lets them share the search result via link. This document is the basis of the corresponding backlog and the reference for end-of-development validation.
+
+### 2.2 Scope
+
+Search covers **published articles** (not drafts, not those in moderation). Indexes three fields: title, summary, and body. Supports filtering by **editorial themes** (defined by the editorial team — currently: *"Música"*, *"Moda"*, *"Cinema"*, *"Literatura"*, *"Cultura Digital"*). Includes ranking by relevance (decreasing weight title > summary > body, tiebreak by date) and link sharing.
+
+**Out of scope (v1.2)**: search by author, search within comments, semantic search via embeddings, term suggestions while the reader types ("autocomplete"). These may become future Epics.
+
+### 2.3 Definitions, acronyms, and abbreviations
+
+| Term | Meaning |
 |---|---|
-| **Leitor** | Visitante do site, autenticado ou anônimo, que consome o conteúdo editorial. |
-| **Artigo** | Texto editorial publicado, com título, resumo, corpo, autor, data, tema. |
-| **Tema editorial** | Categoria fixa definida pela equipe editorial. Atualmente são 5 (Música, Moda, Cinema, Literatura, Cultura Digital). |
-| **Relevância** | Score numérico calculado pela posição do termo buscado (título > resumo > corpo) e pela data do artigo (mais recente vence em empate). |
-| **p95** | Percentil 95 do tempo de resposta — 95% das requisições respondem em ≤ ao valor declarado. |
-| **CWV** | Core Web Vitals (LCP, INP, CLS) — métricas de qualidade percebida pelo Google. |
+| **Reader** | Site visitor, authenticated or anonymous, who consumes editorial content. |
+| **Article** | Published editorial text, with title, summary, body, author, date, theme. |
+| **Editorial theme** | Fixed category defined by the editorial team. Currently 5 (*"Música"*, *"Moda"*, *"Cinema"*, *"Literatura"*, *"Cultura Digital"*). |
+| **Relevance** | Numeric score computed by the position of the searched term (title > summary > body) and by article date (most recent wins tiebreak). |
+| **p95** | 95th percentile of response time — 95% of requests respond in ≤ the declared value. |
+| **CWV** | Core Web Vitals (LCP, INP, CLS) — Google's quality-perceived metrics. |
 
-### 2.4 Referências externas
+### 2.4 External references
 
-- LGPD (Lei nº 13.709/2018) — proteção de dados pessoais do leitor (queries armazenadas, se houver).
-- WCAG 2.2 AA — acessibilidade da interface de busca.
-- Diretriz editorial Interpop, v3 (2026-03) — define temas e critérios de moderação.
+- *"LGPD"* (*"Lei nº 13.709/2018"*) — protection of reader personal data (stored queries, if any).
+- WCAG 2.2 AA — accessibility of the search interface.
+- *"Interpop"* editorial guideline, v3 (2026-03) — defines themes and moderation criteria.
 
 ---
 
-## 3. Descrição geral
+## 3. Overall description
 
-### 3.1 Perspectiva do produto
+### 3.1 Product perspective
 
-A busca é uma funcionalidade transversal do site Interpop. Aparece como menu superior em todas as páginas e como campo destacado na home. Não é uma aplicação isolada; reusa o índice de artigos publicados já mantido pelo CMS interno. Integra com a camada de filtros temáticos já existente (Epic anterior `EP-09`).
+Search is a cross-cutting feature of the *"Interpop"* site. It appears as a top-menu item on every page and as a highlighted field on the home page. Not an isolated application; reuses the published-articles index already maintained by the internal CMS. Integrates with the existing thematic-filter layer (previous Epic `EP-09`).
 
-### 3.2 Classes de usuários
+### 3.2 User classes
 
-| Classe | Descrição | Frequência de uso esperada |
+| Class | Description | Expected usage frequency |
 |---|---|---|
-| **Leitor anônimo** | Visitante sem cadastro. Pode buscar e ler. Maior volume de uso. | ~70% das buscas. Várias buscas por sessão. |
-| **Leitor cadastrado** | Leitor com conta (favorita artigos, comenta). Mesmo comportamento de busca. | ~20%. Comportamento similar ao anônimo. |
-| **Redator/Editor** | Membro da equipe editorial. Usa busca para revisar publicações próprias e do time. | ~5%. Buscas mais específicas, com nome de autor (futuro). |
-| **Admin/Dev** | Equipe operacional. Usa busca para validar conteúdo, debugar, monitorar. | ~5%. Buscas frequentes, com termos técnicos. |
+| **Anonymous reader** | Visitor without registration. May search and read. Highest volume of use. | ~70% of searches. Several searches per session. |
+| **Registered reader** | Reader with an account (favourites articles, comments). Same search behaviour. | ~20%. Behaviour similar to anonymous. |
+| **Writer/Editor** | Editorial team member. Uses search to review their own and team's publications. | ~5%. More specific searches, with author name (future). |
+| **Admin/Dev** | Operational team. Uses search to validate content, debug, monitor. | ~5%. Frequent searches, with technical terms. |
 
-### 3.3 Restrições do projeto
+### 3.3 Project constraints
 
-| Tipo | Restrição |
+| Type | Constraint |
 |---|---|
-| **Tecnologia obrigatória** | Backend Django 5 + Postgres; frontend React 19 + Vite. (Stack do projeto.) |
-| **Hospedagem** | Hostinger KVM 1 — 1 CPU, 4GB RAM. Limita uso intensivo de CPU para indexação. |
-| **Orçamento** | Sem licença paga. Apenas libs gratuitas. Sem serviço externo de busca (Algolia, Elasticsearch hosted, etc.) na v1.2. |
-| **Compliance** | LGPD: queries de leitor anônimo não podem ser associadas a identificador persistente sem consentimento. |
-| **Acessibilidade** | WCAG 2.2 AA: campo de busca navegável por teclado, contraste mínimo 4.5:1, mensagens lidas por screen reader. |
+| **Mandatory technology** | Backend Django 5 + Postgres; frontend React 19 + Vite. (Project stack.) |
+| **Hosting** | *"Hostinger"* KVM 1 — 1 CPU, 4GB RAM. Limits CPU-intensive use for indexing. |
+| **Budget** | No paid license. Only free libs. No external search service (Algolia, Elasticsearch hosted, etc.) in v1.2. |
+| **Compliance** | *"LGPD"*: anonymous-reader queries cannot be associated with a persistent identifier without explicit consent. |
+| **Accessibility** | WCAG 2.2 AA: search field navigable by keyboard, minimum contrast 4.5:1, messages read by screen reader. |
 
-### 3.4 Premissas e dependências
+### 3.4 Assumptions and dependencies
 
-- **Premissa 1**: o acervo cresce em ritmo controlado (10–30 artigos/mês). Não há necessidade de re-indexação dinâmica em tempo real — atualização noturna basta para a v1.2.
-- **Premissa 2**: 99% das buscas são em pt-BR. Stop words em inglês podem ser ignoradas para simplificar a v1.2.
-- **Dependência 1**: a Feature de temas editoriais (`EP-09`) já está em produção desde Sprint 1.
-- **Dependência 2**: o índice `tsvector` do Postgres precisa estar disponível (extensão padrão, OK no Postgres 16).
+- **Assumption 1**: the archive grows at a controlled pace (10–30 articles/month). No need for dynamic real-time re-indexing — nightly update suffices for v1.2.
+- **Assumption 2**: 99% of searches are in pt-BR. English stop words can be ignored to simplify v1.2.
+- **Dependency 1**: the editorial-themes Feature (`EP-09`) has been in production since Sprint 1.
+- **Dependency 2**: the Postgres `tsvector` index must be available (default extension, OK in Postgres 16).
 
 ---
 
 ## 4. Stakeholders
 
-Identificação seguindo Wiegers 3e (cap. 6) — 5 critérios: quem usa, quem decide, quem é afetado, quem aprova, quem fornece input.
+Identification per Wiegers 3e (Ch. 6) — 5 criteria: who uses, who decides, who is affected, who approves, who provides input.
 
-| Stakeholder | Interesse | Tipo de participação |
+| Stakeholder | Interest | Participation type |
 |---|---|---|
-| **Leitor (anônimo + cadastrado)** | Encontrar artigos rapidamente. Tela limpa, sem atrito. | Usuário final — input via pesquisa de UX. |
-| **Equipe editorial (3 redatores)** | Garantir que seus artigos sejam encontráveis. Validar que filtros temáticos refletem a editoria. | Aprovação dos critérios de relevância. |
-| **Gabriel (dev/dono)** | Sustentabilidade técnica (KVM 1). Manutenibilidade. Conformidade LGPD. | Decisor técnico final. Aprova trade-offs. |
-| **Auditor externo (hipotético)** | LGPD: queries de leitor não criam perfil sem consentimento. WCAG 2.2 AA atendida. | Validação de compliance. |
+| **Reader (anonymous + registered)** | Find articles quickly. Clean screen, no friction. | End user — input via UX research. |
+| **Editorial team (3 writers)** | Ensure their articles are findable. Validate that thematic filters reflect the editorial. | Approval of relevance criteria. |
+| ***"Gabriel"* (dev/owner)** | Technical sustainability (KVM 1). Maintainability. *"LGPD"* compliance. | Final technical decider. Approves trade-offs. |
+| **External auditor (hypothetical)** | *"LGPD"*: reader queries do not create a profile without consent. WCAG 2.2 AA met. | Compliance validation. |
 
 ---
 
-## 5. Requisitos Funcionais
+## 5. Functional Requirements
 
 ### RF-08 — Busca por texto livre
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RF-08` |
-| **Prioridade** | 🟠 High |
-| **Fonte** | Leitor (pesquisa de UX 04/2026); equipe editorial. |
-| **Validação** | Equipe editorial 28/05/2026 (ata em Notion). |
+| **Priority** | 🟠 High |
+| **Source** | Reader (UX research 04/2026); editorial team. |
+| **Validation** | Editorial team 28/05/2026 (minutes in Notion). |
 
-**Descrição:**
+**Description:**
 
 O sistema deve permitir que qualquer leitor (anônimo ou cadastrado) digite um termo (palavra ou frase curta) e receba a lista de artigos publicados que contêm aquele termo no título, no resumo ou no corpo. Os resultados são ordenados por relevância (artigos com o termo no título aparecem primeiro). A busca deve funcionar em qualquer página do site através de campo no menu superior, e em destaque na página principal.
 
-**Critério de aceitação (resumo — detalhamento no backlog F-30)**:
+**Acceptance criterion (summary — full detail in backlog F-30)**:
 
 A primeira tela de resultados deve aparecer em ≤800ms para acervo de até 5.000 artigos. A busca deve ser case-insensitive e diacritic-insensitive (digitar "POP" ou "pop" ou "póp" deve retornar os mesmos artigos). A busca não deve depender de login.
 
 ### RF-09 — Filtragem da busca por tema editorial
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RF-09` |
-| **Prioridade** | 🟠 High |
-| **Fonte** | Equipe editorial (reunião 15/03/2026); leitor (sugestão recorrente em pesquisa de UX). |
-| **Validação** | Equipe editorial 28/05/2026. |
+| **Priority** | 🟠 High |
+| **Source** | Editorial team (meeting 15/03/2026); reader (recurrent suggestion in UX research). |
+| **Validation** | Editorial team 28/05/2026. |
 
-**Descrição:**
+**Description:**
 
 O sistema deve permitir que o leitor refine a busca por texto livre selecionando um ou mais temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital). Os filtros aparecem como chips clicáveis acima da lista de resultados; selecionar um filtro reduz a lista; remover todos os filtros volta a considerar todos os temas. A combinação de termo de busca + filtro de tema é a forma mais comum esperada de uso (≥60% das buscas, segundo pesquisa).
 
 ### RF-10 — Compartilhamento da busca por link
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RF-10` |
-| **Prioridade** | 🟡 Normal |
-| **Fonte** | Leitor (pesquisa de UX 04/2026, comentário em rede social). |
-| **Validação** | Gabriel 28/05/2026. |
+| **Priority** | 🟡 Normal |
+| **Source** | Reader (UX research 04/2026, social-media comment). |
+| **Validation** | *"Gabriel"* 28/05/2026. |
 
-**Descrição:**
+**Description:**
 
 A URL da página de busca deve preservar o termo digitado e os filtros aplicados, de forma que ao copiar e enviar o link, o destinatário visualize os mesmos resultados (mesma ordem, mesmos filtros). Isso transforma cada busca em um link compartilhável — útil para a equipe editorial divulgar "tudo o que a gente já cobriu sobre kpop" sem mandar lista manual.
 
 ---
 
-## 6. Requisitos Não Funcionais
+## 6. Non-Functional Requirements
 
-Organização clássica Sommerville: produto · organizacionais · externos.
+Classical Sommerville organization: product · organizational · external.
 
-### 6.1 Requisitos de produto
+### 6.1 Product requirements
 
 #### RNF-04 — Tempo de resposta da primeira tela de busca
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RNF-04` |
-| **Categoria** | Produto — Desempenho |
-| **Prioridade** | 🟠 High |
-| **Fonte** | Diretriz Interpop (CWV — LCP ≤ 2.5s). |
+| **Category** | Product — Performance |
+| **Priority** | 🟠 High |
+| **Source** | *"Interpop"* guideline (CWV — LCP ≤ 2.5s). |
 
-**Descrição:**
+**Description:**
 
 A primeira tela de resultados da busca deve aparecer em ≤800ms (p95) para acervo de até 5.000 artigos publicados, medido na rede 4G simulada do Lighthouse. Quando o tempo exceder 800ms, o sistema deve mostrar um indicador visual de carregamento (skeleton dos cards) em até 300ms após o início da consulta — para que o leitor não tenha impressão de tela travada.
 
-**Como verificar:**
+**How to verify:**
 
-Teste automatizado de performance no CI: `backend/tests/test_search_perf.py::test_p95_under_800ms` mede 100 buscas com termos variados sobre acervo simulado de 5k artigos e calcula p95.
+Automated performance test in CI: `backend/tests/test_search_perf.py::test_p95_under_800ms` measures 100 searches with varied terms across a simulated 5k-article archive and computes p95.
 
 #### RNF-05 — Acessibilidade WCAG 2.2 AA
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RNF-05` |
-| **Categoria** | Produto — Acessibilidade |
-| **Prioridade** | 🟠 High |
-| **Fonte** | Diretriz Interpop (acessibilidade obrigatória). |
+| **Category** | Product — Accessibility |
+| **Priority** | 🟠 High |
+| **Source** | *"Interpop"* guideline (mandatory accessibility). |
 
-**Descrição:**
+**Description:**
 
 A tela de busca e todos os seus elementos interativos (campo de texto, botão de submit, chips de filtro, cards de resultado, botão "Carregar mais") devem ser navegáveis por teclado. Mensagens dinâmicas (resultado de busca, ausência de resultado, indicador de carregamento) devem ser anunciadas por screen reader via ARIA live regions. Contraste mínimo 4.5:1 em todos os textos.
 
-**Como verificar:**
+**How to verify:**
 
-Auditoria automatizada `axe-core` em CI (≥95 score) + revisão manual com NVDA antes de cada release.
+Automated audit `axe-core` in CI (≥95 score) + manual review with NVDA before each release.
 
-### 6.2 Requisitos organizacionais
+### 6.2 Organizational requirements
 
 #### RNF-06 — Stack obrigatória
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RNF-06` |
-| **Categoria** | Organizacional — Tecnologia |
-| **Prioridade** | 🔴 Immediate |
-| **Fonte** | Gabriel (decisão técnica de projeto). |
+| **Category** | Organizational — Technology |
+| **Priority** | 🔴 Immediate |
+| **Source** | *"Gabriel"* (technical project decision). |
 
-**Descrição:**
+**Description:**
 
 A busca deve ser implementada usando apenas as tecnologias já presentes no stack do Interpop: backend Django 5 + DRF + Postgres 16 (com `tsvector` e índice GIN); frontend React 19 + Vite. Sem serviço externo de busca (Algolia, Elasticsearch hosted, Meilisearch SaaS) na v1.2. Sem nova lib paga.
 
-### 6.3 Requisitos externos
+### 6.3 External requirements
 
 #### RNF-07 — Conformidade com LGPD
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `RNF-07` |
-| **Categoria** | Externo — Compliance |
-| **Prioridade** | 🔴 Immediate |
-| **Fonte** | Lei nº 13.709/2018; diretriz de privacidade Interpop. |
+| **Category** | External — Compliance |
+| **Priority** | 🔴 Immediate |
+| **Source** | *"Lei nº 13.709/2018"*; *"Interpop"* privacy guideline. |
 
-**Descrição:**
+**Description:**
 
 Os termos buscados por leitores anônimos não devem ser associados a identificador persistente (cookie, fingerprint) sem consentimento explícito do leitor. O sistema pode coletar termos de busca de forma agregada (estatística geral, sem ligação ao leitor individual) — mas não pode montar perfil de busca individual sem opt-in. Logs de busca devem ser retidos por no máximo 90 dias e ser anonimizados (sem IP completo) antes de qualquer análise.
 
 ---
 
-## 7. Regras de Negócio
+## 7. Business Rules
 
-Regras de domínio editorial que não são RF nem RNF — são restrições do negócio do Interpop.
+Editorial-domain rules that are neither RF nor RNF — they are *"Interpop"* business constraints.
 
 ### G-01 — Artigos em moderação não aparecem
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `G-01` |
-| **Prioridade** | 🔴 Immediate |
-| **Fonte** | Política editorial Interpop. |
+| **Priority** | 🔴 Immediate |
+| **Source** | *"Interpop"* editorial policy. |
 
-**Descrição:**
+**Description:**
 
 Artigos com status `em moderação` (pendentes de revisão editorial após denúncia) NUNCA devem aparecer em resultados de busca, mesmo para o autor original. Só artigos com status `publicado` são buscáveis. Esta regra protege a equipe editorial e os leitores de exposição precoce a conteúdo sob revisão.
 
 ### G-02 — Temas editoriais são fixos
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | **ID** | `G-02` |
-| **Prioridade** | 🟠 High |
-| **Fonte** | Diretriz editorial Interpop, v3. |
+| **Priority** | 🟠 High |
+| **Source** | *"Interpop"* editorial guideline, v3. |
 
-**Descrição:**
+**Description:**
 
 Os temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital) são definidos pela equipe editorial e fixos na v1.2. Mudança no conjunto de temas exige decisão editorial (não é decisão técnica), revisão da especificação e migração dos artigos existentes. A v1.2 não permite cadastro dinâmico de temas via interface.
 
 ---
 
-## 8. Diagrama de fluxo principal
+## 8. Main flow diagram
 
-> Exemplo de fluxo principal — leitor faz busca + filtro:
+> Example of main flow — reader searches + filters:
 
 ```
-[Leitor abre o site]
+[Reader opens the site]
         │
         ▼
-[Vê campo de busca no menu superior + tela inicial com artigos]
+[Sees search field in top menu + initial screen with articles]
         │
         ▼
-[Digita termo + (opcional) seleciona chips de tema]
+[Types term + (optional) selects theme chips]
         │
         ▼
-[Sistema valida termo (2-100 caracteres) e consulta Postgres com tsvector]
+[System validates term (2-100 chars) and queries Postgres with tsvector]
         │
         ▼
-[Resultados ordenados por relevância (título > resumo > corpo) + data]
+[Results ranked by relevance (title > summary > body) + date]
         │
         ▼
-[Tela renderiza 20 cards + URL atualizada com termo + filtros]
+[Screen renders 20 cards + URL updated with term + filters]
         │
         ▼
-[Leitor pode "Carregar mais", clicar em card, ou copiar URL para compartilhar]
+[Reader may "Load more", click on a card, or copy URL to share]
 ```
 
 ---
 
-## 9. Glossário (terminologia específica do projeto)
+## 9. Glossary (project-specific terminology)
 
-| Termo | Definição |
+| Term | Definition |
 |---|---|
-| **Artigo** | Texto editorial publicado no Interpop, com título, resumo, corpo, autor, data, tema. |
-| **Editorial** | Conteúdo crítico produzido pela equipe Interpop sobre cultura pop (música, moda, cinema, etc.). |
-| **Tema** | Categoria fixa que classifica os artigos. v1.2 tem 5 temas. |
-| **Soft Power** | Conceito de Joseph Nye (1990) — capacidade de influenciar através de cultura, valores, narrativa. Foco editorial do Interpop. |
+| **Article** | Editorial text published on *"Interpop"*, with title, summary, body, author, date, theme. |
+| **Editorial** | Critical content produced by the *"Interpop"* team about pop culture (music, fashion, cinema, etc.). |
+| **Theme** | Fixed category classifying articles. v1.2 has 5 themes. |
+| ***"Soft Power"*** | Joseph Nye's concept (1990) — the ability to influence through culture, values, narrative. Editorial focus of *"Interpop"*. |
 
 ---
 
-## 10. Anexos
+## 10. Annexes
 
-### 10.1 Protótipos
+### 10.1 Prototypes
 
-> Em projeto real, links ou imagens dos protótipos lo-fi e hi-fi aprovados.
+> In a real project, links or images of approved lo-fi and hi-fi prototypes.
 
-- Wireframe lo-fi `docs/specs/busca-editorial/protótipo-v1-lofi.png` (15/04/2026)
-- Hi-fi Figma `https://figma.com/file/...` (10/05/2026, aprovado pela equipe editorial em 12/05)
+- Lo-fi wireframe `docs/specs/busca-editorial/protótipo-v1-lofi.png` (15/04/2026)
+- Hi-fi Figma `https://figma.com/file/...` (10/05/2026, approved by the editorial team on 12/05)
 
-### 10.2 Pesquisa de UX (fonte de alguns RFs)
+### 10.2 UX research (source of some RFs)
 
-- Relatório `docs/specs/busca-editorial/pesquisa-ux-04-2026.md` — entrevistas com 12 leitores, perguntas sobre como buscavam conteúdo no site atual.
+- Report `docs/specs/busca-editorial/pesquisa-ux-04-2026.md` — interviews with 12 readers, questions on how they searched content in the current site.
 
 ---
 
-## 11. Histórico de revisões
+## 11. Revision history
 
-> **Cada alteração no documento gera uma entrada nova aqui.** Backlog não muda sem que esta tabela seja atualizada primeiro.
+> **Every change in the document creates a new entry here.** The backlog does not change unless this table is updated first.
 
-| Versão | Data | Autor | Mudança | Impacto no backlog |
+| Version | Date | Author | Change | Backlog impact |
 |---|---|---|---|---|
-| 1.0 | 12/03/2026 | Gabriel | Versão inicial. RF-08 (busca por texto) + RNF-04 (tempo de resposta). | Criação de `EP-10` + `F-30`. |
-| 1.1 | 15/03/2026 | Gabriel | Adicionado RF-09 (filtro temático) após reunião com equipe editorial. | Criação de `F-31`. |
-| 1.2 | 28/05/2026 | Gabriel | Adicionado RF-10 (compartilhamento por link) após pesquisa de UX. RNF-04 ajustado: era 1000ms p95, virou 800ms p95 após estudo de CWV. RNF-07 (LGPD) explicitado. | Criação de `F-32`. `CA11` da `F-30` ajustado de 1000ms para 800ms. Nota no `BACKLOG.md` (data 28/05). |
+| 1.0 | 12/03/2026 | *"Gabriel"* | Initial version. RF-08 (text search) + RNF-04 (response time). | Creation of `EP-10` + `F-30`. |
+| 1.1 | 15/03/2026 | *"Gabriel"* | Added RF-09 (thematic filter) after meeting with the editorial team. | Creation of `F-31`. |
+| 1.2 | 28/05/2026 | *"Gabriel"* | Added RF-10 (link sharing) after UX research. RNF-04 adjusted: was 1000ms p95, became 800ms p95 after CWV study. RNF-07 (*"LGPD"*) made explicit. | Creation of `F-32`. `CA11` of `F-30` adjusted from 1000ms to 800ms. Note in `BACKLOG.md` (date 28/05). |
 
 ---
 
-## 12. Aprovação
+## 12. Approval
 
-| Stakeholder | Função | Data | Forma |
+| Stakeholder | Role | Date | Form |
 |---|---|---|---|
-| Gabriel Marques | dev/dono — aprovador final | 28/05/2026 | Assinatura no git (commit `c8c5c7c`). |
-| Equipe editorial (3 redatores) | Aprovação editorial | 28/05/2026 | Ata Notion `notion.so/...`. |
+| *"Gabriel Marques"* | dev/owner — final approver | 28/05/2026 | Signed git commit (`c8c5c7c`). |
+| Editorial team (3 writers) | Editorial approval | 28/05/2026 | Notion minutes `notion.so/...`. |
 
 ---
 
-## ✅ Smell test do documento de requisitos
+## ✅ Requirements-document smell test
 
-- [ ] Toda RF/RNF/G tem **descrição** em pt-BR sem termo técnico (sem URL, sem nome de método, sem nome de tabela)?
-- [ ] Toda RF/RNF/G tem **fonte declarada** (quem pediu, quando)?
-- [ ] Toda RF/RNF/G tem **prioridade** (🔴/🟠/🟡/⚪)?
-- [ ] Adjetivos vagos ("rápido", "amigável", "intuitivo", "robusto") foram substituídos por **métrica ou comportamento observável**?
-- [ ] Restrições, premissas e dependências estão **explícitas** (§3.3, §3.4)?
-- [ ] Stakeholders identificados pelos 5 critérios de Wiegers (§4)?
-- [ ] Glossário cobre todos os termos do domínio que aparecem no documento?
-- [ ] Histórico de revisões (§11) está atualizado com a última mudança e seu impacto no backlog?
-- [ ] Backlog correspondente (link no topo) referencia este documento em todos os Epics/Features?
+- [ ] Does every RF/RNF/G have a **description** in pt-BR without technical terms (no URL, no method name, no table name)?
+- [ ] Does every RF/RNF/G have a **declared source** (who asked, when)?
+- [ ] Does every RF/RNF/G have a **priority** (🔴/🟠/🟡/⚪)?
+- [ ] Have vague adjectives ("fast", "friendly", "intuitive", "robust") been replaced by **a metric or observable behaviour**?
+- [ ] Are constraints, assumptions, and dependencies **explicit** (§3.3, §3.4)?
+- [ ] Are stakeholders identified by Wiegers's 5 criteria (§4)?
+- [ ] Does the glossary cover all domain terms appearing in the document?
+- [ ] Is the revision history (§11) updated with the last change and its backlog impact?
+- [ ] Does the corresponding backlog (link at the top) reference this document in every Epic/Feature?
