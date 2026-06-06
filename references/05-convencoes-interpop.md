@@ -1,43 +1,45 @@
-# 05 — Convenções Interpop + Template `BACKLOG.md`
+# 05 — *"Interpop"* Conventions + `BACKLOG.md` Template
 
-> Camada **prática** sobre o conteúdo canônico das references 01-04. As convenções abaixo são **regras duras** do projeto Interpop (validadas em SIRA também). Aplicam-se a todo projeto pt-BR deste autor.
+> **Practical** layer on top of the canonical content of references 01-04. The conventions below are **hard rules** of the *"Interpop"* project (validated on *"SIRA"* as well). They apply to every pt-BR project of this author.
 >
-> Por que viver aqui: as references 01-04 trazem a teoria (Sommerville, Pressman, Falbo, IFPB). Esta reference é o **como aplicar na prática** com naming, IDs, prioridade e estrutura do `BACKLOG.md`.
+> Why it lives here: references 01-04 carry the theory (Sommerville, Pressman, Falbo, *"IFPB"*). This reference is the **how to apply in practice** with naming, IDs, priority, and `BACKLOG.md` structure.
+>
+> **Note on the bilingual examples in this file**: many ❌/✅ examples below remain in **pt-BR** by design — these are the actual naming rules for Brazilian projects, and translating the examples to English would defeat the pedagogical point ("don't use infinitive verbs in pt-BR titles"). The **explanation** is in en-CA; the **examples** are in pt-BR.
 
 ---
 
-## 1. Quando usar este reference
+## 1. When to use this reference
 
-Sempre que for:
-- Produzir um **`BACKLOG.md`** para qualquer feature/módulo (mandatório se há `DESIGN.md`)
-- Revisar nomes de Epic/Feature/User Story em backlog existente
-- Decidir se algo é Feature ou Task técnica
-- Atribuir prioridade a item de backlog
-- Treinar agent/dev novo na convenção do time
+Whenever you are about to:
+- Produce a **`BACKLOG.md`** for any feature/module (mandatory if there is a `DESIGN.md`)
+- Review Epic/Feature/User Story names in an existing backlog
+- Decide whether something is a Feature or a technical Task
+- Assign priority to a backlog item
+- Train a new agent/dev in the team's convention
 
 ---
 
-## 2. As 10 regras duras (não negociáveis)
+## 2. The 10 hard rules (non-negotiable)
 
-### Regra 0 — Documento de requisitos é a FONTE DA VERDADE
+### Rule 0 — The requirements document is the SOURCE OF TRUTH
 
-O backlog **NUNCA muda sem que o documento de requisitos mude primeiro**. O backlog é uma materialização do documento — organiza, fatia, prioriza — mas não decide escopo sozinho.
+The backlog **NEVER changes unless the requirements document changes first**. The backlog is a materialization of the document — it organizes, slices, and prioritizes — but does not decide scope on its own.
 
-Isso significa:
+This means:
 
-- 🔁 **Antes de mexer no backlog, sempre verifique se houve alteração no documento de requisitos.** Cliente pode pedir adicionar/alterar/remover durante o projeto — propague para o documento primeiro, depois para o backlog.
-- 📎 O `BACKLOG.md` aponta no topo para o `REQUISITOS.md`: `Documento de requisitos: ../docs/specs/<feature>/REQUISITOS.md (rev. de DD/MM/AAAA)` + `Última verificação de alteração no documento: DD/MM/AAAA — sem mudanças desde a última sprint`.
-- 📎 **Cada Epic/Feature/CA/RNF do backlog tem o campo `Origem (requisitos): RF-NN, RNF-NN, G-NN`** apontando de volta para os itens do documento que ele atende.
-- ⚠️ Item aparecendo no backlog sem `Origem (requisitos)` é suspeito — ou é scope creep, ou refinamento técnico mal colocado (deveria ser Task).
-- 📅 O documento de requisitos tem **histórico de revisões** (§11 do template) com versão, data, autor, mudança, impacto no backlog.
+- 🔁 **Before touching the backlog, always verify whether the requirements document was changed.** The client may request add/alter/remove during the project — propagate to the document first, then to the backlog.
+- 📎 The `BACKLOG.md` points at the top to the `REQUISITOS.md`: `Requirements document: ../docs/specs/<feature>/REQUISITOS.md (rev. of DD/MM/YYYY)` + `Last requirements-document change check: DD/MM/YYYY — no changes since the last sprint`.
+- 📎 **Every Epic/Feature/AC/NFR of the backlog has the `Origin (requirements): RF-NN, RNF-NN, G-NN` field** pointing back to the document items it satisfies.
+- ⚠️ An item appearing in the backlog without `Origin (requirements)` is suspicious — either scope creep, or technical refinement misplaced (should be a Task).
+- 📅 The requirements document has a **revision history** (§11 of the template) with version, date, author, change, backlog impact.
 
-Template do documento: [`../examples/template-documento-requisitos.md`](../examples/template-documento-requisitos.md).
+Document template: [`../examples/template-documento-requisitos.md`](../examples/template-documento-requisitos.md).
 
-### Regra 1 — Sem infinitivo nos títulos de Epic/Feature/US/RF/RNF/G
+### Rule 1 — No infinitive verbs in Epic/Feature/US/RF/RNF/G titles
 
-Use substantivo ou gerúndio descritivo. Tasks (técnicas) podem violar. Vale tanto para o **backlog** (Epic/Feature/US) quanto para o **documento de requisitos** (RF/RNF/G).
+Use a descriptive noun or gerund. Tasks (technical) may violate. Applies to both the **backlog** (Epic/Feature/US) and the **requirements document** (RF/RNF/G).
 
-| ❌ Errado | ✅ Certo |
+| ❌ Wrong | ✅ Right |
 |---|---|
 | Listar reservas do usuário | Listagem de reservas do usuário |
 | Buscar artigos | Busca de artigos |
@@ -46,91 +48,91 @@ Use substantivo ou gerúndio descritivo. Tasks (técnicas) podem violar. Vale ta
 | Filtrar por autor | Filtragem por autor |
 | Compartilhar busca | Compartilhamento da busca |
 | **RF**: `Buscar artigos por texto livre` | **RF**: `Busca de artigos por texto livre` |
-| **RNF**: `Responder consultas em até 800ms` | **RNF**: `Tempo de resposta da primeira tela de busca` (corpo da descrição: "deve aparecer em ≤800ms p95") |
+| **RNF**: `Responder consultas em até 800ms` | **RNF**: `Tempo de resposta da primeira tela de busca` (body of the description: "deve aparecer em ≤800ms p95") |
 | **G**: `Bloquear artigos em moderação` | **G**: `Artigos em moderação não aparecem em buscas` |
 
-### Regra 2 — Sem termos técnicos em Epic/Feature/US/CA/**RF**/RNF/G
+### Rule 2 — No technical terms in Epic/Feature/US/CA/**RF**/RNF/G
 
-Termos técnicos (endpoint, hook, migration, schema, API, config, deploy, nome de tabela, nome de método, comando shell, HTTP status code) só aparecem nas **Tasks**. Vale para todos os artefatos de **backlog** (Epic/Feature/US/CA) **e de documento de requisitos** (RF/RNF/G) — porque ambos são lidos por stakeholders e auditores, não por dev.
+Technical terms (endpoint, hook, migration, schema, API, config, deploy, table name, method name, shell command, HTTP status code) appear only in **Tasks**. Applies to all **backlog** artifacts (Epic/Feature/US/CA) **and document-of-requirements** artifacts (RF/RNF/G) — because both are read by stakeholders and auditors, not by devs.
 
-| ❌ Errado | ✅ Certo |
+| ❌ Wrong | ✅ Right |
 |---|---|
 | Endpoint REST de busca de artigos | Busca de artigos por texto |
 | Hook useSearch com TanStack Query | Apresentação dos resultados em tempo real |
-| Migration tabela `search_index` | (não é Feature — vira Task `T30.1.2`) |
-| Configurar `pg_cron` para limpeza | (não é Feature — vira Task transversal `TX-04`) |
+| Migration tabela `search_index` | (not a Feature — becomes Task `T30.1.2`) |
+| Configurar `pg_cron` para limpeza | (not a Feature — becomes cross-cutting Task `TX-04`) |
 | **CA**: `O endpoint POST /api/v1/bans/ retorna HTTP 400 se hierarquia violada` | **CA**: `Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".` |
 | **RF**: `Implementar query Postgres com tsvector para busca full-text` | **RF**: `O sistema deve permitir que o leitor encontre artigos publicados por palavra-chave, com resultados ordenados por relevância.` |
 | **RNF**: `O índice GIN do Postgres deve responder consultas em ≤50ms` | **RNF**: `A primeira tela de resultados deve aparecer em ≤800ms (p95) para acervo de até 5.000 artigos publicados` |
 | **G**: `Filtrar WHERE status != 'em_moderacao' no SELECT` | **G**: `Artigos com status "em moderação" não aparecem em resultados de busca, mesmo para o autor original.` |
 
-### Regra 3 — Pt-BR explícito, simples e direto
+### Rule 3 — Explicit pt-BR, simple and direct
 
-O texto deve ser lido por stakeholder não-técnico (PO, coordenador, professor avaliador, cliente).
+The text must be readable by a non-technical stakeholder (PO, coordinator, evaluating professor, client).
 
-| ❌ Errado | ✅ Certo |
+| ❌ Wrong | ✅ Right |
 |---|---|
 | Implementar fluxo CRUD do recurso X | Cadastro, edição e remoção do recurso X |
 | Setar up auth com JWT | Acesso seguro com login e senha |
 | F-20 BTS | F-20 Listagem de reservas pessoais com filtros e busca |
 
-### Regra 4 — Configurações técnicas NÃO são Features
+### Rule 4 — Technical configuration is NOT a Feature
 
-**Feature = entregável ao cliente final.** Se ninguém fora do time de dev vai perceber a entrega, não é Feature. Vai como Task (US-bound ou transversal `TX-NN`).
+**Feature = client-deliverable.** If no one outside the dev team will perceive the delivery, it is not a Feature. Goes as a Task (US-bound or cross-cutting `TX-NN`).
 
-São Tasks transversais (`TX-NN`) — NÃO Features:
+These are cross-cutting Tasks (`TX-NN`) — NOT Features:
 
-| Item | Classificação correta |
+| Item | Correct classification |
 |---|---|
-| Configurar variáveis de ambiente | Task transversal |
-| Adicionar lib ao `package.json` | Task transversal |
-| Criar `docker-compose.dev.yml` | Task transversal |
-| Configurar ESLint / Prettier | Task transversal |
-| Criar pastas iniciais do projeto | Task transversal |
-| Setup do CI (GitHub Actions) | Task transversal |
-| Configurar `drf-spectacular` para OpenAPI | Task transversal |
-| Configurar Sentry/Prometheus | Task transversal |
-| Criar arquivo de configuração JSON | Task transversal |
-| Configurar índice GIN no Postgres | Task da US relevante (não transversal — apoia US específica) |
+| Configurar variáveis de ambiente | Cross-cutting Task |
+| Adicionar lib ao `package.json` | Cross-cutting Task |
+| Criar `docker-compose.dev.yml` | Cross-cutting Task |
+| Configurar ESLint / Prettier | Cross-cutting Task |
+| Criar pastas iniciais do projeto | Cross-cutting Task |
+| Setup do CI (GitHub Actions) | Cross-cutting Task |
+| Configurar `drf-spectacular` para OpenAPI | Cross-cutting Task |
+| Configurar Sentry/Prometheus | Cross-cutting Task |
+| Criar arquivo de configuração JSON | Cross-cutting Task |
+| Configurar índice GIN no Postgres | Task of the relevant US (not cross-cutting — supports a specific US) |
 
-### Regra 5 — Prioridade Interpop (4 níveis em todos os nós)
+### Rule 5 — *"Interpop"* priority (4 levels on every node)
 
-Use a escala Interpop em todo Epic, Feature, US e Task:
+Use the *"Interpop"* scale on every Epic, Feature, US, and Task:
 
-| Símbolo | Nome | Significado |
+| Symbol | Name | Meaning |
 |---|---|---|
-| 🔴 | **Immediate** | Bloqueia outros itens; sprint atual obrigatoriamente |
-| 🟠 | **High** | Sprint atual ou próxima |
-| 🟡 | **Normal** | Backlog priorizado |
-| ⚪ | **Low** | Nice to have, sem deadline |
+| 🔴 | **Immediate** | Blocks other items; current sprint, mandatory |
+| 🟠 | **High** | Current sprint or the next |
+| 🟡 | **Normal** | Prioritized backlog |
+| ⚪ | **Low** | Nice to have, no deadline |
 
-> **Equivalência teórica com MoSCoW** (Wiegers/Cohn): Must = Immediate · Should = High · Could = Normal · Won't = Low. Mas no Interpop **use a escala Immediate/High/Normal/Low** — é a que está nas ferramentas (OpenProject) e a que o time consome.
+> **Theoretical equivalence with MoSCoW** (Wiegers/Cohn): Must = Immediate · Should = High · Could = Normal · Won't = Low. But in *"Interpop"* **use the Immediate/High/Normal/Low scale** — it is the one in the tools (OpenProject) and the one the team consumes.
 
-### Regra 6 — Cada nó tem o seu artefato — Feature descrição, US BDD
+### Rule 6 — Each node has its own artifact — Feature description, US BDD
 
-| Nó | Tem descrição? | Tem CAs? | Tem BDD? |
+| Node | Has description? | Has ACs? | Has BDD? |
 |---|---|---|---|
-| Epic (raiz ou aninhado) | Sim (parágrafo em pt-BR de negócio) | Não (CAs ficam em Features) | Não |
-| **Feature** | **Sim (parágrafo em pt-BR de negócio)** | **Sim (lista CA01..CANN, sempre agrupada por tema)** | **Não** ⚠️ |
-| **User Story** | **Sim — o BDD em pt-BR no próprio campo "Descrição"** ⚠️ | Não (CAs ficam na Feature — US REFERENCIA quais cobre via campo "CAs cobertos") | **Sim (`Dado/Quando/Então` no campo Descrição)** ⚠️ |
-| Task | Sim (frase curta com termo técnico OK) | Não | Não |
+| Epic (root or nested) | Yes (pt-BR business-language paragraph) | No (ACs live in Features) | No |
+| **Feature** | **Yes (pt-BR business-language paragraph)** | **Yes (list CA01..CANN, always grouped by theme)** | **No** ⚠️ |
+| **User Story** | **Yes — the pt-BR BDD in the "Description" field itself** ⚠️ | No (ACs live in the Feature — the US REFERENCES which it covers via "Covered ACs" field) | **Yes (`Dado/Quando/Então` in the Description field)** ⚠️ |
+| Task | Yes (short sentence with technical term OK) | No | No |
 
-**Erro comum**: colocar BDD em Feature. **Não faça**. BDD vive em User Story (anti-padrão detalhado em [04-bdd-criterios-aceitacao.md §7.7](04-bdd-criterios-aceitacao.md)).
+**Common mistake**: placing BDD in the Feature. **Don't do it**. BDD lives in the User Story (anti-pattern detailed in [04-bdd-criterios-aceitacao.md §7.7](04-bdd-criterios-aceitacao.md)).
 
-**Detalhe importante sobre o BDD no OpenProject**: cada **Cenário** Gherkin é **conteúdo do campo Descrição da US** — não cria card filho na hierarquia. Quem usa Cucumber/pytest-bdd/cucumber-playwright pode espelhar cada cenário em arquivo `.feature` correspondente (template em [examples/template-user-story.feature](../examples/template-user-story.feature)).
+**Important OpenProject detail about BDD**: each Gherkin **Scenario** is **content of the US Description field** — it does not create a child card in the hierarchy. Whoever uses Cucumber/pytest-bdd/cucumber-playwright can mirror each scenario in a matching `.feature` file (template in [examples/template-user-story.feature](../examples/template-user-story.feature)).
 
-### Regra 7 — CAs sempre agrupados sob `CA - <Tema>` + convenção `[...]`
+### Rule 7 — ACs always grouped under `CA - <Theme>` + `[...]` convention
 
-CAs ficam **sempre** dentro de um item agrupador `CA - <Tema>` no OpenProject (tipo "Critério de Aceitação", sem ID `CANN`, apenas título descritivo). Mesmo quando a Feature tem 1 só CA. Isso mantém consistência visual no backlog e facilita inserção futura.
+ACs **always** live inside a `CA - <Theme>` grouper item in OpenProject (type "Acceptance Criterion", without ID `CANN`, only a descriptive title). Even when the Feature has a single AC. This keeps visual consistency in the backlog and eases future insertion.
 
-**Convenção `[...]`** — quando um CA precisa de sub-regras para ser totalmente testável, **encerre o título com `[...]`** e detalhe no corpo do item abrindo com `Regras a serem aplicadas:` + bullets. CA sem `[...]` deve ser **autossuficiente no título**.
+**`[...]` convention** — when an AC needs sub-rules to be fully testable, **end the title with `[...]`** and detail in the item body opening with `Regras a serem aplicadas:` + bullets. An AC without `[...]` must be **self-sufficient in the title**.
 
-| Caso | Convenção |
+| Case | Convention |
 |---|---|
-| CA com regra autossuficiente no título | Sem `[...]` |
-| CA com sub-regras paralelas no corpo | Termina em `[...]` + `Regras a serem aplicadas:` no corpo |
+| AC with self-sufficient rule in the title | Without `[...]` |
+| AC with parallel sub-rules in the body | Ends with `[...]` + `Regras a serem aplicadas:` in the body |
 
-Exemplo concreto:
+Concrete example:
 
 ```
 ✅ CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser
@@ -139,7 +141,7 @@ Exemplo concreto:
 ✅ CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento
          e validação conforme detalhamento [...]
 
-   Corpo (campo Descrição do CA09):
+   Body (CA09 Description field):
    Regras a serem aplicadas:
    - Só deverá ser habilitado se tiver uma CONFEDERAÇÃO selecionada.
    - Só deve exibir as Federações ATIVAS.
@@ -148,67 +150,67 @@ Exemplo concreto:
    - Deve permitir busca parcial ao digitar.
 ```
 
-Detalhamento completo da convenção `[...]` em [04-bdd-criterios-aceitacao.md §2.5](04-bdd-criterios-aceitacao.md).
+Full `[...]` convention detail in [04-bdd-criterios-aceitacao.md §2.5](04-bdd-criterios-aceitacao.md).
 
-### Regra 8 — TODOS os artefatos têm descrição em linguagem de negócio
+### Rule 8 — ALL artifacts have descriptions in business language
 
-Epic, Feature, User Story, CA, **RF**, RNF, regra de negócio (G): **todos** têm descrição em pt-BR em linguagem de negócio. Lida por qualquer stakeholder (PO, cliente, dev júnior recém-chegado, auditor) sem precisar de glossário técnico. Sem URLs, sem nomes de método, sem stack.
+Epic, Feature, User Story, AC, **RF**, RNF, business rule (G): **all** have descriptions in pt-BR business language. Read by any stakeholder (PO, client, junior dev just arriving, auditor) without needing a technical glossary. No URLs, no method names, no stack.
 
-| Artefato | Onde vive | Descrição é... |
+| Artifact | Lives in | Description is... |
 |---|---|---|
-| Epic | Backlog | Parágrafo explicando o problema do usuário/operação que o Epic resolve. 3–6 frases. |
-| Feature | Backlog | Parágrafo explicando o que o cliente vai conseguir fazer ao receber a Feature. 3–5 frases. Linguagem de negócio. |
-| User Story | Backlog | O **BDD em pt-BR** (cenários `Dado/Quando/Então` no campo Descrição). |
-| CA | Backlog | Frase declarativa imperativa testável. Se sub-regras, `[...]` + bullets. |
-| **RF** | **Documento de requisitos** | **Parágrafo em pt-BR descrevendo o que o sistema deve fazer — entrada/regra/saída do ponto de vista de negócio. Tem `Origem` (stakeholder que pediu), `Prioridade`, e `Critério de aceitação` resumido. Detalhamento da feature equivalente fica no backlog.** |
-| RNF | Documento de requisitos | Restrição quantificada com métrica + como verificar. |
-| Regra de negócio (G) | Documento de requisitos | Restrição do domínio (regulação, política editorial, codigo profissional). |
-| Task | Backlog | Frase curta (termos técnicos OK aqui — escopo do dev). |
+| Epic | Backlog | Paragraph explaining the user/operation problem the Epic solves. 3–6 sentences. |
+| Feature | Backlog | Paragraph explaining what the client will be able to do once the Feature ships. 3–5 sentences. Business language. |
+| User Story | Backlog | The **pt-BR BDD** (`Dado/Quando/Então` scenarios in the Description field). |
+| AC | Backlog | Declarative, imperative, testable sentence. If sub-rules, `[...]` + bullets. |
+| **RF** | **Requirements document** | **pt-BR paragraph describing what the system must do — input/rule/output from the business viewpoint. Has `Origem` (requesting stakeholder), `Prioridade`, and summarized `Critério de aceitação`. Detail of the equivalent feature lives in the backlog.** |
+| RNF | Requirements document | Constraint quantified with a metric + how to verify. |
+| Business rule (G) | Requirements document | Domain constraint (regulation, editorial policy, professional code). |
+| Task | Backlog | Short sentence (technical terms OK here — dev scope). |
 
-> **Relação RF ↔ Feature**: o `RF-NN` é o **requisito declarado** no documento. A `F-NN` (Feature) é a **materialização incremental** desse RF no backlog. Um RF pode gerar uma ou várias Features; uma Feature implementa um ou vários RFs. O backlog **referencia o RF de origem** via campo `Origem (requisitos)` em cada Epic/Feature. Sem essa rastreabilidade, é scope creep silencioso.
+> **FR ↔ Feature relationship**: the `RF-NN` is the **declared requirement** in the document. The `F-NN` (Feature) is the **incremental materialization** of that RF in the backlog. One RF may generate one or several Features; one Feature implements one or several RFs. The backlog **references the source RF** via the `Origin (requirements)` field in each Epic/Feature. Without this traceability, it is silent scope creep.
 
-**Por que essa regra é dura**: requisito ilegível para stakeholder é requisito não validado. Sommerville 4.5: "a única validação confiável é a que envolve o stakeholder lendo e concordando." Se ele não consegue ler, ele não consegue validar.
+**Why this rule is hard**: a requirement unreadable to the stakeholder is an unvalidated requirement. Sommerville 4.5: "the only reliable validation is the one involving the stakeholder reading and agreeing." If they cannot read it, they cannot validate it.
 
-### Regra 9 — Múltiplos Epics-raiz, sem "Epic-projeto" único como pai
+### Rule 9 — Multiple root Epics, no single "project-Epic" as parent
 
-O projeto pode (e quase sempre vai) ter **vários Epics no nível mais alto, irmãos entre si, sem um Epic-pai comum**. Cada Epic-raiz representa uma frente independente: uma plataforma, uma área operacional, um módulo transversal.
+The project may (and almost always will) have **several Epics at the top level, siblings to each other, without a common parent Epic**. Each root Epic represents an independent front: a platform, an operational area, a cross-cutting module.
 
-**Por quê**: o "produto" como um todo é o **repositório/contexto do projeto no OpenProject** — não um item da hierarquia. Forçar tudo embaixo de um único "Epic Produto" cria:
+**Why**: the "product" as a whole is the **OpenProject repository/context** — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates:
 
-- Nó-pai vazio (sem descrição útil, porque a descrição do produto já está no `REQUISITOS.md` e no README do repo);
-- Ambiguidade ("este Epic-raiz é o produto-todo ou é uma frente?");
-- Atrito de navegação (um nível inteiro de cliques antes de chegar onde o trabalho real está).
+- Empty parent node (no useful description, because the product description is already in `REQUISITOS.md` and in the repo README);
+- Ambiguity ("is this root Epic the whole product, or a front?");
+- Navigation friction (a whole level of clicks before reaching where the real work is).
 
-**Exemplos reais**:
+**Real examples**:
 
-| Projeto | Epics-raiz irmãos |
+| Project | Sibling root Epics |
 |---|---|
-| **Controle de Dopagem** (curso IFPB) | `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` |
-| **Interpop** | `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` |
-| **SaaS multi-tenant qualquer** | `EPIC Aplicação Web` · `EPIC API Pública` · `EPIC Painel Admin` · `EPIC Integrações com Terceiros` |
+| ***"Controle de Dopagem"*** (*"IFPB"* course) | `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` |
+| ***"Interpop"*** | `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` |
+| **Any multi-tenant SaaS** | `EPIC Aplicação Web` · `EPIC API Pública` · `EPIC Painel Admin` · `EPIC Integrações com Terceiros` |
 
-**Quando faz sentido um único Epic-raiz**: projeto MVP enxuto com 1-2 sprints de escopo total. Nesse caso, o Epic-raiz único pode até ser o nome do produto temporariamente, até crescer.
+**When a single root Epic makes sense**: lean MVP project with 1–2 sprints of total scope. In that case, the single root Epic may even be the product name temporarily, until it grows.
 
-**Anti-padrão**: criar `EPIC Sistema` como avô de tudo "para organizar". Isso é equivalente a criar uma pasta `/projeto` dentro de um repositório que já se chama `projeto`. Redundante.
+**Anti-pattern**: creating `EPIC Sistema` as the grandparent of everything "to organize". That is equivalent to creating a `/projeto` folder inside a repository already named `projeto`. Redundant.
 
-Detalhamento e diagrama em [`../examples/template-backlog-openproject.md §3`](../examples/template-backlog-openproject.md) e [SKILL.md §5 Fase B](../SKILL.md).
+Detail and diagram in [`../examples/template-backlog-openproject.md §3`](../examples/template-backlog-openproject.md) and [SKILL.md §5 Phase B](../SKILL.md).
 
 ---
 
-## 3. Sistema de IDs (formato Interpop)
+## 3. ID system (*"Interpop"* format)
 
-| Tipo | Padrão | Exemplo | Notas |
+| Type | Pattern | Example | Notes |
 |---|---|---|---|
-| Epic | `EP-NN` | `EP-10` | Numeração contínua no projeto |
-| Feature | `F-NN` | `F-30` | Numeração contínua; primeira Feature do Epic 10 começa em F-30 (convenção: F começa em décadas, deixa folga) |
-| Critério de Aceitação | `CANN` | `CA01`, `CA12` | Contagem por **Feature** (resetar a cada Feature) OU contínua no projeto — escolha uma e mantenha |
-| User Story | `USNN.M` | `US30.1`, `US30.4` | `NN` = nº da Feature pai; `M` = sequência dentro da Feature |
-| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = US pai; `K` = sequência |
-| Task transversal | `TX-NN` | `TX-01`, `TX-12` | Numeração contínua no projeto |
+| Epic | `EP-NN` | `EP-10` | Continuous numbering in the project |
+| Feature | `F-NN` | `F-30` | Continuous numbering; the first Feature of Epic 10 starts at F-30 (convention: F starts at decades, leaves slack) |
+| Acceptance Criterion | `CANN` | `CA01`, `CA12` | Count per **Feature** (reset on each Feature) OR continuous in the project — pick one and stick to it |
+| User Story | `USNN.M` | `US30.1`, `US30.4` | `NN` = parent Feature number; `M` = sequence inside the Feature |
+| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = parent US; `K` = sequence |
+| Cross-cutting Task | `TX-NN` | `TX-01`, `TX-12` | Continuous numbering in the project |
 
-**Regra ouro**: IDs são **eternos**. Não renumeram quando algo muda; a versão muda. Isso preserva rastreabilidade em commits, PRs, ADRs.
+**Golden rule**: IDs are **eternal**. They do not renumber when content changes; the version changes. This preserves traceability in commits, PRs, ADRs.
 
-**Em commits/PRs**:
+**In commits/PRs**:
 ```bash
 git commit -m "feat(search): implementa SearchService.query [T30.1.7]"
 git commit -m "test(search): adiciona cenário BDD listagem básica [US30.1]"
@@ -217,146 +219,146 @@ git commit -m "fix(search): corrige race em cursor [CA02]"
 
 ---
 
-## 4. Template completo de `BACKLOG.md`
+## 4. Full `BACKLOG.md` template
 
 ```markdown
-# Backlog — <Feature/Módulo em pt-BR>
+# Backlog — <Feature/Module in pt-BR>
 
-> Hierarquia: Epic → Feature → CA · US → BDD · Task
-> Convenções: pt-BR sem infinitivo · sem termos técnicos em Epic/Feature/US · Feature tem descrição · US tem BDD · prioridades 🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low em todos os nós
+> Hierarchy: Epic → Feature → AC · US → BDD · Task
+> Conventions: pt-BR without infinitive · no technical terms in Epic/Feature/US · Feature has description · US has BDD · priorities 🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low on every node
 
-## 🟦 EP-NN <Título descritivo em pt-BR sem infinitivo>
+## 🟦 EP-NN <Descriptive pt-BR title, no infinitive>
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | ID | EP-NN |
-| Prioridade | 🔴 / 🟠 / 🟡 / ⚪ |
+| Priority | 🔴 / 🟠 / 🟡 / ⚪ |
 | Status | New / Refining / Ready / In Progress / Review / Done |
-| Sprint alvo | Sprint X (e Sprint Y, se cruzar) |
-| Descrição | <parágrafo em pt-BR explícito, sem termos técnicos> |
-| Pertence a | Aplicação Web / Mobile / Backend (root do projeto) |
+| Target sprint | Sprint X (and Sprint Y, if it spans) |
+| Description | <explicit pt-BR paragraph, no technical terms> |
+| Belongs to | Aplicação Web / Mobile / Backend (project root) |
 | Features | F-AA, F-BB, F-CC |
 
 ---
 
-## 🟩 F-AA <Título descritivo em pt-BR>
+## 🟩 F-AA <Descriptive pt-BR title>
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | ID | F-AA |
-| Tipo | Feature |
+| Type | Feature |
 | Epic | EP-NN |
-| Prioridade | (escala) |
-| Status | (estados) |
-| Sprint alvo | Sprint X |
-| Entregável ao cliente | Sim — **se Não, NÃO é Feature; mover para Tasks** |
-| Descrição | <parágrafo em pt-BR explicando o que o leitor/usuário vai conseguir fazer> |
+| Priority | (scale) |
+| Status | (states) |
+| Target sprint | Sprint X |
+| Client-deliverable | Yes — **if No, NOT a Feature; move to Tasks** |
+| Description | <pt-BR paragraph explaining what the reader/user will be able to do> |
 
-### Critérios de Aceitação da F-AA
+### F-AA Acceptance Criteria
 
-| ID | Descrição | Prioridade |
+| ID | Description | Priority |
 |---|---|---|
-| CA01 | <regra testável em pt-BR, frase declarativa> | (escala) |
-| CA02 | <…> | (escala) |
+| CA01 | <testable pt-BR rule, declarative sentence> | (scale) |
+| CA02 | <…> | (scale) |
 
-### User Stories da F-AA
+### F-AA User Stories
 
-#### 🟦 USAA.M <Título em pt-BR — incremento que cabe em UMA sprint>
+#### 🟦 USAA.M <pt-BR title — increment fitting in ONE sprint>
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
 | ID | USAA.M |
 | Feature | F-AA |
-| Prioridade | (escala) |
-| Status | (estados) |
-| Sprint alvo | Sprint X |
-| CAs cobertos | CA01, CA02, … |
+| Priority | (scale) |
+| Status | (states) |
+| Target sprint | Sprint X |
+| Covered ACs | CA01, CA02, … |
 | Story Points | <Fibonacci: 1, 2, 3, 5, 8, 13, 21> |
 
-**BDD (`Dado/Quando/Então` em pt-BR)**:
+**BDD (`Dado/Quando/Então` in pt-BR)**:
 
 \`\`\`gherkin
-Cenário: <Título descritivo em pt-BR>
-  Dado <pré-condição>
-  E <pré-condição adicional>
-  Quando <ação do usuário>
-  E <ação adicional>
-  Então <resultado esperado>
-  E <verificação adicional>
+Cenário: <Descriptive pt-BR title>
+  Dado <pre-condition>
+  E <additional pre-condition>
+  Quando <user action>
+  E <additional action>
+  Então <expected result>
+  E <additional verification>
 \`\`\`
 
 \`\`\`gherkin
-Cenário: <Caminho alternativo / erro / edge case>
+Cenário: <Alternative path / error / edge case>
   Dado <…>
   Quando <…>
   Então <…>
 \`\`\`
 
-**Tasks da USAA.M** (aqui PODE haver termos técnicos):
+**USAA.M Tasks** (technical terms ALLOWED here):
 
-| ID | Descrição da Task | Prioridade |
+| ID | Task description | Priority |
 |---|---|---|
-| TAA.M.1 | <task técnica concreta, ex.: "Implementar SearchService.query() com paginação keyset"> | (escala) |
-| TAA.M.2 | <…> | (escala) |
+| TAA.M.1 | <concrete technical task, e.g.: "Implementar SearchService.query() com paginação keyset"> | (scale) |
+| TAA.M.2 | <…> | (scale) |
 
 ---
 
-## 📋 Tasks transversais (configurações técnicas — não são Features)
+## 📋 Cross-cutting Tasks (technical configurations — not Features)
 
-| ID | Descrição | Prioridade | Para qual US (ou "geral") |
+| ID | Description | Priority | For which US (or "general") |
 |---|---|---|---|
-| TX-01 | Configurar variável de ambiente `<NOME>` no `.env.example` | (escala) | TAA.M.K |
-| TX-02 | Adicionar `<lib>` ao `package.json` | (escala) | geral |
-| TX-03 | Criar `docker-compose.dev.yml` com Postgres 16 + Redis | (escala) | geral |
+| TX-01 | Configurar variável de ambiente `<NOME>` no `.env.example` | (scale) | TAA.M.K |
+| TX-02 | Adicionar `<lib>` ao `package.json` | (scale) | general |
+| TX-03 | Criar `docker-compose.dev.yml` com Postgres 16 + Redis | (scale) | general |
 
 ---
 
-## 📊 Resumo do backlog
+## 📊 Backlog summary
 
-| Nível | Quantidade |
+| Level | Count |
 |---|---|
 | Epics | <n> |
 | Features | <n> |
-| CAs | <n> |
+| ACs | <n> |
 | US | <n> |
-| BDD cenários | <n> |
+| BDD scenarios | <n> |
 | Tasks (US-bound) | <n> |
-| Tasks transversais | <n> |
-| **Story Points totais** | **<n>** (Sprint X) + **<n>** (Sprint Y) |
+| Cross-cutting Tasks | <n> |
+| **Total Story Points** | **<n>** (Sprint X) + **<n>** (Sprint Y) |
 
-### Plano de Sprints
+### Sprint plan
 
-| Sprint | Foco | Story Points | Features entregues |
+| Sprint | Focus | Story Points | Features delivered |
 |---|---|---|---|
-| Sprint X | <descrição> | <pontos> | F-AA, F-BB |
-| Sprint Y | <descrição> | <pontos> | F-CC |
+| Sprint X | <description> | <points> | F-AA, F-BB |
+| Sprint Y | <description> | <points> | F-CC |
 
 ---
 
-## 🔗 Rastreabilidade
+## 🔗 Traceability
 
-| Requisito (RF/RNF) | Feature | US | CA | BDD | Task | Teste |
+| Requirement (RF/RNF) | Feature | US | AC | BDD | Task | Test |
 |---|---|---|---|---|---|---|
-| RF: <…> | F-AA | USAA.M | CA01 | "<cenário>" | TAA.M.K | <teste path> |
+| RF: <…> | F-AA | USAA.M | CA01 | "<scenario>" | TAA.M.K | <test path> |
 
 ---
 
-## ⚖️ Validação Falbo 7 dimensões (engenharia-de-requisitos)
+## ⚖️ Falbo 7-dimension validation (engenharia-de-requisitos)
 
-| Feature | Completo | Correto | Consistente | Realista | Necessário | Priorizável | Verificável |
+| Feature | Complete | Correct | Consistent | Realistic | Necessary | Prioritizable | Verifiable |
 |---|---|---|---|---|---|---|---|
 | F-AA | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 ```
 
 ---
 
-## 5. Exemplos reais do projeto Interpop (Busca Editorial)
+## 5. Real examples from the *"Interpop"* project (*"Busca Editorial"*)
 
-Exemplo completo em produção: [`/home/gabriel/Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md`](../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md) — 696 linhas, 1 Epic + 3 Features + 27 CAs + 12 US + 20 cenários BDD + 84 Tasks + 12 TX.
+Full example in production: [`/home/gabriel/Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md`](../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/BACKLOG.md) — 696 lines, 1 Epic + 3 Features + 27 ACs + 12 US + 20 BDD scenarios + 84 Tasks + 12 TX.
 
-### Extrato (boas referências)
+### Extract (good references — kept in pt-BR as they are real project items)
 
-**Epic em pt-BR sem infinitivo, sem termo técnico**:
+**Epic in pt-BR without infinitive, without technical term**:
 ```
 EP-10 Busca Editorial
 Descrição: Conjunto de funcionalidades que permite ao leitor encontrar artigos
@@ -364,7 +366,7 @@ do Interpop através de palavras-chave e filtros, com resultados ordenados por
 relevância. Inclui também o compartilhamento da busca via link.
 ```
 
-**Feature com descrição (sem BDD)**:
+**Feature with description (no BDD)**:
 ```
 F-30 Busca de artigos por texto
 Descrição: Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e
@@ -374,7 +376,7 @@ com o termo no título aparecem primeiro) e com destaque visual nas palavras
 buscadas.
 ```
 
-**User Story com título descritivo + BDD em pt-BR**:
+**User Story with descriptive title + pt-BR BDD**:
 ```
 US30.1 Apresentação básica e ordenação dos resultados da busca
 CAs cobertos: CA01, CA02, CA09, CA10, CA11, CA12
@@ -388,13 +390,13 @@ Cenário: Leitor realiza busca simples e visualiza resultados ordenados
   E os artigos aparecem ordenados do mais relevante para o menos relevante
 ```
 
-**Task com termos técnicos (permitido)**:
+**Task with technical terms (allowed)**:
 ```
 T30.1.7  Implementar SearchService.query(spec: QuerySpec) -> SearchResultPage
          com paginação keyset (cursor base64 assinado HMAC)         🟠 High
 ```
 
-**Task transversal (configuração técnica fora de Feature)**:
+**Cross-cutting Task (technical configuration outside any Feature)**:
 ```
 TX-03  Adicionar `extension unaccent` no Postgres via migration
        `0002_search_extensions`                                     🔴 Immediate
@@ -402,9 +404,9 @@ TX-03  Adicionar `extension unaccent` no Postgres via migration
 
 ---
 
-## 6. Exemplos reais do projeto SIRA (Sistema de Reserva)
+## 6. Real examples from the *"SIRA"* project (*"Sistema de Reserva"*)
 
-Referenciados nos prints do usuário (OpenProject):
+Referenced in the user's OpenProject screenshots:
 
 ```
 EP-08 Minhas Reservas (CRUD)                          🟠 High
@@ -422,61 +424,61 @@ EP-08 Minhas Reservas (CRUD)                          🟠 High
               Reservas Pessoais                                 🟡 Normal
 ```
 
-Note que:
-- `EP-08 Minhas Reservas (CRUD)` — substantivo, sem infinitivo
-- `F-20 Listagem de reservas pessoais com filtros e busca` — substantivo + descrição
-- `US20.1 Visualização Base e Ordenação da Lista de Reservas Pessoais` — substantivo
-- CAs em frase declarativa pt-BR direta
+Note that:
+- `EP-08 Minhas Reservas (CRUD)` — noun, no infinitive
+- `F-20 Listagem de reservas pessoais com filtros e busca` — noun + description
+- `US20.1 Visualização Base e Ordenação da Lista de Reservas Pessoais` — noun
+- ACs as direct pt-BR declarative sentences
 
 ---
 
-## 7. Smell test (rápido antes de mergear backlog)
+## 7. Smell test (quick check before merging the backlog)
 
-Antes de aceitar um `BACKLOG.md`, rode este grep mental:
+Before accepting a `BACKLOG.md`, run this mental grep:
 
-- [ ] **Documento de requisitos foi verificado** antes de mexer no backlog? Topo do `BACKLOG.md` mostra `Última verificação de alteração no documento: DD/MM/AAAA`?
-- [ ] Toda Feature/US/CA/RNF tem campo **`Origem (requisitos)`** apontando para `RF-NN`/`RNF-NN`/`G-NN` do documento? (Sem origem documentada = scope creep silencioso.)
-- [ ] **Todos os artefatos têm descrição em linguagem de negócio** — Epic, Feature, US, CA, RNF? Lida por stakeholder sem glossário técnico?
-- [ ] Algum título de Epic/Feature/US começa com **verbo no infinitivo**? Se sim → reescrever.
-- [ ] Algum título OU descrição de Epic/Feature/US/**CA**/**RNF** tem **termo técnico** (`endpoint`, `hook`, `API`, `schema`, `migration`, `config`, HTTP status code, nome de tabela)? Se sim → mover para Task.
-- [ ] Alguma "Feature" não é **entregável ao cliente final**? Se sim → mover para Task transversal `TX-NN`.
-- [ ] Alguma **Feature** tem BDD em vez de descrição? Se sim → mover BDD para User Story; manter descrição em pt-BR na Feature.
-- [ ] Alguma **User Story** está sem BDD no campo Descrição? Se sim → escrever (≥2 cenários: feliz + erro/borda).
-- [ ] Algum CA é **subjetivo** ("deve ser amigável", "deve ser responsivo")? Se sim → reescrever testável.
-- [ ] **CAs estão dentro de agrupador `CA - <Tema>`** (mesmo Feature com 1 só CA)?
-- [ ] CAs com sub-regras encerram com **`[...]`** e têm `Regras a serem aplicadas:` no corpo? CAs sem `[...]` são autossuficientes no título?
-- [ ] **Epic está aninhado** quando o domínio tem sub-classificações (módulo → grupo → operação)?
-- [ ] **Backlog tem múltiplos Epics-raiz irmãos** (frentes independentes do projeto) em vez de um único "Epic-projeto" como avô de tudo? (Regra 9)
-- [ ] Algum nó **sem prioridade declarada**? Se sim → atribuir 🔴/🟠/🟡/⚪.
-- [ ] Cada US tem **CAs explicitamente associados** (rastreabilidade)?
-- [ ] IDs seguem padrão (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN` — Epic aninhado: `EP-NN.M`)?
+- [ ] **Was the requirements document checked** before touching the backlog? Does the top of `BACKLOG.md` show `Last requirements-document change check: DD/MM/YYYY`?
+- [ ] Does every Feature/US/CA/NFR have the **`Origin (requirements)`** field pointing to `RF-NN`/`RNF-NN`/`G-NN` in the document? (No documented origin = silent scope creep.)
+- [ ] **Do all artifacts have business-language descriptions** — Epic, Feature, US, AC, NFR? Readable by a stakeholder without a technical glossary?
+- [ ] Does any Epic/Feature/US title start with an **infinitive verb**? If yes → rewrite.
+- [ ] Does any Epic/Feature/US/**CA**/**RNF** title OR description contain **technical terms** (`endpoint`, `hook`, `API`, `schema`, `migration`, `config`, HTTP status code, table name)? If yes → move to Task.
+- [ ] Is any "Feature" not **client-deliverable**? If yes → move to cross-cutting Task `TX-NN`.
+- [ ] Does any **Feature** have BDD instead of description? If yes → move BDD to the User Story; keep the pt-BR description on the Feature.
+- [ ] Is any **User Story** missing BDD in the Description field? If yes → write it (≥2 scenarios: happy + error/edge).
+- [ ] Is any AC **subjective** ("must be friendly", "must be responsive")? If yes → rewrite testably.
+- [ ] **Are ACs inside a `CA - <Theme>` grouper** (even with a single AC in the Feature)?
+- [ ] Do ACs with sub-rules end with **`[...]`** and have `Regras a serem aplicadas:` in the body? Are ACs without `[...]` self-sufficient in the title?
+- [ ] Is **the Epic nested** when the domain has sub-classifications (module → group → operation)?
+- [ ] Does the **backlog have multiple sibling root Epics** (independent project fronts) rather than a single "project-Epic" as the grandparent of everything? (Rule 9)
+- [ ] Is any node **without declared priority**? If yes → assign 🔴/🟠/🟡/⚪.
+- [ ] Does each US have **explicitly associated ACs** (traceability)?
+- [ ] Do IDs follow the pattern (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN` — nested Epic: `EP-NN.M`)?
 
-Falhou em qualquer um → ainda não está pronto para `code-implementer`.
-
----
-
-## 8. Conexão com agents
-
-- `documentation-engineer` agent — **gera** este `BACKLOG.md` (rotina obrigatória ao produzir DESIGN.md)
-- `design-orchestrator` agent — **referencia** este BACKLOG.md como entregável final do design bundle
-- `code-implementer` agent — **consome** este BACKLOG.md como input mandatório (pick-and-execute por Task ID)
-- `testing-engineer` agent — **derivar** testes dos BDDs e CAs aqui declarados
+Failed any → not ready for `code-implementer`.
 
 ---
 
-## 9. Pontos abertos / pendências de evolução desta convenção
+## 8. Connection with agents
 
-- Quando o time tiver tagging maduro, considerar `apps.taxonomy` como Epic separado e adaptar template
-- Avaliar se Story Points em Fibonacci continua adequado quando o time crescer (>5 devs)
-- Considerar adicionar campo `Definition of Ready` explícito em cada US (hoje implícito no checklist Falbo + naming)
-- Decidir se CA enumeration é **por Feature** (reset CA01 a cada Feature) ou **contínuo no projeto** (CA01..CA999). Hoje varia entre SIRA (por Feature) e o Interpop Busca (contínuo). Padronizar.
+- `documentation-engineer` agent — **generates** this `BACKLOG.md` (mandatory routine when producing DESIGN.md)
+- `design-orchestrator` agent — **references** this BACKLOG.md as the final deliverable of the design bundle
+- `code-implementer` agent — **consumes** this BACKLOG.md as mandatory input (pick-and-execute by Task ID)
+- `testing-engineer` agent — **derives** tests from the BDDs and ACs declared here
 
-### Pendências resolvidas (jun/2026)
+---
 
-- ✅ **Convenção `[...]` para CAs com sub-regras** — formalizada na Regra 7 (acima) e em [04-bdd-criterios-aceitacao.md §2.5](04-bdd-criterios-aceitacao.md).
-- ✅ **CAs sempre agrupados sob `CA - <Tema>`** — Regra 7.
-- ✅ **TODOS os artefatos têm descrição em linguagem de negócio** — Regra 8.
-- ✅ **Múltiplos Epics-raiz, sem Epic-projeto único** — Regra 9 (formalizada após observação no projeto Controle Dopagem com 3 Epics-raiz: APLICAÇÃO WEB + APLICAÇÃO MOBILE + ATIVIDADES DE APOIO).
-- ✅ **Documento de requisitos como fonte da verdade** — Regra 0.
-- ✅ **Epic aninhado** — Regra 6 + diagrama no template ([examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md)).
-- ✅ **BDD vive no campo Descrição da US, não como card filho** — Regra 6.
+## 9. Open points / evolution of this convention
+
+- When the team has mature tagging, consider `apps.taxonomy` as a separate Epic and adapt the template
+- Evaluate whether Story Points in Fibonacci remains adequate when the team grows (>5 devs)
+- Consider adding an explicit `Definition of Ready` field to each US (today implicit in the Falbo checklist + naming)
+- Decide whether AC enumeration is **per Feature** (reset CA01 on each Feature) or **continuous in the project** (CA01..CA999). Today it varies between *"SIRA"* (per Feature) and *"Interpop Busca"* (continuous). Standardize.
+
+### Resolved items (Jun/2026)
+
+- ✅ **`[...]` convention for ACs with sub-rules** — formalized in Rule 7 (above) and in [04-bdd-criterios-aceitacao.md §2.5](04-bdd-criterios-aceitacao.md).
+- ✅ **ACs always grouped under `CA - <Theme>`** — Rule 7.
+- ✅ **ALL artifacts have business-language descriptions** — Rule 8.
+- ✅ **Multiple root Epics, no single project-Epic** — Rule 9 (formalized after observation in the *"Controle de Dopagem"* project with 3 root Epics: APLICAÇÃO WEB + APLICAÇÃO MOBILE + ATIVIDADES DE APOIO).
+- ✅ **Requirements document as source of truth** — Rule 0.
+- ✅ **Nested Epic** — Rule 6 + diagram in the template ([examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md)).
+- ✅ **BDD lives in the US Description field, not as a child card** — Rule 6.

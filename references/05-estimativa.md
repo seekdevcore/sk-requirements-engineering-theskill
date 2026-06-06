@@ -1,27 +1,27 @@
-# 05 — Estimativa: Story Points + Planning Poker
+# 05 — Estimation: Story Points + Planning Poker
 
-> Como dimensionar User Stories de forma colaborativa. Combina AULA 09.2 IFPB + Cohn (User Stories Applied) + James Grenning (Planning Poker original 2002). Story Points são **medida abstrata de complexidade**, não horas. Planning Poker é o **método de consenso** para chegar nesses pontos.
-
----
-
-## 1. Por que NÃO estimar em horas
-
-Estimativa em horas falha por 4 razões:
-
-1. **Habilidade varia** — 1h do João ≠ 1h da Maria
-2. **Foco varia** — interrupções, reuniões consomem horas, não complexidade
-3. **Ancoragem** — gerente vê "8h" como deadline ("amanhã às 17h"), não como estimativa
-4. **Comparação difícil** — você sabe se feature X é "mais complexa" que Y; raramente sabe quantas horas exatas X leva
-
-**Story Points resolvem isso**: você não estima tempo, estima **complexidade RELATIVA**. Um item de 5 pontos é ~5× mais complexo que um de 1 ponto. Quanto isso vira em horas é problema da **velocity** (ver §7).
+> How to size User Stories collaboratively. Combines LECTURE 09.2 *"IFPB"* + Cohn (*User Stories Applied*) + James Grenning (original 2002 Planning Poker). Story Points are an **abstract measure of complexity**, not hours. Planning Poker is the **consensus method** to arrive at those points.
 
 ---
 
-## 2. Story Points — definição (AULA 09.2)
+## 1. Why NOT to estimate in hours
 
-> Story points são números **abstratos** que dão **ideia de proporcionalidade** entre os requisitos (stories). A técnica consiste em contar a **complexidade do Backlog**.
+Estimating in hours fails for 4 reasons:
 
-**Analogia visual** (slide do curso):
+1. **Skill varies** — 1h of João ≠ 1h of Maria
+2. **Focus varies** — interruptions and meetings consume hours, not complexity
+3. **Anchoring** — the manager reads "8h" as a deadline ("tomorrow at 5pm"), not as an estimate
+4. **Comparison is hard** — you know whether feature X is "more complex" than Y; you rarely know how many exact hours X takes
+
+**Story Points solve this**: you do not estimate time, you estimate **RELATIVE complexity**. An item of 5 points is ~5× more complex than one of 1 point. How that converts into hours is the **velocity** problem (see §7).
+
+---
+
+## 2. Story Points — definition (LECTURE 09.2)
+
+> Story points are **abstract** numbers that give an **idea of proportionality** between requirements (stories). The technique consists of counting the **complexity of the Backlog**.
+
+**Visual analogy** (course slide):
 
 ```
 ┌─────────────────────┐ ← Living: 13pts
@@ -38,24 +38,24 @@ Estimativa em horas falha por 4 razões:
 └─┴───┴─────┴──────────┘
 ```
 
-Não importa quantos m² o Living tem em valor absoluto. O que importa é que o Living é **~3× mais complexo** que o Hall (13 vs 3) e ~13× mais complexo que o Closet (13 vs 1).
+It does not matter how many m² the Living has in absolute terms. What matters is that the Living is **~3× more complex** than the Hall (13 vs. 3) and ~13× more complex than the Closet (13 vs. 1).
 
 ---
 
-## 3. Planning Poker — origem e propósito
+## 3. Planning Poker — origin and purpose
 
-- **2002 — James Grenning** propõe a técnica no artigo *"Planning Poker"*
-- **2005 — Mike Cohn** populariza no livro *Agile Estimating and Planning*
+- **2002 — James Grenning** proposes the technique in the article *"Planning Poker"*
+- **2005 — Mike Cohn** popularizes it in *Agile Estimating and Planning*
 
-**Por que poker** (e não consenso por discussão aberta):
+**Why poker** (and not consensus through open discussion):
 
-- Evita **ancoragem** (1ª voz dominante influencia as demais)
-- Força cada membro a **pensar antes de falar**
-- Revela **divergências grandes** (sinal de que falta entendimento da história)
+- Avoids **anchoring** (the first dominant voice influences the others)
+- Forces each member to **think before speaking**
+- Reveals **large divergences** (signal that understanding of the story is missing)
 
 ---
 
-## 4. O baralho (escala Fibonacci modificada)
+## 4. The deck (modified Fibonacci scale)
 
 ```
 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
@@ -63,208 +63,208 @@ Não importa quantos m² o Living tem em valor absoluto. O que importa é que o 
 └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
 ```
 
-**Por que Fibonacci**: gaps crescentes refletem incerteza crescente. Diferença entre 1 e 2 é precisa; entre 13 e 21 é vaga, como deve ser.
+**Why Fibonacci**: growing gaps reflect growing uncertainty. The difference between 1 and 2 is precise; between 13 and 21 is vague, as it should be.
 
-**Significados especiais**:
+**Special meanings**:
 
-| Carta | Significado |
+| Card | Meaning |
 |---|---|
-| `0` | Trivial (label change, color tweak) — **NÃO usado na 1ª rodada** |
-| `1/2` | Quase trivial — **NÃO usado na 1ª rodada** |
-| `1` | Mais simples possível do backlog atual (história-guia) |
-| `2..89` | Proporcional à história-guia |
-| `?` | **Não entendi** — preciso conversar com PO. Bloqueio o planning |
-| `100` | **Isto é épico disfarçado** — fatiar em US menores antes de estimar |
+| `0` | Trivial (label change, color tweak) — **NOT used in the 1st round** |
+| `1/2` | Almost trivial — **NOT used in the 1st round** |
+| `1` | The simplest item possible in the current backlog (guide story) |
+| `2..89` | Proportional to the guide story |
+| `?` | **I did not understand** — I need to talk to the PO. I block the planning |
+| `100` | **This is a disguised epic** — slice into smaller US before estimating |
 
-### 4.1 Por que 0 e 1/2 ficam de fora na 1ª rodada
+### 4.1 Why 0 and 1/2 are kept out of the 1st round
 
-Da AULA 09.2: *"Não agora, mas no futuro, pois a prática demonstra que ao longo do desenvolvimento sempre haverá itens mais simples que o estimado com 1 ponto, como por exemplo: o acerto de um bug de layout, a troca de um label ou mesmo a troca de um botão da interface."*
+From LECTURE 09.2: *"Not now, but in the future, because practice shows there will always be items along development simpler than those estimated at 1 point, such as: fixing a layout bug, swapping a label, or even swapping a UI button."*
 
-Você **reserva** o 0 e 1/2 para itens futuros que serão mais simples que o atual menor item. Se você gastasse o 1 num item trivial agora, depois não teria espaço para algo ainda menor.
+You **reserve** the 0 and 1/2 for future items that will be simpler than the current smallest one. If you spent the 1 on a trivial item now, you would later have no room for something even smaller.
 
 ---
 
-## 5. Procedimento (AULA 09.2, 4 passos)
+## 5. Procedure (LECTURE 09.2, 4 steps)
 
-### 5.1 Passo 1 — Leitura conjunta do backlog
+### 5.1 Step 1 — Joint reading of the backlog
 
-A equipe lê **todas as stories** do backlog (do produto ou só da sprint) para ter visão geral do que será estimado.
+The team reads **all stories** of the backlog (the product's or just the sprint's) to gain an overview of what will be estimated.
 
-**Tempo típico**: 15-30min para 20-30 stories.
+**Typical time**: 15–30min for 20–30 stories.
 
-### 5.2 Passo 2 — Escolha da história-guia
+### 5.2 Step 2 — Choice of the guide story
 
-> Das stories do Backlog, a equipe seleciona a que julga ser a **mais simples de todas**, isto é, a que demandará **menos esforço** para implementação. Para essa história a estimativa será de **1 ponto**.
+> Of the Backlog stories, the team selects the one it judges to be the **simplest of all**, that is, the one demanding the **least effort** to implement. For this story, the estimate will be **1 point**.
 
-**Dica de pro** (AULA 09.2):
-> Buscar um item já desenvolvido pelo time em uma sprint passada (se existir) e utilizar ele como referência de comparação. Com algo já realizado as estimativas serão mais assertivas.
+**Pro tip** (LECTURE 09.2):
+> Look for an item the team has already developed in a past sprint (if any) and use it as a comparison reference. With something already accomplished, estimates will be more accurate.
 
-### 5.3 Passo 3 — Pontuar as demais em proporção
+### 5.3 Step 3 — Score the others in proportion
 
-> Seguindo a ordem apresentada no Backlog, **cada Story é relida e pontuada**, tomando-se a história guia como referência.
+> Following the order presented in the Backlog, **each Story is re-read and scored**, taking the guide story as reference.
 >
-> Uma história que demande um esforço maior que a história guia **não necessariamente será pontuada com o valor seguinte** na escala de pontos. O esforço deve ser pontuado seguindo uma **proporção** ao esforço definido para a história guia.
+> A story demanding more effort than the guide story **will not necessarily be scored with the next value** on the points scale. The effort must be scored following a **proportion** to the effort defined for the guide story.
 
-**Exemplo concreto**:
+**Concrete example**:
 
-- Histórica-guia (1pt): "Adicionar campo 'apelido' ao formulário de atleta (string opcional)"
-- Story A: "Adicionar combo de seleção de federação com filtro por confederação" → essa é **8×** mais complexa (envio de dados em cascata, validação cruzada, integração com cache). Pontuação = **8**, não 2.
+- Guide story (1pt): "Add 'nickname' field to the athlete form (optional string)"
+- Story A: "Add federation-selection combo with filter by confederation" → this one is **8×** more complex (cascade data, cross-validation, cache integration). Score = **8**, not 2.
 
-A escala Fibonacci tem buracos (1, 2, 3, 5, 8, 13…) **propositalmente**. Você não desliza pelos valores; você compara magnitude.
+The Fibonacci scale has gaps (1, 2, 3, 5, 8, 13…) **on purpose**. You do not slide through values; you compare magnitude.
 
-### 5.4 Passo 4 — Voto + discussão + revoto
+### 5.4 Step 4 — Vote + discussion + revote
 
-Por história:
+For each story:
 
-1. Facilitador lê a story em voz alta
-2. Cada membro escolhe sua carta **em silêncio**
-3. Todos viram a carta ao mesmo tempo
-4. Se há consenso → registra pontuação
-5. Se há divergência → **menor e maior valor justificam**
-6. Re-discute → vota de novo
-7. Repetir até consenso ou registrar discordância
+1. The facilitator reads the story out loud
+2. Each member chooses their card **in silence**
+3. Everyone flips the card at the same time
+4. If consensus → record the score
+5. If divergence → **lowest and highest values justify**
+6. Re-discuss → vote again
+7. Repeat until consensus, or record the disagreement
 
-### 5.5 O que fazer com `?` e `100`
+### 5.5 What to do with `?` and `100`
 
-- **`?` apareceu** → para a discussão da story. Quem votou `?` fala que dúvida tem. PO esclarece. Re-vota.
-- **`100` apareceu** → story é épico. Sai do planning. Volta para refinamento do backlog.
+- **`?` appeared** → stop the story discussion. Whoever voted `?` says what doubt they have. The PO clarifies. Re-vote.
+- **`100` appeared** → story is an epic. Out of the planning. Goes back to backlog refinement.
 
 ---
 
-## 6. Quem participa do Planning Poker
+## 6. Who participates in Planning Poker
 
-| Papel | Vota? | Por quê |
+| Role | Votes? | Why |
 |---|---|---|
-| Dev | ✅ | Implementa |
-| QA / Tester | ✅ | Testa, conhece risco |
-| Designer | ✅ se a story tem UI | Designa, conhece complexidade de UX |
-| PO / Product Manager | ❌ | Quem define o "o quê", não estima o "quanto" |
-| Scrum Master / Facilitador | ❌ | Só facilita, não vota |
-| Gerente / Stakeholder externo | ❌ | Geraria ancoragem por autoridade |
+| Dev | ✅ | Implements |
+| QA / Tester | ✅ | Tests, knows risk |
+| Designer | ✅ if the story has UI | Designs, knows UX complexity |
+| PO / Product Manager | ❌ | Defines the "what", does not estimate the "how much" |
+| Scrum Master / Facilitator | ❌ | Only facilitates, does not vote |
+| Manager / External stakeholder | ❌ | Would create anchoring by authority |
 
-**Regra ouro**: quem **NÃO vai implementar não vota**.
+**Golden rule**: whoever **WILL NOT implement does not vote**.
 
 ---
 
-## 7. Velocity — onde Story Points viram tempo
+## 7. Velocity — where Story Points become time
 
-**Velocity** = soma de pontos entregues por sprint (média das últimas 3-5 sprints).
+**Velocity** = sum of points delivered per sprint (average of the last 3–5 sprints).
 
-Exemplo:
-- Sprint 1: entregou 23pts
-- Sprint 2: entregou 28pts
-- Sprint 3: entregou 25pts
-- **Velocity média = 25pts/sprint**
+Example:
+- Sprint 1: delivered 23pts
+- Sprint 2: delivered 28pts
+- Sprint 3: delivered 25pts
+- **Average velocity = 25pts/sprint**
 
-**Para próxima sprint**: equipe escolhe ~25pts do backlog priorizado. Não 40 (overcommit), não 10 (sub-utilização).
+**For the next sprint**: the team chooses ~25pts of the prioritized backlog. Not 40 (overcommit), not 10 (under-use).
 
-**Conversão para deadline**:
-- Backlog total = 150pts
+**Conversion to deadline**:
+- Total backlog = 150pts
 - Velocity = 25pts/sprint
-- Sprints restantes = 150 / 25 = **6 sprints**
+- Remaining sprints = 150 / 25 = **6 sprints**
 
-Esta é **estimativa, não promessa**. Recalcule a cada sprint.
+This is an **estimate, not a promise**. Recalculate every sprint.
 
-### 7.1 Quando velocity NÃO funciona
+### 7.1 When velocity DOES NOT work
 
-- **1as 3 sprints** — equipe ainda calibrando. Use range (10-30pts), não média
-- **Equipe muda** — velocity reseta (membro novo aprendendo, membro saindo)
-- **Stack muda** — migração de framework destrói baseline
-- **Tipo de trabalho muda** — sprint só de refactor não é comparável a sprint de feature
+- **First 3 sprints** — team still calibrating. Use range (10–30pts), not average
+- **Team changes** — velocity resets (new member learning, member leaving)
+- **Stack changes** — framework migration destroys the baseline
+- **Type of work changes** — a sprint of refactor only is not comparable to a feature sprint
 
 ---
 
-## 8. O que NÃO fazer com Story Points
+## 8. What NOT to do with Story Points
 
-### 8.1 Não converta pontos em horas explicitamente
+### 8.1 Do not explicitly convert points into hours
 
 ```
 ❌ "1pt = 4h, 2pt = 8h, 3pt = 12h"
-   → reintroduz o problema que story points resolvem
+   → reintroduces the problem story points were meant to solve
 ```
 
-Velocity é a única conversão válida — e ela é **estatística** (média), não **determinística**.
+Velocity is the only valid conversion — and it is **statistical** (average), not **deterministic**.
 
-### 8.2 Não compare velocity entre equipes
+### 8.2 Do not compare velocity across teams
 
-Equipe A entrega 30pts/sprint, Equipe B entrega 50pts/sprint. **Isso não significa nada.** Os pontos são relativos à história-guia de cada equipe. Comparar é como comparar reais com euros sem câmbio — números diferentes, valor incomparável.
+Team A delivers 30pts/sprint, Team B delivers 50pts/sprint. **This means nothing.** Points are relative to each team's guide story. Comparing is like comparing reais to euros without an exchange rate — different numbers, incomparable value.
 
-### 8.3 Não use pontos para avaliação de performance
+### 8.3 Do not use points for performance review
 
-Dev sob pressão para "marcar mais pontos" infla estimativas. Quebra o sistema todo. **Pontos servem para planejamento, não avaliação.**
+A dev under pressure to "score more points" inflates estimates. Breaks the whole system. **Points serve planning, not appraisal.**
 
-### 8.4 Não re-estime mid-sprint
+### 8.4 Do not re-estimate mid-sprint
 
-Story estimada como 5 está se mostrando ser 13. **Não muda o número.** Resultado: velocity da sprint cai → próxima sprint absorve menos. O sistema se autoajusta.
+Story estimated as 5 turning out to be 13. **Do not change the number.** Result: sprint velocity drops → next sprint absorbs less. The system self-adjusts.
 
-### 8.5 Não estime sem CA + BDD prontos
+### 8.5 Do not estimate without ACs + BDD ready
 
-Como você estima complexidade de "fazer login" se não sabe se é com email/senha, OAuth, 2FA, SSO? **Story sem critério é story sem estimativa.** Lembrando: os CAs vivem na **Feature pai** (ver [04-bdd-criterios-aceitacao.md §2.1](04-bdd-criterios-aceitacao.md)); a US herda por rastreabilidade e adiciona o **BDD** no seu próprio campo "Descrição". Se a Feature pai não tem CAs ou se a US ainda não tem BDD escrito, volte para refinamento.
+How do you estimate the complexity of "doing login" if you do not know whether it is email/password, OAuth, 2FA, SSO? **Story without criterion is story without estimate.** Reminder: ACs live in the **parent Feature** (see [04-bdd-criterios-aceitacao.md §2.1](04-bdd-criterios-aceitacao.md)); the US inherits via traceability and adds the **BDD** in its own "Description" field. If the parent Feature has no ACs or the US has no BDD yet, go back to refinement.
 
 ---
 
-## 9. Sinalizadores de Planning Poker mal feito
+## 9. Smells of poorly run Planning Poker
 
-| Sintoma | Causa provável | Ação |
+| Symptom | Likely cause | Action |
 |---|---|---|
-| Todo mundo vota o mesmo número sempre | Ancoragem (alguém comenta antes) ou groupthink | Lembrar: silêncio antes de virar |
-| Divergência crônica em toda story | Time não compartilha visão de domínio | Investir em onboarding + refinamento prévio |
-| Muitos `?` | Backlog não refinado | Voltar para refinamento; agendar Three Amigos |
-| Muitos `100` | Stories grandes demais | Fatiar antes do planning |
-| Equipe estima sempre baixo | Otimismo + medo de "ser lento" | Comparar com history; mostrar velocity |
-| Equipe estima sempre alto | Defensa contra cobrança ou risco real | Investigar cause-root: é estimativa ou risco? |
-| Velocity flutua >30% sprint-a-sprint | Estimativa inconsistente ou eventos externos | Estabilizar equipe; introduzir buffer técnico |
+| Everyone always votes the same number | Anchoring (someone commented first) or groupthink | Remind: silence before the flip |
+| Chronic divergence on every story | Team does not share domain view | Invest in onboarding + prior refinement |
+| Many `?` | Backlog not refined | Go back to refinement; schedule Three Amigos |
+| Many `100` | Stories too large | Slice before the planning |
+| Team always estimates low | Optimism + fear of "being slow" | Compare with history; show velocity |
+| Team always estimates high | Defence against pressure or real risk | Investigate root cause: is it an estimate or a risk? |
+| Velocity fluctuates >30% sprint-to-sprint | Inconsistent estimation or external events | Stabilize team; introduce technical buffer |
 
 ---
 
-## 10. Variações úteis
+## 10. Useful variations
 
-### 10.1 T-shirt sizing (estágio inicial, backlog cru)
+### 10.1 T-shirt sizing (early stage, raw backlog)
 
-Em vez de números, use **PP, P, M, G, GG**. Útil para **épico inteiro** quando ainda não tem detalhe.
+Instead of numbers, use **XS, S, M, L, XL**. Useful for a **whole epic** when there is no detail yet.
 
 ```
-Epic "Notificações push" — T-shirt: GG
+Epic "Push notifications" — T-shirt: XL
 Epic "Theme switcher dark mode" — T-shirt: M
-Epic "Adicionar avatar no perfil" — T-shirt: P
+Epic "Add avatar in profile" — T-shirt: S
 ```
 
-Depois converte para Fibonacci quando fatiar em features/US.
+Then convert to Fibonacci when slicing into features/US.
 
-### 10.2 Bucket System (50+ items rapidamente)
+### 10.2 Bucket System (50+ items quickly)
 
-Para backlog grande, dispensa Poker tradicional:
+For a large backlog, skips traditional Poker:
 
-1. Coloca todas as stories num lado
-2. Escolhe 1 representante de cada "complexidade típica" (1, 3, 8, 21)
-3. Equipe **move stories** para o bucket que cabem
-4. Discute só os limites (entre 1 e 3, entre 8 e 13)
+1. Place all stories on one side
+2. Choose 1 representative of each "typical complexity" (1, 3, 8, 21)
+3. The team **moves stories** into the bucket they fit
+4. Discuss only the boundaries (between 1 and 3, between 8 and 13)
 
-**Tempo**: 50 stories em ~1h. Sacrifica precisão por velocidade.
+**Time**: 50 stories in ~1h. Sacrifices precision for speed.
 
-### 10.3 Magic Estimation (totalmente silencioso)
+### 10.3 Magic Estimation (fully silent)
 
-Variação: equipe estima 30+ stories **sem falar**, movendo cards numa linha de complexidade. Discute só ao final.
-
----
-
-## 11. Pós-estimativa: Definition of Ready
-
-Antes de uma US entrar na sprint, deve ter:
-
-- [ ] Título curto descritivo
-- [ ] BDD na descrição (DADO/QUANDO/ENTÃO)
-- [ ] CAs associados via relações
-- [ ] Story points estimados
-- [ ] INVEST validado
-- [ ] Definição de "pronto" (Definition of Done) clara
-- [ ] Sem dependências externas bloqueadoras
-
-Falta qualquer um → **NÃO entra na sprint.** Vai para refinamento.
+Variant: team estimates 30+ stories **without speaking**, moving cards along a complexity line. Discusses only at the end.
 
 ---
 
-## 12. Conexão com as próximas references
+## 11. Post-estimation: Definition of Ready
 
-- **Validação (Falbo 7 dimensões + Sommerville 5 conferências)**: [06-validacao.md](06-validacao.md)
-- **Gestão de mudança quando estimativa erra muito**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
+Before a US enters the sprint, it must have:
+
+- [ ] Short descriptive title
+- [ ] BDD in the description (Given/When/Then)
+- [ ] ACs associated via relations
+- [ ] Estimated story points
+- [ ] INVEST validated
+- [ ] Clear Definition of Done
+- [ ] No blocking external dependencies
+
+Missing any → **DOES NOT enter the sprint.** Goes to refinement.
+
+---
+
+## 12. Connection with the next references
+
+- **Validation (Falbo 7 dimensions + Sommerville 5 checks)**: [06-validacao.md](06-validacao.md)
+- **Change management when estimates are far off**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)

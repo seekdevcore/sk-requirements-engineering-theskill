@@ -1,243 +1,245 @@
-# 04 — Critérios de Aceitação + BDD
+# 04 — Acceptance Criteria + BDD
 
-> Como tornar requisitos **testáveis**. Combina AULA 08 (CA estilo declarativo IFPB), AULA 09 (integração CA + BDD no OpenProject), e metodologia BDD (Dan North, Liz Keogh, Aslak Hellesøy). **CA é o invariante por feature; BDD é o cenário executável por User Story.** Use os dois, não escolha um.
+> How to make requirements **testable**. Combines LECTURE 08 (declarative AC style *"IFPB"*), LECTURE 09 (AC + BDD integration in OpenProject), and BDD methodology (Dan North, Liz Keogh, Aslak Hellesøy). **AC is the per-feature invariant; BDD is the executable per-User-Story scenario.** Use both, do not choose one.
 
 ---
 
-## 1. Por que CAs + BDD são camadas COMPLEMENTARES
+## 1. Why ACs + BDD are COMPLEMENTARY layers
 
-Há confusão recorrente entre "CA é Gherkin" e "Gherkin substitui CA". Os dois servem propósitos diferentes:
+There is recurring confusion between "AC is Gherkin" and "Gherkin replaces AC". They serve different purposes:
 
-| | Critério de Aceitação (CA) | BDD (Gherkin) |
+| | Acceptance Criterion (AC) | BDD (Gherkin) |
 |---|---|---|
-| **Nível** | Feature | User Story |
-| **Forma** | Frase declarativa imperativa | Cenário DADO/QUANDO/ENTÃO |
-| **O que define** | Invariante / regra de negócio | Interação concreta usuário-sistema |
-| **Audiência** | PO + analista + dev + QA | Toda a equipe + executável como teste |
-| **Ferramenta** | Lista de regras numeradas | Cucumber, Behat, SpecFlow, Behave, RSpec |
-| **Exemplo (saúde)** | "CA02: Senha deve ter 8+ chars, 1 maiúscula, 1 número" | "DADO usuário na tela de cadastro / QUANDO digita senha 'abc123' / ENTÃO sistema mostra erro de senha fraca" |
+| **Level** | Feature | User Story |
+| **Form** | Declarative imperative sentence | Given/When/Then scenario |
+| **What it defines** | Invariant / business rule | Concrete user-system interaction |
+| **Audience** | PO + analyst + dev + QA | Whole team + executable as a test |
+| **Tool** | Numbered list of rules | Cucumber, Behat, SpecFlow, Behave, RSpec |
+| **Example (health)** | "CA02: Password must have 8+ chars, 1 uppercase, 1 number" | "GIVEN the user is on the registration screen / WHEN they type the password 'abc123' / THEN the system shows a weak-password error" |
 
-**O mapeamento típico**:
+**Typical mapping**:
 
 ```
-FEATURE                                       ← agrupa regras
-  ├─ DESCRIÇÃO (parágrafo em pt-BR)           ← entregável ao cliente
-  ├─ CA01: regra A                            ← invariantes testáveis
-  ├─ CA02: regra B
-  ├─ CA03: regra C
-  └─ USER STORY (fatia de 1 sprint)
-       ├─ Título curto descritivo             ← "US Listagem básica de atletas"
-       ├─ DESCRIÇÃO = BDD                     ← cenários DADO/QUANDO/ENTÃO
-       │     ├─ Cenário 1 — exercita CA01 + CA02
-       │     ├─ Cenário 2 — exercita CA02 + CA03
-       │     └─ Cenário 3 — fluxo de erro
-       └─ Relação a: CAs (rastreabilidade)    ← lista de CAs cobertos
+FEATURE                                       ← groups rules
+  ├─ DESCRIPTION (business-language paragraph) ← deliverable to the client
+  ├─ CA01: rule A                              ← testable invariants
+  ├─ CA02: rule B
+  ├─ CA03: rule C
+  └─ USER STORY (one-sprint slice)
+       ├─ Short descriptive title              ← "US Listagem básica de atletas"
+       ├─ DESCRIPTION = BDD                    ← Given/When/Then scenarios
+       │     ├─ Scenario 1 — exercises CA01 + CA02
+       │     ├─ Scenario 2 — exercises CA02 + CA03
+       │     └─ Scenario 3 — error flow
+       └─ Related to: ACs (traceability)       ← list of covered ACs
 ```
 
-**Regra dura** (ver SKILL.md): **Feature tem descrição, NUNCA BDD. User Story tem BDD, sempre.** A descrição da Feature é o "o que vamos entregar ao cliente, em uma frase de negócio"; o BDD da US é "como o usuário vai exercitar isso em um cenário concreto".
+**Hard rule** (see SKILL.md): **Feature has a description, NEVER BDD. User Story has BDD, always.** The Feature description is "what we will deliver to the client, in one business sentence"; the User Story BDD is "how the user will exercise it in a concrete scenario".
 
-CAs são **regras** (lista de invariantes por feature); BDDs são **cenários** (sequência de eventos por user story). Você precisa dos dois para ter cobertura.
+ACs are **rules** (list of invariants per feature); BDDs are **scenarios** (event sequence per user story). You need both for coverage.
 
 ---
 
-## 2. Critérios de Aceitação (CAs)
+## 2. Acceptance Criteria (ACs)
 
-### 2.1 Definição IFPB (AULA 08)
+### 2.1 *"IFPB"* definition (LECTURE 08)
 
-> **Condições para que uma Feature seja considerada concluída/aceita.**
+> **Conditions for a Feature to be considered finished/accepted.**
 
-São especificados **POR FEATURE** (regra inegociável do curso). Sem CAs, a feature é desejo, não requisito. A User Story **herda os CAs por rastreabilidade** (campo "Relacionado a: CA01, CA03, CA07") — ela mesma não tem CAs próprios; o que ela tem é o BDD do cenário concreto que exercita os CAs herdados da Feature pai.
+They are specified **PER FEATURE** (non-negotiable rule from the course). Without ACs, the feature is a wish, not a requirement. The User Story **inherits the ACs through traceability** ("Related to: CA01, CA03, CA07" field) — it has no ACs of its own; what it has is the BDD of the concrete scenario that exercises the ACs inherited from the parent Feature.
 
-> A confusão "CAs por user story" aparece em material introdutório porque, no Jira/Trello, costuma-se grudar CAs no card de US por conveniência operacional. **Na hierarquia formal IFPB seguida aqui, CAs pertencem à Feature**; a US apenas referencia.
+> The "ACs per user story" confusion shows up in introductory material because, in Jira/Trello, people tend to glue ACs onto the US card for operational convenience. **In the formal *"IFPB"* hierarchy followed here, ACs belong to the Feature**; the US only references them.
 
-### 2.2 Estilo declarativo (modelo IFPB)
+### 2.2 Declarative style (*"IFPB"* model)
 
-Cada CA é uma frase imperativa que descreve uma regra ou condição testável. **Não usa Gherkin** — é texto livre prescritivo.
-
-```
-CA01 - Apenas usuários autorizados podem ter acesso a funcionalidade
-       de Consulta GERAL de ATLETAS.
-
-CA02 - A consulta deve exibir apenas os atletas das FEDERAÇÕES
-       esportivas que o usuário tem acesso no seu cadastro.
-
-CA03 - A tela de consulta deve conter os campos e layout conforme
-       definido no protótipo.
-
-CA04 - A consulta deverá ser realizada levando-se em conta as
-       opções de filtro informadas pelo usuário.
-
-CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser
-       no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir
-       mensagem de erro.
-
-CA13 - A listagem geral de atletas deverá ser exibida em ordem
-       alfabética, por default.
-
-CA14 - A listagem geral de atletas poderá ser reordenada ao clicar
-       no título das colunas.
-
-CA14 - A listagem geral de atletas deverá ser paginada com as
-       opções de visualizar 10, 50, 100 ou todos.
-
-CA15 - A listagem geral de atletas deverá exibir todos os atletas
-       por default.
-```
-
-### 2.3 Decomposição de CAs complexos (modelo IFPB)
-
-Quando um CA agrupa múltiplas sub-regras, expanda em sub-bullets no campo de detalhamento. Exemplo CA09:
+Each AC is an imperative sentence describing a testable rule or condition. **It does not use Gherkin** — it is prescriptive free text.
 
 ```
-CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento
-       e validação conforme detalhamento:
+CA01 - Only authorized users may access the Consulta GERAL de
+       ATLETAS feature.
 
-       Regras a serem aplicadas:
-       • O combobox FEDERAÇÃO só deverá ser habilitado se tiver uma
-         CONFEDERAÇÃO selecionada
-       • Só deve exibir as Federações ATIVAS
-       • Em ordem ALFABÉTICA
-       • Deve exibir apenas as federações que o usuário logado está
-         associado no seu cadastro de acesso
-       • Deve permitir busca parcial ao digitar
+CA02 - The query shall display only the athletes of the sports
+       FEDERAÇÕES the user has access to in their profile.
+
+CA03 - The query screen shall contain the fields and layout
+       defined in the prototype.
+
+CA04 - The query shall be performed taking into account the
+       filter options informed by the user.
+
+CA05 - The CPF field is not mandatory. But if filled, must be in
+       the format XXX.XXX.XXX-XX. If the CPF is invalid, emit
+       an error message.
+
+CA13 - The general athlete listing shall be displayed in
+       alphabetical order by default.
+
+CA14 - The general athlete listing may be re-sorted by clicking
+       the column headers.
+
+CA14 - The general athlete listing shall be paginated with the
+       options 10, 50, 100, or all.
+
+CA15 - The general athlete listing shall display all athletes
+       by default.
 ```
 
-### 2.4 Boas práticas de CA
+### 2.3 Decomposing complex ACs (*"IFPB"* model)
 
-| ✅ Faça | ❌ Evite |
+When an AC groups multiple sub-rules, expand into sub-bullets in the detail field. Example CA09:
+
+```
+CA09 - The FEDERAÇÃO combobox must apply the fill-in and
+       validation rules as detailed:
+
+       Rules to be applied:
+       • The FEDERAÇÃO combobox shall only be enabled if a
+         CONFEDERAÇÃO is selected
+       • Shall display only ACTIVE Federações
+       • In ALPHABETICAL order
+       • Shall display only the Federações the logged-in user
+         is associated with in their access profile
+       • Shall allow partial-text search while typing
+```
+
+### 2.4 AC best practices
+
+| ✅ Do | ❌ Avoid |
 |---|---|
-| Linguagem imperativa ("deve", "não pode") | Linguagem vaga ("seria bom", "preferencialmente") |
-| Verbos testáveis ("exibir", "validar", "rejeitar") | Adjetivos qualitativos sem métrica ("amigável", "rápido") |
-| Uma regra por CA (atômico) | Múltiplas regras misturadas |
-| Numeração estável (CA01..CA20) | Renumerar a cada mudança |
-| Ligar CA a feature explicitamente | CA órfão sem feature pai |
-| Versionar (CA não muda silenciosamente) | Editar CA sem histórico |
+| Imperative language ("shall", "must not") | Vague language ("would be nice", "preferably") |
+| Testable verbs ("display", "validate", "reject") | Qualitative adjectives without metric ("friendly", "fast") |
+| One rule per AC (atomic) | Multiple rules mixed |
+| Stable numbering (CA01..CA20) | Renumber on every change |
+| Link AC to feature explicitly | Orphan AC with no parent feature |
+| Version (AC does not change silently) | Edit AC without history |
 
-### 2.5 Convenção `[...]` — CA com sub-regras (regra dura)
+### 2.5 `[...]` convention — AC with sub-rules (hard rule)
 
-Quando um CA precisa de sub-regras para ser totalmente testável, **encerre o título com `[...]`** e detalhe no corpo do item (campo "descrição" no OpenProject) abrindo com `Regras a serem aplicadas:` seguido de bullets.
+When an AC needs sub-rules to be fully testable, **end the title with `[...]`** and detail in the item body (the "description" field in OpenProject), opening with `Rules to be applied:` followed by bullets.
 
-**Por que existe**: quem lê o backlog em modo **lista** (visão padrão do OpenProject, com 50+ itens na tela) precisa decidir em 1 segundo se aquele CA é autossuficiente ou exige clique. O `[...]` sinaliza isso sem ambiguidade.
+**Why it exists**: whoever reads the backlog in **list mode** (OpenProject's default view, with 50+ items on screen) must decide in 1 second whether that AC is self-sufficient or requires a click. The `[...]` signals this unambiguously.
 
-#### Exemplo concreto (caso real do curso IFPB)
+#### Concrete example (real case from the *"IFPB"* course)
 
-**Título no card** (visível em modo lista):
-
-```
-CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento e validação conforme detalhamento [...]
-```
-
-**Descrição (corpo do item, lida ao abrir)**:
+**Title on the card** (visible in list mode):
 
 ```
-Regras a serem aplicadas:
-- O combobox FEDERAÇÃO só deverá ser habilitado se tiver uma CONFEDERAÇÃO selecionada.
-- Só deve exibir as Federações ATIVAS.
-- Em ordem ALFABÉTICA.
-- Deve exibir apenas as federações que o usuário logado está associado no seu cadastro de acesso.
-- Deve permitir busca parcial ao digitar.
+CA09 - The FEDERAÇÃO combobox must apply the fill-in and validation rules as detailed [...]
 ```
 
-**Contraste — CA autossuficiente (sem `[...]`)**:
+**Description (item body, read on opening)**:
 
 ```
-CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro.
+Rules to be applied:
+- The FEDERAÇÃO combobox shall only be enabled if a CONFEDERAÇÃO is selected.
+- Shall display only ACTIVE Federações.
+- In ALPHABETICAL order.
+- Shall display only the Federações the logged-in user is associated with in their access profile.
+- Shall allow partial-text search while typing.
 ```
 
-Não tem `[...]` porque o título já contém tudo que é necessário para testar.
+**Contrast — self-sufficient AC (without `[...]`)**:
 
-#### Quando usar `[...]`
+```
+CA05 - The CPF field is not mandatory. But if filled, must be in the format XXX.XXX.XXX-XX. If the CPF is invalid, emit an error message.
+```
 
-| Situação | Usa `[...]`? |
+It does not need `[...]` because the title already contains everything required to test.
+
+#### When to use `[...]`
+
+| Situation | Use `[...]`? |
 |---|---|
-| CA com 1 regra autossuficiente (título completo) | Não |
-| CA cujo título excederia ~250 caracteres se autossuficiente | Sim |
-| CA com 3+ sub-regras paralelas (formato lista no corpo) | Sim |
-| CA que herda comportamento condicional ("Só ativa se X foi selecionado") com várias condições | Sim |
-| CA com regra única, mas com nota lateral (ex.: "exceto em fim de semana") | Não — coloque a exceção no próprio título |
+| AC with 1 self-sufficient rule (complete title) | No |
+| AC whose title would exceed ~250 characters if self-sufficient | Yes |
+| AC with 3+ parallel sub-rules (list format in the body) | Yes |
+| AC inheriting conditional behaviour ("Only active if X was selected") with several conditions | Yes |
+| AC with a single rule, but with a side note (e.g.: "except on weekends") | No — put the exception in the title itself |
 
-#### Anti-padrão: `[...]` sem detalhamento
+#### Anti-pattern: `[...]` without detail
 
-Título termina com `[...]` mas o corpo está vazio ou só repete o título. **Sempre detalhe** com pelo menos 2 bullets em "Regras a serem aplicadas:". Se não tiver o que detalhar, remova o `[...]`.
+Title ends with `[...]` but the body is empty or only repeats the title. **Always detail** with at least 2 bullets under "Rules to be applied:". If you have nothing to detail, remove the `[...]`.
 
-#### Sempre agrupado: convenção do agrupador `CA - <Tema>`
+#### Always grouped: `CA - <Theme>` grouper convention
 
-CAs ficam sempre dentro de um agrupador `CA - <Tema>`, mesmo quando a Feature tem 1 só CA. O agrupador é um item do tipo "Critério de Aceitação" no OpenProject, sem `[...]`, sem ID (`CANN`), apenas com título descritivo (`CA - Acesso e visibilidade`). Os CAs específicos (`CA01`, `CA02`, …) vivem como filhos do agrupador. Detalhamento em [05-convencoes-interpop.md](05-convencoes-interpop.md) e exemplo trabalhado em [examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md) §4.
-
----
-
-### 2.6 Erros frequentes em CA (com exemplos)
-
-```
-❌ CA: "A consulta deve ser rápida."
-✅ CA: "A consulta deve retornar resultado em ≤2s para até 10k
-       registros e ≤5s para até 100k."
-
-❌ CA: "Sistema deve aceitar CPF."
-✅ CA: "O campo CPF deve aceitar o formato XXX.XXX.XXX-XX. Se inválido,
-       exibir 'CPF inválido' próximo ao campo, em vermelho."
-
-❌ CA: "Usuário pode fazer login com email ou usuário e senha
-       criptografada via OAuth e a senha deve ter pelo menos 8
-       caracteres ou usar 2FA."
-✅ CA1: "Usuário deve fazer login com email + senha."
-   CA2: "Senha deve ter ≥8 chars, ≥1 maiúscula, ≥1 número."
-   CA3: "Após 3 tentativas inválidas, conta bloqueada por 15min."
-   CA4: "Usuário pode habilitar 2FA via app TOTP."
-```
+ACs always live inside a `CA - <Theme>` grouper, even when the Feature has a single AC. The grouper is an OpenProject item of type "Acceptance Criterion" without `[...]`, without an ID (`CANN`), only with a descriptive title (`CA - Access and visibility`). The specific ACs (`CA01`, `CA02`, …) live as children of the grouper. Detail in [05-convencoes-interpop.md](05-convencoes-interpop.md) and worked example in [examples/template-backlog-openproject.md](../examples/template-backlog-openproject.md) §4.
 
 ---
 
-## 3. BDD — Behavior-Driven Development
+### 2.6 Frequent AC mistakes (with examples)
 
-### 3.1 Origem e propósito
+```
+❌ AC: "The query must be fast."
+✅ AC: "The query must return a result in ≤2s for up to 10k records
+       and ≤5s for up to 100k."
 
-- **2003 — Dan North** cunha BDD em artigo *"Introducing BDD"*
-- **2006-2008 — Aslak Hellesøy** desenvolve **Cucumber**
-- **2010+ — Liz Keogh, Gojko Adzic** formalizam Specification by Example
+❌ AC: "System must accept CPF."
+✅ AC: "The CPF field must accept the format XXX.XXX.XXX-XX. If
+       invalid, display 'Invalid CPF' next to the field, in red."
 
-**Ideia central de North**: TDD funciona, mas o nome "test" confunde o cliente. **Renomear "test" para "comportamento"** e usar linguagem de domínio resolve. BDD não é teste — é **conversação executável**.
+❌ AC: "User can log in with email or username and encrypted
+       password via OAuth and password must be at least 8
+       characters or use 2FA."
+✅ CA1: "User must log in with email + password."
+   CA2: "Password must have ≥8 chars, ≥1 uppercase, ≥1 number."
+   CA3: "After 3 invalid attempts, account locked for 15min."
+   CA4: "User can enable 2FA via TOTP app."
+```
 
-### 3.2 Os 3 pilares do BDD
+---
 
-1. **Outside-In** — começa pelo comportamento esperado (visão do usuário) e desce para implementação
-2. **Three Amigos** — PO (negócio) + Dev (implementação) + QA (teste) discutem **JUNTOS** cada cenário ANTES da codificação
-3. **Ubiquitous Language** — vocabulário compartilhado entre todos (mesmo termo significa mesma coisa em conversa, código e teste)
+## 3. BDD — Behaviour-Driven Development
 
-### 3.3 Ciclo BDD (Discovery → Formulation → Automation)
+### 3.1 Origin and purpose
+
+- **2003 — Dan North** coins BDD in the article *"Introducing BDD"*
+- **2006–2008 — Aslak Hellesøy** develops **Cucumber**
+- **2010+ — Liz Keogh, Gojko Adzic** formalize Specification by Example
+
+**North's central idea**: TDD works, but the name "test" confuses the client. **Rename "test" to "behaviour"** and use domain language. BDD is not testing — it is **executable conversation**.
+
+### 3.2 The 3 pillars of BDD
+
+1. **Outside-In** — start from the expected behaviour (user view) and descend to implementation
+2. **Three Amigos** — PO (business) + Dev (implementation) + QA (testing) discuss **TOGETHER** each scenario BEFORE coding
+3. **Ubiquitous Language** — shared vocabulary across all (same term means the same thing in conversation, code, and test)
+
+### 3.3 BDD cycle (Discovery → Formulation → Automation)
 
 ```
 1. DISCOVERY (Three Amigos)
-   ↓ "Vamos descobrir o comportamento juntos"
-   Resultado: lista de cenários em linguagem natural
+   ↓ "Let's discover the behaviour together"
+   Result: list of scenarios in natural language
 
 2. FORMULATION (Gherkin)
-   ↓ "Vamos formular cada cenário com DADO/QUANDO/ENTÃO"
-   Resultado: arquivo .feature versionado
+   ↓ "Let's formulate each scenario with Given/When/Then"
+   Result: versioned .feature file
 
 3. AUTOMATION (step definitions)
-   ↓ "Vamos automatizar a verificação"
-   Resultado: cenário executável como teste
+   ↓ "Let's automate the verification"
+   Result: scenario executable as a test
 ```
 
-**Erro comum**: pular Discovery e ir direto para Gherkin. Resultado: cenários técnicos que não refletem comportamento real do domínio.
+**Common mistake**: skipping Discovery and going straight to Gherkin. Result: technical scenarios that do not reflect the real domain behaviour.
 
-### 3.4 Gherkin (sintaxe pt-BR)
+### 3.4 Gherkin (localized syntax — English vs. pt-BR)
 
-| Inglês | pt-BR | Significado |
+| English | pt-BR | Meaning |
 |---|---|---|
-| `Feature` | `Funcionalidade` | Cabeçalho |
-| `Scenario` | `Cenário` | Caso específico |
-| `Given` | `Dado` ou `DADO` | Pré-condição (estado inicial) |
-| `When` | `Quando` ou `QUANDO` | Evento (ação do usuário/sistema) |
-| `Then` | `Então` ou `ENTÃO` | Resultado esperado |
-| `And` | `E` | Conjunção (de qualquer cláusula) |
-| `But` | `Mas` | Negação esperada |
-| `Background` | `Contexto` | Pré-condições comuns a todos cenários |
-| `Scenario Outline` | `Esquema do Cenário` | Cenário parametrizado |
-| `Examples` | `Exemplos` | Tabela de dados para esquema |
+| `Feature` | `Funcionalidade` | Header |
+| `Scenario` | `Cenário` | Specific case |
+| `Given` | `Dado` or `DADO` | Pre-condition (initial state) |
+| `When` | `Quando` or `QUANDO` | Event (user/system action) |
+| `Then` | `Então` or `ENTÃO` | Expected result |
+| `And` | `E` | Conjunction (of any clause) |
+| `But` | `Mas` | Expected negation |
+| `Background` | `Contexto` | Pre-conditions common to all scenarios |
+| `Scenario Outline` | `Esquema do Cenário` | Parameterized scenario |
+| `Examples` | `Exemplos` | Data table for the outline |
 
-### 3.5 Exemplo concreto (do curso IFPB AULA 09)
+> **Why bilingual**: this skill keeps both Gherkin dialects because real *"Interpop"*, *"SIRA"*, and *"Controle de Dopagem"* `.feature` files use pt-BR keywords (PO and stakeholders speak Portuguese). Cucumber, Behave, SpecFlow, and Behat support both natively via the `# language: pt` header.
+
+### 3.5 Concrete example (verbatim from *"IFPB"* course LECTURE 09)
 
 ```gherkin
 Funcionalidade: Listagem básica de atletas
@@ -248,48 +250,50 @@ Funcionalidade: Listagem básica de atletas
     ENTÃO deve-se exibir a relação básica de atletas
 ```
 
-> **Atenção a um falso amigo terminológico**: a palavra-chave `Funcionalidade:` (Gherkin pt-BR, traduz `Feature:` em inglês) **NÃO é a mesma Feature da nossa hierarquia de backlog**. No Gherkin, `Funcionalidade:` é apenas o **cabeçalho de um arquivo `.feature`** — e cada arquivo `.feature` tipicamente corresponde a **uma User Story** da nossa hierarquia (ou no máximo a uma fatia coesa dela). Não tente mapear `Funcionalidade:` 1-para-1 com a Feature do OpenProject; a granularidade é diferente.
+> Kept in pt-BR as a historical artifact of the *"IFPB"* course material. For an en-CA equivalent, see §3.6 below.
 
-Este cenário implementa **simultaneamente** os CA01 (acesso autorizado), CA02 (filtro por federação implícito), CA03 (layout do protótipo), CA13 (ordem alfabética default), CA15 (exibir todos por default).
+> **Watch out for a terminological false friend**: the keyword `Funcionalidade:` (Gherkin pt-BR, translates `Feature:` in English) **is NOT the same Feature as in our backlog hierarchy**. In Gherkin, `Funcionalidade:` is just the **header of a `.feature` file** — and each `.feature` file typically corresponds to **one User Story** of our hierarchy (or at most a cohesive slice of one). Do not try to map `Funcionalidade:` 1-to-1 with the OpenProject Feature; the granularity is different.
 
-### 3.6 Mais exemplos (cobertura ampla)
+This scenario implements **simultaneously** CA01 (authorized access), CA02 (implicit federation filter), CA03 (prototype layout), CA13 (default alphabetical order), CA15 (display all by default).
+
+### 3.6 More examples (broad coverage — en-CA)
 
 ```gherkin
-Funcionalidade: Validação de CPF no cadastro de atleta
+Feature: CPF validation in athlete registration
 
-  Contexto:
-    DADO que o usuário está na tela de cadastro de atleta
-    E está logado como admin
+  Background:
+    Given the user is on the athlete-registration screen
+    And is logged in as admin
 
-  Cenário: CPF válido é aceito
-    QUANDO preenche o campo CPF com "111.222.333-44"
-    E clica em Salvar
-    ENTÃO o atleta deve ser cadastrado com sucesso
+  Scenario: Valid CPF is accepted
+    When the CPF field is filled with "111.222.333-44"
+    And the Save button is clicked
+    Then the athlete shall be successfully registered
 
-  Cenário: CPF inválido é rejeitado
-    QUANDO preenche o campo CPF com "123.456.789-00"
-    E clica em Salvar
-    ENTÃO o sistema exibe a mensagem "CPF inválido"
-    E o atleta NÃO é cadastrado
+  Scenario: Invalid CPF is rejected
+    When the CPF field is filled with "123.456.789-00"
+    And the Save button is clicked
+    Then the system displays the message "Invalid CPF"
+    And the athlete is NOT registered
 
-  Esquema do Cenário: Validação de formato
-    QUANDO preenche o campo CPF com "<entrada>"
-    ENTÃO o sistema exibe "<mensagem>"
+  Scenario Outline: Format validation
+    When the CPF field is filled with "<input>"
+    Then the system displays "<message>"
 
-    Exemplos:
-      | entrada            | mensagem                          |
+    Examples:
+      | input              | message                           |
       | 111.222.333-44     |                                   |
-      | 123                | CPF deve estar no formato         |
-      | abc.def.ghi-jk     | CPF deve conter apenas números    |
+      | 123                | CPF must be in the format         |
+      | abc.def.ghi-jk     | CPF must contain only digits      |
       |                    |                                   |
 ```
 
-### 3.7 Quando o BDD vira teste automatizado
+### 3.7 When BDD becomes an automated test
 
-Cada cenário Gherkin tem **step definitions** que executam de verdade:
+Each Gherkin scenario has **step definitions** that actually execute:
 
 ```ruby
-# Em Ruby + Cucumber
+# Ruby + Cucumber (pt-BR steps — they map to the LECTURE 09 example)
 Dado('que o usuário esteja logado na aplicação e tenha permissão de acesso') do
   @user = create(:user, role: 'admin')
   login_as(@user)
@@ -306,7 +310,7 @@ end
 ```
 
 ```python
-# Em Python + Behave
+# Python + Behave (pt-BR steps)
 @given('que o usuário esteja logado na aplicação e tenha permissão de acesso')
 def step_impl(context):
     context.user = create_user(role='admin')
@@ -314,27 +318,27 @@ def step_impl(context):
 ```
 
 ```typescript
-// Em TypeScript + Cucumber.js
+// TypeScript + Cucumber.js (pt-BR steps)
 Given('que o usuário esteja logado na aplicação e tenha permissão de acesso', async function() {
   this.user = await createUser({ role: 'admin' });
   await loginAs(this.user);
 });
 ```
 
-### 3.8 Três tipos de "step"
+### 3.8 Three types of "step"
 
-- `Given/Dado` — **estado** (sem ação, sem verificação)
-- `When/Quando` — **ação** (sem verificação)
-- `Then/Então` — **verificação** (sem mudar estado)
+- `Given/Dado` — **state** (no action, no verification)
+- `When/Quando` — **action** (no verification)
+- `Then/Então` — **verification** (no state mutation)
 
-**Erro comum**: misturar ação e verificação. `Quando o usuário se cadastra e o sistema exibe sucesso` — duas coisas, separar.
+**Common mistake**: mixing action and verification. `When the user registers and the system displays success` — two things, split them.
 
-### 3.9 BDD em pt-BR — vantagens no Brasil
+### 3.9 BDD in pt-BR — advantages in Brazil
 
-A regra de oro é **falar a língua do negócio**. Se PO e stakeholders falam português, **escreva os cenários em português**. Cucumber, Behave, SpecFlow, Behat suportam Gherkin localizado nativamente.
+The golden rule is **speak the business language**. If the PO and stakeholders speak Portuguese, **write the scenarios in Portuguese**. Cucumber, Behave, SpecFlow, and Behat support localized Gherkin natively.
 
 ```yaml
-# Arquivo .feature com cabeçalho de idioma
+# .feature file with language header
 # language: pt
 Funcionalidade: ...
   Cenário: ...
@@ -343,167 +347,169 @@ Funcionalidade: ...
     Então ...
 ```
 
+For en-CA projects, drop the `# language: pt` header (English is the default) and use `Feature:`/`Scenario:`/`Given/When/Then`.
+
 ---
 
-## 4. Onde o BDD se encaixa no processo (curso IFPB)
+## 4. Where BDD fits in the process (*"IFPB"* course)
 
 ```
-ELICITAÇÃO
+ELICITATION
      ↓
-ESPECIFICAÇÃO
+SPECIFICATION
      │
      ├─ Epic
      │   ↓
      │   Feature
      │      │
-     │      ├─ DESCRIÇÃO da Feature ◄────── parágrafo pt-BR (entregável ao cliente)
-     │      ├─ CAs (regras declarativas, invariantes)
-     │      └─ User Stories (fatiamento por sprint)
+     │      ├─ Feature DESCRIPTION ◄────── business-language paragraph (client-deliverable)
+     │      ├─ ACs (declarative rules, invariants)
+     │      └─ User Stories (sprint slicing)
      │           │
-     │           ├─ Título curto descritivo
-     │           ├─ DESCRIÇÃO da US = BDD ◄── BDD entra AQUI (cenários DADO/QUANDO/ENTÃO)
-     │           └─ Relações = CAs associados (rastreabilidade)
+     │           ├─ Short descriptive title
+     │           ├─ US DESCRIPTION = BDD ◄── BDD goes HERE (Given/When/Then scenarios)
+     │           └─ Relations = associated ACs (traceability)
      │
-VALIDAÇÃO
+VALIDATION
      ↓
-EXECUÇÃO BDD (testes vivos durante validação) ◄────── BDD vira teste AQUI
+BDD EXECUTION (living tests during validation) ◄────── BDD becomes a test HERE
 ```
 
-**Posição do BDD**: ponte entre **Especificação** e **Validação**. Na especificação, é a forma de descrever o comportamento da **User Story** (nunca da Feature — a Feature tem descrição em prosa, não cenário). Na validação, vira teste executável que confirma que o código entrega o comportamento.
+**Position of BDD**: bridge between **Specification** and **Validation**. In specification, it is the form for describing the behaviour of the **User Story** (never of the Feature — Feature has a prose description, not a scenario). In validation, it becomes an executable test that confirms the code delivers the behaviour.
 
 ---
 
-## 5. Three Amigos — a prática-chave que NÃO pular
+## 5. Three Amigos — the key practice NOT to skip
 
-Antes de escrever qualquer linha de Gherkin, **junte os 3 papéis**:
+Before writing any line of Gherkin, **get the 3 roles together**:
 
-| Papel | Pergunta que ele faz |
+| Role | Question they ask |
 |---|---|
-| **PO / negócio** | "É isso que o cliente precisa?" |
-| **Dev** | "É implementável? Quais APIs/dados eu preciso?" |
-| **QA** | "Como vou testar? Quais edge cases? Quais cenários de erro?" |
+| **PO / business** | "Is this what the client needs?" |
+| **Dev** | "Is it implementable? Which APIs/data do I need?" |
+| **QA** | "How will I test? Which edge cases? Which error scenarios?" |
 
-**Tempo típico**: 30-60min por feature. **Resultado**: lista de cenários (felizes + tristes + edge cases) que entram no .feature.
+**Typical duration**: 30–60min per feature. **Result**: list of scenarios (happy + sad + edge cases) that enter the .feature.
 
-**Anti-pattern**: dev escreve Gherkin sozinho. Resultado: cenários que cobrem implementação, não comportamento. Quebram a cada refactor.
-
----
-
-## 6. Critérios de qualidade de cenário BDD (Liz Keogh)
-
-Um bom cenário:
-
-- **Concreto** — usa valores reais ("R$ 100", "joão@email.com"), não placeholders ("um valor", "um email")
-- **Curto** — 3-7 steps. Mais que isso, fatie em múltiplos cenários
-- **Foco em UM comportamento** — não testa 3 coisas no mesmo cenário
-- **Independente de implementação** — fala em termos de domínio ("usuário cadastra atleta"), não de UI ("usuário clica no botão azul")
-- **Determinístico** — mesmo Given+When → sempre o mesmo Then (sem `Date.now()`, sem random)
-- **Não acopla** — Given de um cenário NÃO depende de execução de outro
+**Anti-pattern**: dev writes Gherkin alone. Result: scenarios covering implementation, not behaviour. They break on every refactor.
 
 ---
 
-## 7. Anti-patterns frequentes em CAs e BDD
+## 6. BDD scenario-quality criteria (Liz Keogh)
 
-### 7.1 CA e BDD competindo (escrever só um)
+A good scenario is:
 
-```
-❌ "Eu uso só CAs. BDD é overengineering."
-   → Você perde a executabilidade. O sistema é validado por leitura
-     manual. Em 6 meses, ninguém lembra qual CA foi de fato implementado.
+- **Concrete** — uses real values ("CAD $100", "joao@email.com"), not placeholders ("an amount", "an email")
+- **Short** — 3–7 steps. More than that, split into multiple scenarios
+- **Focused on ONE behaviour** — does not test 3 things in the same scenario
+- **Independent of implementation** — talks in domain terms ("user registers athlete"), not UI ("user clicks the blue button")
+- **Deterministic** — same Given+When → always the same Then (no `Date.now()`, no random)
+- **Non-coupling** — Given of one scenario does NOT depend on execution of another
 
-❌ "Eu uso só BDD. CAs são redundantes."
-   → Você perde o invariante por feature. Cada nova US só sabe seus
-     cenários, não as regras gerais. Conflitos silenciosos entre US.
-```
+---
 
-### 7.2 BDD acoplado à UI
+## 7. Frequent anti-patterns in ACs and BDD
 
-```
-❌ DADO que estou na página /login
-   QUANDO clico no botão #submit-btn
-   ENTÃO vejo elemento .error com texto "fail"
-
-✅ DADO que sou um usuário não cadastrado
-   QUANDO tento fazer login com email "x@y.com" e senha "errada"
-   ENTÃO o sistema rejeita o login com mensagem de credenciais inválidas
-```
-
-### 7.3 Dev escreve Gherkin sozinho
-
-PO/QA não revisam → cenários cobrem implementação, não comportamento → refactor quebra 30 cenários por mudança trivial.
-
-### 7.4 CA qualitativo sem métrica
+### 7.1 AC and BDD competing (writing only one)
 
 ```
-❌ "Sistema deve ter boa performance."
-✅ "Endpoint POST /atletas deve responder em ≤500ms (p95) com payload
-   de até 10kB."
+❌ "I use only ACs. BDD is overengineering."
+   → You lose executability. The system is validated by manual reading.
+     In 6 months nobody remembers which AC was actually implemented.
+
+❌ "I use only BDD. ACs are redundant."
+   → You lose the per-feature invariant. Each new US knows only its
+     scenarios, not the general rules. Silent conflicts between US.
 ```
 
-### 7.5 BDD virou regression test sem revisão
-
-Cenários se acumulam, ninguém revisa. Suite roda em 45min, ninguém olha o resultado. **Cenário sem dono = lixo executável.**
-
-### 7.6 Esperar BDD substituir teste unitário
-
-BDD = **comportamento end-to-end ou de subsistema**. Lógica interna ainda precisa de teste unitário rápido. Pirâmide de teste continua valendo: muitos unit, alguns integration, poucos BDD.
-
-### 7.7 Feature com BDD em vez de descrição (anti-pattern crítico)
+### 7.2 BDD coupled to the UI
 
 ```
-❌ Feature: Hierarquia de Banimento
-   DADO que o usuário é admin
-   QUANDO tenta banir outro admin
-   ENTÃO o sistema rejeita com HTTP 400
+❌ GIVEN I am on the /login page
+   WHEN I click the #submit-btn button
+   THEN I see element .error with text "fail"
+
+✅ GIVEN I am an unregistered user
+   WHEN I try to log in with email "x@y.com" and password "wrong"
+   THEN the system rejects the login with an "invalid credentials" message
 ```
 
-Erro de granularidade: BDD pertence à **User Story** (cenário concreto, fatia de 1 sprint), não à Feature (entregável global). Quando você cola BDD direto na Feature, três coisas quebram:
+### 7.3 Dev writes Gherkin alone
 
-1. **Não há descrição em prosa** — stakeholder não-técnico não consegue ler "DADO/QUANDO/ENTÃO" no card sem treino. Perde-se o documento conversacional.
-2. **CAs ficam órfãos** — sem o "guarda-chuva" da descrição, CAs viram lista de regras sem narrativa que as justifique.
-3. **Sprint Planning trava** — devs não conseguem fatiar a Feature em US porque ela já vem como cenário único; ou criam US falsas que repetem o BDD da Feature.
+PO/QA do not review → scenarios cover implementation, not behaviour → refactor breaks 30 scenarios per trivial change.
+
+### 7.4 Qualitative AC without metric
 
 ```
-✅ Feature: Hierarquia de Banimento
-   Descrição: Define quem pode banir e desbanir quem dentro da equipe
-   editorial. Implementa hierarquia dev > admin > editor > user...
-   [parágrafo de negócio]
+❌ "System must have good performance."
+✅ "Endpoint POST /atletas must respond in ≤500ms (p95) with payload
+   of up to 10kB."
+```
 
-   CA01: Dev é imune a banimento por qualquer outro usuário.
-   CA02: Admin só pode ser banido por dev.
+### 7.5 BDD became regression test without review
+
+Scenarios pile up; nobody reviews. Suite runs in 45min; nobody looks at the result. **Scenario without owner = executable garbage.**
+
+### 7.6 Expecting BDD to replace unit testing
+
+BDD = **end-to-end or subsystem behaviour**. Internal logic still needs fast unit tests. The test pyramid still holds: many unit, some integration, few BDD.
+
+### 7.7 Feature with BDD instead of description (critical anti-pattern)
+
+```
+❌ Feature: Ban Hierarchy
+   GIVEN the user is admin
+   WHEN they try to ban another admin
+   THEN the system rejects with HTTP 400
+```
+
+Granularity mistake: BDD belongs to the **User Story** (concrete scenario, one-sprint slice), not to the Feature (overall deliverable). When you paste BDD straight into the Feature, three things break:
+
+1. **No prose description** — non-technical stakeholders cannot read "GIVEN/WHEN/THEN" on the card without training. You lose the conversational document.
+2. **ACs become orphans** — without the "umbrella" of the description, ACs become a list of rules without a narrative to justify them.
+3. **Sprint Planning stalls** — devs cannot slice the Feature into US because it arrives as a single scenario; or they create fake US that repeat the Feature BDD.
+
+```
+✅ Feature: Ban Hierarchy
+   Description: Defines who can ban and unban whom within the editorial
+   team. Implements the dev > admin > editor > user hierarchy...
+   [business paragraph]
+
+   CA01: Dev is immune to banning by any other user.
+   CA02: Admin can only be banned by dev.
    ...
 
-   US 1: Aplicar hierarquia no model
-     DADO sistema com usuários de roles distintas
-     QUANDO user.can_be_banned_by(actor) é chamado
-     ENTÃO o resultado segue a matriz CA01..CA04
-     Relacionado a: CA01, CA02, CA03, CA04
+   US 1: Apply hierarchy in the model
+     GIVEN system with users of distinct roles
+     WHEN user.can_be_banned_by(actor) is called
+     THEN the result follows the CA01..CA04 matrix
+     Related to: CA01, CA02, CA03, CA04
 
-   US 2: Aplicar hierarquia no endpoint de banimento
-     DADO admin autenticado e alvo também admin
-     QUANDO tenta criar banimento
-     ENTÃO sistema retorna HTTP 400
-     Relacionado a: CA02, CA06
+   US 2: Apply hierarchy in the ban endpoint
+     GIVEN authenticated admin and target is also admin
+     WHEN they try to create a ban
+     THEN system returns HTTP 400
+     Related to: CA02, CA06
 ```
 
-Cenários múltiplos por User Story, descrição em prosa para Feature, CAs no meio como invariantes. Cada artefato no seu nível.
+Multiple scenarios per User Story, prose description for the Feature, ACs in between as invariants. Each artifact at its proper level.
 
 ---
 
-## 8. Quando NÃO usar BDD
+## 8. When NOT to use BDD
 
-- **Projeto sem PO/cliente engajado** — sem Three Amigos, BDD vira Gherkin obrigatório (e ruim)
-- **Time não conhece a sintaxe** + sem tempo de treinar — texto livre é melhor que Gherkin errado
-- **Stack sem suporte adequado** — alguns frameworks JS antigos tornam step definitions custosas
-- **Equipe muito pequena (1 dev)** — overhead de Gherkin > valor do cenário compartilhado. Use só CAs declarativos
-- **Sistema interno raramente alterado** — investimento de BDD não se paga
+- **Project without engaged PO/client** — without Three Amigos, BDD becomes mandatory (and bad) Gherkin
+- **Team does not know the syntax** + no time to train — free text is better than wrong Gherkin
+- **Stack without adequate support** — some old JS frameworks make step definitions costly
+- **Very small team (1 dev)** — Gherkin overhead > shared-scenario value. Use only declarative ACs
+- **Internal system rarely changed** — BDD investment does not pay off
 
-**Em qualquer um desses casos, CA declarativo IFPB (sem Gherkin) ainda vale.** Não troque CA por nada.
+**In any of these cases, the declarative *"IFPB"* AC (without Gherkin) still applies.** Do not trade ACs away.
 
 ---
 
-## 9. Conexão com as próximas references
+## 9. Connection with the next references
 
-- **Como estimar US com CAs+BDD prontos**: [05-estimativa.md](05-estimativa.md)
-- **Como validar (revisar CAs + protótipo + Gherkin)**: [06-validacao.md](06-validacao.md)
-- **Rastreabilidade CA → BDD → código → teste**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
+- **How to estimate US with ACs+BDD ready**: [05-estimativa.md](05-estimativa.md)
+- **How to validate (review ACs + prototype + Gherkin)**: [06-validacao.md](06-validacao.md)
+- **AC → BDD → code → test traceability**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
