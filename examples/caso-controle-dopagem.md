@@ -1,52 +1,54 @@
-# Exemplo Aplicado — Sistema de Controle de Dopagem (caso real CNPq 487777/2013-1)
+# Worked Example — Doping Control System (real *"CNPq"* 487777/2013-1 case)
 
-> Caso real apresentado na AULA 03 do curso ERS do IFPB. Projeto financiado pelo CNPq, sistema integrado para entidades esportivas brasileiras (ABCD — Autoridade Brasileira de Controle de Dopagem, COB — Comitê Olímpico Brasileiro, confederações esportivas). Mostra elicitação → especificação → backlog → US com BDD em um sistema crítico real.
-
----
-
-## 1. Contexto e problema
-
-**Problema de negócio**: Ausência de controle centralizado de testes de dopagem no Brasil. Cada confederação esportiva tinha seu próprio processo manual ou planilha local. ABCD precisava agregar dados nacionais para reportar à WADA (World Anti-Doping Agency). STJD precisava acompanhar processos de infração. Resultado: dados fragmentados, dificuldade de acompanhamento, risco de penalidades internacionais.
-
-**Estudo de viabilidade** — 3 perguntas Sommerville:
-
-1. ✅ Contribui para objetivos? Sim (cumprir Código Mundial Antidopagem)
-2. ✅ Cabe em cronograma/orçamento? Sim (CNPq aprovou; equipe IFPB)
-3. ✅ Integra com sistemas em uso? Parcialmente (precisa importar planilhas existentes)
-
-→ Projeto prossegue.
+> Real case presented in LECTURE 03 of the ERS course at *"IFPB"*. Project funded by *"CNPq"*; integrated system for Brazilian sports entities (*"ABCD"* — *"Autoridade Brasileira de Controle de Dopagem"*, *"COB"* — *"Comitê Olímpico Brasileiro"*, sports confederations). Walks through elicitation → specification → backlog → US with BDD in a real critical system.
+>
+> **Note on language preservation**: Feature, Epic, User Story, AC, FR, NFR, and business-rule (G/E) titles are kept in **pt-BR** because they are the actual identifiers used in the original *"IFPB"* / *"CNPq"* project — Redmine cards, *"SVN"* commits, academic papers reference them verbatim. Translating these would break traceability with the source material. **Explanations, tables and analysis are in en-CA**; **artifact content is in pt-BR**.
 
 ---
 
-## 2. Elicitação (técnicas combinadas)
+## 1. Context and problem
 
-Conforme [02-elicitacao.md](../references/02-elicitacao.md), nenhuma técnica isolada bastaria. O projeto usou:
+**Business problem**: Absence of centralized doping-test control in Brazil. Each sports confederation had its own manual process or local spreadsheet. *"ABCD"* needed to aggregate national data to report to *"WADA"* (World Anti-Doping Agency). *"STJD"* needed to follow infraction proceedings. Result: fragmented data, follow-up difficulty, risk of international penalties.
 
-| Técnica | Fonte | O que descobriu |
+**Feasibility study** — Sommerville's 3 questions:
+
+1. ✅ Contributes to objectives? Yes (fulfilling the *"Código Mundial Antidopagem"* / World Anti-Doping Code)
+2. ✅ Fits schedule/budget? Yes (*"CNPq"* approved; *"IFPB"* team)
+3. ✅ Integrates with systems in use? Partially (needs to import existing spreadsheets)
+
+→ Project proceeds.
+
+---
+
+## 2. Elicitation (combined techniques)
+
+Per [02-elicitacao.md](../references/02-elicitacao.md), no isolated technique would suffice. The project used:
+
+| Technique | Source | What was discovered |
 |---|---|---|
-| **Entrevistas** | ABCD, COB, confederações | Processos atuais, dificuldades, expectativas |
-| **Análise de documentos** | Código Mundial Antidopagem, regulamentos STJD, planilhas existentes | Regras formais; estrutura de dados existente |
-| **Brainstorming** | Equipe + ABCD | Funcionalidades novas (módulo estatístico para BI) |
-| **Observação** | Visitas à ABCD | Como amostras são coletadas, transportadas, custodiadas |
+| **Interviews** | *"ABCD"*, *"COB"*, confederations | Current processes, difficulties, expectations |
+| **Document analysis** | *"Código Mundial Antidopagem"*, *"STJD"* regulations, existing spreadsheets | Formal rules; existing data structure |
+| **Brainstorming** | Team + *"ABCD"* | New features (statistics module for BI) |
+| **Observation** | Visits to *"ABCD"* | How samples are collected, transported, kept in custody |
 
-**Stakeholders identificados** (Wiegers 5 critérios):
+**Stakeholders identified** (Wiegers 5 criteria):
 
-- ABCD (autoridade central — usuário operacional)
-- COB (esfera olímpica — usuário consultivo)
-- Confederações esportivas (cadastram atletas)
-- Atletas (sujeitos dos testes; dados sensíveis — privacidade crítica)
-- OCDs e Escoltas (oficiais de controle, terceirizados)
-- STJD (julgamento de infrações)
-- Laboratórios credenciados (recebem amostras)
-- Ministério do Esporte (regulador)
+- *"ABCD"* (central authority — operational user)
+- *"COB"* (Olympic sphere — consultative user)
+- Sports confederations (register athletes)
+- Athletes (subjects of the tests; sensitive data — critical privacy)
+- *"OCDs"* and *"Escoltas"* (control officers, outsourced)
+- *"STJD"* (judges infractions)
+- Accredited laboratories (receive samples)
+- *"Ministério do Esporte"* (regulator)
 
 ---
 
-## 3. Requisitos de alto nível identificados
+## 3. High-level requirements identified
 
-### 3.1 Requisitos Funcionais por módulo
+### 3.1 Functional requirements by module
 
-A elicitação resultou em **10 módulos**:
+Elicitation produced **10 modules**:
 
 ```
 ADMINISTRATIVO   — Atleta, Médico, Confederação, Provas, Modalidades,
@@ -60,23 +62,23 @@ ESCOLTAS         — Alocação Eventos, Custos
 USO GERAL        — Pessoas, Notificações, Portarias, Solicitações
 FINANCEIRO       — Taxas, Boletos, Inadimplência, Baixa Bancária
 ESTATÍSTICO      — Inteligência de Negócios (BI)
-DOPAGEM          
+DOPAGEM
 TÉCNICO          — Organização Competições, Inscrição Competições,
                  — Julgamento Competições
 CONTROLE         — Acesso (RBAC)
 DE ACESSO
 ```
 
-Total: 133 funcionalidades identificadas no escopo inicial.
+Total: 133 features identified in the initial scope.
 
-### 3.2 Regras de Negócio (notação Gxx) e Exceções (notação Exx)
+### 3.2 Business Rules (Gxx notation) and Exceptions (Exx notation)
 
-O projeto adotou **duas notações distintas** para regras (AULA 03 IFPB):
+The project adopted **two distinct notations** for rules (LECTURE 03 *"IFPB"*):
 
-- **Gxx** — Regras gerais de negócio (válidas em toda a base do sistema).
-- **Exx** — Exceções específicas (regras que se aplicam apenas em condições particulares).
+- **Gxx** — General business rules (valid across the entire system base).
+- **Exx** — Specific exceptions (rules that apply only in particular conditions).
 
-#### Regras gerais (Gxx) — amostra do documento de regras (v0.23, 175 regras totais)
+#### General rules (Gxx) — sample from the rules document (v0.23, 175 total rules)
 
 ```
 G09 — Não pode haver duas pessoas com o mesmo CPF.
@@ -100,7 +102,7 @@ G17 — Listagem de Modalidades: a relação depende da Confederação
 ...
 ```
 
-#### Exceções específicas (Exx)
+#### Specific exceptions (Exx)
 
 ```
 E1 — O nome do pai tem que ser diferente do nome da mãe.
@@ -112,46 +114,46 @@ E3 — Se o atleta for portador de deficiência, é obrigatório o
 ...
 ```
 
-Note que **estas regras vêm de fontes diferentes**:
-- **Gxx** vêm do DOMÍNIO (Código Mundial Antidopagem WADA, regulamentos STJD, política de identidade). Fáceis de passar despercebidas — só apareceram via análise de documentos.
-- **Exx** vêm da OBSERVAÇÃO (etnografia + entrevistas com a equipe que cadastra atletas) — situações reais de borda que só quem opera o sistema tem na cabeça.
+Note that **these rules come from different sources**:
+- **Gxx** come from the DOMAIN (*"WADA"* / *"Código Mundial Antidopagem"*, *"STJD"* regulations, identity policy). Easy to miss — they only surfaced via document analysis.
+- **Exx** come from OBSERVATION (ethnography + interviews with the team that registers athletes) — real edge situations that only operators have in their heads.
 
-> **Padrão recomendado**: separar Gxx (regras invariantes do domínio) de Exx (exceções condicionais de borda) facilita rastrear origem e responsabilidade pela manutenção. Quando uma exceção vira regra geral (todos os casos passam a se comportar igual), promova de Exx para Gxx no documento.
+> **Recommended pattern**: separating Gxx (invariant domain rules) from Exx (conditional edge exceptions) makes it easier to trace origin and maintenance responsibility. When an exception becomes a general rule (all cases now behave the same), promote it from Exx to Gxx in the document.
 
-### 3.3 Requisitos Não Funcionais
+### 3.3 Non-Functional Requirements
 
-| Tipo | Requisito | Métrica |
+| Type | Requirement | Metric |
 |---|---|---|
-| **Produto - Disponibilidade** | Sistema disponível em horário comercial (seg-sex, 8h-18h) | ≥99,5% |
-| **Produto - Segurança** | Dados de atletas confidenciais | RBAC + criptografia em repouso |
-| **Produto - Confiabilidade** | Backup automatizado | Diário, retenção 1 ano |
-| **Produto - Plataforma** | Web (acessível a confederações remotas) | Multi-navegador |
-| **Organizacional - Tecnologia** | Stack definida pela equipe IFPB | JAVA/JSF, Hibernate, Primefaces, PostgreSQL, IReport/Jasper |
-| **Organizacional - Processo** | Versionamento + ticketing | SVN + Redmine + Astah para UML |
-| **Externo - Conformidade** | Atender Código Mundial Antidopagem (WADA) | Auditoria anual |
-| **Externo - Privacidade** | LGPD (dados sensíveis de saúde) | Consentimento + retenção + auditoria de acesso |
+| **Product - Availability** | System available during business hours (Mon-Fri, 8h-18h) | ≥99.5% |
+| **Product - Security** | Athletes' data confidential | RBAC + encryption at rest |
+| **Product - Reliability** | Automated backup | Daily, 1-year retention |
+| **Product - Platform** | Web (accessible to remote confederations) | Multi-browser |
+| **Organizational - Technology** | Stack defined by the *"IFPB"* team | Java/JSF, *"Hibernate"*, *"Primefaces"*, PostgreSQL, *"IReport"*/*"Jasper"* |
+| **Organizational - Process** | Versioning + ticketing | *"SVN"* + *"Redmine"* + *"Astah"* for UML |
+| **External - Compliance** | Meet *"WADA"* / *"Código Mundial Antidopagem"* | Annual audit |
+| **External - Privacy** | *"LGPD"* (sensitive health data) | Consent + retention + access audit |
 
 ---
 
-## 4. Especificação — hierarquia do backlog
+## 4. Specification — backlog hierarchy
 
-Aplicando o modelo IFPB de [03-especificacao.md](../references/03-especificacao.md).
+Applying the *"IFPB"* model from [03-especificacao.md](../references/03-especificacao.md).
 
-> **Lição prática da AULA 03 IFPB — legenda de escopo no backlog**: o slide original do projeto Controle Dopagem usa 4 cores para classificar o status de escopo de cada Funcionalidade/Módulo:
+> **Practical lesson from LECTURE 03 *"IFPB"* — backlog scope legend**: the original project slide for *"Controle de Dopagem"* uses 4 colours to classify the scope status of each Feature/Module:
 >
-> - 🟦 **Escopo inicial do projeto CNPq 487777/2013-1** (o que está contratado)
-> - 🟩 **Acrescentado ao escopo atendendo demanda da ABCD** (escopo expandido com aprovação documentada)
-> - 🟧 **Não contemplado no projeto — proposta para NOVO projeto** (registrado para próximo edital)
-> - ⬜ **Não contemplado no projeto — a ser prospectado com Confederações** (ainda em análise de viabilidade)
+> - 🟦 **Initial scope of *"CNPq"* project 487777/2013-1** (what is contracted)
+> - 🟩 **Added to scope on *"ABCD"* demand** (expanded scope with documented approval)
+> - 🟧 **Not in project — proposal for a NEW project** (recorded for the next call)
+> - ⬜ **Not in project — to be explored with Confederations** (still in feasibility analysis)
 >
-> **Por que isso importa**: marcar visualmente quem-pediu-o-quê e o-que-cabe-no-orçamento evita scope creep silencioso. Em qualquer backlog real, item entrando no escopo precisa ter origem documentada e flag de status. **Sem origem ≡ scope creep**. Ver `Origem (requisitos)` no [template-backlog-openproject.md §4](template-backlog-openproject.md).
+> **Why this matters**: visually marking who-asked-for-what and what-fits-in-budget avoids silent scope creep. In any real backlog, an item entering the scope must have documented origin and a status flag. **No origin ≡ scope creep**. See `Origin (requirements)` in [template-backlog-openproject.md §4](template-backlog-openproject.md).
 
-> **⚠️ Importante — múltiplos Epics-raiz, sem "Epic-projeto" único como pai**: o projeto Controle Dopagem tem **três Epics no nível mais alto, irmãos entre si** (`APLICAÇÃO WEB`, `APLICAÇÃO MOBILE`, `ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO`). Não existe um nó "Epic Controle de Dopagem" como avô comum — o "produto" como um todo é o **contexto/repositório** do projeto no OpenProject, não um item da hierarquia. Detalhamento da convenção em [`../examples/template-backlog-openproject.md §3`](template-backlog-openproject.md).
+> **⚠️ Important — multiple root Epics, no single "project-Epic" parent**: the *"Controle de Dopagem"* project has **three Epics at the top level, siblings to each other** (`APLICAÇÃO WEB`, `APLICAÇÃO MOBILE`, `ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO`). There is no "Epic Controle de Dopagem" node as a common grandparent — the "product" as a whole is the **OpenProject context/repository** of the project, not an item of the hierarchy. Convention detail in [`../examples/template-backlog-openproject.md §3`](template-backlog-openproject.md).
 
 ```
-PROJETO Controle Dopagem (= contexto/repositório no OpenProject; NÃO é um EPIC)
+PROJECT Controle Dopagem (= OpenProject context/repository; NOT an EPIC)
 │
-├─ EPIC APLICAÇÃO WEB                                  ← Epic-raiz #1 (frente: plataforma web)
+├─ EPIC APLICAÇÃO WEB                                  ← Root Epic #1 (front: web platform)
 │   ├─ EPIC Módulo ADMINISTRATIVO
 │   │    └─ EPIC Gestão de ATLETAS
 │   │         ├─ EPIC CADASTRO de Atletas
@@ -173,34 +175,34 @@ PROJETO Controle Dopagem (= contexto/repositório no OpenProject; NÃO é um EPI
 │   │              └─ FEATURE Relação de Atletas por Confederação
 │   ├─ EPIC Módulo DOPAGEM
 │   │    └─ ...
-│   └─ ... (outros módulos)
+│   └─ ... (other modules)
 │
-├─ EPIC APLICAÇÃO MOBILE                               ← Epic-raiz #2 (frente: plataforma mobile)
-│   └─ ... (própria sub-hierarquia)
+├─ EPIC APLICAÇÃO MOBILE                               ← Root Epic #2 (front: mobile platform)
+│   └─ ... (own sub-hierarchy)
 │
-└─ EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO  ← Epic-raiz #3 (frente: atividades transversais)
-    └─ ... (própria sub-hierarquia)
+└─ EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO  ← Root Epic #3 (front: cross-cutting activities)
+    └─ ... (own sub-hierarchy)
 ```
 
-> **Nota sobre as Features listadas acima:** no backlog real, **cada item `FEATURE Xxxxx` tem sua própria descrição em pt-BR** (entregável ao cliente, sem termos técnicos), seguindo a regra da skill (Feature tem descrição; User Story tem BDD). Este caso de estudo elabora em profundidade apenas a Feature `Consulta GERAL de Atletas` (§5–§8) para ilustrar o fluxo completo CA → US → BDD → Estimativa; as demais ficam representadas apenas pelo título no diagrama. **Em projeto real, ausência de descrição de Feature é dívida de especificação** — aparece como atrito no Sprint Planning (PO precisa explicar de novo o entregável) e na revisão de US (devs questionam o "porquê" da história).
+> **Note on the Features listed above:** in the real backlog, **each `FEATURE Xxxxx` item has its own pt-BR description** (client-deliverable, no technical terms), per the skill rule (Feature has a description; User Story has BDD). This case study elaborates in depth only the `Consulta GERAL de Atletas` Feature (§5–§8) to illustrate the full AC → US → BDD → Estimation flow; the others are represented only by their title in the diagram. **In a real project, a Feature missing its description is specification debt** — it surfaces as friction in Sprint Planning (PO has to re-explain the deliverable) and in US review (devs question the "why" of the story).
 
 ---
 
 ## 5. Feature: Consulta GERAL de Atletas
 
-**Descrição da Feature (entregável ao cliente, em pt-BR):**
+**Feature description (client-deliverable, in pt-BR):**
 
-Permite que operadores autorizados (ABCD, COB e confederações) consultem a base nacional de atletas em uma única tela paginada, aplicando filtros opcionais por CPF, nome, técnico, patrocinador, médico, modalidade, categoria, tipo de bolsa, programa especial, competição e datas de competição. A consulta é restrita automaticamente às federações associadas ao usuário logado no servidor — não há "consulta global" cega, mesmo para administradores. O entregável ao cliente é o ponto de entrada operacional para todos os fluxos de dopagem subsequentes: convocação para teste (regra G09), análise de histórico de testes do atleta, e cruzamento com processos do STJD. Em volume real (ABCD agrega ~50 mil atletas nacionais), a feature precisa responder com paginação preguiçosa e ordenação no servidor.
+Permite que operadores autorizados (*"ABCD"*, *"COB"* e confederações) consultem a base nacional de atletas em uma única tela paginada, aplicando filtros opcionais por *"CPF"*, nome, técnico, patrocinador, médico, modalidade, categoria, tipo de bolsa, programa especial, competição e datas de competição. A consulta é restrita automaticamente às federações associadas ao usuário logado no servidor — não há "consulta global" cega, mesmo para administradores. O entregável ao cliente é o ponto de entrada operacional para todos os fluxos de dopagem subsequentes: convocação para teste (regra G09), análise de histórico de testes do atleta, e cruzamento com processos do *"STJD"*. Em volume real (*"ABCD"* agrega ~50 mil atletas nacionais), a feature precisa responder com paginação preguiçosa e ordenação no servidor.
 
-> Esta descrição é o que vai no card de Feature do OpenProject/Redmine. Linguagem de negócio, sem termos técnicos (JSF/Hibernate/Primefaces ficam nas Tasks). Os critérios de aceitação abaixo formalizam as regras testáveis; o BDD aparece só nas User Stories (§7).
+> This description is what goes on the OpenProject/Redmine Feature card. Business language, no technical terms (JSF/Hibernate/Primefaces stay in the Tasks). The acceptance criteria below formalize the testable rules; BDD appears only in the User Stories (§7).
 
-### 5.1 Critérios de Aceitação (estilo declarativo)
+### 5.1 Acceptance Criteria (declarative style)
 
-Aplicando [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md). 15 CAs declarativos, **agrupados por tema** (convenção `CA - <Tema>` da Regra 7 de [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). CAs com **`[...]`** no fim do título precisam ser lidos junto com o detalhamento na §5.2.
+Applying [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md). 15 declarative ACs, **grouped by theme** (`CA - <Theme>` convention from Rule 7 of [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). ACs with **`[...]`** at the end of the title must be read together with the detail in §5.2.
 
 #### 📋 CA - Acesso e visibilidade
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA01` | Apenas usuários autorizados podem ter acesso à funcionalidade de Consulta GERAL de ATLETAS. | — |
 | `CA02` | A consulta deve exibir apenas os atletas das FEDERAÇÕES esportivas que o usuário tem acesso no seu cadastro. | — |
@@ -208,7 +210,7 @@ Aplicando [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitac
 
 #### 📋 CA - Filtros e busca
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA04` | A consulta deverá ser realizada levando-se em conta as opções de filtro informadas pelo usuário. | — |
 | `CA05` | O campo CPF não é obrigatório. Mas se preenchido, deverá ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro. | — |
@@ -217,7 +219,7 @@ Aplicando [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitac
 
 #### 📋 CA - Comboboxes (regras de habilitação, listagem e busca)
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA08` | O combobox CONFEDERAÇÃO deve aplicar as regras de listagem e busca **[...]** | ✅ |
 | `CA09` | O combobox FEDERAÇÃO deve aplicar as regras de preenchimento e validação **[...]** | ✅ |
@@ -227,18 +229,18 @@ Aplicando [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitac
 
 #### 📋 CA - Apresentação dos resultados
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA13` | A listagem geral de atletas deverá ser exibida em ordem alfabética, por default. | — |
 | `CA14a` | A listagem geral de atletas poderá ser reordenada ao clicar no título das colunas. | — |
 | `CA14b` | A listagem geral de atletas deverá ser paginada com as opções de visualizar 10, 50, 100 ou todos. | — |
 | `CA15` | A listagem geral de atletas deverá exibir todos os atletas por default. | — |
 
-### 5.2 Detalhamento dos CAs com `[...]`
+### 5.2 Detail of ACs with `[...]`
 
-Cada bloco abaixo é o que aparece no **corpo do item** no OpenProject (campo Descrição do CA), seguindo a convenção `Regras a serem aplicadas:` + bullets.
+Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Regras a serem aplicadas:` + bullets convention.
 
-#### CA08 — Detalhamento
+#### CA08 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -248,7 +250,7 @@ Regras a serem aplicadas:
 - Deve permitir busca parcial ao digitar.
 ```
 
-#### CA09 — Detalhamento
+#### CA09 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -259,7 +261,7 @@ Regras a serem aplicadas:
 - Deve permitir busca parcial ao digitar.
 ```
 
-#### CA10 — Detalhamento
+#### CA10 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -268,7 +270,7 @@ Regras a serem aplicadas:
 - Em ordem ALFABÉTICA.
 ```
 
-#### CA11 — Detalhamento
+#### CA11 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -279,43 +281,43 @@ Regras a serem aplicadas:
 
 ---
 
-## 6. Fatiamento em User Stories (3 sprints)
+## 6. Slicing into User Stories (3 sprints)
 
-Aplicando o fluxo da AULA 09 (ver [03-especificacao.md §6.5](../references/03-especificacao.md)):
+Applying the LECTURE 09 flow (see [03-especificacao.md §6.5](../references/03-especificacao.md)):
 
-### 6.1 Agrupar CAs por sprint (priorização incremental)
-
-```
-Sprint 1 — Consulta BÁSICA (entregável o mais simples possível)
-  CA01 — Acesso autorizado
-  CA02 — Filtro implícito por federação do usuário
-  CA03 — Layout do protótipo
-  CA13 — Ordem alfabética default
-  CA15 — Exibir todos por default
-
-Sprint 2 — Ordenação + paginação
-  CA14a — Reordenação por clique no header
-  CA14b — Paginação 10/50/100/todos
-
-Sprint 3 — Busca avançada
-  CA04 — Filtros aplicados
-  CA05 — Validação CPF
-  CA06 — Datas opcionais
-  CA07 — Busca parcial por nome/etc.
-  CA08-CA12 — Comboboxes ativos + alfabéticos + busca parcial
-```
-
-### 6.2 User Stories resultantes
+### 6.1 Group ACs by sprint (incremental prioritization)
 
 ```
-US Listagem BÁSICA de Atletas                              (Sprint 1)
-US Listagem de Atletas com ordenação e paginação (sem busca)  (Sprint 2)
-US Listagem Avançada de Atletas com opções de busca (filtro)  (Sprint 3)
+Sprint 1 — Consulta BÁSICA (simplest possible deliverable)
+  CA01 — Authorized access
+  CA02 — Implicit filter by user's federation
+  CA03 — Prototype layout
+  CA13 — Default alphabetical order
+  CA15 — Display all by default
+
+Sprint 2 — Sorting + pagination
+  CA14a — Re-sort on header click
+  CA14b — Pagination 10/50/100/all
+
+Sprint 3 — Advanced search
+  CA04 — Applied filters
+  CA05 — CPF validation
+  CA06 — Optional dates
+  CA07 — Partial search by name/etc.
+  CA08-CA12 — Active comboboxes + alphabetical + partial search
+```
+
+### 6.2 Resulting User Stories
+
+```
+US Listagem BÁSICA de Atletas                                  (Sprint 1)
+US Listagem de Atletas com ordenação e paginação (sem busca)   (Sprint 2)
+US Listagem Avançada de Atletas com opções de busca (filtro)   (Sprint 3)
 ```
 
 ---
 
-## 7. BDD da US "Listagem BÁSICA de Atletas"
+## 7. BDD of US "Listagem BÁSICA de Atletas"
 
 ```gherkin
 # language: pt
@@ -340,80 +342,80 @@ Funcionalidade: Listagem básica de atletas
     E não deve exibir nenhum dado de atleta
 ```
 
-**Relações no OpenProject** (rastreabilidade):
+**OpenProject relations** (traceability):
 
 ```
 US Listagem BÁSICA de Atletas
-├─ relacionado-a: CA01 (acesso autorizado)
-├─ relacionado-a: CA02 (filtro federação)
-├─ relacionado-a: CA03 (layout)
-├─ relacionado-a: CA13 (ordem alfabética)
-└─ relacionado-a: CA15 (exibir todos default)
+├─ related-to: CA01 (authorized access)
+├─ related-to: CA02 (federation filter)
+├─ related-to: CA03 (layout)
+├─ related-to: CA13 (alphabetical order)
+└─ related-to: CA15 (display all by default)
 ```
 
 ---
 
-## 8. Estimativa (Planning Poker)
+## 8. Estimation (Planning Poker)
 
-História-guia escolhida: **"Adicionar campo apelido ao cadastro de atleta"** (entregue na sprint passada — 1 ponto).
+Chosen guide story: **"Adicionar campo apelido ao cadastro de atleta"** (delivered in the previous sprint — 1 point).
 
-Estimativas:
+Estimates:
 
-| User Story | Pontos | Justificativa |
+| User Story | Points | Justification |
 |---|---|---|
-| US Listagem BÁSICA | **5** | Query + RBAC + view padronizada + integração com prototipo |
-| US Listagem com ordenação/paginação | **3** | Pequenas extensões da básica + componentes Primefaces |
-| US Listagem Avançada com filtros | **13** | Múltiplos comboboxes com cascateamento, busca parcial em vários campos, validação CPF, regras de exibição condicional |
+| US Listagem BÁSICA | **5** | Query + RBAC + standardized view + prototype integration |
+| US Listagem com ordenação/paginação | **3** | Small extensions over the basic + *"Primefaces"* components |
+| US Listagem Avançada com filtros | **13** | Multiple cascading comboboxes, partial search across several fields, *"CPF"* validation, conditional display rules |
 
-Total da feature CONSULTA GERAL: **21 pontos**.
+Total for the CONSULTA GERAL feature: **21 points**.
 
-Com velocity média de 25pts/sprint, a feature ocupa essencialmente 1 sprint inteira (ou se espalha em 2 com outras US menores).
-
----
-
-## 9. Validação
-
-### 9.1 Conferências Sommerville aplicadas
-
-- ✅ **Validade**: confirmado com ABCD em revisão (julho/2023)
-- ✅ **Consistência**: CA08 e CA09 são consistentes — CA09 só ativa se CA08 selecionado
-- ✅ **Completude**: revisão revelou ausência de CA para exportação (CSV) — adicionado posteriormente
-- ✅ **Realismo**: stack Java/JSF é familiar à equipe; cabe no cronograma
-- ✅ **Verificabilidade**: cada CA tem cenário Gherkin associado
-
-### 9.2 Dimensões Falbo por CA
-
-Cada CA validado contra os 7 critérios. **CA05 inicial era**: "O campo CPF deve ser validado". Falhou em **completude** (não dizia formato) e **verificabilidade** (como testar?). Reescrito para versão atual com formato XXX.XXX.XXX-XX explícito.
-
-### 9.3 Protótipos validados com ABCD
-
-Wireframes Pencil + sketches em papel → foto enviada por e-mail → reunião de validação → ajustes → wireframe v2 → aprovado.
+With an average velocity of 25pts/sprint, the feature essentially fills 1 whole sprint (or spreads across 2 alongside smaller US).
 
 ---
 
-## 10. Aspectos éticos (camada SBC)
+## 9. Validation
 
-Aplicando [09-etica-sbc.md](../references/09-etica-sbc.md):
+### 9.1 Sommerville checks applied
 
-| Princípio | Aplicação no caso |
+- ✅ **Validity**: confirmed with *"ABCD"* in review (July 2023)
+- ✅ **Consistency**: CA08 and CA09 are consistent — CA09 only activates if CA08 is selected
+- ✅ **Completeness**: the review revealed missing AC for export (CSV) — added later
+- ✅ **Realism**: the Java/JSF stack is familiar to the team; fits the schedule
+- ✅ **Verifiability**: each CA has an associated Gherkin scenario
+
+### 9.2 Falbo dimensions per AC
+
+Each AC validated against the 7 criteria. **Initial CA05 was**: "The CPF field must be validated". It failed on **completeness** (did not state format) and **verifiability** (how to test?). Rewritten to the current version with explicit XXX.XXX.XXX-XX format.
+
+### 9.3 Prototypes validated with *"ABCD"*
+
+*"Pencil"* wireframes + paper sketches → photo sent by email → validation meeting → adjustments → wireframe v2 → approved.
+
+---
+
+## 10. Ethical aspects (*"SBC"* layer)
+
+Applying [09-etica-sbc.md](../references/09-etica-sbc.md):
+
+| Principle | Application in the case |
 |---|---|
-| **§1.1 Bem-estar humano** | Sistema apoia integridade esportiva (bem público) |
-| **§1.2 Evitar danos** | Acusação falsa de doping destrói carreira de atleta — RNF de auditoria rigorosa |
-| **§1.4 Não discriminar** | Sistema não pode privilegiar/penalizar atletas por federação, gênero, modalidade |
-| **§1.6 Privacidade** | Dados de saúde (substâncias) extremamente sensíveis — criptografia em repouso + acesso auditado + retenção definida |
-| **§1.7 Confidencialidade** | Resultados de teste positivo NÃO podem vazar antes do processo formal STJD |
-| **§2.5 Avaliação ML** | (Caso este sistema agregue ML para detecção de padrões suspeitos — auditoria contínua de viés) |
-| **§3.7 Infraestrutura societal** | Sistema integra-se à infraestrutura nacional do esporte; padrões de operação acima do média de sistemas comerciais |
+| **§1.1 Human well-being** | System supports sport integrity (public good) |
+| **§1.2 Avoid harm** | A false doping accusation destroys an athlete's career — NFR of strict audit |
+| **§1.4 Non-discrimination** | System cannot privilege/penalize athletes by federation, gender, modality |
+| **§1.6 Privacy** | Health data (substances) extremely sensitive — encryption at rest + audited access + defined retention |
+| **§1.7 Confidentiality** | Positive test results CANNOT leak before the formal *"STJD"* process |
+| **§2.5 ML evaluation** | (If this system aggregates ML for suspicious-pattern detection — continuous bias auditing) |
+| **§3.7 Societal infrastructure** | System integrates with the national sport infrastructure; standards of operation above the commercial-system average |
 
-Decisão ética concreta: **resultado positivo bloqueia automaticamente UI da confederação** (G10) — não para esconder, mas para evitar vazamento informal antes do devido processo.
+Concrete ethical decision: **a positive result automatically blocks the confederation UI** (G10) — not to hide it, but to prevent informal leakage before due process.
 
 ---
 
-## 11. Lições do caso
+## 11. Lessons from the case
 
-1. **Análise de documentos foi mais valiosa que entrevistas** — Código WADA tem 200 páginas de regras técnicas que ninguém na ABCD lembra de cabeça
-2. **Stakeholders diversos exigem priorização explícita** — confederações queriam features de cadastro; ABCD queria de operação; conflito foi resolvido com MoSCoW (Must-have do projeto = operação ABCD)
-3. **Fatiamento em US salvou o projeto** — versão básica entregue em 3 meses gerou tração; restante evoluiu com feedback
-4. **BDD em pt-BR engajou stakeholders não-técnicos** — médicos da ABCD revisaram cenários e apontaram regra G14 que faltava
-5. **Rastreabilidade no Redmine + SVN** foi adequada à escala (não precisou de DOORS)
-6. **RNFs de privacidade dominaram custo de implementação** — auditoria + criptografia + retenção tomaram tanto esforço quanto a feature em si
+1. **Document analysis was more valuable than interviews** — the *"WADA"* Code has 200 pages of technical rules nobody at *"ABCD"* remembers by heart
+2. **Diverse stakeholders require explicit prioritization** — confederations wanted registration features; *"ABCD"* wanted operations features; the conflict was resolved with MoSCoW (project Must-have = *"ABCD"* operation)
+3. **Slicing into US saved the project** — basic version delivered in 3 months generated traction; the rest evolved with feedback
+4. **BDD in pt-BR engaged non-technical stakeholders** — *"ABCD"* physicians reviewed scenarios and pointed out missing rule G14
+5. **Traceability in *"Redmine"* + *"SVN"*** was adequate to the scale (no need for DOORS)
+6. **Privacy NFRs dominated implementation cost** — audit + encryption + retention took as much effort as the feature itself

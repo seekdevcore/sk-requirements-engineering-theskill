@@ -1,88 +1,90 @@
-# Exemplo Aplicado — Hierarquia de Banimento no Projeto Interpop
+# Worked Example — Ban Hierarchy in the *"Interpop"* Project
 
-> Caso real do projeto Interpop (editorial brasileiro de Soft Power; Django 5 + DRF + React 19). Mostra como uma feature **já implementada** se mapeia para o framework de ER da skill — útil para auditar especificações pré-existentes ou para servir de molde a novas features no mesmo projeto. Commit referência: `1e0241e` (feat(moderation): dev é superadmin — único que bane/desbane admins).
+> Real case from the *"Interpop"* project (Brazilian editorial of *"Soft Power"*; Django 5 + DRF + React 19). Shows how an **already implemented** feature maps to the skill's RE framework — useful for auditing pre-existing specifications or as a template for new features in the same project. Reference commit: `1e0241e` (feat(moderation): dev é superadmin — único que bane/desbane admins).
+>
+> **Note on language preservation**: Feature, User Story, AC, FR, NFR, and business-rule titles, as well as the BDD content, are kept in **pt-BR** because they are the actual identifiers used in the *"Interpop"* repository, commits, OpenProject cards, and `CLAUDE.md` instructions. **Explanations, tables, and analysis are in en-CA**; **artifact content is in pt-BR**.
 
 ---
 
-## 1. Contexto e problema
+## 1. Context and problem
 
-**Problema editorial-político**: o Interpop tem hierarquia editorial `dev > admin > editor > user`. A versão inicial da moderação permitia que qualquer admin banisse outro admin. Isso criava risco real: numa equipe editorial com ≥2 admins, um admin abusivo poderia "decapitar" administrativamente outro admin antes de ser confrontado. Ou pior: admin sob coação externa banindo o dev.
+**Editorial-political problem**: *"Interpop"* has the editorial hierarchy `dev > admin > editor > user`. The initial moderation version let any admin ban another admin. This created real risk: in an editorial team with ≥2 admins, an abusive admin could administratively "decapitate" another admin before being confronted. Or worse: an admin under external coercion banning the dev.
 
-**Diagnóstico**: a relação de poder no banimento NÃO refletia a hierarquia editorial declarada. **Era requisito implícito, não documentado** — o tipo que a etnografia revela (ver [02-elicitacao.md §7](../references/02-elicitacao.md)). Discutindo o caso, ficou explícito.
+**Diagnosis**: the power relation for banning did NOT mirror the declared editorial hierarchy. **It was an implicit, undocumented requirement** — the kind ethnography reveals (see [02-elicitacao.md §7](../references/02-elicitacao.md)). Once the case was discussed, it became explicit.
 
 ---
 
 ## 2. Stakeholders
 
-Aplicando Wiegers 2003 (ver [01-fundamentos.md §5](../references/01-fundamentos.md)):
+Applying Wiegers 2003 (see [01-fundamentos.md §5](../references/01-fundamentos.md)):
 
-| Stakeholder | Interesse |
+| Stakeholder | Interest |
 |---|---|
-| **Dev (dono/criador do projeto)** | Garantir que nenhum admin possa decapitar a hierarquia |
-| **Admin editorial** | Poder banir editores/users que abusam, mas estar protegido de banimento por outro admin |
-| **Editor** | Poder solicitar banimentos via BanRequest, sem possibilidade de executar diretamente |
-| **User (leitor)** | Não ser banido injustamente; ter via de revisão |
-| **Banido** | Ter clareza sobre o que aconteceu; potencial via de contestação |
-| **Auditor externo** (hipotético) | Logs completos de quem baniu quem, quando e por quê |
+| **Dev (project owner/creator)** | Ensure no admin can decapitate the hierarchy |
+| **Editorial admin** | Be able to ban editors/users who abuse, while protected from banning by another admin |
+| **Editor** | Be able to request bans via BanRequest, without the ability to execute directly |
+| **User (reader)** | Not be unjustly banned; have a review channel |
+| **Banned** | Have clarity on what happened; potential contestation channel |
+| **External auditor** (hypothetical) | Complete logs of who banned whom, when, and why |
 
 ---
 
-## 3. Análise AS-IS → TO-BE
+## 3. AS-IS → TO-BE analysis
 
-Aplicando análise de [08-analista-negocios.md §3](../references/08-analista-negocios.md):
+Applying the analysis from [08-analista-negocios.md §3](../references/08-analista-negocios.md):
 
-### AS-IS (antes do commit 1e0241e)
+### AS-IS (before commit 1e0241e)
 
 ```
 Admin1 → POST /moderation/bans/ { user: Admin2, reason: "..." }
-  → Sistema aceita
-  → Admin2 banido (perde acesso, perde poder)
-  → Dev descobre depois (por monitoramento ou reclamação)
+  → System accepts
+  → Admin2 banned (loses access, loses power)
+  → Dev finds out later (via monitoring or complaint)
 ```
 
-**Dores**:
-- Hierarquia editorial declarada não correspondia à hierarquia técnica
-- Admin sob pressão externa podia banir outros admins / o dev
-- Não havia processo formal de "como admin é banido"
+**Pains**:
+- Declared editorial hierarchy did not match the technical hierarchy
+- Admin under external pressure could ban other admins / the dev
+- No formal process for "how an admin is banned"
 
 ### TO-BE
 
 ```
 Admin1 → POST /moderation/bans/ { user: Admin2 }
-  → Sistema REJEITA (400)
-  → Hierarquia: apenas dev bane admin
+  → System REJECTS (400)
+  → Hierarchy: only dev bans admin
 
 Admin1 → POST /moderation/bans/ { user: Editor1 }
-  → Sistema aceita
-  → Editor1 banido
+  → System accepts
+  → Editor1 banned
 ```
 
 ### GAP analysis
 
-| Gap | Solução |
+| Gap | Solution |
 |---|---|
-| `is_banned` está num lugar; `Ban` está em outro; podem divergir | RNF: transação atômica em `ban_user` (ADR-012) |
-| Idempotência: re-banir após unban quebrava UNIQUE constraint | RF: `update_or_create` reativa Ban existente |
-| Hierarquia não está expressa em código | RF: método relacional `can_be_banned_by(actor)` no model User |
-| Sem teste de regressão | RNF: cobertura ≥90% no `apps.moderation` |
+| `is_banned` lives in one place; `Ban` in another; they could diverge | NFR: atomic transaction in `ban_user` (ADR-012) |
+| Idempotency: re-banning after unban broke the UNIQUE constraint | FR: `update_or_create` reactivates the existing Ban |
+| Hierarchy is not expressed in code | FR: relational method `can_be_banned_by(actor)` on the User model |
+| No regression test | NFR: ≥90% coverage in `apps.moderation` |
 
 ---
 
 ## 4. Feature: Hierarquia de Banimento
 
-**Descrição da Feature (entregável ao cliente, em pt-BR):**
+**Feature description (client-deliverable, in pt-BR):**
 
-Define quem pode banir e desbanir quem dentro da equipe editorial do Interpop. Implementa a hierarquia `dev > admin > editor > user` como uma matriz de permissões aplicada de forma consistente em todas as operações de banimento e desbanimento — sejam elas executadas pela interface pública (moderação direta), pela aprovação de uma solicitação de banimento aberta por um editor, ou pelas ações equivalentes na interface administrativa. O entregável ao cliente (Gabriel, dev/dono do projeto) é a garantia de que nenhum administrador pode "decapitar" outro administrador nem o próprio dev — mesmo sob coação externa ou em caso de credenciais comprometidas. A regra vale simetricamente para banimento e desbanimento, com idempotência preservada quando um usuário é re-banido após desbanimento (reativa o registro existente em vez de criar duplicata).
+Define quem pode banir e desbanir quem dentro da equipe editorial do *"Interpop"*. Implementa a hierarquia `dev > admin > editor > user` como uma matriz de permissões aplicada de forma consistente em todas as operações de banimento e desbanimento — sejam elas executadas pela interface pública (moderação direta), pela aprovação de uma solicitação de banimento aberta por um editor, ou pelas ações equivalentes na interface administrativa. O entregável ao cliente (*"Gabriel"*, dev/dono do projeto) é a garantia de que nenhum administrador pode "decapitar" outro administrador nem o próprio dev — mesmo sob coação externa ou em caso de credenciais comprometidas. A regra vale simetricamente para banimento e desbanimento, com idempotência preservada quando um usuário é re-banido após desbanimento (reativa o registro existente em vez de criar duplicata).
 
-> Esta descrição é o que vai no card de Feature do OpenProject (ou equivalente). Ela é **escrita em linguagem de negócio**, lida por qualquer stakeholder. Os critérios de aceitação abaixo formalizam as regras testáveis; o BDD aparece só nas User Stories (§5).
+> This description is what goes on the OpenProject Feature card (or equivalent). It is **written in business language**, readable by any stakeholder. The ACs below formalize the testable rules; BDD appears only in the User Stories (§5).
 
-### 4.1 Critérios de Aceitação (estilo declarativo)
+### 4.1 Acceptance Criteria (declarative style)
 
-9 CAs, **agrupados por tema** (Regra 7 de [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). CAs com **`[...]`** no fim do título precisam ser lidos junto com o detalhamento na §4.2.
+9 ACs, **grouped by theme** (Rule 7 of [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). ACs with **`[...]`** at the end of the title must be read together with the detail in §4.2.
 
 #### 📋 CA - Hierarquia de banimento
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA01` | Dev é imune a banimento por qualquer outro usuário, incluindo outro dev. | — |
 | `CA02` | Administrador só pode ser banido por um dev **[...]** | ✅ |
@@ -91,7 +93,7 @@ Define quem pode banir e desbanir quem dentro da equipe editorial do Interpop. I
 
 #### 📋 CA - Comportamento da operação de banimento
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA05` | A regra de hierarquia de banimento se aplica também ao desbanimento **[...]** | ✅ |
 | `CA06` | Ao receber a operação de banimento, o sistema responde com um dentre três resultados de negócio **[...]** | ✅ |
@@ -100,15 +102,15 @@ Define quem pode banir e desbanir quem dentro da equipe editorial do Interpop. I
 
 #### 📋 CA - Fluxo de aprovação via solicitação (BanRequest)
 
-| ID | Descrição | Detalhamento? |
+| ID | Description | Detail? |
 |---|---|---|
 | `CA09` | O fluxo de solicitação de banimento (BanRequest) continua intacto: editores podem abrir solicitações que admin/dev aprovam ou rejeitam, com idempotência preservada **[...]** | ✅ |
 
-### 4.2 Detalhamento dos CAs com `[...]`
+### 4.2 Detail of ACs with `[...]`
 
-Cada bloco abaixo é o que aparece no **corpo do item** no OpenProject (campo Descrição do CA), seguindo a convenção `Regras a serem aplicadas:` + bullets.
+Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Regras a serem aplicadas:` + bullets convention.
 
-#### CA02 — Detalhamento
+#### CA02 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -118,7 +120,7 @@ Regras a serem aplicadas:
 - Apenas dev (papel mais alto da hierarquia) pode aplicar banimento a administrador.
 ```
 
-#### CA03 — Detalhamento
+#### CA03 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -128,7 +130,7 @@ Regras a serem aplicadas:
 - Usuário comum NÃO bane ninguém (papel mais baixo da hierarquia).
 ```
 
-#### CA05 — Detalhamento
+#### CA05 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -138,7 +140,7 @@ Regras a serem aplicadas:
 - A política existe para evitar que o subordinado reverta a decisão do superior.
 ```
 
-#### CA06 — Detalhamento
+#### CA06 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -148,9 +150,9 @@ Regras a serem aplicadas:
 - Em todos os casos de rejeição, nenhum registro de banimento é criado e nenhum perfil de usuário é alterado.
 ```
 
-> **Nota técnica (não vai no card do CA06)**: os 3 resultados de negócio acima são implementados respectivamente como HTTP 201, 400 e 403 no endpoint `POST /api/v1/moderation/bans/`. Esse mapeamento técnico é responsabilidade das Tasks (ver §7 Rastreabilidade), não do CA.
+> **Technical note (does not go on the CA06 card)**: the 3 business results above are implemented respectively as HTTP 201, 400, and 403 on the `POST /api/v1/moderation/bans/` endpoint. This technical mapping is the responsibility of the Tasks (see §7 Traceability), not the AC.
 
-#### CA07 — Detalhamento
+#### CA07 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -159,7 +161,7 @@ Regras a serem aplicadas:
 - O histórico do usuário fica coerente: 1 registro de banimento por relação usuário↔administrador, com sequência ativo/inativo no tempo.
 ```
 
-#### CA09 — Detalhamento
+#### CA09 — Detail
 
 ```
 Regras a serem aplicadas:
@@ -169,16 +171,16 @@ Regras a serem aplicadas:
 - Aprovar uma solicitação que já foi aprovada anteriormente retorna o banimento existente, sem criar duplicata (idempotência).
 ```
 
-### 4.3 Anexo técnico — Matriz exaustiva do método `can_be_banned_by`
+### 4.3 Technical annex — Exhaustive matrix of the `can_be_banned_by` method
 
-> **Nota**: este anexo é **derivação técnica** do CA02 + CA04 para uso de quem implementa o método `User.can_be_banned_by(actor)`. Não é detalhamento de CA no estilo "Regras a serem aplicadas:" — é tabela de verdade exaustiva. Em projeto real, viraria comentário no código ou tabela de teste (`pytest.mark.parametrize`).
+> **Note**: this annex is a **technical derivation** of CA02 + CA04 for whoever implements the `User.can_be_banned_by(actor)` method. It is not AC detail in the "Regras a serem aplicadas:" style — it is an exhaustive truth table. In a real project, this becomes a comment in the code or a test table (`pytest.mark.parametrize`).
 
 ```
-Matriz exaustiva can_be_banned_by(actor) → bool
+Exhaustive matrix can_be_banned_by(actor) → bool
 
        • dev_user.can_be_banned_by(admin_user)   → False
-       • dev_user.can_be_banned_by(dev2)         → False  (dev imune mesmo a outro dev)
-       • dev_user.can_be_banned_by(dev_user)     → False  (ninguém bane a si mesmo)
+       • dev_user.can_be_banned_by(dev2)         → False  (dev immune even to another dev)
+       • dev_user.can_be_banned_by(dev_user)     → False  (no one bans themselves)
        • admin_user.can_be_banned_by(dev_user)   → True
        • admin_user.can_be_banned_by(admin2)     → False
        • admin_user.can_be_banned_by(admin_user) → False
@@ -191,9 +193,9 @@ Matriz exaustiva can_be_banned_by(actor) → bool
 
 ---
 
-## 5. User Stories (com BDD)
+## 5. User Stories (with BDD)
 
-### US 1 — Aplicar hierarquia no model
+### US 1 — Apply the hierarchy in the model
 
 ```
 US Implementar can_be_banned_by no User como autoridade única de hierarquia
@@ -207,7 +209,7 @@ Relacionado a: CA01, CA02, CA03, CA04
 Story Points: 3
 ```
 
-### US 2 — Aplicar hierarquia no endpoint
+### US 2 — Apply the hierarchy in the endpoint
 
 ```
 US Endpoint POST /bans/ valida hierarquia antes de criar Ban
@@ -238,7 +240,7 @@ Relacionado a: CA02, CA03, CA06
 Story Points: 5
 ```
 
-### US 3 — Garantir atomicidade transacional
+### US 3 — Ensure transactional atomicity
 
 ```
 US Garantir que ban_user é atômico (rollback em falha)
@@ -253,7 +255,7 @@ Relacionado a: CA08
 Story Points: 2
 ```
 
-### US 4 — Idempotência (re-banir após unban)
+### US 4 — Idempotency (re-ban after unban)
 
 ```
 US ban_user reativa Ban existente em vez de criar duplicata
@@ -272,7 +274,7 @@ Relacionado a: CA07
 Story Points: 3
 ```
 
-### US 5 — Desbanimento segue mesma hierarquia
+### US 5 — Unban follows the same hierarchy
 
 ```
 US Aplicar can_be_unbanned_by relacional
@@ -294,28 +296,28 @@ Story Points: 3
 
 ---
 
-## 6. Validação aplicada (Sommerville 5 + Falbo 7)
+## 6. Applied validation (Sommerville 5 + Falbo 7)
 
-Aplicando [06-validacao.md](../references/06-validacao.md):
+Applying [06-validacao.md](../references/06-validacao.md):
 
-| Conferência | Aplicação |
+| Check | Application |
 |---|---|
-| **Validade** (Sommerville) | Confirmado em discussão com dev: "Sim, queremos exatamente que admin não bane admin" |
-| **Consistência** | CA02 e CA09 são consistentes — approve_ban_request reusa ban_user |
-| **Completude** | Inicial faltava CA04 (auto-banimento); descoberto em revisão antes do código |
-| **Realismo** | Implementável em Django 5 + DRF sem dependência externa |
-| **Verificabilidade** | Cada CA tem teste pytest correspondente em `tests/test_ban_hierarchy.py` |
-| **Completo (Falbo)** | CAs descrevem entrada (HTTP request), regra (matriz), saída (HTTP status + estado do User) |
-| **Correto (Falbo)** | Validado em conversa com dev (stakeholder único do projeto) |
-| **Necessário (Falbo)** | Sim — risco real de abuso interno |
-| **Priorizável (Falbo)** | Alta prioridade (commit foi feito imediatamente após decisão) |
-| **Verificável (Falbo)** | 13 testes específicos passaram (`test_ban_hierarchy.py`) |
+| **Validity** (Sommerville) | Confirmed in discussion with the dev: "Yes, we want exactly that an admin does not ban an admin" |
+| **Consistency** | CA02 and CA09 are consistent — approve_ban_request reuses ban_user |
+| **Completeness** | The initial set was missing CA04 (self-ban); discovered in review before coding |
+| **Realism** | Implementable in Django 5 + DRF without external dependency |
+| **Verifiability** | Each AC has a corresponding pytest test in `tests/test_ban_hierarchy.py` |
+| **Complete (Falbo)** | ACs describe input (HTTP request), rule (matrix), output (HTTP status + User state) |
+| **Correct (Falbo)** | Validated in conversation with the dev (sole stakeholder of the project) |
+| **Necessary (Falbo)** | Yes — real risk of internal abuse |
+| **Prioritizable (Falbo)** | High priority (commit was made immediately after the decision) |
+| **Verifiable (Falbo)** | 13 specific tests passed (`test_ban_hierarchy.py`) |
 
 ---
 
-## 7. Rastreabilidade implementada
+## 7. Implemented traceability
 
-Aplicando [07-mudanca-rastreabilidade.md](../references/07-mudanca-rastreabilidade.md):
+Applying [07-mudanca-rastreabilidade.md](../references/07-mudanca-rastreabilidade.md):
 
 ```
 Commit 1e0241e: feat(moderation): dev é superadmin — único que bane/desbane admins
@@ -328,16 +330,16 @@ Commit 1e0241e: feat(moderation): dev é superadmin — único que bane/desbane 
 │    ├─ unban_user(ban, admin) → Ban
 │    │    └─ raise PermissionDenied if not ban.user.can_be_unbanned_by(admin)
 │    └─ approve_ban_request(request_obj, admin, decision_note) → Ban
-│         └─ chama ban_user (herda hierarquia)
+│         └─ calls ban_user (inherits hierarchy)
 ├─ apps/users/admin.py
-│    └─ is_banned readonly (não puli a hierarquia via Django Admin)
+│    └─ is_banned readonly (do not bypass the hierarchy via Django Admin)
 ├─ apps/moderation/tests/test_ban_hierarchy.py
-│    ├─ test_can_be_banned_by_matrix (matriz exaustiva model)
+│    ├─ test_can_be_banned_by_matrix (exhaustive model matrix)
 │    ├─ test_dev_can_ban_admin (endpoint)
 │    ├─ test_admin_cannot_ban_another_admin
 │    ├─ test_admin_cannot_ban_dev
 │    ├─ test_dev_cannot_ban_another_dev
-│    ├─ test_admin_can_still_ban_editor (regressão)
+│    ├─ test_admin_can_still_ban_editor (regression)
 │    ├─ test_editor_cannot_reach_ban_endpoint (403)
 │    ├─ test_admin_cannot_unban_dev_placed_ban_on_admin
 │    ├─ test_dev_can_unban_admin
@@ -348,51 +350,51 @@ Commit 1e0241e: feat(moderation): dev é superadmin — único que bane/desbane 
      └─ test_ban_user_rollback_on_failure (CA08)
 ```
 
-**Cada CA tem teste rastreável**, cada teste descreve uma regra de domínio.
+**Every AC has a traceable test**, every test describes a domain rule.
 
 ---
 
-## 8. Camada ética (SBC 002/2024)
+## 8. Ethical layer (*"SBC"* 002/2024)
 
-Aplicando [09-etica-sbc.md](../references/09-etica-sbc.md):
+Applying [09-etica-sbc.md](../references/09-etica-sbc.md):
 
-| Princípio | Aplicação no caso |
+| Principle | Application in the case |
 |---|---|
-| **§1.1 Bem-estar** | Hierarquia protege equipe editorial de abuso interno; protege leitores de receberem moderação inconsistente |
-| **§1.2 Evitar danos** | Banimento injusto é dano reputacional grave; hierarquia rigorosa reduz risco |
-| **§1.3 Honestidade** | Hierarquia declarada (`dev > admin > editor > user`) agora corresponde à implementação |
-| **§1.4 Não discriminar** | Hierarquia não privilegia ninguém por características pessoais; só por papel |
-| **§2.9 Sistemas seguros** | Defesa em profundidade: model (matriz) + endpoint (permission classes) + service (transação atômica + hierarquia repetida como última barreira) |
-| **§3.6 Cuidado ao modificar** | Mudança preservou comportamento antigo: admin segue podendo banir editor/user (regressão testada) |
+| **§1.1 Well-being** | The hierarchy protects the editorial team from internal abuse; protects readers from receiving inconsistent moderation |
+| **§1.2 Avoid harm** | Unjust banning is grave reputational harm; strict hierarchy reduces the risk |
+| **§1.3 Honesty** | The declared hierarchy (`dev > admin > editor > user`) now matches the implementation |
+| **§1.4 Non-discrimination** | The hierarchy does not privilege anyone by personal characteristics; only by role |
+| **§2.9 Secure systems** | Defence in depth: model (matrix) + endpoint (permission classes) + service (atomic transaction + hierarchy repeated as a last barrier) |
+| **§3.6 Care when modifying** | Change preserved old behaviour: admin still bans editor/user (regression tested) |
 
-**Decisão ética**: optou-se por hierarquia **rígida** (admin não bane admin, em hipótese alguma) em vez de hierarquia **flexível** (quórum de admins). Justificativa: time pequeno (1 dev + 2 admins), quórum não é viável. Trade-off documentado.
-
----
-
-## 9. Lições do caso (aplicáveis a futuras features do Interpop)
-
-1. **Hierarquia editorial declarada em CLAUDE.md** virou requisito implícito; **explicitá-lo via CAs** foi o passo que faltava
-2. **Defesa em profundidade** vence pré-condições isoladas: model + endpoint + service, todos validam
-3. **BDD em pt-BR no commit message** ajuda revisão futura ("Regra: dev é imune; admin só por dev")
-4. **Teste de regressão é parte do requisito** — CA "admin segue banindo editor" deve estar explícito; senão refactor pode quebrar
-5. **ADR-012 (transação atômica)** virou padrão arquitetural transversal — toda operação ≥2 writes herda dele
-6. **Idempotência** veio de requisito (CA07) descoberto em produção (bug original); recuperar via reescrita do ban_user foi mais barato que tratar UNIQUE constraint no caller
+**Ethical decision**: chose **rigid** hierarchy (admin never bans admin) over **flexible** hierarchy (admin quorum). Justification: small team (1 dev + 2 admins), quorum is not viable. Trade-off documented.
 
 ---
 
-## 10. Aplicando este molde a próximas features do Interpop
+## 9. Lessons from the case (applicable to future *"Interpop"* features)
 
-Para qualquer feature nova (ex.: "comentários moderados pela comunidade"), reuse esta estrutura:
+1. **Editorial hierarchy declared in CLAUDE.md** had become an implicit requirement; **making it explicit via ACs** was the missing step
+2. **Defence in depth** beats isolated pre-conditions: model + endpoint + service, all validate
+3. **BDD in pt-BR in the commit message** helps future review ("Regra: dev é imune; admin só por dev")
+4. **Regression testing is part of the requirement** — the AC "admin still bans editor" must be explicit; otherwise a refactor may break it
+5. **ADR-012 (atomic transaction)** became a cross-cutting architectural standard — every ≥2-write operation inherits from it
+6. **Idempotency** came from a requirement (CA07) discovered in production (the original bug); recovering via rewriting ban_user was cheaper than handling the UNIQUE constraint at the caller
 
-1. **Stakeholders identificados explicitamente** (lista de quem é afetado)
-2. **AS-IS / TO-BE** documentados (gap claro)
-3. **CAs declarativos com IDs estáveis** (`CA-COMMENT-01`, `CA-COMMENT-02`, ...)
-4. **User Stories fatiando CAs em fatias incrementais** com BDD na descrição
-5. **Story Points via Planning Poker** (mesmo solo, comparando com features anteriores)
-6. **Validação contra Falbo 7 + Sommerville 5** antes de codar
-7. **Camada ética**: pergunta concreta — quem pode ser prejudicado por essa feature?
-8. **Defesa em profundidade**: aplicar invariante em ≥2 camadas independentes
-9. **Testes rastreáveis aos CAs** (não testes orientados a código)
-10. **Commit message reflete o requisito**, não só a mudança técnica
+---
 
-Em projetos da escala do Interpop (solo + part-time + contribuição IA), este nível de cerimônia ER **acelera** entrega ao invés de atrasar — porque elimina retrabalho silencioso na revisão.
+## 10. Applying this template to next *"Interpop"* features
+
+For any new feature (e.g., "community-moderated comments"), reuse this structure:
+
+1. **Stakeholders explicitly identified** (list of who is affected)
+2. **AS-IS / TO-BE** documented (clear gap)
+3. **Declarative ACs with stable IDs** (`CA-COMMENT-01`, `CA-COMMENT-02`, ...)
+4. **User Stories slicing ACs into incremental slices** with BDD in the description
+5. **Story Points via Planning Poker** (even solo, comparing with previous features)
+6. **Validation against Falbo 7 + Sommerville 5** before coding
+7. **Ethical layer**: concrete question — who can be harmed by this feature?
+8. **Defence in depth**: apply invariant in ≥2 independent layers
+9. **Tests traceable to the ACs** (not code-oriented tests)
+10. **Commit message reflects the requirement**, not only the technical change
+
+In *"Interpop"*-scale projects (solo + part-time + AI contribution), this level of RE ceremony **accelerates** delivery instead of slowing it down — because it eliminates silent rework at review.
