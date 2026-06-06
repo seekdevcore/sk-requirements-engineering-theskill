@@ -1,0 +1,23 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Local logs / drafts
+*.log
+*.bak
+*.draft.md
+DRAFT-*
+
+# Python / generated
+__pycache__/
+*.pyc
+
+# Node / generated
+node_modules/
+
+# Anthropic Claude Code local state (per-skill)
+.claude-cache/
