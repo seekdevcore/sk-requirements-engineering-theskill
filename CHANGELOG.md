@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+Changes accumulated since v1.2.0 will be listed here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.
+
+---
+
 ## [1.2.0] — 2026-06-06
 
 ### Changed — Full en-CA content translation completed
