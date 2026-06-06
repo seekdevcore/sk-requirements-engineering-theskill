@@ -28,6 +28,7 @@ jobs:
   markdown-lint:
     name: markdown-lint
     runs-on: ubuntu-latest
+    if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'
     steps:
       - uses: actions/checkout@v4
       - uses: DavidAnson/markdownlint-cli2-action@v17
@@ -44,6 +45,7 @@ jobs:
   link-check:
     name: link-check
     runs-on: ubuntu-latest
+    if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'
     steps:
       - uses: actions/checkout@v4
       - name: Lychee link checker
@@ -66,6 +68,7 @@ jobs:
   yaml-schema:
     name: yaml-schema
     runs-on: ubuntu-latest
+    if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'
     steps:
       - uses: actions/checkout@v4
       - name: Install yamllint
@@ -76,6 +79,7 @@ jobs:
   actionlint:
     name: actionlint
     runs-on: ubuntu-latest
+    if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'
     steps:
       - uses: actions/checkout@v4
       - name: Run actionlint
