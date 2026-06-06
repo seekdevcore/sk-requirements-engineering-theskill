@@ -41,6 +41,7 @@ git checkout -b <kind>/<short-description>
 ```
 
 Branch naming convention:
+
 - `feat/<thing>` — new content (`feat/case-study-fintech`, `feat/translation-es`)
 - `fix/<thing>` — corrections (`fix/typo-references-04`, `fix/broken-link-readme`)
 - `docs/<thing>` — meta-documentation (`docs/contributing-update`)
@@ -49,6 +50,7 @@ Branch naming convention:
 ### 3.3 Make your change
 
 For **new content**, follow the structural patterns:
+
 - New case study → mirror [`examples/caso-interpop-moderacao.md`](./examples/caso-interpop-moderacao.md) structure (Context → Stakeholders → AS-IS/TO-BE → Feature → ACs grouped by theme → User Stories with BDD → Validation → Traceability → Ethical layer → Lessons).
 - New `.feature` template → mirror [`examples/template-user-story.feature`](./examples/template-user-story.feature) (header comment with `@US`/`@F`/`@EP`/`@CAs`/`@SP`/`@Doc-Req`; ≥4 scenarios covering happy path + error + edge + outline).
 - New translation → create `translations/<bcp-47-tag>/` with the full file tree mirrored from root.
@@ -89,6 +91,7 @@ git push -u origin <branch>
 ```
 
 We use Conventional Commits scopes mapped to the directory:
+
 - `feat(references)`, `feat(examples)`, `feat(translations)`, `feat(i18n)`
 - `fix(references)`, `fix(typo)`, `fix(link)`
 - `docs(readme)`, `docs(changelog)`, `docs(contributing)`
@@ -110,6 +113,7 @@ Participation in this project is governed by the [`CODE_OF_CONDUCT.md`](./CODE_O
 By submitting a PR, you agree that your contribution will be licensed under [**Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**](./LICENSE) — the same license as the rest of the skill.
 
 In practice this means:
+
 - You retain copyright of your contribution.
 - You grant everyone the right to share and adapt under the same license.
 - You must indicate the source instructor of the primary corpus (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"* — see [README §About the source instructor](./README.md#-about-the-source-instructor)) when redistributing.

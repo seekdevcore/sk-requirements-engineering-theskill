@@ -98,6 +98,7 @@
 ### 2.6 §1.7 — Honour confidentiality
 
 Application in RE:
+
 - Requirements documents containing trade secrets do not leak in public PRs
 - Market analysis / competitive intelligence treated as confidential
 - **Exception**: violation of law → report to the competent authorities (whistleblower)
@@ -121,6 +122,7 @@ Application in RE:
 > If at any time, before or during the work, the professional identifies the lack of necessary competencies, they must **communicate this to the employer or client**.
 
 Application in RE:
+
 - Engineer without critical domain knowledge (health, legal, finance) **must declare it** and demand a specialist on the team
 - "I know IT but not medicine" is not shameful — what is shameful is pretending to know
 
@@ -137,6 +139,7 @@ Application in RE:
 - **Recourse to refusing to implement** when analysis shows unavoidable harm
 
 Classic examples where professional refusal was applied:
+
 - Google engineers refuse to work on Project Maven (military AI drones)
 - Microsoft engineers contest the ICE contract
 - Facebook engineers refuse political microtargeting features
@@ -214,6 +217,7 @@ Failed any → Three Amigos discussion + requirement adjustment or refusal.
 **Situation**: client wants to collect *"CPF"*, *"RG"*, address, phone, email, profession, income, marital status to "qualify the lead".
 
 **Treatment**:
+
 - §1.6 — minimum necessary collection
 - Question: is every field justified for the declared purpose?
 - Renegotiate: collect the minimum now, expand only if necessary with consent
@@ -224,6 +228,7 @@ Failed any → Three Amigos discussion + requirement adjustment or refusal.
 **Situation**: ML decides credit approval / school enrollment / medical care.
 
 **Treatment**:
+
 - §2.5 — continuous risk re-evaluation; bias audit
 - §1.4 — audit by demographic groups (does the same error affect all equally?)
 - §2.6 — does the team have competence in responsible ML?
@@ -234,6 +239,7 @@ Failed any → Three Amigos discussion + requirement adjustment or refusal.
 **Situation**: manager requests a dashboard with individual real-time productivity (keystrokes, screen captures).
 
 **Treatment**:
+
 - §1.1 — individual autonomy; surveillance erodes autonomy
 - §1.2 — foreseeable psychological harms (anxiety, gaming the system)
 - Renegotiate: focus on team metrics, not individual; coarser time granularity
@@ -244,6 +250,7 @@ Failed any → Three Amigos discussion + requirement adjustment or refusal.
 **Situation**: the app will discontinue support for old browsers. Elderly / low-income users depend on those browsers.
 
 **Treatment**:
+
 - §3.6 — investigate alternatives; help smooth migration
 - Extend the support deadline
 - Offer an alternative path (lite version, in-person service)
@@ -254,6 +261,7 @@ Failed any → Three Amigos discussion + requirement adjustment or refusal.
 **Situation**: tight deadline, the manager asks to "skip the tests" or "validate later".
 
 **Treatment**:
+
 - §2.1 — quality in professional work
 - §1.3 — honesty about limitations
 - §2.5 — identified risks must be reported

@@ -106,6 +106,7 @@ The skill's frontmatter declared `language: en-CA` as the default since v1.0.0, 
 The previous state (`language: en-CA` declared, but content in pt-BR) was misleading for English-speaking users. Discoverability and trigger activation worked in English, but every artifact opened in Portuguese — a poor experience.
 
 The chosen middle ground:
+
 1. **Entry point (SKILL.md, README.md, CHANGELOG.md) in en-CA** — these are read first; they need to match the declared language.
 2. **`references/` and `examples/` filenames in pt-BR for now** — preserves backward compatibility with existing projects.
 3. **Full pt-BR copy at `translations/pt-BR/`** — pt-BR readers (the original audience of the *"IFPB"* course) lose nothing.
@@ -148,6 +149,7 @@ Per CC BY-SA 4.0 license requirements (Attribution), the source instructor of th
 ### Added — Initial public release
 
 #### Core skill files
+
 - `SKILL.md` — 10-section entry point with usage protocol, premise (requirement-as-leverage), bibliography, anti-patterns, and naming rules. Includes:
   - Regra 0 (source-of-truth document) — backlog never changes without document update first
   - Regra 9 (multiple root Epics) — no single "Epic-project" parent; root Epics are siblings
@@ -155,6 +157,7 @@ Per CC BY-SA 4.0 license requirements (Attribution), the source instructor of th
   - 13 anti-patterns (Connextra title in card, qualitative NFR, AC+BDD competing, etc.)
 
 #### Reference documents (`references/`)
+
 - `01-fundamentos.md` — FR vs NFR, stakeholders, feasibility study, requirements in any lifecycle model (Sommerville Figs 2.1–2.3), professional engineering analogy, canonical "tree-swing" cartoon, 7 real failure cases (Mariner, Hartford, Citibank, UEFA, INSS, IPTU SP, Boeing 737 MAX), MVP + A/B testing as modern complements (Valente 2020).
 - `02-elicitacao.md` — Sommerville 5 difficulties + Christel & Kang + Kotonya; 6 techniques compared; full coverage of interviews (5W planning, question types, pyramid/funnel/diamond structures, recording).
 - `03-especificacao.md` — Backlog hierarchy with multiple root Epics, document vs backlog artifact split (5.1.1 RF/RNF/G + 5.1.2 Epic/Feature/CA/US/Task), User Story history (1997 Chrysler C3 → 2004 Cohn), 3 Cs of Jeffries, INVEST checklist, Spike as backlog item type.
@@ -167,6 +170,7 @@ Per CC BY-SA 4.0 license requirements (Attribution), the source instructor of th
 - `09-etica-sbc.md` — Full SBC 002/2024 Code applied to requirements engineering decisions (privacy, ML/AI, inclusion, decommissioning).
 
 #### Examples and templates (`examples/`)
+
 - `caso-controle-dopagem.md` — Real CNPq 487777/2013-1 case (ABCD/COB); FR + NFR + business rules G + exceptions E; backlog with multiple root Epics (Aplicação Web + Mobile + Atividades de Apoio); Feature "Consulta GERAL de Atletas" worked end-to-end with 15 grouped ACs (4 with `[...]`), 3 sliced User Stories with BDD, Planning Poker estimation.
 - `caso-interpop-moderacao.md` — Interpop ban hierarchy (dev/admin/editor/user); 9 ACs grouped in 3 themes; 6 ACs with `[...]` detailing; 5 User Stories with BDD; technical annex with `can_be_banned_by` exhaustive matrix.
 - `template-backlog-openproject.md` — Full worked backlog template (Busca Editorial Interpop + Cadastro de Atletas) showing multiple root Epics, 4-level Epic nesting, AC grouping, `[...]` convention, BDD as US Description field content, smell test.

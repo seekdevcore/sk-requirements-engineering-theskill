@@ -43,6 +43,7 @@ Admin1 → POST /moderation/bans/ { user: Admin2, reason: "..." }
 ```
 
 **Pains**:
+
 - Declared editorial hierarchy did not match the technical hierarchy
 - Admin under external pressure could ban other admins / the dev
 - No formal process for "how an admin is banned"

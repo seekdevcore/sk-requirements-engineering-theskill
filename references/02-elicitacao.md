@@ -146,6 +146,7 @@ In practice, **a mix**. Fully open discussions rarely work. Start with a few que
 | **Report/minutes** | Captures main points | Must be written quickly for quality |
 
 **Mandatory items of the minutes** (Kendall & Kendall):
+
 - Interviewee(s) + Interviewer(s)
 - Date and time + Duration
 - Subject + Goals

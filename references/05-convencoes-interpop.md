@@ -11,6 +11,7 @@
 ## 1. When to use this reference
 
 Whenever you are about to:
+
 - Produce a **`BACKLOG.md`** for any feature/module (mandatory if there is a `DESIGN.md`)
 - Review Epic/Feature/User Story names in an existing backlog
 - Decide whether something is a Feature or a technical Task
@@ -211,6 +212,7 @@ Detail and diagram in [`../examples/template-backlog-openproject.md §3`](../exa
 **Golden rule**: IDs are **eternal**. They do not renumber when content changes; the version changes. This preserves traceability in commits, PRs, ADRs.
 
 **In commits/PRs**:
+
 ```bash
 git commit -m "feat(search): implementa SearchService.query [T30.1.7]"
 git commit -m "test(search): adiciona cenário BDD listagem básica [US30.1]"
@@ -359,6 +361,7 @@ Full example in production: [`/home/gabriel/Documentos/Projetos/interpop/docs/sp
 ### Extract (good references — kept in pt-BR as they are real project items)
 
 **Epic in pt-BR without infinitive, without technical term**:
+
 ```
 EP-10 Busca Editorial
 Descrição: Conjunto de funcionalidades que permite ao leitor encontrar artigos
@@ -367,6 +370,7 @@ relevância. Inclui também o compartilhamento da busca via link.
 ```
 
 **Feature with description (no BDD)**:
+
 ```
 F-30 Busca de artigos por texto
 Descrição: Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e
@@ -377,6 +381,7 @@ buscadas.
 ```
 
 **User Story with descriptive title + pt-BR BDD**:
+
 ```
 US30.1 Apresentação básica e ordenação dos resultados da busca
 CAs cobertos: CA01, CA02, CA09, CA10, CA11, CA12
@@ -391,12 +396,14 @@ Cenário: Leitor realiza busca simples e visualiza resultados ordenados
 ```
 
 **Task with technical terms (allowed)**:
+
 ```
 T30.1.7  Implementar SearchService.query(spec: QuerySpec) -> SearchResultPage
          com paginação keyset (cursor base64 assinado HMAC)         🟠 High
 ```
 
 **Cross-cutting Task (technical configuration outside any Feature)**:
+
 ```
 TX-03  Adicionar `extension unaccent` no Postgres via migration
        `0002_search_extensions`                                     🔴 Immediate
@@ -425,6 +432,7 @@ EP-08 Minhas Reservas (CRUD)                          🟠 High
 ```
 
 Note that:
+
 - `EP-08 Minhas Reservas (CRUD)` — noun, no infinitive
 - `F-20 Listagem de reservas pessoais com filtros e busca` — noun + description
 - `US20.1 Visualização Base e Ordenação da Lista de Reservas Pessoais` — noun

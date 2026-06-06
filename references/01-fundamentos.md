@@ -17,6 +17,7 @@ Three canonical definitions worth reading together:
 > A requirement is a **specification of what must be implemented**, or some form of **constraint** on the system.
 
 **IEEE Std (Glossary of SE Terminology)** — presents 3 complementary senses:
+
 1. A condition or capability **needed by a user** to solve a problem or achieve an objective.
 2. A condition or capability that must be **achieved or possessed by a system** (or system component) to satisfy a contract, standard, specification, or other formally imposed documents.
 3. A **documented representation** of a condition or capability as in 1 and 2.
@@ -68,6 +69,7 @@ Marco Tulio Valente, in *Engenharia de Software Moderna* (Ch. 3, available at [e
 **Definition**: the smallest functional version of a product capable of **generating validated learning** about the customer with the least effort. It is an instrument for **requirements discovery via real-world experimentation** — instead of only eliciting what the customer says they want, observe what they do with a basic version and adjust the backlog.
 
 **How it connects to this skill**:
+
 - Replaces part of classical elicitation in **projects with high uncertainty** (new product, new market, unvalidated persona) — where interviews and questionnaires fail because nobody can answer.
 - Does not replace ACs, BDD, or identified stakeholders — it merely **compresses the discovery → specification → validation cycle** into iterations of weeks rather than months.
 - Anti-pattern: confusing MVP with "first crude version without quality". MVP is minimum in **scope**, not in the quality of the requirements specified for that minimum scope.
@@ -77,6 +79,7 @@ Marco Tulio Valente, in *Engenharia de Software Moderna* (Ch. 3, available at [e
 **Definition**: a controlled experiment in which two groups of users receive different versions of a feature (variant A vs. variant B), and business metrics (conversion, retention, time-on-task) decide which one ships.
 
 **How it connects to this skill**:
+
 - A tool for **quantitative validation of requirements** when there is ambiguity between stakeholders ("should the button be blue or red?" → A/B test decides with data).
 - Combines with **product NFRs** (conversion rate, p95 latency, form-abandonment) — A/B measures real, not estimated, impact.
 - Anti-pattern: A/B-testing everything. Works when there is a **clear hypothesis + direct metric + statistically significant volume**. Without those three, it is data theatre.
@@ -128,6 +131,7 @@ These cases became Brooks's sentence: *"the hardest single part of building a so
 Describes **what** the system does: services, inputs, outputs, behaviour, exceptions. In some cases it also declares what the system **must not** do.
 
 Examples (Mentcare):
+
 - "A user shall be able to search the consultation lists across all clinics."
 - "The system shall generate, for each day and each clinic, a list of patients due to attend that day."
 - "Every staff member using the system shall be uniquely identified by their eight-digit employee number."
@@ -150,6 +154,7 @@ A constraint **on** the services or functions. Frequently applies to the **whole
 ```
 
 **Mentcare examples (Fig 4.4):**
+
 - **Product**: "Available across all clinics during business hours (Mon–Fri, 08:30–17:30), with maximum downtime 5s/day."
 - **Organizational**: "Users identify themselves with the health authority identity card."
 - **External**: "Implement privacy measures for patient data per HStan-03-2006-priv."
@@ -200,6 +205,7 @@ A cross-cutting sub-category. **Derived from the application domain, not from th
 **Everyone affected by the system, directly or indirectly.** Do not restrict to "end user".
 
 **Sommerville-Mentcare example — 8 categories:**
+
 1. Patients (recorded data) and family members
 2. Physicians (assessment/treatment)
 3. Nursing staff (treatment coordination/administration)

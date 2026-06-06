@@ -151,6 +151,7 @@ For each story:
 **Velocity** = sum of points delivered per sprint (average of the last 3–5 sprints).
 
 Example:
+
 - Sprint 1: delivered 23pts
 - Sprint 2: delivered 28pts
 - Sprint 3: delivered 25pts
@@ -159,6 +160,7 @@ Example:
 **For the next sprint**: the team chooses ~25pts of the prioritized backlog. Not 40 (overcommit), not 10 (under-use).
 
 **Conversion to deadline**:
+
 - Total backlog = 150pts
 - Velocity = 25pts/sprint
 - Remaining sprints = 150 / 25 = **6 sprints**

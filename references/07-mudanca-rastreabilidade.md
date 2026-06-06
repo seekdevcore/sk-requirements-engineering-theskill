@@ -60,6 +60,7 @@ Identifies a problem OR a specific change proposal. The analyst assesses whether
 ### 3.2 Stage 2 — Change analysis + cost estimation
 
 Evaluates **impact** based on:
+
 - Traceability (which requirements depend on this one?)
 - General system knowledge
 - Which artifacts will be touched (docs, design, code, tests)
@@ -69,6 +70,7 @@ Evaluates **impact** based on:
 ### 3.3 Stage 3 — Implementation
 
 Modify:
+
 - Requirements document
 - Design
 - Code
@@ -109,6 +111,7 @@ Who approves a change? Within what timeframe? What SLA? Covered by a CCB (Change
 ### 4.3 Traceability policies
 
 Which relations must be recorded? Among:
+
 - Requirement ↔ requirement (depends-on)
 - Requirement ↔ design
 - Requirement ↔ code
@@ -240,6 +243,7 @@ RF-001 DEPRECATED → no longer used; kept for history
 ```
 
 **Requirement history** records:
+
 - Who changed it
 - When
 - What changed (diff)

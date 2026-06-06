@@ -17,6 +17,12 @@ ifpb\.edu\.br
 # SBC website occasionally blocks non-browser User-Agents.
 sbc\.org\.br
 
+# ACM blocks non-browser User-Agents with 403 (Cloudflare bot-check).
+www\.acm\.org/code-of-ethics
+
+# IEEE returns 418 ("I'm a teapot") for non-browser User-Agents.
+www\.ieee\.org/about/corporate/governance
+
 # Example/placeholder URLs intentionally non-resolvable in templates.
 example\.com
 your-domain

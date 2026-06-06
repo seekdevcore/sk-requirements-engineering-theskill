@@ -147,6 +147,7 @@ The course material that constitutes the primary corpus of this skill — *"IFPB
 Her credentials make this skill content **academically and industrially grounded**, not a generic summary:
 
 ### Academic credentials
+
 - **Ph.D. in Computer Science / Software Engineering** — *"Universidade Federal de Pernambuco"* (UFPE), 2017
 - **Doctoral thesis**: *"An approach to support the Requirements Specification in Agile Software Development"* — **the exact subject of this skill**
 - **Doctoral sandwich period**: *"Universidade Nova de Lisboa"* (UNL, Portugal), 2016 — advised by Miguel Goulão (Portugal) and Carla Schuenemann
@@ -155,12 +156,14 @@ Her credentials make this skill content **academically and industrially grounded
 - **B.Sc. in Computer Science** — *"Universidade Federal da Paraíba"* (UFPB), 1997
 
 ### Active research lines (relevant to this skill)
+
 1. **Requirements Engineering in Agile Projects** (since 2014) — direct base of this skill
 2. Agile software development
 3. *"Sistema de Informação para Controle de Dopagem"* (*"CNPq"* DTI-A, 2014-2015 — **origin of the *"Controle de Dopagem"* worked example** in `examples/caso-controle-dopagem.md`)
 4. BPM (Business Process Management) automation
 
 ### Industrial experience (20+ years)
+
 - ***"DATAPREV"*** (Federal Data Processing Service for Social Security) — IT Analyst, project manager of *"Ministério do Trabalho"*'s *"Plano Nacional de Qualificação"* (2006–2013, public competition entry)
 - ***"CESAR"*** (*"Centro de Estudos e Sistemas Avançados do Recife"*) — Project Manager (2005–2006)
 - ***"CAGEPA"*** (*"Paraíba"* state water utility) — Systems Analyst (2005–2006, public competition entry)
@@ -169,6 +172,7 @@ Her credentials make this skill content **academically and industrially grounded
 - Past collaborations with ***"Multilaser"***, ***"CPM Braxis"***
 
 ### Faculty position
+
 - ***"Professor Efetivo"* (tenured), *"Dedicação Exclusiva"*** at ***"IFPB Campus João Pessoa"*** since 2006 — entered through public competition, **first place**
 - Active researcher at the ***"EMBRAPII"*** (*"Empresa Brasileira de Pesquisa e Inovação Industrial"*) hub at *"IFPB"*
 - ***"CNPq"* DTI-A** researcher (*"Desenvolvimento Tecnológico e Industrial"*, Category A)
@@ -176,6 +180,7 @@ Her credentials make this skill content **academically and industrially grounded
 - Has supervised 50+ undergraduate students, 3 specialization students, 5+ undergraduate research students (*"IC"*), and is currently co-supervising 1 Ph.D. candidate and 10 *"ICs"*
 
 ### Pedagogical resources beyond the *"IFPB"* course
+
 - **PMBOK** certification (Qualiti, 2005)
 - Coordinator of multiple ongoing research repositories: *"Boas Práticas em Processos de Desenvolvimento de Software"*, *"Práticas em Gerenciamento de Projetos de Software"*, *"Ambiente de Boas Práticas Reconfiguráveis em Engenharia de Software"*
 
@@ -256,6 +261,7 @@ Pull requests welcome — especially for:
 When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (10 hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
 
 For en-CA translation contributions, preserve:
+
 - **All pt-BR domain terms** in *italic + quotes* (institutions, organizations, government systems, project codenames, regulatory frameworks)
 - **All pt-BR acronyms** (`RF`, `RNF`, `G`, `CA`, `US`, `EP`, `F`, `T`, `TX`) — do not renumber to English
 - **Cross-references** between files (when a reference points to `references/05-convencoes-interpop.md`, the link stays valid because the filename is preserved)
@@ -267,10 +273,12 @@ For en-CA translation contributions, preserve:
 This skill content is licensed under **[Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/)**.
 
 You are free to:
+
 - **Share** — copy and redistribute in any medium or format
 - **Adapt** — remix, transform, and build upon the material for any purpose, even commercially
 
 Under the following terms:
+
 - **Attribution** — give appropriate credit to **Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*** as author of the original course material (see [About the source instructor](#-about-the-source-instructor) for the academic citation format), and indicate if changes were made
 - **ShareAlike** — distribute your contributions under the same license
 

@@ -45,6 +45,7 @@ The most widespread consulting practice. Not nominally in BABOK, but crosses alm
 **Map of the current process** — how it is today, with its pains, bottlenecks, rework.
 
 Techniques:
+
 - **BPMN** (Business Process Model and Notation) — formal process diagram
 - **Value-stream maps** (lean) — highlights wait time vs. value time
 - **Service Blueprint** — adds a user-experience layer
@@ -74,6 +75,7 @@ PAINS:
 **How we want it to be** — drawing of the process after the solution.
 
 **Care**: TO-BE is not "AS-IS + system". It is **a redesigned process** that may involve:
+
 - Eliminating unnecessary steps
 - Reorganizing responsibilities
 - Automating where it makes sense
@@ -150,6 +152,7 @@ Score = (Reach × Impact × Confidence) / Effort
 | **Effort** | Person-months |
 
 **Example**:
+
 - Feature A: 1000 users × 1 (medium impact) × 0.8 (high confidence) / 2 PM = **400**
 - Feature B: 100 users × 3 (massive impact) × 0.5 (uncertain) / 1 PM = **150**
 
@@ -164,6 +167,7 @@ Feature A has the higher score → ships first.
 **Focus**: what the business needs (not how the system will do it).
 
 Typical structure:
+
 - Executive summary
 - Context and opportunity
 - Business objectives + success metrics (KPIs)
@@ -182,6 +186,7 @@ Typical structure:
 ### 5.3 Use Case Document
 
 Each use case documented with:
+
 - Actors
 - Pre-condition
 - Post-condition
@@ -198,6 +203,7 @@ Formal notation: pools (organizations), lanes (roles), activities (rectangles), 
 ### 5.5 Stakeholder Register
 
 Table with columns:
+
 - Name / Role
 - Interests
 - Power level

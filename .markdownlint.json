@@ -12,8 +12,8 @@
   "MD025": false,
   "_MD025": "single-h1 — CHANGELOG-style files legitimately have multiple top-level entries; the docs also embed sample requirements documents that start with their own H1.",
 
-  "MD033": { "allowed_elements": ["p", "img", "picture", "source", "br", "details", "summary", "kbd", "sub", "sup", "mark"] },
-  "_MD033": "no-inline-html — allow the small set of HTML used for the README hero banner and the occasional inline highlighting.",
+  "MD033": false,
+  "_MD033": "no-inline-html — disabled. We use HTML for the README banner (<p>, <img>, <picture>) AND pt-BR placeholder syntax inside the OpenProject backlog template (<termo>, <nome>, <id>) which the linter mistakes for inline tags. Enumeration of allowed_elements does not cover the open-ended placeholder vocabulary.",
 
   "MD034": false,
   "_MD034": "no-bare-urls — bibliographic citations occasionally show bare URLs (lattes, orcid) on purpose. Linkifying every one would clutter the prose.",
@@ -27,7 +27,16 @@
   "MD041": false,
   "_MD041": "first-line-h1 — README starts with `<p>` (banner image) and some references start with metadata blocks before the H1.",
 
+  "MD028": false,
+  "_MD028": "no-blanks-blockquote — disabled. We intentionally separate consecutive `>` blockquote paragraphs with a blank line in worked examples to distinguish back-to-back author notes (e.g., a rule of thumb followed by an anti-pattern warning). Visual rendering keeps them as separate quote blocks, which is the intent.",
+
+  "MD051": false,
+  "_MD051": "link-fragments — disabled. GitHub auto-generates anchors stripping emoji prefixes (## ⚡ Language status → #language-status), but markdownlint computes the anchor including the emoji. The links work correctly on github.com; the linter is wrong here.",
+
   "MD046": { "style": "fenced" },
 
-  "MD048": { "style": "backtick" }
+  "MD048": { "style": "backtick" },
+
+  "MD060": false,
+  "_MD060": "table-column-style — disabled. We use compact `|---|---|` pipe style throughout (no padding spaces). Visually equivalent to `| --- | --- |` once rendered; enforcing it would require touching every table in every file with no functional gain."
 }

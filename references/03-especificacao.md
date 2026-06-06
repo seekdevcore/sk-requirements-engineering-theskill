@@ -261,6 +261,7 @@ Agile development = features delivered **iteratively and incrementally**. The us
 The feature has 15 ACs (CA01..CA15). Instead of implementing everything in one giant sprint, slice into **3 incremental US**:
 
 **Sprint 1** — deliver basic, simplest-possible listing:
+
 - Access control (CA01)
 - Implicit filter by user's federation (CA02)
 - Layout per prototype (CA03)
@@ -269,11 +270,13 @@ The feature has 15 ACs (CA01..CA15). Instead of implementing everything in one g
 → **US Listagem BÁSICA de Atletas**
 
 **Sprint 2** — evolve to interactive sorting + pagination:
+
 - Re-sort by clicking the header (CA14a)
 - Pagination 10/50/100/all (CA14b)
 → **US Listagem com ordenação e paginação (sem busca)**
 
 **Sprint 3** — evolve with search options:
+
 - Applied filters (CA04, CA05, CA06, CA07)
 - Active + alphabetical comboboxes (CA08-CA12)
 → **US Listagem Avançada com opções de busca (filtro)**
@@ -415,6 +418,6 @@ Full `BACKLOG.md` template, examples from the ***"SIRA"*** project (*"Sistema de
 
 - **BDD + AC + style**: [04-bdd-criterios-aceitacao.md](04-bdd-criterios-aceitacao.md)
 - ***"Interpop"* conventions + `BACKLOG.md` template**: [05-convencoes-interpop.md](05-convencoes-interpop.md) ⭐ new
-- **Planning Poker estimation**: [05-estimativa.md](05-estimativa.md) → renumbered to [06-estimativa.md](06-estimativa.md) (re-numbering pending)
+- **Planning Poker estimation**: [05-estimativa.md](05-estimativa.md)
 - **Validation (Falbo 7 dimensions)**: [06-validacao.md](06-validacao.md)
 - **End-to-end traceability**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)

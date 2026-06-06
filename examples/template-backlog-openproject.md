@@ -112,6 +112,7 @@ PROJECT (not a node in OpenProject — it is the project repository/context)
 > **Why not creating a single "Product Epic" as the grandparent of everything**: the "product" as a whole is the **OpenProject repository / project context** — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node (no useful description), hurts navigation, and creates ambiguity ("is this root Epic the whole product, or is it a front?").
 >
 > **Real examples**:
+>
 > - ***"Controle de Dopagem"*** (*"IFPB"* course): `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` — three root Epics, siblings at the top level.
 > - ***"Interpop"***: `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` — several root Epics, siblings. There is no "*"Interpop"*" Epic as parent.
 
@@ -478,7 +479,7 @@ Regras a serem aplicadas:
 - Não permitir o salvamento enquanto o CPF estiver inválido.
 ```
 
-> _The remaining Features (F-201 to F-209) follow the same pattern. In a real backlog, each Feature has its own section with description, ACs, US, and Tasks._
+> *The remaining Features (F-201 to F-209) follow the same pattern. In a real backlog, each Feature has its own section with description, ACs, US, and Tasks.*
 
 ---
 

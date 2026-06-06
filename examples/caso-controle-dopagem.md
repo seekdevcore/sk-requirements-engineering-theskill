@@ -115,6 +115,7 @@ E3 — Se o atleta for portador de deficiência, é obrigatório o
 ```
 
 Note that **these rules come from different sources**:
+
 - **Gxx** come from the DOMAIN (*"WADA"* / *"Código Mundial Antidopagem"*, *"STJD"* regulations, identity policy). Easy to miss — they only surfaced via document analysis.
 - **Exx** come from OBSERVATION (ethnography + interviews with the team that registers athletes) — real edge situations that only operators have in their heads.
 

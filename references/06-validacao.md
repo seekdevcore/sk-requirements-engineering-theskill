@@ -119,43 +119,51 @@ The tool does not matter — what matters is **SEE + DISCUSS + ITERATE**.
 #### 4.2.3 7 groups of best practices (LECTURE 10)
 
 **Clarity and Simplicity**
+
 - Avoid visual pollution: use only elements necessary for the task
 - Reduce the number of steps: fewer clicks/screens is better
 - Simple and direct language on buttons and labels ("Send", "Save", "Cancel")
 - Group related elements: form fields close by function
 
 **Consistency and Standards**
+
 - Visual consistency: colours, icons, spacing, and typography follow a standard
 - Reuse components: the same button style across all screens
 - Respect system conventions (web, Android, iOS) — menus, icons, familiar interactions
 
 **Visual Hierarchy and Layout**
+
 - Highlight what is most important: use size, contrast, position
 - Spacing (visual breathing room)
 - Alignment and grid
 
 **Feedback and Interaction**
+
 - Prototype system responses (messages, loading, colour change)
 - Show component states (disabled buttons, filled fields, errors)
 - Avoid surprises — the user understands the result before executing
 
 **User Focus**
+
 - Know the target audience (adapt language and complexity)
 - Prioritize the most frequent tasks
 - Include the user in validation (test with peers + collect feedback)
 
 **Fidelity and Iteration**
+
 - Start simple (low fidelity) to test ideas quickly
 - Evolve progressively as requirements and feedback become clearer
 - Do not fall in love with the initial design
 
 **Usability and Accessibility**
+
 - Adequate contrast (text readable to users with visual impairments)
 - Do not rely on colour alone to convey information
 - Legible fonts + adequate sizes
 - Keyboard / screen-reader navigation (in hi-fi)
 
 **Coherence with Requirements**
+
 - Every interface element corresponds to a functional requirement
 - Do not create unforeseen screens/features without justification
 - Review prototype + requirements together for traceability
