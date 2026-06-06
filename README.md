@@ -4,7 +4,7 @@
 [![Skill: engenharia-de-requisitos](https://img.shields.io/badge/Skill-engenharia--de--requisitos-blue)](./SKILL.md)
 [![Language: en-CA default](https://img.shields.io/badge/Language-en--CA%20(default)-success)](#language-status)
 [![Translation: pt-BR available](https://img.shields.io/badge/Translation-pt--BR%20available-yellow)](#language-status)
-[![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational)](./CHANGELOG.md)
+[![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational)](./CHANGELOG.md)
 
 > **Skill for [Claude Code](https://claude.com/claude-code)** that loads canonical knowledge of **Requirements Engineering**, **Business Analysis**, and **Professional Ethics in Computing** into any Claude session — built from the full course material of *"IFPB"* (*"Instituto Federal da Paraíba"*) plus the canonical bibliography of the field (Sommerville, Pressman, Wiegers, Cohn, Robertson, Hull, Falbo, BABOK v3, *"SBC"* 002/2024).
 
@@ -16,12 +16,12 @@
 
 | Language | Status | Current content |
 |---|---|---|
-| **en-CA** (default declared in frontmatter) | 🟡 Partial | Entry point translated: [`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md). **Full content of `references/` and `examples/` translation in progress (roadmap).** Brazilian domain terms remain in *italic + quotes* by design. |
-| **pt-BR** | 🟢 Complete | **Full content preserved at [`translations/pt-BR/`](./translations/pt-BR/)** — the original source, IFPB course taught in Portuguese. |
+| **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (10 files), [`examples/`](./examples/) (5 files). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
+| **pt-BR** | 🟢 Complete | **Full snapshot preserved at [`translations/pt-BR/`](./translations/pt-BR/)** — the original source, *"IFPB"* course taught in Portuguese. Authoritative for compliance/audit reference. |
 
-> **If you read English**: the entry point is in en-CA. References and examples are still in pt-BR (translation in progress); Claude can translate them inline at request, or you can read the source directly — they remain easily skimmable in pt-BR. **Pull requests welcome for the remaining en-CA translation.**
+> **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
 >
-> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/). O entry point (SKILL.md, README.md, CHANGELOG.md) na raiz foi promovido para en-CA, mas o material-fonte continua íntegro.
+> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — snapshot autoritativo. Continua íntegro e atualizado.
 
 ---
 
@@ -128,7 +128,7 @@ engenharia-de-requisitos/
     └── template-user-story.feature      (Gherkin pt-BR ready-to-copy)
 ```
 
-> **Note on `references/` and `examples/` filenames**: the filenames are kept in pt-BR for backward compatibility with projects that already reference them (e.g., *"Interpop"*). Their internal content will be translated to en-CA in upcoming releases. The pt-BR copy is always reachable at `translations/pt-BR/`.
+> **Note on `references/` and `examples/` filenames**: the filenames are kept in pt-BR for backward compatibility with projects that already reference them (e.g., *"Interpop"*). Their **internal content was translated to en-CA in v1.2.0**. The verbatim pt-BR snapshot remains reachable at `translations/pt-BR/`.
 
 **Usage pattern**: `SKILL.md` is a 10-section map with links to detail. You read `SKILL.md` to locate the answer; you read a `reference` only when you need full detail on that topic.
 
@@ -242,10 +242,10 @@ Cucumber, Behave, SpecFlow, and Behat support localized Gherkin natively. To aut
 
 Pull requests welcome — especially for:
 
-1. **en-CA translation** of the remaining `references/` and `examples/` content
-2. Additional real-world examples (case studies)
-3. New `.feature` templates per stack (pytest-bdd, behave, cucumber-js, cucumber-playwright, SpecFlow, Behat)
-4. Tooling integration scaffolds (Linear, Jira, Notion, GitHub Issues, Plane)
+1. Additional real-world worked examples (case studies from other domains: fintech, govtech, healthtech, SaaS multi-tenant)
+2. New `.feature` template variants per stack (pytest-bdd, behave, cucumber-js, cucumber-playwright, SpecFlow, Behat)
+3. Tooling integration scaffolds (Linear, Jira, Notion, GitHub Issues, Plane)
+4. Additional language translations (es, fr, de, it, etc.) under `translations/<bcp-47-tag>/`
 
 When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (10 hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
 

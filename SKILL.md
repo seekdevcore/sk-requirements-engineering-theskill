@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: partial — entry point translated (SKILL.md, README.md, CHANGELOG.md); references/ and examples/ translation in progress
-  pt-BR: complete — full copy available at translations/pt-BR/
+  en-CA: complete — entry point (SKILL.md, README.md, CHANGELOG.md), references/ (10 files), and examples/ (5 files) all translated. Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: complete — full snapshot preserved at translations/pt-BR/
 source: https://github.com/seekdevcore/sk-requirements-engineering-skill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.1.0
+version: 1.2.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
