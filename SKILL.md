@@ -1,409 +1,412 @@
 ---
 name: engenharia-de-requisitos
-description: Use when the user is doing requirements engineering, business analysis, or software engineering tasks that involve discovering, specifying, validating, or managing software requirements. Triggers include (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Applies to new projects (no requirements yet) and to evolutions (changes in existing requirements). Not the right skill for pure code implementation — it is for the STAGE BEFORE (discovering what to build) and AFTER (validating that what was built is correct). IMPORTANT: Current content is written in pt-BR (Brazilian Portuguese); en-CA translation is on the roadmap.
+description: Use when the user is doing requirements engineering, business analysis, or software engineering tasks that involve discovering, specifying, validating, or managing software requirements. Triggers include (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Applies to new projects (no requirements yet) and to evolutions (changes in existing requirements). Not the right skill for pure code implementation — it is for the STAGE BEFORE (discovering what to build) and AFTER (validating that what was built is correct).
 language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: roadmap
-  pt-BR: available (current default content)
+  en-CA: partial — entry point translated (SKILL.md, README.md, CHANGELOG.md); references/ and examples/ translation in progress
+  pt-BR: complete — full copy available at translations/pt-BR/
 source: https://github.com/seekdevcore/sk-requirements-engineering-skill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.0.0
+version: 1.1.0
 ---
 
-# Engenharia de Requisitos (ER) + Análise de Negócios + Ética Profissional
+# Requirements Engineering (RE) + Business Analysis + Professional Ethics
 
-> Skill construída a partir de 11 aulas do curso ERS (Eng. de Requisitos de Software) do IFPB Campus João Pessoa (Profa. Juliana Dantas Ribeiro Viana de Medeiros), Sommerville 10e (Cap. 4), Pressman, Wiegers, Falbo, BABOK e Código de Ética SBC 002/2024. Vocabulário em pt-BR (DADO/QUANDO/ENTÃO ao invés de Given/When/Then), porque o curso-fonte é em português e o usuário trabalha primariamente no Brasil.
-
----
-
-## 1. Quando esta skill se aplica (gatilhos)
-
-Invoque **antes** de:
-
-- Iniciar um produto novo sem requisitos escritos
-- Adicionar feature substancial a um produto existente
-- Discutir o que será entregue numa sprint
-- Escrever ou refatorar user stories, critérios de aceitação, cenários BDD
-- Estimar esforço de stories (Planning Poker, Story Points)
-- Avaliar se um requisito proposto é completo / correto / consistente / realista / necessário / priorizável / verificável
-- Decidir entre construir ou comprar (estudo de viabilidade)
-- Levantar requisitos não funcionais (desempenho, segurança, usabilidade, acessibilidade, conformidade legal)
-- Discutir rastreabilidade entre requisito ↔ teste ↔ código
-- Apoiar análise de negócio (mapear AS-IS, projetar TO-BE)
-- Decisões com componente ético: privacidade, ML/IA, descontinuação de sistema, falha em projetar inclusão
-
-**Não invoque** para tarefas puramente de implementação (codar, debugar, refatorar código já especificado). Para essas, use skills de programação/debugging — ER vem antes (o quê / por quê) e depois (foi entregue o certo?), não no meio (como codar).
+> Skill built from the 11 lectures of the ERS course (*Engenharia de Requisitos de Software* / Software Requirements Engineering) of *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Ch. 4), Pressman, Wiegers, Falbo, BABOK, and the SBC 002/2024 Code of Ethics. **Note on terminology**: the original source course is in Brazilian Portuguese; this default English content keeps Brazilian domain-specific terms in *"pt-BR with italics + quotes"* (e.g., *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). Gherkin keywords are translated to Given/When/Then; the pt-BR equivalents (Dado/Quando/Então) are available in `translations/pt-BR/`.
 
 ---
 
-## 2. Premissa central (regra inegociável)
+## 1. When this skill applies (triggers)
 
-> **Requisito ruim = produto ruim.** Não importa quão boa seja a implementação: se o requisito está errado, ambíguo, incompleto ou inviável, o sistema entregue não resolve o problema real. Sommerville (4.5): "O custo de corrigir um problema nos requisitos com uma alteração no sistema normalmente é muito maior do que o de consertar erros de projeto ou de código."
+Invoke **before**:
 
-Por isso, ER é a fase de maior alavancagem do ciclo de software. **Não pule.** Mesmo em projetos ágeis pequenos, todo cartão do backlog é um requisito — só muda o nível de formalismo e o ciclo de revisão.
+- Starting a new product without written requirements
+- Adding a substantial feature to an existing product
+- Discussing what will be delivered in a sprint
+- Writing or refactoring user stories, acceptance criteria, BDD scenarios
+- Estimating story effort (Planning Poker, Story Points)
+- Evaluating whether a proposed requirement is complete / correct / consistent / realistic / necessary / prioritizable / verifiable
+- Deciding between build vs. buy (feasibility study)
+- Eliciting non-functional requirements (performance, security, usability, accessibility, regulatory compliance)
+- Discussing traceability between requirement ↔ test ↔ code
+- Supporting business analysis (mapping AS-IS, designing TO-BE)
+- Decisions with an ethical component: privacy, ML/AI, system decommissioning, failure to design for inclusion
 
-### 2.1 O documento de requisitos é a fonte da verdade (regra zero)
-
-**O backlog NUNCA muda sem que o documento de requisitos mude primeiro.** O backlog é uma materialização do documento — organiza, fatia, prioriza — mas não decide escopo sozinho.
-
-Isso significa:
-
-- 🔁 **Antes de mexer em qualquer Epic/Feature/CA/RNF do backlog, verifique se houve alteração no documento de requisitos.** O cliente pode pedir adicionar/alterar/remover requisitos durante o projeto — essas mudanças têm que se propagar primeiro para o documento, depois para o backlog.
-- 📎 O backlog **referencia de volta** o documento (cada Epic/Feature/CA tem campo `Origem (requisitos)` apontando para `RF-NN`/`RNF-NN` correspondente).
-- ⚠️ Mudança aparecendo direto no backlog sem origem documentada é **suspeita**: ou é *scope creep* (escopo crescendo sem aprovação), ou é refinamento puramente técnico (deve virar Task, não Feature). Em ambos os casos, registrar no documento antes.
-- 📅 O documento de requisitos tem **histórico de revisões** (versão, data, autor, mudança, impacto no backlog). Sem isso, ninguém lembra o que foi combinado em conversa de WhatsApp três sprints atrás.
-
-**Padrão prático**: o BACKLOG.md tem no topo o link para o REQUISITOS.md + a data da última conferência (`Última verificação de alteração no documento: DD/MM/AAAA — sem mudanças`).
-
-Templates prontos em [examples/template-documento-requisitos.md](examples/template-documento-requisitos.md) e [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md).
+**Do NOT invoke** for purely implementation tasks (coding, debugging, refactoring already-specified code). For those, use programming/debugging skills — RE comes **before** (what / why) and **after** (was the right thing delivered?), not in the middle (how to code it).
 
 ---
 
-## 3. O processo (mapa do território)
+## 2. Central premise (non-negotiable)
 
-Sommerville e o curso IFPB adotam o **processo iterativo em espiral** (Fig 4.6 do livro):
+> **Bad requirement = bad product.** No matter how good the implementation: if the requirement is wrong, ambiguous, incomplete, or unfeasible, the delivered system does not solve the real problem. Sommerville (4.5): *"The cost of fixing a requirements problem by changing the system is normally much greater than fixing design or coding errors."*
+
+For this reason, RE is the highest-leverage stage of the software cycle. **Don't skip it.** Even in small agile projects, every backlog card is a requirement — only the level of formalism and the review cycle change.
+
+### 2.1 The requirements document is the source of truth (rule zero)
+
+**The backlog NEVER changes unless the requirements document changes first.** The backlog is a materialization of the document — it organizes, slices, and prioritizes — but it does not decide scope on its own.
+
+This means:
+
+- 🔁 **Before touching any Epic/Feature/CA/RNF in the backlog, verify whether the requirements document was changed.** The client may ask to add/alter/remove requirements during the project — those changes must propagate first to the document, then to the backlog.
+- 📎 The backlog **references back** to the document (every Epic/Feature/CA has an `Origin (requirements)` field pointing to the corresponding `RF-NN`/`RNF-NN`).
+- ⚠️ A change appearing directly in the backlog without a documented origin is **suspect**: either it is *scope creep* (scope growing without approval), or it is purely technical refinement (should become a Task, not a Feature). In either case, record it in the document first.
+- 📅 The requirements document has a **revision history** (version, date, author, change, impact on backlog). Without it, nobody remembers what was agreed in a three-sprint-old WhatsApp conversation.
+
+**Practical pattern**: the `BACKLOG.md` has at its top a link to the `REQUISITOS.md` + the date of the last check (`Last requirements-document check: DD/MM/YYYY — no changes`).
+
+Ready-to-copy templates in [examples/template-documento-requisitos.md](examples/template-documento-requisitos.md) and [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md).
+
+---
+
+## 3. The process (territory map)
+
+Sommerville and the *"IFPB"* course adopt the **iterative spiral process** (Fig 4.6 of the book):
 
 ```
                 ┌─────────────────────────┐
                 ↓                         │
    ┌──────────────────┐         ┌──────────────────┐
-   │  Elicitação e    │ ──────→ │  Especificação   │
-   │  análise         │         │  de requisitos   │
-   │  (descoberta)    │         │  (documentar)    │
+   │  Elicitation &   │ ──────→ │  Requirements    │
+   │  analysis        │         │  specification   │
+   │  (discovery)     │         │  (documentation) │
    └──────────────────┘         └──────────────────┘
                 ↑                         │
                 │                         ↓
                 │              ┌──────────────────┐
-                └────────────  │  Validação de    │
-                               │  requisitos      │
-                               │  (conferir)      │
+                └────────────  │  Requirements    │
+                               │  validation      │
+                               │  (verification)  │
                                └──────────────────┘
                                          │
                                          ↓
-                                 Documento de requisitos
+                                Requirements document
 ```
 
-Atravessando as 3 fases, **dois processos contínuos**:
+Crossing the 3 phases, **two continuous processes**:
 
-- **Gestão de mudança** (Sommerville 4.6): requisitos mudam — sempre. Precisa de processo para avaliar impacto + custo antes de aceitar.
-- **Rastreabilidade**: cada requisito tem ID; cada decisão de projeto, teste e linha de código deve poder ser ligada de volta ao requisito que justifica sua existência.
+- **Change management** (Sommerville 4.6): requirements change — always. A process is needed to assess impact + cost before accepting.
+- **Traceability**: every requirement has an ID; every design decision, test, and line of code must be linkable back to the requirement that justifies its existence.
 
-Sub-processo dentro de Elicitação (Sommerville Fig 4.7):
-**Descoberta → Classificação/Organização → Priorização/Negociação → Documentação** (em loop, com feedback contínuo).
+Sub-process within Elicitation (Sommerville Fig 4.7):
+**Discovery → Classification/Organization → Prioritization/Negotiation → Documentation** (in a loop, with continuous feedback).
 
 ---
 
-## 4. Conceitos que você precisa antes de qualquer ação
+## 4. Concepts you need before any action
 
-### 4.1 Requisito de usuário vs requisito de sistema
+### 4.1 User requirement vs. system requirement
 
-| Nível | Linguagem | Audiência | Exemplo |
+| Level | Language | Audience | Example |
 |---|---|---|---|
-| **Usuário** | Natural, alto nível | Cliente, gerente, usuário final | "O sistema deve gerar relatório mensal de prescrições por clínica." |
-| **Sistema** | Detalhado, mensurável | Dev, arquiteto, tester | "1.1 No último dia útil do mês, gerar resumo com nome, qtde de prescrições, dose total e custo, com acesso restrito por lista de controle." |
+| **User** | Natural, high level | Client, manager, end user | "The system shall generate a monthly report of prescriptions per clinic." |
+| **System** | Detailed, measurable | Developer, architect, tester | "1.1 On the last business day of the month, generate a summary with medication name, quantity of prescriptions, total dose, and cost, with access restricted by control list." |
 
-Ambos coexistem no documento. Usuário entende o de cima; dev implementa o de baixo.
+Both coexist in the document. The user understands the top one; the developer implements the bottom one.
 
-### 4.2 Requisito Funcional (RF) vs Não Funcional (RNF)
+### 4.2 Functional Requirement (FR — `RF` in the conventions) vs. Non-Functional (NFR — `RNF`)
 
-- **RF**: o que o sistema **faz**. Entradas, saídas, comportamento, exceções.
-- **RNF**: restrições sobre **como** o sistema funciona. Classificação Sommerville (Fig 4.3):
-  - **Produto** — desempenho, confiabilidade, segurança da informação (security), usabilidade, acessibilidade
-  - **Organizacional** — processo operacional, padrão de desenvolvimento, ambiente
-  - **Externo** — regulatório, legislativo (LGPD/GDPR), ético
+- **FR (`RF`)**: what the system **does**. Inputs, outputs, behaviour, exceptions.
+- **NFR (`RNF`)**: constraints on **how** the system functions. Sommerville classification (Fig 4.3):
+  - **Product** — performance, reliability, security, usability, accessibility
+  - **Organizational** — operational process, development standard, environment
+  - **External** — regulatory, legislative (*"LGPD"* / GDPR), ethical
 
-> **RNFs frequentemente são MAIS CRÍTICOS que RFs.** Sommerville (4.1.2): "Descumprir um requisito não funcional pode significar a inutilização total do sistema." Sistema funciona mas é lento → ninguém usa. Sistema funciona mas vaza dados → multa LGPD + fechamento.
+> **NFRs are frequently MORE CRITICAL than FRs.** Sommerville (4.1.2): *"Failure to meet a non-functional requirement may mean that the entire system becomes unusable."* System works but is slow → nobody uses it. System works but leaks data → *"LGPD"* fine + shutdown.
 
-**Regra de ouro do RNF: deve ser quantitativo.** "Fácil de usar" ❌ → "Usuário deve completar tarefa X em ≤2min após 1h de treinamento, com ≤2 erros/h" ✅. Veja métricas em [references/01-fundamentos.md](references/01-fundamentos.md).
+**Golden rule of NFR: it must be quantitative.** "Easy to use" ❌ → "User must complete task X in ≤2 min after 1h of training, with ≤2 errors/h" ✅. See metrics in [references/01-fundamentos.md](references/01-fundamentos.md).
 
 ### 4.3 Stakeholders
 
-Todas as pessoas afetadas pelo sistema. Não só usuários finais. Exemplo Mentcare (Sommerville): pacientes, familiares, médicos, enfermagem, recepcionistas, TI, gestor de ética, gestores administrativos, controle de prontuário. **Stakeholder esquecido = requisito esquecido = retrabalho garantido.**
+All people affected by the system. Not only end users. Mentcare example (Sommerville): patients, family members, doctors, nursing staff, receptionists, IT, ethics manager, administrative managers, records control. **Forgotten stakeholder = forgotten requirement = guaranteed rework.**
 
-### 4.4 Estudo de viabilidade (3 perguntas, ANTES de qualquer outra coisa)
+### 4.4 Feasibility study (3 questions, BEFORE anything else)
 
-1. O sistema contribui para os objetivos da organização?
-2. Cabe no cronograma e orçamento usando tecnologia atual?
-3. Integra com os outros sistemas em uso?
+1. Does the system contribute to the organization's objectives?
+2. Does it fit the schedule and budget using current technology?
+3. Does it integrate with the other systems in use?
 
-Qualquer "não" → questione se o projeto deve prosseguir.
+Any "no" → question whether the project should proceed.
 
 ---
 
-## 5. Detalhamento por fase (entry points para references/)
+## 5. Detail per phase (entry points for `references/`)
 
-### Fase A — ELICITAÇÃO (descobrir)
-6 técnicas, escolha pelo contexto. Tabela completa + quando usar em [references/02-elicitacao.md](references/02-elicitacao.md):
+### Phase A — ELICITATION (discover)
 
-| Técnica | Boa para | Limitação |
+6 techniques, choose by context. Full table + when to use in [references/02-elicitacao.md](references/02-elicitacao.md):
+
+| Technique | Good for | Limitation |
 |---|---|---|
-| Entrevistas | Profundidade qualitativa, "o porquê e o como" | Habilidade do entrevistador; vieses |
-| Questionários | Largura quantitativa, stakeholders dispersos | Profundidade baixa; respostas superficiais |
-| Workshops / Brainstorming | Consenso, inovação, conflitos | Groupthink, dominância de comunicativos |
-| Etnografia | Requisitos implícitos, processos reais | Caro, ruim para inovação radical |
-| Análise de documentos | Regras formais, sistemas legados | Doc desatualizada; "como deveria" ≠ "como é" |
-| Histórias e cenários | Discussão exploratória com stakeholder leigo | Não é especificação executável |
+| Interviews | Qualitative depth, "the why and the how" | Interviewer skill; biases |
+| Questionnaires | Quantitative breadth, dispersed stakeholders | Low depth; superficial answers |
+| Workshops / Brainstorming | Consensus, innovation, conflicts | Groupthink, dominance of vocal participants |
+| Ethnography | Implicit requirements, real processes | Expensive, poor for radical innovation |
+| Document analysis | Formal rules, legacy systems | Outdated docs; "how it should be" ≠ "how it is" |
+| Stories and scenarios | Exploratory discussion with lay stakeholders | Not executable specification |
 
-**Combine sempre 2+ técnicas.** Entrevista → questionário (qualitativo gera quantitativo). Análise docs + observação (formal vs real).
+**Always combine 2+ techniques.** Interview → questionnaire (qualitative generates quantitative). Document analysis + observation (formal vs. real).
 
-### Fase B — ESPECIFICAÇÃO (documentar)
+### Phase B — SPECIFICATION (document)
 
-**Hierarquia do backlog** (curso IFPB, OpenProject — versão completa, refletindo múltiplos Epics-raiz, Epic aninhado e BDD no campo Descrição):
+**Backlog hierarchy** (*"IFPB"* course, OpenProject — full version, reflecting multiple root Epics, nested Epics, and BDD in the Description field):
 
 ```
-📄 Documento de Requisitos (FONTE DA VERDADE — sempre cheque antes de mexer)
+📄 Requirements Document (SOURCE OF TRUTH — always check before touching anything)
     │
     ▼
-PROJETO (= repositório/contexto no OpenProject — NÃO é um EPIC)
+PROJECT (= repository/context in OpenProject — NOT an EPIC)
     │
-    ├─ 🟦 EPIC raiz #1                              ← uma frente do projeto
-    │   └─ 🟦 EPIC sub                              ← sub-domínio (módulo, área)
-    │       └─ 🟦 EPIC sub-sub                      ← sub-sub-domínio
-    │           └─ 🟦 EPIC sub-sub-sub              ← IFPB chega a 4 níveis
-    │               └─ 🟩 FEATURE                   ← entregável ao cliente
-    │                   ├─ 📋 CA grupo "CA - <Tema A>"   ← CAs sempre agrupados
-    │                   │    ├─ ✅ CA01 - regra autossuficiente
-    │                   │    ├─ ✅ CA02 - regra autossuficiente
-    │                   │    └─ ✅ CA03 - regra com sub-regras [...]
-    │                   ├─ 📋 CA grupo "CA - <Tema B>"
+    ├─ 🟦 ROOT EPIC #1                               ← one front of the project
+    │   └─ 🟦 SUB EPIC                               ← sub-domain (module, area)
+    │       └─ 🟦 SUB-SUB EPIC                       ← sub-sub-domain
+    │           └─ 🟦 SUB-SUB-SUB EPIC               ← IFPB reaches 4 levels
+    │               └─ 🟩 FEATURE                    ← customer-deliverable
+    │                   ├─ 📋 CA group "CA - <Theme A>"   ← ACs always grouped
+    │                   │    ├─ ✅ CA01 - self-sufficient rule
+    │                   │    ├─ ✅ CA02 - self-sufficient rule
+    │                   │    └─ ✅ CA03 - rule with sub-rules [...]
+    │                   ├─ 📋 CA group "CA - <Theme B>"
     │                   │    └─ ✅ CA04 - ...
-    │                   └─ 🟦 USER STORY                ← fatia de 1 sprint
-    │                       ├─ 🎬 BDD: Cenário 1 (feliz)   ┐
-    │                       ├─ 🎬 BDD: Cenário 2 (erro)    │ ← conteúdo do
-    │                       └─ 🎬 BDD: Cenário 3 (alt.)    ┘   campo "Descrição"
-    │                                                          da US (não cards)
-    │                       └─ 🔧 TASK                       ← unidade técnica
-    │                                                          (termos técnicos OK)
+    │                   └─ 🟦 USER STORY                 ← slice of 1 sprint
+    │                       ├─ 🎬 BDD: Scenario 1 (happy)  ┐
+    │                       ├─ 🎬 BDD: Scenario 2 (error)  │ ← content of the
+    │                       └─ 🎬 BDD: Scenario 3 (alt.)   ┘   "Description" field
+    │                                                          of the US (not cards)
+    │                       └─ 🔧 TASK                       ← technical unit
+    │                                                          (technical terms OK)
     │
-    ├─ 🟦 EPIC raiz #2                              ← outra frente (irmão)
-    │   └─ ... (mesma estrutura interna)
+    ├─ 🟦 ROOT EPIC #2                               ← another front (sibling)
+    │   └─ ... (same internal structure)
     │
-    └─ 🟦 EPIC raiz #N                              ← outras frentes (irmãs)
+    └─ 🟦 ROOT EPIC #N                               ← other fronts (siblings)
         └─ ...
 ```
 
-> **🔴 Regra: múltiplos Epics-raiz, sem "Epic-projeto" único**. Um projeto tipicamente tem **vários Epics no nível mais alto, irmãos entre si**, sem um nó-pai comum. Cada Epic-raiz é uma **frente independente** (plataforma, área operacional, módulo transversal). O "produto" como um todo é o **contexto/repositório** do projeto no OpenProject — não um item da hierarquia. Forçar tudo embaixo de um único "Epic Produto" cria nó-pai vazio e atrapalha navegação. Exemplos reais: Controle Dopagem tem `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO` (3 irmãos); Interpop tem `EP-10 Busca` · `EP-09 Filtros` · `EP-15 Newsletter` · `EP-20 Moderação` (vários irmãos). Detalhamento em [`examples/template-backlog-openproject.md §3`](examples/template-backlog-openproject.md).
+> **🔴 Rule: multiple root Epics, no single "Project-Epic"**. A project typically has **several Epics at the top level, siblings to each other**, without a common parent node. Each root Epic is an **independent front** (platform, operational area, cross-cutting module). The "product" as a whole is the **context/repository** of the project in OpenProject — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node and disrupts navigation. Real examples: *"Controle de Dopagem"* has `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO` (3 siblings); *"Interpop"* has `EP-10 Busca` · `EP-09 Filtros` · `EP-15 Newsletter` · `EP-20 Moderação` (several siblings). Detail in [`examples/template-backlog-openproject.md §3`](examples/template-backlog-openproject.md).
 
-**Templates prontos para copiar:**
-- 📋 [`examples/template-backlog-openproject.md`](examples/template-backlog-openproject.md) — backlog completo com Busca Editorial Interpop preenchida + Cadastro de Atletas mostrando 4 níveis de Epic
-- 📋 [`examples/template-documento-requisitos.md`](examples/template-documento-requisitos.md) — documento de requisitos (IEEE 830 + Sommerville + Wiegers)
-- 🎬 [`examples/template-user-story.feature`](examples/template-user-story.feature) — arquivo Gherkin pronto com 4 cenários + Esquema do Cenário + step definitions de exemplo (Python + TypeScript)
+**Ready-to-copy templates:**
 
-**Distinção crítica Feature ↔ User Story** (regra dura — anti-padrão "Feature com BDD" em [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):
-- **Feature** tem **descrição em pt-BR** (parágrafo de negócio explicando o entregável ao cliente) + **CAs**. NUNCA tem BDD.
-- **User Story** tem **BDD em pt-BR** (`Dado/Quando/Então`, no próprio campo "Descrição" — não como cards filhos) + **CAs herdados** via rastreabilidade. Nunca tem CAs próprios.
+- 📋 [`examples/template-backlog-openproject.md`](examples/template-backlog-openproject.md) — complete backlog with *"Busca Editorial Interpop"* filled in + *"Cadastro de Atletas"* showing 4 levels of Epic
+- 📋 [`examples/template-documento-requisitos.md`](examples/template-documento-requisitos.md) — requirements document (IEEE 830 + Sommerville + Wiegers)
+- 🎬 [`examples/template-user-story.feature`](examples/template-user-story.feature) — ready Gherkin file with 4 scenarios + Scenario Outline + sample step definitions (Python + TypeScript)
 
-**Regra ampliada: TODOS os artefatos têm descrição em linguagem de negócio.** Epic, Feature, User Story, CA, RNF, regra de negócio (G) — todos descritos em pt-BR sem termo técnico (sem URL, sem nome de método, sem nome de tabela, sem stack). Quem lê: cliente, PO, dev júnior, auditor — todos sem glossário técnico. Endpoints e libs só aparecem em **Tasks**.
+**Critical distinction Feature ↔ User Story** (hard rule — anti-pattern "Feature with BDD" in [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):
 
-**Convenção `[...]` para CAs com sub-regras** (regra dura — detalhamento em [04-bdd §2.x](references/04-bdd-criterios-aceitacao.md)):
+- **Feature** has a **description in business language** (a paragraph in plain language explaining the customer-deliverable) + **ACs**. It NEVER has BDD.
+- **User Story** has **BDD** (`Given/When/Then`, in the "Description" field itself — not as child cards) + **inherited ACs** via traceability. Never has its own ACs.
 
-Quando um CA precisa de sub-regras para ser totalmente testável, **encerre o título com `[...]`** e detalhe no corpo do item (campo "descrição" no OpenProject) abrindo com `Regras a serem aplicadas:` + bullets. CA sem `[...]` deve ser **autossuficiente no título**.
+**Extended rule: ALL artifacts have descriptions in business language.** Epic, Feature, User Story, CA, **RF**, RNF, business rule (G) — all described in plain language without technical terms (no URL, no method name, no table name, no stack). Read by: client, PO, junior developer, auditor — all without a technical glossary. Endpoints and libraries only appear in **Tasks**.
+
+**`[...]` convention for ACs with sub-rules** (hard rule — detail in [04-bdd §2.5](references/04-bdd-criterios-aceitacao.md)):
+
+When an AC needs sub-rules to be fully testable, **end the title with `[...]`** and detail in the item body (the "description" field in OpenProject) opening with `Rules to be applied:` + bullets. An AC without `[...]` must be **self-sufficient in the title**.
 
 ```
-Exemplo CA com [...] (precisa abrir o item):
-  CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento
-         e validação conforme detalhamento [...]
-  Corpo:
-    Regras a serem aplicadas:
-    - Só deverá ser habilitado se tiver uma CONFEDERAÇÃO selecionada.
-    - Só deve exibir as Federações ATIVAS.
-    - Em ordem ALFABÉTICA.
+Example AC with [...] (must open the item):
+  CA09 - The FEDERATION combobox must apply the fill-in and validation
+         rules as detailed [...]
+  Body:
+    Rules to be applied:
+    - Must only be enabled if a CONFEDERATION is selected.
+    - Must only display ACTIVE Federations.
+    - In ALPHABETICAL order.
     - ...
 
-Exemplo CA autossuficiente (sem [...]):
-  CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser no
-         formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro.
+Example self-sufficient AC (without [...]):
+  CA05 - The CPF field is not mandatory. But if filled, must be in the
+         format XXX.XXX.XXX-XX. If the CPF is invalid, show an error message.
 ```
 
-Quem lê o backlog em modo lista vê o `[...]` e sabe que precisa clicar. Sem ambiguidade.
+Whoever reads the backlog in list mode sees the `[...]` and knows they must click. No ambiguity.
 
-**Regra do título da User Story**: no card, use **título curto descritivo** ("US Listagem Básica de Atletas"). NÃO escreva o template Connextra inteiro ("Como editor, eu quero …, para que …") no título — esse template existe para **conversa**, não para card. Detalhamento em [references/03-especificacao.md](references/03-especificacao.md).
-
----
-
-#### 🔴 Convenções de naming Interpop/IFPB (regra dura — vale em todo projeto pt-BR deste autor)
-
-Aplicam-se a TODOS os títulos de Epic, Feature, User Story, CA e RNF. **Tasks podem violar** (termos técnicos são permitidos lá).
-
-1. **Sem infinitivo** nos títulos. Use substantivo/gerúndio descritivo.
-   - ❌ `Listar reservas do usuário` → ✅ `Listagem de reservas do usuário`
-   - ❌ `Buscar artigos` → ✅ `Busca de artigos`
-   - ❌ `Cadastrar atleta` → ✅ `Cadastro de atleta`
-
-2. **Sem termos técnicos** em títulos nem descrições de Epic/Feature/US/CA/**RF**/RNF/G. Termos técnicos só aparecem nas Tasks. Vale tanto para o **backlog** (Epic/Feature/US/CA) quanto para o **documento de requisitos** (RF/RNF/G) — ambos são lidos por stakeholders, não por dev.
-   - ❌ `Endpoint REST de busca` → ✅ `Busca de artigos por texto`
-   - ❌ `Hook useSearch com TanStack` → ✅ `Apresentação dos resultados em tempo real`
-   - ❌ `Migration tabela search_index` → ✅ (não é Feature; vira Task técnica)
-   - ❌ CA: `Endpoint POST /api/v1/bans/ retorna 400 se hierarquia violada` → ✅ `Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".`
-
-3. **Pt-BR explícito, simples, direto** — quem lê deve entender sem contexto técnico.
-
-4. **Todos os artefatos têm descrição em linguagem de negócio.** Epic, Feature, US, CA, **RF**, RNF, regra de negócio (G). Lida por qualquer stakeholder (PO, cliente, dev júnior, auditor) sem precisar de glossário. Sem URLs, sem nomes de método, sem stack. Endpoints e libs só nas Tasks. **Relação RF ↔ Feature**: RF é o requisito declarado no documento; Feature é a materialização incremental dele no backlog (com rastreabilidade via campo `Origem (requisitos)`).
-
-5. **CAs sempre agrupados** sob um título `CA - <Tema>`, mesmo Feature com 1 só CA. O agrupamento mantém consistência visual no OpenProject e facilita inserção futura (ver template em [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md) §4).
-
-6. **Configurações técnicas NÃO são Features** (ESLint, variáveis de ambiente, criação de pastas, arquivos JSON, Vite config, lint config, docker-compose). Vão como **Tasks transversais** (`TX-NN`), agrupadas para visibilidade do time técnico, fora da hierarquia de Features. A regra mestra: **Feature = entregável ao cliente**. Se não é entregável ao cliente final, não é Feature.
-
-7. **Escala de prioridade Interpop** (aplicada em TODOS os níveis: Epic, Feature, US, CA, Task):
-   - 🔴 **Immediate** — bloqueia outras coisas; sprint atual obrigatoriamente
-   - 🟠 **High** — sprint atual ou próxima
-   - 🟡 **Normal** — backlog priorizado
-   - ⚪ **Low** — nice to have, sem deadline
-
-   > MoSCoW (Must/Should/Could/Won't) é equivalente teórico mas a equipe Interpop usa Immediate/High/Normal/Low. Use essa escala em projetos brasileiros deste autor.
-
-8. **IDs estáveis** (formato Interpop):
-   - `EP-NN` (Epic, podendo ser aninhado: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Critério de Aceitação) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (Task transversal)
-   - IDs são eternos (não renumeram em mudança); versão do artefato muda.
-
-**Template completo de BACKLOG.md** + exemplos do projeto SIRA e Interpop em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
-
-**Critérios de Aceitação + BDD são complementares, não competem:**
-
-- **CA** é regra declarativa por feature: "CA05 — O campo CPF não é obrigatório. Se preenchido, deve estar no formato XXX.XXX.XXX-XX." Lista de regras testáveis.
-- **BDD** é cenário executável por user story: "DADO que o usuário está logado e tem permissão / QUANDO acessa o menu administrativo > Atletas / ENTÃO o sistema exibe a lista básica de atletas."
-
-CA define o **invariante**; BDD define a **interação**. Use os dois. Detalhamento em [references/04-bdd-criterios-aceitacao.md](references/04-bdd-criterios-aceitacao.md).
-
-### Fase C — ESTIMATIVA (dimensionar)
-
-Story Points (medida abstrata de complexidade) + Planning Poker (Fibonacci: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 + `?` + 100).
-
-- `?` = falta entendimento → conversar com PO
-- `100` = é épico disfarçado → fatiar em stories
-- 0 e 1/2 não entram na 1ª rodada — reservados para itens triviais futuros (label, troca de cor)
-
-Procedimento: escolher história-guia (mais simples = 1pt) → estimar restantes em proporção (não próximo número na escala). Detalhamento em [references/05-estimativa.md](references/05-estimativa.md).
-
-### Fase D — VALIDAÇÃO (conferir que é o certo)
-
-**5 conferências Sommerville:** validade · consistência · completude · realismo · verificabilidade.
-
-**7 dimensões Falbo (por requisito):** completo · correto · consistente · realista · necessário · passível de priorização · verificável.
-
-**3 técnicas:** revisões de requisitos (walkthrough), prototipação (lo-fi → hi-fi), geração de casos de teste a partir do requisito.
-
-Protótipos são a ferramenta mais eficaz porque o usuário VÊ o resultado. Comece em papel/quadro, evolua para Figma quando necessário. Detalhamento em [references/06-validacao.md](references/06-validacao.md).
-
-### Fase E — MUDANÇA + RASTREABILIDADE (manter coerência)
-
-Requisitos **duradouros** (atividades centrais; mudam lentamente) vs **voláteis** (apoio; mudam frequentemente). Diferencie ao priorizar arquitetura.
-
-Processo formal de mudança (Sommerville Fig 4.19):
-**Problema identificado → análise/especificação → análise de impacto + custo → implementação** (com rollback no documento de requisitos sincronizado com código).
-
-Rastreabilidade: cada requisito ID → projeto → código → teste. Sem isso, mudar 1 requisito vira "que módulos eu mexo?". Detalhamento em [references/07-mudanca-rastreabilidade.md](references/07-mudanca-rastreabilidade.md).
+**User Story title rule**: on the card, use a **short descriptive title** ("US Basic Athlete Listing"). DO NOT write the entire Connextra template ("As an editor, I want …, so that …") in the title — that template exists for **conversation**, not for cards. Detail in [references/03-especificacao.md](references/03-especificacao.md).
 
 ---
 
-## 6. Camada transversal: o analista de negócios
+#### 🔴 Naming conventions *"Interpop"* / *"IFPB"* (hard rule — applies to every pt-BR project of this author)
 
-Em times pequenos, dev + PO acumulam o papel. Em times maiores, há analista dedicado. O BABOK (Business Analysis Body of Knowledge) define 6 áreas de conhecimento: planejamento, elicitação, gerenciamento do ciclo de vida, análise de estratégia, análise de requisitos e design de solução, avaliação. Fluxo central: **AS-IS** (processo atual) → **TO-BE** (processo desejado) → análise GAP → requisitos do sistema que cobrem o GAP. Detalhamento em [references/08-analista-negocios.md](references/08-analista-negocios.md).
+Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business rule (G). **Tasks may violate** (technical terms are allowed there).
 
----
+1. **No infinitive verbs** in titles. Use a descriptive noun/gerund.
+   - ❌ `List user reservations` → ✅ `Listing of user reservations`
+   - ❌ `Search articles` → ✅ `Article search`
+   - ❌ `Register athlete` → ✅ `Athlete registration`
 
-## 7. Camada transversal: ética profissional
+2. **No technical terms** in titles nor descriptions of Epic/Feature/US/CA/**RF**/RNF/G. Technical terms only appear in Tasks. Applies both to the **backlog** (Epic/Feature/US/CA) and to the **requirements document** (RF/RNF/G) — both are read by stakeholders, not by developers.
+   - ❌ `REST endpoint for search` → ✅ `Article search by text`
+   - ❌ `useSearch hook with TanStack` → ✅ `Real-time presentation of results`
+   - ❌ `Migration of search_index table` → ✅ (not a Feature; becomes a technical Task)
+   - ❌ CA: `Endpoint POST /api/v1/bans/ returns 400 if hierarchy violated` → ✅ `When an administrator tries to ban another administrator, the system rejects the operation with the message "Operação não permitida".`
 
-> Esta é uma camada **inegociável**. Não está acima das outras — está embaixo de todas. Código SBC 002/2024 (versão pt-BR do IFIP, adaptação do ACM): "A profissão de Computação como um todo se beneficia quando o processo de tomada de decisão ética ocorre de forma responsável e transparente."
+3. **Plain language, simple, direct** — whoever reads must understand without technical context.
 
-Princípios que mais incidem em ER:
+4. **All artifacts have descriptions in business language.** Epic, Feature, US, CA, **RF**, RNF, business rule (G). Read by any stakeholder (PO, client, junior developer, auditor) without needing a glossary. No URLs, no method names, no stack. Endpoints and libraries only in Tasks. **RF ↔ Feature relationship**: RF is the requirement declared in the document; Feature is its incremental materialization in the backlog (with traceability via the `Origin (requirements)` field).
 
-- **1.1 Bem-estar humano** — "necessidades dos menos favorecidos devem receber maior atenção"
-- **1.2 Evitar danos** — relatar riscos do sistema mesmo se isso atrasa entrega
-- **1.6 Privacidade** — coleta mínima, consentimento, retenção definida (LGPD c/c)
-- **2.5 Avaliação abrangente** — sistemas de **ML exigem reavaliação contínua de risco**
-- **2.6 Trabalhar só em áreas de competência** — comunicar limitações ao cliente
-- **2.9 Sistemas seguros** — "quando uso indevido ou danos são previstos ou inevitáveis, **a melhor opção pode ser não implementar o sistema**"
-- **3.1 Bem público no centro** — cita explicitamente "análise de requisitos" como momento de avaliação ética
+5. **ACs always grouped** under a `CA - <Theme>` title, even for a Feature with a single AC. Grouping maintains visual consistency in OpenProject and facilitates future insertion (see template in [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md) §4).
 
-Detalhamento e aplicação em [references/09-etica-sbc.md](references/09-etica-sbc.md).
+6. **Technical configurations are NOT Features** (ESLint, environment variables, folder creation, JSON files, Vite config, lint config, docker-compose). These go as **cross-cutting Tasks** (`TX-NN`), grouped for technical-team visibility, outside the Feature hierarchy. The master rule: **Feature = customer-deliverable**. If it is not deliverable to the end customer, it is not a Feature.
 
----
+7. ***"Interpop"* priority scale** (applied at ALL levels: Epic, Feature, US, CA, Task):
+   - 🔴 **Immediate** — blocks other items; must be done in the current sprint
+   - 🟠 **High** — current sprint or next
+   - 🟡 **Normal** — prioritized backlog
+   - ⚪ **Low** — nice to have, no deadline
 
-## 8. Anti-padrões frequentes (evite estes)
+   > MoSCoW (Must/Should/Could/Won't) is a theoretical equivalent, but the *"Interpop"* team uses Immediate/High/Normal/Low. Use this scale in this author's Brazilian projects.
 
-1. **Pular elicitação** — "já sei o que o cliente quer" → custo de retrabalho 10× a 200× o de fixar na fase certa
-2. **Connextra no título** — "Como [X], eu quero [Y] para que [Z]" no título do card vira ilegível; use no campo de descrição/conversa, não no título
-3. **RNF qualitativo** — "deve ser rápido" não é requisito, é desejo. Quantifique sempre
-4. **CA e BDD competindo** — escrever só um dos dois. São camadas complementares (invariante × interação)
-5. **Storyteller sem stakeholder** — escrever requisitos sozinho. Requisito sem dono = requisito que ninguém valida
-6. **Aceitar tudo sem priorizar** — backlog de 200 itens sem ordem é o mesmo que backlog vazio
-7. **Esquecer mudança** — desenhar arquitetura assumindo que os requisitos não mudam → reescrita total em 6 meses
-8. **Ignorar rastreabilidade** — impossível analisar impacto de mudança sem ID/link entre artefatos
-9. **Ética como afterthought** — questões éticas devem entrar nos critérios de aceitação, não num documento separado que ninguém lê
-10. **Etnografia em projeto inovador** — etnografia ótima para sistema-substituto; péssima para produto que ainda não existe (Nokia × Apple)
-11. **Feature com BDD em vez de descrição** — colar `DADO/QUANDO/ENTÃO` direto na Feature em vez do parágrafo em pt-BR de negócio. Resultado: stakeholder não-técnico não lê, CAs ficam órfãos, Sprint Planning trava. BDD vive na **User Story**. Detalhamento e exemplos ❌/✅ em [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)
-12. **Backlog sem origem no documento de requisitos** — Epic/Feature/CA que aparece no backlog sem `Origem (requisitos)` apontando para `RF-NN`/`RNF-NN` é scope creep silencioso ou refinamento técnico mal colocado. Toda mudança nasce no documento; backlog só materializa (ver §2.1).
-13. **Termo técnico em CA** — `CA: O endpoint POST /api/v1/bans/ retorna HTTP 400 se hierarquia violada` força o auditor/cliente a abrir glossário. Reescreva em linguagem de negócio: `CA: Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".` Endpoint e HTTP status ficam na Task.
+8. **Stable IDs** (*"Interpop"* format — kept in pt-BR for retro-compatibility with existing projects):
+   - `EP-NN` (Epic, may be nested: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Acceptance Criterion) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (cross-cutting Task) · `G-NN` (business rule)
+   - IDs are eternal (they do not get renumbered when content changes); the artifact version changes.
 
----
+**Full `BACKLOG.md` template** + examples from *"SIRA"* and *"Interpop"* projects in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 
-## 9. Checklist de aplicação (use a cada feature)
+**Acceptance Criteria + BDD are complementary, not competing:**
 
-Antes de aceitar uma feature no backlog, valide os 7 pontos de Falbo:
+- **CA (AC)** is a declarative rule per feature: "CA05 — The CPF field is not mandatory. If filled, must be in the format XXX.XXX.XXX-XX." A list of testable rules.
+- **BDD** is an executable scenario per user story: "GIVEN the user is logged in and has permission / WHEN they access the administrative menu > Athletes / THEN the system displays the basic list of athletes."
 
-- [ ] **Completo** — descreve a funcionalidade/regra/restrição inteira
-- [ ] **Correto** — descreve exatamente o que deve ser construído
-- [ ] **Consistente** — não ambíguo, não conflita com outro requisito
-- [ ] **Realista** — implementável dado o que sabemos da plataforma
-- [ ] **Necessário** — cliente precisa OU exigência externa/padrão
-- [ ] **Passível de priorização** — tem ordem clara vs outros itens
-- [ ] **Verificável** — dá para escrever teste que prove implementação
+CA defines the **invariant**; BDD defines the **interaction**. Use both. Detail in [references/04-bdd-criterios-aceitacao.md](references/04-bdd-criterios-aceitacao.md).
 
-Falhou em ≥1 → não está pronto. Volte ao stakeholder.
+### Phase C — ESTIMATION (sizing)
 
-### Checklist adicional de naming (regra dura — Interpop)
+Story Points (abstract measure of complexity) + Planning Poker (Fibonacci: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 + `?` + 100).
 
-Antes de aceitar Epic/Feature/US no backlog:
+- `?` = missing understanding → talk to the PO
+- `100` = a disguised epic → slice into stories
+- 0 and 1/2 do not enter the 1st round — reserved for trivial future items (label, color change)
 
-- [ ] Título **NÃO começa com infinitivo** (sem `Listar`/`Criar`/`Buscar`/`Cadastrar`/`Configurar`/`Implementar`)
-- [ ] Título **NÃO contém termos técnicos** (sem `endpoint`/`hook`/`migration`/`API`/`schema`/`config`)
-- [ ] Título em **pt-BR explícito** legível por stakeholder não-técnico
-- [ ] Item **é entregável ao cliente** (se é configuração técnica, mover para Task transversal `TX-NN`)
-- [ ] Prioridade declarada (🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low)
-- [ ] **Feature** tem **descrição em parágrafo** · **User Story** tem **BDD `Dado/Quando/Então`** (não trocar)
-- [ ] Cada User Story tem **CAs associados explicitamente** (relação rastreável)
-- [ ] Cada Task tem **Task ID** (`TNN.M.K` ou `TX-NN`) para aparecer em commit/PR
+Procedure: choose a guide story (simplest = 1 pt) → estimate the rest proportionally (not the next number on the scale). Detail in [references/05-estimativa.md](references/05-estimativa.md).
 
-Falhou em ≥1 → não está pronto. Corrija antes de descer para implementação.
+### Phase D — VALIDATION (check that it's the right thing)
 
----
+**Sommerville's 5 checks:** validity · consistency · completeness · realism · verifiability.
 
-## 10. Fonte primária e bibliografia canônica
+**Falbo's 7 dimensions (per requirement):** complete · correct · consistent · realistic · necessary · prioritizable · verifiable.
 
-### 10.1 Autora do material-fonte (corpus primário desta skill)
+**3 techniques:** requirement reviews (walkthrough), prototyping (lo-fi → hi-fi), generation of test cases from the requirement.
 
-O corpus primário desta skill — todas as 11 aulas processadas (LECTURE 0 a 10, incluindo 09.2) — foi criado e ministrado pela **Profa. Dra. Juliana Dantas Ribeiro Viana de Medeiros** ([Lattes](http://lattes.cnpq.br/9730254173461923) · [ORCID 0000-0001-8387-4616](https://orcid.org/0000-0001-8387-4616)).
+Prototypes are the most effective tool because the user SEES the result. Start on paper/whiteboard, evolve to Figma when necessary. Detail in [references/06-validacao.md](references/06-validacao.md).
 
-Por que isso importa para a confiabilidade do que a skill afirma:
+### Phase E — CHANGE + TRACEABILITY (maintain coherence)
 
-- **Doutorado em Engenharia de Software** (UFPE 2017) com período sanduíche na **Universidade Nova de Lisboa** (2016, bolsa Erasmus Mundus BEMUNDUS), sob orientação de Alexandre Marcos Lins de Vasconcelos e co-orientação de Miguel Goulão (UNL) e Carla Schuenemann.
-- **Tese de doutorado**: *"An approach to support the Requirements Specification in Agile Software Development"* — o **tema exato** que esta skill condensa.
-- **Linha de pesquisa ativa**: "Engenharia de Requisitos em Projetos Ágeis" (desde 2014, IFPB).
-- **Coordenadora do projeto CNPq DTI-A 487777/2013-1** — *Sistema de Informação Integrado para Controle de Dopagem* (2014–2015), que é a **origem do caso de estudo principal** em [`examples/caso-controle-dopagem.md`](examples/caso-controle-dopagem.md).
-- **20+ anos de experiência industrial** em gerência e desenvolvimento de software: DATAPREV (Ministério do Trabalho, 2006–2013), CESAR (Recife, 2005–2006), CAGEPA, Ministério Público da Paraíba, Prefeitura de João Pessoa/PB (sistemas tributários IPTU/ITBI/Taxa de Lixo, 1997–2005), e colaborações com Multilaser e CPM Braxis.
-- **Professor Efetivo, Dedicação Exclusiva** no IFPB Campus João Pessoa desde 2006 (ingresso por concurso público, **1º lugar**); pesquisadora ativa no polo **EMBRAPII** do IFPB; vinculada também à UFCG desde 2020.
-- Mestrado em Ciência da Computação (UFPE 2001, bolsa CNPq, dissertação sobre ISO 9001:2000 em empresas de software) e Graduação em Ciência da Computação (UFPB 1997).
+**Enduring** requirements (central activities; change slowly) vs. **volatile** requirements (support; change frequently). Differentiate when prioritizing architecture.
 
-> **Citação acadêmica**: Medeiros, J. D. R. V. de. *Engenharia de Requisitos de Software* [material didático, aulas 0–10]. IFPB Campus João Pessoa, 2025. Lattes: http://lattes.cnpq.br/9730254173461923. ORCID: https://orcid.org/0000-0001-8387-4616.
+Formal change process (Sommerville Fig 4.19):
+**Identified problem → analysis/specification → impact + cost analysis → implementation** (with rollback on the requirements document synchronized with the code).
 
-### 10.2 Bibliografia canônica (complementa o corpus primário)
-
-- **Sommerville, I.** Engenharia de Software, 10ª ed. Pearson, 2019 — base do curso (Cap. 4 é o pivô)
-- **Pressman, R.** Engenharia de Software, 9ª ed. AMGH, 2021 — visão complementar (7 etapas de ER)
-- **Wiegers, K. & Beatty, J.** Software Requirements, 3rd ed. Microsoft Press
-- **Cohn, M.** User Stories Applied, 2004 — referência padrão de US
-- **Robertson, S. & Robertson, J.** Mastering the Requirements Process (método VOLERE)
-- **Hull, E., Jackson, K., Dick, J.** Requirements Engineering, 4th ed. Springer
-- **IIBA.** BABOK Guide v3 — análise de negócios
-- **Falbo, R. A.** Notas de Aula — Engenharia de Requisitos de Software (UFES)
-- **SBC.** Resolução 002/2024 — Código de Ética e Conduta Profissional
-- **Valente, M. T.** Engenharia de Software Moderna, 2020 ([engsoftmoderna.info](https://engsoftmoderna.info)) — cap. 3 (MVP + Testes A/B)
+Traceability: every requirement ID → design → code → test. Without it, changing 1 requirement turns into "which modules do I touch?". Detail in [references/07-mudanca-rastreabilidade.md](references/07-mudanca-rastreabilidade.md).
 
 ---
 
-**Para detalhar qualquer ponto acima, vá direto ao arquivo de references/ correspondente.** Esta SKILL.md é o mapa; o detalhe vive lá. Não tente substituir as leituras canônicas: esta skill condensa para uso imediato, mas as decisões importantes merecem o livro inteiro.
+## 6. Cross-cutting layer: the business analyst
+
+In small teams, dev + PO accumulate the role. In larger teams, there is a dedicated analyst. BABOK (Business Analysis Body of Knowledge) defines 6 knowledge areas: planning, elicitation, lifecycle management, strategy analysis, requirements analysis and solution design, evaluation. Central flow: **AS-IS** (current process) → **TO-BE** (desired process) → GAP analysis → system requirements that cover the GAP. Detail in [references/08-analista-negocios.md](references/08-analista-negocios.md).
+
+---
+
+## 7. Cross-cutting layer: professional ethics
+
+> This is an **non-negotiable** layer. It is not above the others — it is below all of them. *"SBC"* Code 002/2024 (pt-BR version of IFIP, adapted from ACM): *"The Computing profession as a whole benefits when the ethical decision-making process occurs in a responsible and transparent manner."*
+
+Principles that most apply to RE:
+
+- **1.1 Human well-being** — "the needs of the less favoured must receive greater attention"
+- **1.2 Avoid harm** — report system risks even if it delays delivery
+- **1.6 Privacy** — minimal collection, consent, defined retention (*"LGPD"* / GDPR)
+- **2.5 Comprehensive evaluation** — **ML systems require continuous risk re-evaluation**
+- **2.6 Work only in areas of competence** — communicate limitations to the client
+- **2.9 Robust and secure systems** — *"when misuse or harm is foreseen or unavoidable, **the best option may be to not implement the system**"*
+- **3.1 Public good at the centre** — explicitly cites *"requirements analysis"* as a moment of ethical evaluation
+
+Detail and application in [references/09-etica-sbc.md](references/09-etica-sbc.md).
+
+---
+
+## 8. Frequent anti-patterns (avoid these)
+
+1. **Skipping elicitation** — "I already know what the client wants" → rework cost 10× to 200× the cost of fixing in the right phase
+2. **Connextra in the title** — "As [X], I want [Y] so that [Z]" in the card title becomes unreadable; use it in the description/conversation field, not in the title
+3. **Qualitative NFR** — "must be fast" is not a requirement, it is a wish. Always quantify
+4. **CA and BDD competing** — writing only one of the two. They are complementary layers (invariant × interaction)
+5. **Storyteller without stakeholder** — writing requirements alone. Requirement without an owner = requirement nobody validates
+6. **Accepting everything without prioritizing** — a 200-item backlog without order is the same as an empty backlog
+7. **Forgetting change** — designing architecture assuming requirements do not change → total rewrite in 6 months
+8. **Ignoring traceability** — impossible to analyze change impact without ID/link between artifacts
+9. **Ethics as an afterthought** — ethical issues should enter acceptance criteria, not a separate document nobody reads
+10. **Ethnography in an innovative project** — ethnography is great for replacement systems; terrible for products that do not yet exist (Nokia × Apple)
+11. **Feature with BDD instead of description** — pasting `GIVEN/WHEN/THEN` directly into the Feature instead of the business-language paragraph. Result: non-technical stakeholders do not read it, ACs become orphans, Sprint Planning stalls. BDD lives in the **User Story**. Detail and ❌/✅ examples in [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)
+12. **Backlog without origin in the requirements document** — an Epic/Feature/CA that appears in the backlog without `Origin (requirements)` pointing to `RF-NN`/`RNF-NN` is silent scope creep or technical refinement misplaced. Every change is born in the document; the backlog only materializes (see §2.1).
+13. **Technical term in an AC** — `CA: The endpoint POST /api/v1/bans/ returns HTTP 400 if hierarchy violated` forces the auditor/client to open a glossary. Rewrite in business language: `CA: When an administrator tries to ban another administrator, the system rejects the operation with the message "Operação não permitida".` Endpoint and HTTP status go in the Task.
+
+---
+
+## 9. Application checklist (use per feature)
+
+Before accepting a feature in the backlog, validate Falbo's 7 dimensions:
+
+- [ ] **Complete** — describes the entire functionality/rule/restriction
+- [ ] **Correct** — describes exactly what is to be built
+- [ ] **Consistent** — unambiguous, does not conflict with another requirement
+- [ ] **Realistic** — implementable given what we know of the platform
+- [ ] **Necessary** — client needs OR external/standard requirement
+- [ ] **Prioritizable** — has a clear order vs. other items
+- [ ] **Verifiable** — possible to write a test that proves the implementation
+
+Failed ≥1 → not ready. Return to the stakeholder.
+
+### Additional naming checklist (hard rule — *"Interpop"*)
+
+Before accepting Epic/Feature/US in the backlog:
+
+- [ ] Title **DOES NOT begin with an infinitive verb** (no `List`/`Create`/`Search`/`Register`/`Configure`/`Implement`)
+- [ ] Title **does NOT contain technical terms** (no `endpoint`/`hook`/`migration`/`API`/`schema`/`config`)
+- [ ] Title in **plain language** readable by a non-technical stakeholder
+- [ ] Item **is customer-deliverable** (if it is a technical configuration, move it to a cross-cutting Task `TX-NN`)
+- [ ] Priority declared (🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low)
+- [ ] **Feature** has a **paragraph description** · **User Story** has **BDD `Given/When/Then`** (do not swap)
+- [ ] Every User Story has **explicitly associated ACs** (traceable relation)
+- [ ] Every Task has a **Task ID** (`TNN.M.K` or `TX-NN`) so it appears in commit/PR
+
+Failed ≥1 → not ready. Fix it before moving to implementation.
+
+---
+
+## 10. Primary source and canonical bibliography
+
+### 10.1 Author of the source material (primary corpus of this skill)
+
+The primary corpus of this skill — all 11 processed lectures (LECTURE 0 to 10, including 09.2) — was created and taught by **Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*** ([Lattes](http://lattes.cnpq.br/9730254173461923) · [ORCID 0000-0001-8387-4616](https://orcid.org/0000-0001-8387-4616)).
+
+Why this matters for the reliability of what this skill claims:
+
+- **Ph.D. in Software Engineering** (UFPE 2017) with a sandwich period at **Universidade Nova de Lisboa** (2016, Erasmus Mundus BEMUNDUS scholarship), supervised by Alexandre Marcos Lins de Vasconcelos with co-supervision by Miguel Goulão (UNL) and Carla Schuenemann.
+- **Doctoral thesis**: *"An approach to support the Requirements Specification in Agile Software Development"* — the **exact subject** this skill condenses.
+- **Active research line**: *"Requirements Engineering in Agile Projects"* (since 2014, *"IFPB"*).
+- **Coordinator of *"CNPq"* DTI-A project 487777/2013-1** — *"Sistema de Informação Integrado para Controle de Dopagem"* (2014–2015), which is the **origin of the main case study** in [`examples/caso-controle-dopagem.md`](examples/caso-controle-dopagem.md).
+- **20+ years of industrial experience** in software project management and development: *"DATAPREV"* (*"Ministério do Trabalho"*, 2006–2013), *"CESAR"* (Recife, 2005–2006), *"CAGEPA"*, *"Ministério Público da Paraíba"*, *"Prefeitura de João Pessoa"* (tax systems *"IPTU"*/*"ITBI"*/*"Taxa de Lixo"*, 1997–2005), and collaborations with *"Multilaser"* and *"CPM Braxis"*.
+- **Tenured Professor (Dedicação Exclusiva)** at *"IFPB"* Campus João Pessoa since 2006 (entry via public competition, **1st place**); active researcher at the *"EMBRAPII"* hub at *"IFPB"*; also affiliated with UFCG since 2020.
+- M.Sc. in Computer Science (UFPE 2001, *"CNPq"* scholarship, dissertation on ISO 9001:2000 in software companies) and B.Sc. in Computer Science (UFPB 1997).
+
+> **Academic citation**: Medeiros, J. D. R. V. de. *Engenharia de Requisitos de Software* [course material, lectures 0–10]. *"IFPB"* Campus João Pessoa, 2025. Lattes: http://lattes.cnpq.br/9730254173461923. ORCID: https://orcid.org/0000-0001-8387-4616.
+
+### 10.2 Canonical bibliography (complements the primary corpus)
+
+- **Sommerville, I.** *Software Engineering*, 10th ed. Pearson, 2019 — base of the course (Ch. 4 is the pivot)
+- **Pressman, R.** *Software Engineering: A Practitioner's Approach*, 9th ed. McGraw-Hill, 2021 — complementary view (7 stages of RE)
+- **Wiegers, K. & Beatty, J.** *Software Requirements*, 3rd ed. Microsoft Press
+- **Cohn, M.** *User Stories Applied*, 2004 — standard reference for US
+- **Robertson, S. & Robertson, J.** *Mastering the Requirements Process* (VOLERE method)
+- **Hull, E., Jackson, K., Dick, J.** *Requirements Engineering*, 4th ed. Springer
+- **IIBA.** *BABOK Guide* v3 — business analysis
+- **Falbo, R. A.** Lecture notes — Software Requirements Engineering (UFES)
+- **SBC.** Resolution 002/2024 — Code of Ethics and Professional Conduct
+- **Valente, M. T.** *Engenharia de Software Moderna*, 2020 ([engsoftmoderna.info](https://engsoftmoderna.info)) — ch. 3 (MVP + A/B Testing)
+
+---
+
+**To detail any point above, go directly to the corresponding `references/` file.** This `SKILL.md` is the map; the detail lives there. Do not try to substitute the canonical readings: this skill condenses for immediate use, but important decisions deserve the full book.
