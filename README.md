@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/banner.png" alt="Requirements Engineering — Claude Code Skill. Pt-BR tagline: Transformando necessidades em soluções de valor. Diagram shows the full RE journey from Discover → Analyse → Specify → Validate → Deliver, with stakeholders, elicitation, analysis, specification, validation cards, and the legend Foco no valor e no usuário (focus on value and user). Domain tags: Comunicação, Análise, Modelagem, Documentação, Negociação, Pensamento Crítico." width="100%" />
+</p>
+
 # Requirements Engineering — Claude Code Skill
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
@@ -102,6 +106,8 @@ engenharia-de-requisitos/
 ├── README.md                      ← this file — en-CA
 ├── LICENSE                        ← CC BY-SA 4.0
 ├── CHANGELOG.md                   ← version history — en-CA
+├── assets/                        ← hero banner + visual assets (pt-BR diagram)
+│   └── banner.png
 ├── translations/
 │   └── pt-BR/                     ← full pt-BR copy of all content
 │       ├── SKILL.md
