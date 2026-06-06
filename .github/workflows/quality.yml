@@ -1,0 +1,85 @@
+name: quality
+
+# Quality gate for the engenharia-de-requisitos skill.
+# Four parallel jobs validate the content repo:
+#   1. markdown-lint  — Markdown style (markdownlint-cli2)
+#   2. link-check     — HTTP link liveness (lychee)
+#   3. yaml-schema    — Issue templates + workflow YAML parse correctness (yamllint)
+#   4. actionlint     — Workflows themselves have valid syntax
+#
+# These check names are what the branch ruleset "Require status checks to pass"
+# expects under "Add checks" after the first successful run on main.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  markdown-lint:
+    name: markdown-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v17
+        with:
+          # Ignore the verbatim pt-BR snapshot (it must mirror legacy content
+          # untouched) and node_modules-style noise.
+          globs: |
+            **/*.md
+            !translations/pt-BR/**
+            !node_modules/**
+            !.git/**
+          config: ".markdownlint.json"
+
+  link-check:
+    name: link-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee link checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Internal anchors + external HTTP(S) links. Exclude noisy domains
+          # via .lycheeignore. Cache results to keep PRs fast.
+          args: >-
+            --no-progress
+            --max-concurrency 8
+            --timeout 20
+            --cache
+            --max-cache-age 14d
+            --exclude-path translations/pt-BR
+            "**/*.md"
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  yaml-schema:
+    name: yaml-schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pipx install yamllint
+      - name: Run yamllint
+        run: yamllint -c .yamllint.yml .github/
+
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run actionlint
+        uses: raven-actions/actionlint@v2
+        with:
+          matcher: true
+          fail-on-error: true

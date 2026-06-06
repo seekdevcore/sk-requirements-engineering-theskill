@@ -1,0 +1,33 @@
+# Patterns lychee should skip when checking HTTP links.
+# Each line is a substring or regex matched against the URL.
+
+# Lattes is the Brazilian academic CV system; it rate-limits aggressively
+# and frequently returns 403 to non-browser User-Agents.
+lattes\.cnpq\.br
+
+# ORCID also rate-limits and occasionally redirects non-browser clients.
+orcid\.org
+
+# CNPq institutional pages have unstable TLS chains in CI environments.
+cnpq\.br
+
+# IFPB website occasionally times out from GitHub-hosted runners.
+ifpb\.edu\.br
+
+# SBC website occasionally blocks non-browser User-Agents.
+sbc\.org\.br
+
+# Example/placeholder URLs intentionally non-resolvable in templates.
+example\.com
+your-domain
+seu-dominio
+
+# Internal /docs/specs path inside a sibling project repo that this skill
+# illustrates but does not own. The link is documentary, not navigable.
+/Documentos/Projetos/interpop
+
+# Figma file shareable links require login (private project examples).
+figma\.com/file/
+
+# Notion private-workspace URLs in approval examples.
+notion\.so/

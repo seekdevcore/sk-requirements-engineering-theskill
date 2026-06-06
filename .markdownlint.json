@@ -1,0 +1,33 @@
+{
+  "_comment": "Markdownlint config tuned for this content-heavy skill. Rules disabled or relaxed below are commented inline.",
+
+  "default": true,
+
+  "MD013": false,
+  "_MD013": "line-length — disabled because our prose, tables, and code blocks legitimately exceed 80/120 chars; enforcement adds noise without value.",
+
+  "MD024": { "siblings_only": true },
+  "_MD024": "no-duplicate-heading — siblings_only allows the repeated `### Added` / `### Changed` headings across CHANGELOG versions.",
+
+  "MD025": false,
+  "_MD025": "single-h1 — CHANGELOG-style files legitimately have multiple top-level entries; the docs also embed sample requirements documents that start with their own H1.",
+
+  "MD033": { "allowed_elements": ["p", "img", "picture", "source", "br", "details", "summary", "kbd", "sub", "sup", "mark"] },
+  "_MD033": "no-inline-html — allow the small set of HTML used for the README hero banner and the occasional inline highlighting.",
+
+  "MD034": false,
+  "_MD034": "no-bare-urls — bibliographic citations occasionally show bare URLs (lattes, orcid) on purpose. Linkifying every one would clutter the prose.",
+
+  "MD036": false,
+  "_MD036": "no-emphasis-as-heading — we use `**bold**` for in-paragraph emphasis (Brazilian domain terms in *italic+quotes*, anti-pattern callouts). Not a heading substitute.",
+
+  "MD040": false,
+  "_MD040": "fenced-code-language — some pseudo-code blocks have no language. Mandating a tag would force fake languages.",
+
+  "MD041": false,
+  "_MD041": "first-line-h1 — README starts with `<p>` (banner image) and some references start with metadata blocks before the H1.",
+
+  "MD046": { "style": "fenced" },
+
+  "MD048": { "style": "backtick" }
+}

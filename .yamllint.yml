@@ -1,0 +1,29 @@
+# yamllint config — strict-enough to catch real bugs, relaxed where
+# GitHub's own Issue/PR template forms have their own quirks.
+
+extends: default
+
+rules:
+  line-length:
+    max: 200
+    level: warning
+
+  document-start:
+    present: false
+
+  truthy:
+    # GitHub Actions uses `on:` as a key; default yamllint flags this as truthy.
+    check-keys: false
+
+  comments:
+    min-spaces-from-content: 1
+
+  comments-indentation: disable
+
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+
+ignore: |
+  translations/pt-BR/
+  node_modules/
