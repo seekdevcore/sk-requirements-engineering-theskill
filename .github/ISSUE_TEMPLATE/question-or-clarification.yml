@@ -1,0 +1,59 @@
+name: 🟡 Question / clarification
+description: Ask about a specific point in references/ or examples/ that you find unclear, ambiguous, or that you think could be better explained.
+title: "question: <topic>"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For open-ended conversation or brainstorming, prefer [Discussions](https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions). Use this Issue template only when the question can lead to a **specific clarification or rewording** of an existing file.
+
+  - type: input
+    id: file
+    attributes:
+      label: Affected file (or section of SKILL.md)
+      description: Where in the skill does the unclear point live?
+      placeholder: e.g., references/05-convencoes-interpop.md §2 Rule 7
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: What is unclear?
+      description: |
+        State the question concretely. Examples:
+        - "Rule 7 says ACs must be grouped under `CA - <Theme>`, but in §4.2 of the worked example F-200 only has 1 AC — why still group it?"
+        - "The Falbo 7-dimension checklist requires 'Necessary' — how do I distinguish 'Necessary' from 'Prioritizable' when the stakeholder asks for everything?"
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (what triggered the question)
+      description: |
+        Optional but useful — describe the real situation that made you hit this point.
+        "I am writing a backlog for X and the rule felt either too strict or too loose because…"
+      render: markdown
+    validations:
+      required: false
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Possible improvement (optional)
+      description: |
+        If you have a specific suggestion for how to clarify the file (extra sentence, example, cross-reference), share it. We will discuss before any PR.
+      render: markdown
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+          required: true

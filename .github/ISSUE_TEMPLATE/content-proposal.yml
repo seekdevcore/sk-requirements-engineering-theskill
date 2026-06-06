@@ -1,0 +1,79 @@
+name: 🟠 New content proposal
+description: Propose a new worked example (case study), a new .feature template variant, a tooling-integration scaffold (Linear/Jira/Notion/Plane), a new translation, or a new anti-pattern submission.
+title: "feat: <short description>"
+labels: ["enhancement", "needs-discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Open this issue **before** starting work so we can align on direction. Trivial fixes (typo, broken link) do not need an issue — go straight to PR.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of contribution
+      options:
+        - New worked example (case study from your domain)
+        - New `.feature` template variant for a specific stack
+        - Tooling-integration scaffold (Linear / Jira / Notion / Plane / Shortcut / etc.)
+        - New full or partial translation under translations/<bcp-47-tag>/
+        - New anti-pattern submission (with ❌/✅ example)
+        - Reference-content extension (new section in an existing references/ file)
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: |
+        Why this contribution belongs in the skill. Concrete is better than abstract.
+        Good: "Fintech projects subject to BACEN rules have no case study; PIX onboarding 2025 is illustrative because [reason]."
+        Weak: "The skill is missing fintech."
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: |
+        What you intend to produce. Be specific.
+        - For a case study: which Feature, how many ACs, how many US, will it have an ethical-layer section?
+        - For a `.feature` template: which stack? Which scenarios will it demonstrate?
+        - For a translation: which files, full or partial?
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: alignment
+    attributes:
+      label: Alignment with the hard rules
+      description: |
+        Confirm you understand the [10 hard rules](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/references/05-convencoes-interpop.md) and explain any deviation you anticipate.
+      render: markdown
+    validations:
+      required: false
+
+  - type: textarea
+    id: ownership
+    attributes:
+      label: Stakeholder / source ownership
+      description: |
+        Is this case study based on a real project you contributed to? Do you have permission from the stakeholders to publish? If proprietary, indicate what you can anonymize.
+        For translations: declare your fluency level in the target language and whether you are a native speaker.
+      render: markdown
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct + License
+      options:
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+          required: true
+        - label: I agree my contribution will be licensed under [CC BY-SA 4.0](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/LICENSE) (the same as the rest of the skill).
+          required: true

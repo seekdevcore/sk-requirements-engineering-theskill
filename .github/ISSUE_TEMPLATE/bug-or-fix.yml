@@ -1,0 +1,82 @@
+name: 🔴 Bug / Fix
+description: Report a broken link, typo, factual error, outdated citation, or any incorrect content in references/, examples/, or root-level files.
+title: "fix: <short description>"
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for catching this. Please tell us **exactly** what is wrong so we can verify and fix quickly.
+
+  - type: input
+    id: file
+    attributes:
+      label: Affected file
+      description: The exact path of the file with the issue.
+      placeholder: e.g., references/04-bdd-criterios-aceitacao.md
+    validations:
+      required: true
+
+  - type: input
+    id: line
+    attributes:
+      label: Line / section
+      description: Line number (e.g., L142) or section heading (e.g., §3.5 "Concrete example").
+      placeholder: e.g., §2.5 — `[...]` convention
+    validations:
+      required: false
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of error
+      options:
+        - Typo / grammar
+        - Broken link
+        - Factual error (cites wrong source, wrong figure number, etc.)
+        - Outdated citation (replaced by newer edition / standard)
+        - Inconsistency with another reference file
+        - Inconsistency between en-CA and pt-BR copies
+        - Example does not respect the hard rules (Rules 0–9)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: What it currently says
+      description: Copy-paste the exact text (or screenshot if visual).
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: What it should say
+      description: Your suggested correction. If you do not have a fix in mind, leave a note explaining why it is wrong.
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / source
+      description: |
+        Link to the canonical source proving the correction. For factual errors, this is often:
+        - the page in Sommerville/Pressman/Wiegers/Cohn cited
+        - the official URL of WADA/SBC/IIBA/IEEE
+        - a `git blame` showing when an outdated state was introduced
+      render: markdown
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+          required: true
