@@ -9,7 +9,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Changes accumulated since v1.2.0 will be listed here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.
+Operational maturity hardening after the v1.2.0 content milestone. **No content change** in `references/`, `examples/`, or `translations/pt-BR/` — only branding, community-health, CI, and branch-protection plumbing.
+
+### Added
+
+#### Branding & visual identity
+
+- `assets/banner.png` — hero banner (1672×941, ~1.9 MB) with full English alt-text describing the pt-BR diagram for accessibility and SEO. Displayed at the top of `README.md` via `<p align="center"><img width="100%" ...>` so it renders as the GitHub repo hero.
+
+#### Community-health
+
+- `CONTRIBUTING.md` — 7-section operational guide: what is accepted (with priority), what is not, 6-step contribution process (issue-first for non-trivial, `kind/short-description` branch naming, hard-rules checklist, Conventional Commits + signed commits), recognition policy, license acknowledgement. Surfaces as the "Contributing" link in the GitHub repo header.
+- `CODE_OF_CONDUCT.md` — Contributor Covenant 2.1 augmented with explicit cross-references to *"SBC"* 002/2024 sections that already underpin `references/09-etica-sbc.md` (§1.1, §1.2, §1.3, §1.4, §3.1, §3.6). Includes §7 alignment-with-content note: the community producing this skill is held to the same ethics it teaches.
+- `.github/PULL_REQUEST_TEMPLATE.md` — auto-loads on PR creation with hard-rules checklist (Rules 0, 1, 2, 7, 8, 9), language-preservation checklist (siglas, italic+quotes, cross-refs, *"SBC"* citations), quality bar (concrete examples, BDD step count, README/CHANGELOG sync), commit hygiene (signed, Conventional Commits, Co-Authored-By), and license acknowledgement.
+- `.github/ISSUE_TEMPLATE/config.yml` — disables blank issues, surfaces 3 contact links (Discussions, source-instructor section, CoC).
+- `.github/ISSUE_TEMPLATE/bug-or-fix.yml` — 🔴 typed form for typo, broken link, factual error, outdated citation, en-CA↔pt-BR inconsistency, hard-rules violation in example.
+- `.github/ISSUE_TEMPLATE/content-proposal.yml` — 🟠 typed form for case study, `.feature` template variant, tooling scaffold, translation, anti-pattern submission. Requires motivation, scope, alignment with hard rules, stakeholder/source-ownership disclosure, license acknowledgement.
+- `.github/ISSUE_TEMPLATE/question-or-clarification.yml` — 🟡 typed form for "this section is unclear" pointing to a specific file + section, with optional improvement proposal.
+
+#### CI quality
+
+- `.github/workflows/quality.yml` — 4-job parallel quality gate (markdown-lint via `DavidAnson/markdownlint-cli2-action@v17`, link-check via `lycheeverse/lychee-action@v2` with 14-day cache, yaml-schema via `yamllint`, actionlint via `raven-actions/actionlint@v2`). `concurrency` group cancels superseded runs; `permissions: contents read` enforces least-privilege.
+- `.markdownlint.json` — 8 rules disabled or relaxed with inline `_<RULE>` comments explaining each decision (line-length irrelevant for content tables; allowed inline HTML for banner; emphasis-as-heading disabled for `**bold**` Brazilian-domain terms; bare URLs allowed for bibliographic citations; first-line H1 disabled for `<p>` banner; `MD024 siblings_only` for repeated `### Added` across CHANGELOG versions; `MD028` disabled for separated `>` blockquote paragraphs; `MD033` disabled for `<termo>/<nome>/<id>` placeholders in OpenProject backlog template; `MD051` disabled for anchor links with emoji prefixes; `MD060` disabled for compact `|---|---|` table style).
+- `.lycheeignore` — 12 URL patterns intentionally skipped: Brazilian academic systems that rate-limit aggressively (*"Lattes"*, *"CNPq"*, *"ORCID"*, *"IFPB"*, *"SBC"*), the ACM Code of Ethics URL (Cloudflare 403 for non-browser User-Agents), the IEEE governance URL (418 "I'm a teapot" for bots), placeholder URLs in templates (`example.com`, `your-domain`, `seu-dominio`), sibling-project documentary paths (*"Interpop"* docs/specs), private-workspace URLs in worked examples (Figma file, Notion private workspaces).
+- `.yamllint.yml` — extends default with `line-length max 200` (warning, not error), `document-start` disabled, `truthy check-keys` disabled (so GitHub Actions `on:` key is not flagged), 2-space indentation with consistent sequences. Ignores `translations/pt-BR/` and `node_modules/`.
+
+#### Branch protection (upstream only)
+
+- Ruleset `main-protection` (ID `17348015`) on `seekdevcore` upstream — `enforcement: active`, targeting default branch:
+  - Restrict deletions.
+  - Block force pushes (`non_fast_forward`).
+  - Require signed commits.
+  - Require linear history (no merge commits).
+  - Require pull request before merging: 1 approval, `dismiss_stale_reviews_on_push: true`, `required_review_thread_resolution: true`, allowed merge methods `[merge, squash, rebase]`.
+  - Require 4 status checks to pass: `markdown-lint`, `link-check`, `yaml-schema`, `actionlint`.
+
+#### Auto-sync (fork only)
+
+- `.github/workflows/sync-upstream.yml` — exists **only on the fork** (`GabeMarques-Intetsu/sk-requirements-engineering-skill`), not on the upstream. Runs every 30 minutes via cron + on-demand via `workflow_dispatch`. Uses `gh CLI` directly (no third-party Action) to minimize supply-chain surface. Keeps fork main in sync with upstream main automatically.
+
+### Changed
+
+- **Publisher display name rebranded `Seekdev` → `Seek`** in `README.md` Maintainer section. The GitHub handle remains `seekdevcore` (cannot be changed without renaming the account); only the human-facing label changed.
+- **README hero**: replaced badges-only top with banner image + 4 badges + bilingual reader note explaining what remains in pt-BR by design (domain terms, real-project identifiers, *"IFPB"* course Gherkin, `.feature` template).
+- **README repository-structure** section updated to list `assets/`, `.github/`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`.
+- **README Contributing section** rewritten: removed "remaining en-CA translation" item (closed in v1.2.0); replaced with "Additional language translations under `translations/<bcp-47-tag>/`" to set the pattern for future i18n.
+- **SKILL.md frontmatter** synced with v1.2.0 reality: `version: 1.1.0` → `1.2.0`; `content_status.en-CA: partial — entry point translated; references and examples in progress` → `complete — entry point, references/ (10 files), and examples/ (5 files) all translated`.
+- **`quality.yml` jobs guarded** with `if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'` so the workflow does not run duplicated on the fork mirror (which received `.github/workflows/quality.yml` via `gh repo sync`). On the fork, all 4 jobs report `skipped` — no runner spawned, no notification fired.
+
+### Fixed
+
+- **Enforcement-channel email** in `CODE_OF_CONDUCT.md` §5 and `CONTRIBUTING.md` §4: `gabriel.santos.23@academico.ifpb.edu.br` → `gabriel.intetsu.dev@gmail.com`. The *"IFPB"* academic address is tied to a single institutional role and may rotate; the personal Gmail is the stable, long-lived inbox.
+- **Broken intra-skill link** in `references/03-especificacao.md` §12: pointer to `references/06-estimativa.md` (a file that does not exist — legacy renumbering plan that never materialized). Removed the broken pointer; kept the live link to `references/05-estimativa.md`.
+- **Relative-path link** in `.github/PULL_REQUEST_TEMPLATE.md`: `../../discussions` (which `lychee` cannot resolve from `file://` scheme during CI) → absolute `https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions` URL.
+- **First CI run (commit `a21693f`)**: 4 link-check errors + 50+ markdown-lint violations. Resolved across 2 follow-up commits — auto-fixes for whitespace rules (MD031, MD032) applied across 16 files, 4 rules disabled with rationale (MD028, MD033, MD051, MD060), 2 link-check fixes (broken `06-estimativa` ref + PR-template relative URL), 2 false positives excluded (ACM 403 + IEEE 418).
+
+### Workflow validation (end-to-end)
+
+- **PR #1** (`chore(changelog): add [Unreleased] section per Keep a Changelog spec`) — first PR after branch protection went live. Validated: (1) push to feature branch (not main directly), (2) PR via `gh pr create`, (3) 4 required status checks passing, (4) cross-account approval (PR author `GabeMarques-Intetsu` → approver `seekdevcore` via `gh auth switch`), (5) squash merge with auto-delete-branch. Time: ~45s from open to merged.
+- **PR #2** (`ci(quality): guard all 4 jobs to run only on the canonical upstream repo`) — re-validated the workflow and verified the guard itself by self-reference (the PR ran the workflow on the upstream where `github.repository` evaluates to the canonical value, so checks executed and passed).
 
 ---
 

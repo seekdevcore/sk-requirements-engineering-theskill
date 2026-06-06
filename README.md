@@ -8,7 +8,9 @@
 [![Skill: engenharia-de-requisitos](https://img.shields.io/badge/Skill-engenharia--de--requisitos-blue)](./SKILL.md)
 [![Language: en-CA default](https://img.shields.io/badge/Language-en--CA%20(default)-success)](#language-status)
 [![Translation: pt-BR available](https://img.shields.io/badge/Translation-pt--BR%20available-yellow)](#language-status)
-[![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational)](./CHANGELOG.md)
+[![Latest release](https://img.shields.io/github/v/release/seekdevcore/sk-requirements-engineering-skill?label=Release&color=informational)](https://github.com/seekdevcore/sk-requirements-engineering-skill/releases/latest)
+[![CI quality](https://img.shields.io/github/actions/workflow/status/seekdevcore/sk-requirements-engineering-skill/quality.yml?branch=main&label=CI)](https://github.com/seekdevcore/sk-requirements-engineering-skill/actions/workflows/quality.yml)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-purple.svg)](./CODE_OF_CONDUCT.md)
 
 > **Skill for [Claude Code](https://claude.com/claude-code)** that loads canonical knowledge of **Requirements Engineering**, **Business Analysis**, and **Professional Ethics in Computing** into any Claude session — built from the full course material of *"IFPB"* (*"Instituto Federal da Paraíba"*) plus the canonical bibliography of the field (Sommerville, Pressman, Wiegers, Cohn, Robertson, Hull, Falbo, BABOK v3, *"SBC"* 002/2024).
 
@@ -106,6 +108,17 @@ engenharia-de-requisitos/
 ├── README.md                      ← this file — en-CA
 ├── LICENSE                        ← CC BY-SA 4.0
 ├── CHANGELOG.md                   ← version history — en-CA
+├── CONTRIBUTING.md                ← how to contribute (7-section operational guide)
+├── CODE_OF_CONDUCT.md             ← Contributor Covenant 2.1 + SBC 002/2024 cross-refs
+├── .github/
+│   ├── workflows/
+│   │   ├── quality.yml            ← CI: markdown-lint + link-check + yaml-schema + actionlint
+│   │   └── sync-upstream.yml      ← fork-only: auto-sync with upstream every 30 min
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── ISSUE_TEMPLATE/            ← bug-or-fix, content-proposal, question-or-clarification
+├── .markdownlint.json             ← tuned config (8 rules disabled/relaxed, all documented inline)
+├── .lycheeignore                  ← 12 URL patterns intentionally skipped (rate-limited / bot-blocked)
+├── .yamllint.yml                  ← YAML lint config for .github/ schema
 ├── assets/                        ← hero banner + visual assets (pt-BR diagram)
 │   └── banner.png
 ├── translations/
