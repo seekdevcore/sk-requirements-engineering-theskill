@@ -373,7 +373,25 @@ Falhou em ≥1 → não está pronto. Corrija antes de descer para implementaç�
 
 ---
 
-## 10. Bibliografia canônica (citada acima)
+## 10. Fonte primária e bibliografia canônica
+
+### 10.1 Autora do material-fonte (corpus primário desta skill)
+
+O corpus primário desta skill — todas as 11 aulas processadas (LECTURE 0 a 10, incluindo 09.2) — foi criado e ministrado pela **Profa. Dra. Juliana Dantas Ribeiro Viana de Medeiros** ([Lattes](http://lattes.cnpq.br/9730254173461923) · [ORCID 0000-0001-8387-4616](https://orcid.org/0000-0001-8387-4616)).
+
+Por que isso importa para a confiabilidade do que a skill afirma:
+
+- **Doutorado em Engenharia de Software** (UFPE 2017) com período sanduíche na **Universidade Nova de Lisboa** (2016, bolsa Erasmus Mundus BEMUNDUS), sob orientação de Alexandre Marcos Lins de Vasconcelos e co-orientação de Miguel Goulão (UNL) e Carla Schuenemann.
+- **Tese de doutorado**: *"An approach to support the Requirements Specification in Agile Software Development"* — o **tema exato** que esta skill condensa.
+- **Linha de pesquisa ativa**: "Engenharia de Requisitos em Projetos Ágeis" (desde 2014, IFPB).
+- **Coordenadora do projeto CNPq DTI-A 487777/2013-1** — *Sistema de Informação Integrado para Controle de Dopagem* (2014–2015), que é a **origem do caso de estudo principal** em [`examples/caso-controle-dopagem.md`](examples/caso-controle-dopagem.md).
+- **20+ anos de experiência industrial** em gerência e desenvolvimento de software: DATAPREV (Ministério do Trabalho, 2006–2013), CESAR (Recife, 2005–2006), CAGEPA, Ministério Público da Paraíba, Prefeitura de João Pessoa/PB (sistemas tributários IPTU/ITBI/Taxa de Lixo, 1997–2005), e colaborações com Multilaser e CPM Braxis.
+- **Professor Efetivo, Dedicação Exclusiva** no IFPB Campus João Pessoa desde 2006 (ingresso por concurso público, **1º lugar**); pesquisadora ativa no polo **EMBRAPII** do IFPB; vinculada também à UFCG desde 2020.
+- Mestrado em Ciência da Computação (UFPE 2001, bolsa CNPq, dissertação sobre ISO 9001:2000 em empresas de software) e Graduação em Ciência da Computação (UFPB 1997).
+
+> **Citação acadêmica**: Medeiros, J. D. R. V. de. *Engenharia de Requisitos de Software* [material didático, aulas 0–10]. IFPB Campus João Pessoa, 2025. Lattes: http://lattes.cnpq.br/9730254173461923. ORCID: https://orcid.org/0000-0001-8387-4616.
+
+### 10.2 Bibliografia canônica (complementa o corpus primário)
 
 - **Sommerville, I.** Engenharia de Software, 10ª ed. Pearson, 2019 — base do curso (Cap. 4 é o pivô)
 - **Pressman, R.** Engenharia de Software, 9ª ed. AMGH, 2021 — visão complementar (7 etapas de ER)
@@ -384,6 +402,7 @@ Falhou em ≥1 → não está pronto. Corrija antes de descer para implementaç�
 - **IIBA.** BABOK Guide v3 — análise de negócios
 - **Falbo, R. A.** Notas de Aula — Engenharia de Requisitos de Software (UFES)
 - **SBC.** Resolução 002/2024 — Código de Ética e Conduta Profissional
+- **Valente, M. T.** Engenharia de Software Moderna, 2020 ([engsoftmoderna.info](https://engsoftmoderna.info)) — cap. 3 (MVP + Testes A/B)
 
 ---
 
