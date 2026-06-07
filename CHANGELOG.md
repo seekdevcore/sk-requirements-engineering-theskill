@@ -13,6 +13,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] — 2026-06-07
+
+Infrastructure cleanup. **No content change** — same skill, same MCP server, same plugin marketplace; one less moving part in the distribution layer.
+
+### Removed
+
+- **Personal fork at `GabeMarques-Intetsu/sk-requirements-engineering-skill`** has been **permanently deleted**. The fork existed (since v1.0.0) as a discoverability proxy: it let the project owner pin a "personal" copy on their GitHub profile when the canonical upstream was hosted under the `seekdevcore` account. As of today, GitHub has indexed the owner's 23 commits on the upstream as a recognized contribution, so the upstream `seekdevcore/sk-requirements-engineering-skill` is directly pinnable on the owner's profile via `Customize your pins → search → seekdevcore/...`. The fork no longer served any purpose, so it was deleted.
+- The companion **`sync-upstream.yml` workflow that existed only on the fork** (introduced in v1.3.0 and documented in `CHANGELOG.md §1.3.0` / `§1.4.0`) was deleted along with the fork. There is no fork to keep in sync any longer. The upstream `quality.yml` and its `mcp-smoke` job (added in v1.4.0) remain intact.
+
+### Changed
+
+- **SKILL.md frontmatter**: `version: 1.4.0` → `1.5.0`.
+- **Local git remotes** of contributors who had previously cloned the fork need to remove the `fork` remote (`git remote remove fork`). The single canonical remote is now `origin` pointing to `seekdevcore/sk-requirements-engineering-skill`.
+
+### What did NOT change
+
+- Native skill content (`SKILL.md`, `references/`, `examples/`, `translations/pt-BR/`) — untouched.
+- Plugin marketplace manifest (`.claude-plugin/marketplace.json`, `plugin.json`) — untouched.
+- MCP server (`mcp-server/`) — untouched.
+- Branch protection (`main-protection` ruleset with 6 rules + 5 required status checks) — intact.
+- Releases v1.0.0..v1.4.0 — preserved on the upstream (they had also existed on the fork as mirrors, but those copies are gone with the fork).
+
+### Why a minor bump (not a patch)
+
+Semver-strict would classify "infra cleanup with zero API/content surface change" as a patch (1.4.1). The bump to 1.5.0 is a deliberate signal that **the distribution topology of the project changed visibly** — anyone tracking releases who had previously installed from the fork now needs to switch their remote / install URL to the upstream. Marking this as a minor release (rather than burying it as a patch) surfaces that change in the release feed and in dependency-update tooling.
+
+### Historical references to the fork
+
+Earlier CHANGELOG entries (`§1.3.0` "Added — Auto-sync (fork only)" and `§1.4.0` "Added — Claude Code plugin manifest") describe the fork as still existing. Those entries are kept verbatim as a historical record of what the project state was at the time of those releases — editing past changelog entries to retroactively pretend the fork never existed would violate the Keep-a-Changelog "do not rewrite history" principle.
+
+---
+
 ## [1.4.0] — 2026-06-06
 
 Cross-platform distribution: same corpus now reachable from Claude Code (native skill + plugin marketplace) and from any MCP client (Claude Desktop, Cursor, Cline, Continue, Zed, OpenAI Responses API, custom agents). **No content change** in `references/`, `examples/`, or `translations/pt-BR/`.
