@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+*No changes yet. New entries will accrue here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.*
+
+---
+
+## [1.4.0] — 2026-06-06
+
+Cross-platform distribution: same corpus now reachable from Claude Code (native skill + plugin marketplace) and from any MCP client (Claude Desktop, Cursor, Cline, Continue, Zed, OpenAI Responses API, custom agents). **No content change** in `references/`, `examples/`, or `translations/pt-BR/`.
+
 ### Added
 
 - **Claude Code plugin manifest** — `.claude-plugin/marketplace.json` + `.claude-plugin/plugin.json` make this repo installable via `/plugin marketplace add seekdevcore/sk-requirements-engineering-skill` followed by `/plugin install engenharia-de-requisitos`. Mirrors the schema used by the `karpathy-skills` and `claude-plugins-official` marketplaces.
