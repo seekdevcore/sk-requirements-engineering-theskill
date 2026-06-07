@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "CC-BY-SA-4.0" }
 authors = [{ name = "Gabriel Marques", email = "gabriel.intetsu.dev@gmail.com" }]
-keywords = ["mcp", "requirements-engineering", "ifpb", "babok", "sommerville"]
+keywords = ["mcp", "requirements-engineering", "ifpb", "babok", "sommerville", "bdd", "agile", "scrum"]
 dependencies = ["mcp[cli]>=1.2.0"]
 
 [project.scripts]
