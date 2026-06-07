@@ -35,8 +35,8 @@ Trivial fixes (typo, broken link, citation update) — skip the issue, go straig
 ### 3.2 Fork + branch
 
 ```bash
-gh repo fork seekdevcore/sk-requirements-engineering-skill --clone --remote
-cd sk-requirements-engineering-skill
+gh repo fork seekdevcore/sk-requirements-engineering --clone --remote
+cd sk-requirements-engineering
 git checkout -b <kind>/<short-description>
 ```
 
@@ -126,6 +126,6 @@ All contributors are listed in the GitHub contributors page automatically. Signi
 
 ## 7. Questions?
 
-- General questions about the skill: open a [Discussion](https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions).
-- Specific contribution proposal: open an [Issue](https://github.com/seekdevcore/sk-requirements-engineering-skill/issues/new/choose).
+- General questions about the skill: open a [Discussion](https://github.com/seekdevcore/sk-requirements-engineering/discussions).
+- Specific contribution proposal: open an [Issue](https://github.com/seekdevcore/sk-requirements-engineering/issues/new/choose).
 - Direct contact (maintainer): [@GabeMarques-Intetsu](https://github.com/GabeMarques-Intetsu).

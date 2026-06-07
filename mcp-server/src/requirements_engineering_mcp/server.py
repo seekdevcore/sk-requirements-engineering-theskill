@@ -1,7 +1,7 @@
 """FastMCP server exposing the engenharia-de-requisitos skill corpus.
 
 Layout assumption: this module ships inside `mcp-server/` at the root of
-the `sk-requirements-engineering-skill` repository. The skill content lives
+the `sk-requirements-engineering` repository. The skill content lives
 two directories up (`../../`). The server discovers the corpus relative
 to its own file location so it works after `uv tool install`, `uvx`, and
 local `uv run` invocations alike.

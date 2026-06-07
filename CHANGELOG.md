@@ -19,13 +19,13 @@ Infrastructure cleanup. **No content change** — same skill, same MCP server, s
 
 ### Removed
 
-- **Personal fork at `GabeMarques-Intetsu/sk-requirements-engineering-skill`** has been **permanently deleted**. The fork existed (since v1.0.0) as a discoverability proxy: it let the project owner pin a "personal" copy on their GitHub profile when the canonical upstream was hosted under the `seekdevcore` account. As of today, GitHub has indexed the owner's 23 commits on the upstream as a recognized contribution, so the upstream `seekdevcore/sk-requirements-engineering-skill` is directly pinnable on the owner's profile via `Customize your pins → search → seekdevcore/...`. The fork no longer served any purpose, so it was deleted.
+- **Personal fork at `GabeMarques-Intetsu/sk-requirements-engineering-skill`** has been **permanently deleted**. The fork existed (since v1.0.0) as a discoverability proxy: it let the project owner pin a "personal" copy on their GitHub profile when the canonical upstream was hosted under the `seekdevcore` account. As of today, GitHub has indexed the owner's 23 commits on the upstream as a recognized contribution, so the upstream `seekdevcore/sk-requirements-engineering` is directly pinnable on the owner's profile via `Customize your pins → search → seekdevcore/...`. The fork no longer served any purpose, so it was deleted.
 - The companion **`sync-upstream.yml` workflow that existed only on the fork** (introduced in v1.3.0 and documented in `CHANGELOG.md §1.3.0` / `§1.4.0`) was deleted along with the fork. There is no fork to keep in sync any longer. The upstream `quality.yml` and its `mcp-smoke` job (added in v1.4.0) remain intact.
 
 ### Changed
 
 - **SKILL.md frontmatter**: `version: 1.4.0` → `1.5.0`.
-- **Local git remotes** of contributors who had previously cloned the fork need to remove the `fork` remote (`git remote remove fork`). The single canonical remote is now `origin` pointing to `seekdevcore/sk-requirements-engineering-skill`.
+- **Local git remotes** of contributors who had previously cloned the fork need to remove the `fork` remote (`git remote remove fork`). The single canonical remote is now `origin` pointing to `seekdevcore/sk-requirements-engineering`.
 
 ### What did NOT change
 
@@ -51,7 +51,7 @@ Cross-platform distribution: same corpus now reachable from Claude Code (native 
 
 ### Added
 
-- **Claude Code plugin manifest** — `.claude-plugin/marketplace.json` + `.claude-plugin/plugin.json` make this repo installable via `/plugin marketplace add seekdevcore/sk-requirements-engineering-skill` followed by `/plugin install engenharia-de-requisitos`. Mirrors the schema used by the `karpathy-skills` and `claude-plugins-official` marketplaces.
+- **Claude Code plugin manifest** — `.claude-plugin/marketplace.json` + `.claude-plugin/plugin.json` make this repo installable via `/plugin marketplace add seekdevcore/sk-requirements-engineering` followed by `/plugin install engenharia-de-requisitos`. Mirrors the schema used by the `karpathy-skills` and `claude-plugins-official` marketplaces.
 - **MCP server** — `mcp-server/` Python package built with FastMCP (`mcp[cli]>=1.2.0`), exposing the corpus to any MCP-compatible client (Claude Desktop, Cursor, Cline, Continue, Zed, OpenAI Responses API, custom LangChain/LlamaIndex agents). Resources: `requirements://skill`, `requirements://reference/{name}`, `requirements://example/{name}`, `requirements://catalog`. Tools: `list_references()`, `list_examples()`, `list_hard_rules()`, `validate_user_story(title, bdd?)` (INVEST + naming-convention check), `validate_acceptance_criterion(text)` (Interpop AC rule check). Layout: `mcp-server/src/requirements_engineering_mcp/server.py`, `pyproject.toml`, `.python-version` (3.12), and full per-client setup docs in `mcp-server/README.md`.
 - **`mcp-smoke` CI job** — fifth job in `quality.yml` that installs `uv`, syncs `mcp-server/` dependencies, imports the server module, and asserts the corpus is discoverable (10 references + 5 examples found; all tools return non-empty strings; validators run without raising). Prevents regressions where the MCP server compiles but cannot locate the corpus.
 
@@ -111,13 +111,13 @@ Operational maturity hardening after the v1.2.0 content milestone. **No content 
 - **README repository-structure** section updated to list `assets/`, `.github/`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`.
 - **README Contributing section** rewritten: removed "remaining en-CA translation" item (closed in v1.2.0); replaced with "Additional language translations under `translations/<bcp-47-tag>/`" to set the pattern for future i18n.
 - **SKILL.md frontmatter** synced with v1.2.0 reality: `version: 1.1.0` → `1.2.0`; `content_status.en-CA: partial — entry point translated; references and examples in progress` → `complete — entry point, references/ (10 files), and examples/ (5 files) all translated`.
-- **`quality.yml` jobs guarded** with `if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'` so the workflow does not run duplicated on the fork mirror (which received `.github/workflows/quality.yml` via `gh repo sync`). On the fork, all 4 jobs report `skipped` — no runner spawned, no notification fired.
+- **`quality.yml` jobs guarded** with `if: github.repository == 'seekdevcore/sk-requirements-engineering'` so the workflow does not run duplicated on the fork mirror (which received `.github/workflows/quality.yml` via `gh repo sync`). On the fork, all 4 jobs report `skipped` — no runner spawned, no notification fired.
 
 ### Fixed
 
 - **Enforcement-channel email** in `CODE_OF_CONDUCT.md` §5 and `CONTRIBUTING.md` §4: `gabriel.santos.23@academico.ifpb.edu.br` → `gabriel.intetsu.dev@gmail.com`. The *"IFPB"* academic address is tied to a single institutional role and may rotate; the personal Gmail is the stable, long-lived inbox.
 - **Broken intra-skill link** in `references/03-especificacao.md` §12: pointer to `references/06-estimativa.md` (a file that does not exist — legacy renumbering plan that never materialized). Removed the broken pointer; kept the live link to `references/05-estimativa.md`.
-- **Relative-path link** in `.github/PULL_REQUEST_TEMPLATE.md`: `../../discussions` (which `lychee` cannot resolve from `file://` scheme during CI) → absolute `https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions` URL.
+- **Relative-path link** in `.github/PULL_REQUEST_TEMPLATE.md`: `../../discussions` (which `lychee` cannot resolve from `file://` scheme during CI) → absolute `https://github.com/seekdevcore/sk-requirements-engineering/discussions` URL.
 - **First CI run (commit `a21693f`)**: 4 link-check errors + 50+ markdown-lint violations. Resolved across 2 follow-up commits — auto-fixes for whitespace rules (MD031, MD032) applied across 16 files, 4 rules disabled with rationale (MD028, MD033, MD051, MD060), 2 link-check fixes (broken `06-estimativa` ref + PR-template relative URL), 2 false positives excluded (ACM 403 + IEEE 418).
 
 ### Workflow validation (end-to-end)

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        For open-ended conversation or brainstorming, prefer [Discussions](https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions). Use this Issue template only when the question can lead to a **specific clarification or rewording** of an existing file.
+        For open-ended conversation or brainstorming, prefer [Discussions](https://github.com/seekdevcore/sk-requirements-engineering/discussions). Use this Issue template only when the question can lead to a **specific clarification or rewording** of an existing file.
 
   - type: input
     id: file
@@ -55,5 +55,5 @@ body:
     attributes:
       label: Code of Conduct
       options:
-        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
           required: true

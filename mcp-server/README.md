@@ -44,8 +44,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh   # if you don't have uv
 Clone the repo, install dependencies, and the entry point is available as a uv-managed command:
 
 ```bash
-git clone https://github.com/seekdevcore/sk-requirements-engineering-skill.git
-cd sk-requirements-engineering-skill/mcp-server
+git clone https://github.com/seekdevcore/sk-requirements-engineering.git
+cd sk-requirements-engineering/mcp-server
 uv sync                                  # installs mcp[cli] in .venv
 uv run requirements-engineering-mcp      # boots on stdio
 ```
@@ -73,7 +73,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
       "command": "uv",
       "args": [
         "--directory",
-        "/absolute/path/to/sk-requirements-engineering-skill/mcp-server",
+        "/absolute/path/to/sk-requirements-engineering/mcp-server",
         "run",
         "requirements-engineering-mcp"
       ]
@@ -87,7 +87,7 @@ Restart Claude Desktop.
 ### Claude Code (CLI — alternative to the native skill)
 
 ```bash
-cd sk-requirements-engineering-skill/mcp-server
+cd sk-requirements-engineering/mcp-server
 claude mcp add engenharia-de-requisitos -- uv run requirements-engineering-mcp
 ```
 
