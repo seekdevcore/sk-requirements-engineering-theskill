@@ -78,5 +78,5 @@ body:
     attributes:
       label: Code of Conduct
       options:
-        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
           required: true

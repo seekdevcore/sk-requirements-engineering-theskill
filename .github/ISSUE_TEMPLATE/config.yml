@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 General question or discussion
-    url: https://github.com/seekdevcore/sk-requirements-engineering-skill/discussions
+    url: https://github.com/seekdevcore/sk-requirements-engineering/discussions
     about: Use GitHub Discussions for open-ended questions, ideas, or context-sharing that does not (yet) describe a concrete change.
   - name: 📚 Read the source instructor credentials
-    url: https://github.com/seekdevcore/sk-requirements-engineering-skill#-about-the-source-instructor
+    url: https://github.com/seekdevcore/sk-requirements-engineering#-about-the-source-instructor
     about: Background on Prof. Dr. Juliana Dantas Ribeiro Viana de Medeiros (IFPB) whose course material is the primary corpus.
   - name: 📄 Read the Code of Conduct
-    url: https://github.com/seekdevcore/sk-requirements-engineering-skill/blob/main/CODE_OF_CONDUCT.md
+    url: https://github.com/seekdevcore/sk-requirements-engineering/blob/main/CODE_OF_CONDUCT.md
     about: Contributor Covenant 2.1 + SBC 002/2024 references.

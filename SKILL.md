@@ -7,7 +7,7 @@ available_translations:
 content_status:
   en-CA: complete — entry point (SKILL.md, README.md, CHANGELOG.md), references/ (10 files), and examples/ (5 files) all translated. Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
   pt-BR: complete — full snapshot preserved at translations/pt-BR/
-source: https://github.com/seekdevcore/sk-requirements-engineering-skill
+source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
