@@ -33,6 +33,14 @@
 
 ## 📦 Installation
 
+> **3 install paths**, depending on where you want to consume the methodology:
+>
+> | Path | Best for | One-liner |
+> |---|---|---|
+> | **Native skill** (this section) | Claude Code CLI users | `git clone … ~/.claude/skills/engenharia-de-requisitos` |
+> | **Plugin marketplace** ([§Plugin install](#-claude-code-plugin-install-1-liner)) | Claude Code users who want managed install + auto-update | `/plugin marketplace add seekdevcore/sk-requirements-engineering-skill` |
+> | **MCP server** ([§MCP server](#-mcp-server-for-claude-desktop--cursor--cline--continue--zed--any-mcp-client)) | Claude Desktop · Cursor · Cline · Continue · Zed · OpenAI Responses · custom agents | `uv run requirements-engineering-mcp` |
+
 ### Option 1 — Clone directly into your global skills folder (recommended)
 
 ```bash
@@ -82,6 +90,44 @@ You should see `engenharia-de-requisitos` in the list. Then invoke it explicitly
 
 ---
 
+## 🧩 Claude Code plugin install (1-liner)
+
+> Same skill as above, packaged as a Claude Code **plugin marketplace** — managed install + auto-update + uninstall, no manual `git clone` required.
+
+In a Claude Code session:
+
+```text
+/plugin marketplace add seekdevcore/sk-requirements-engineering-skill
+/plugin install engenharia-de-requisitos
+```
+
+The skill is now available globally. Updates flow via `/plugin update`. Uninstall via `/plugin uninstall engenharia-de-requisitos`.
+
+This route uses [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) and [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json) declared at the root of this repo.
+
+---
+
+## 🌐 MCP server (for Claude Desktop · Cursor · Cline · Continue · Zed · any MCP client)
+
+> **For everyone NOT on Claude Code CLI.** The methodology corpus is also exposed as an MCP server (`mcp-server/`) so it is reachable from any client that speaks the Model Context Protocol — Claude Desktop, Cursor, Cline, Continue, Zed, OpenAI Responses API with the `openai-mcp` bridge, custom LangChain/LlamaIndex agents, etc.
+
+**Resources exposed**: `requirements://skill`, `requirements://reference/{name}`, `requirements://example/{name}`, `requirements://catalog`.
+
+**Tools exposed**: `list_references()`, `list_examples()`, `list_hard_rules()`, `validate_user_story(title, bdd?)`, `validate_acceptance_criterion(text)`.
+
+Quick start:
+
+```bash
+git clone https://github.com/seekdevcore/sk-requirements-engineering-skill.git
+cd sk-requirements-engineering-skill/mcp-server
+uv sync
+uv run requirements-engineering-mcp        # boots on stdio
+```
+
+Full setup with copy-pasteable config blocks for Claude Desktop, Cursor, Cline, Continue, Zed, and Claude Code CLI in [**`mcp-server/README.md`**](./mcp-server/README.md).
+
+---
+
 ## 🎯 When to invoke this skill
 
 Invoke when you (or Claude on your behalf) are doing:
@@ -110,6 +156,16 @@ engenharia-de-requisitos/
 ├── CHANGELOG.md                   ← version history — en-CA
 ├── CONTRIBUTING.md                ← how to contribute (7-section operational guide)
 ├── CODE_OF_CONDUCT.md             ← Contributor Covenant 2.1 + SBC 002/2024 cross-refs
+├── .claude-plugin/                ← Claude Code plugin marketplace manifest
+│   ├── marketplace.json
+│   └── plugin.json
+├── mcp-server/                    ← MCP server for Claude Desktop / Cursor / Cline / etc.
+│   ├── src/requirements_engineering_mcp/
+│   │   ├── __init__.py
+│   │   └── server.py              ← FastMCP — Resources + Tools wrapping the corpus
+│   ├── pyproject.toml             ← uv project (mcp[cli]>=1.2.0)
+│   ├── .python-version            ← 3.12
+│   └── README.md                  ← full client-config docs (Claude Desktop, Cursor, etc.)
 ├── .github/
 │   ├── workflows/
 │   │   ├── quality.yml            ← CI: markdown-lint + link-check + yaml-schema + actionlint

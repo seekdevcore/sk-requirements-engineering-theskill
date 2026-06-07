@@ -87,3 +87,20 @@ jobs:
         with:
           matcher: true
           fail-on-error: true
+
+  mcp-smoke:
+    name: mcp-smoke
+    runs-on: ubuntu-latest
+    if: github.repository == 'seekdevcore/sk-requirements-engineering-skill'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Sync mcp-server deps
+        working-directory: mcp-server
+        run: uv sync --frozen || uv sync
+      - name: Run smoke test script
+        working-directory: mcp-server
+        run: uv run python tests/smoke.py

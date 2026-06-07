@@ -9,7 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-*No changes yet. New entries will accrue here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.*
+### Added
+
+- **Claude Code plugin manifest** — `.claude-plugin/marketplace.json` + `.claude-plugin/plugin.json` make this repo installable via `/plugin marketplace add seekdevcore/sk-requirements-engineering-skill` followed by `/plugin install engenharia-de-requisitos`. Mirrors the schema used by the `karpathy-skills` and `claude-plugins-official` marketplaces.
+- **MCP server** — `mcp-server/` Python package built with FastMCP (`mcp[cli]>=1.2.0`), exposing the corpus to any MCP-compatible client (Claude Desktop, Cursor, Cline, Continue, Zed, OpenAI Responses API, custom LangChain/LlamaIndex agents). Resources: `requirements://skill`, `requirements://reference/{name}`, `requirements://example/{name}`, `requirements://catalog`. Tools: `list_references()`, `list_examples()`, `list_hard_rules()`, `validate_user_story(title, bdd?)` (INVEST + naming-convention check), `validate_acceptance_criterion(text)` (Interpop AC rule check). Layout: `mcp-server/src/requirements_engineering_mcp/server.py`, `pyproject.toml`, `.python-version` (3.12), and full per-client setup docs in `mcp-server/README.md`.
+- **`mcp-smoke` CI job** — fifth job in `quality.yml` that installs `uv`, syncs `mcp-server/` dependencies, imports the server module, and asserts the corpus is discoverable (10 references + 5 examples found; all tools return non-empty strings; validators run without raising). Prevents regressions where the MCP server compiles but cannot locate the corpus.
+
+### Changed
+
+- **README §Installation** — opens with a 3-row comparison table (Native skill / Plugin marketplace / MCP server) explaining when to use which path. Plugin install (1-liner) and MCP server (with Resources + Tools matrix) added as new top-level sections.
+- **README repository-structure** block updated to list `.claude-plugin/` and `mcp-server/`.
+- **`.gitignore`** — adds `mcp-server/.venv/`, `mcp-server/.pytest_cache/`, `*.egg-info/`, `build/`, `dist/`. (`uv.lock` is intentionally tracked for reproducibility.)
 
 ---
 

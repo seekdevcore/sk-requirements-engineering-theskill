@@ -1,0 +1,25 @@
+{
+  "name": "engenharia-de-requisitos",
+  "description": "Loads canonical knowledge of Requirements Engineering, Business Analysis, and Professional Ethics into any Claude session. Built from the IFPB ERS course material (Prof. Dr. Juliana Dantas Ribeiro Viana de Medeiros) plus the canonical bibliography (Sommerville, Pressman, Wiegers, Cohn, Robertson, Hull, Falbo, BABOK v3, SBC 002/2024). Bilingual: en-CA default + full pt-BR snapshot preserved at translations/pt-BR/.",
+  "version": "1.3.0",
+  "author": {
+    "name": "Gabriel Marques",
+    "url": "https://github.com/GabeMarques-Intetsu"
+  },
+  "license": "CC-BY-SA-4.0",
+  "homepage": "https://github.com/seekdevcore/sk-requirements-engineering-skill",
+  "repository": "https://github.com/seekdevcore/sk-requirements-engineering-skill",
+  "keywords": [
+    "requirements-engineering",
+    "engenharia-de-requisitos",
+    "business-analysis",
+    "bdd",
+    "acceptance-criteria",
+    "user-stories",
+    "planning-poker",
+    "babok",
+    "sommerville",
+    "ifpb"
+  ],
+  "skills": ["./"]
+}

@@ -15,6 +15,13 @@ DRAFT-*
 # Python / generated
 __pycache__/
 *.pyc
+*.egg-info/
+build/
+dist/
+
+# MCP server venv (uv.lock IS committed for reproducibility)
+mcp-server/.venv/
+mcp-server/.pytest_cache/
 
 # Node / generated
 node_modules/
