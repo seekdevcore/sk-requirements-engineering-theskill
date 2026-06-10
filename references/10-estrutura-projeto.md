@@ -89,6 +89,16 @@ requirements/
 
 **ID rule**: `RF-NNN`, `RNF-<slug>`. Immutable after creation. A discontinued requirement becomes `RF-NNN-deprecated.md` — it never disappears (kept for audit).
 
+> ⚠️ **One file per MODULE, not one file per requirement (the most common point of confusion).** Each `RF/`
+> file documents a whole **module** (one Epic / bounded context / app), and is named by its **first**
+> requirement: `RF-01-<module>.md` holds `RF-01..RF-04`; `RF-05-<module>.md` holds `RF-05..RF-08`; and so on.
+> The individual requirements live as `### RF-NN` sections **inside** the file. Therefore a folder listing
+> `RF-01, RF-05, RF-09…` is **not** missing `RF-02/03/04` — those are sections of the first file. **Gaps in the
+> *filenames* are module boundaries (contiguous ranges), never missing requirements.** A reader who counts
+> files counts *modules*; to count requirements, `grep -c '^### RF-' RF/*.md`. (One-file-per-requirement is a
+> valid variant, but the default — and what the scaffolder/Adaptation-protocol assume — is one-file-per-module.
+> The same logic applies to `RNF/`: group by quality attribute or by Sommerville class, not necessarily one file per `RNF-NN`.)
+
 ---
 
 ## 4. `backlog/` — the "WHO does WHAT, WHEN"
