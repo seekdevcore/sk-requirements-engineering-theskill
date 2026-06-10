@@ -60,6 +60,7 @@ jobs:
             --cache
             --max-cache-age 14d
             --exclude-path translations/pt-BR
+            --exclude-path assets/templates
             "**/*.md"
           fail: true
         env:
