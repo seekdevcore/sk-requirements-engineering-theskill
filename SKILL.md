@@ -38,17 +38,23 @@ version: 1.7.0
 
    Verdicts: **GREENFIELD** (no `docs/` spine) · **HAS-STRUCTURE** (already laid out) · **LOOSE-FILES** (stray `RF-*`/`RNF-*`/`EP-*`/`F-*`/… outside their homes) · **LEGACY-MONOLITH** (a single requirements document — e.g. `REQUISITOS*.md`, `requisitos.md`, a filled `template-documento-requisitos.md` — produced by a pre-`docs/` version of this skill and never split into the spine).
 
-3. **Act on the verdict — never stop at "well, it already has a doc":**
+3. **Settle two decisions with the user before scaffolding — infer first, recommend a default, ask only when genuinely ambiguous (never interrogate on obvious cases).** Each is the user's call because each changes the shape of the repository:
+
+   - **(a) `specs/` vs `--no-specs` — this fixes the ADR tiering.** Infer from the §10 decision table ([`references/10-estrutura-projeto.md §10`](references/10-estrutura-projeto.md)): a solo/small project whose features fit in one head → **`--no-specs`** (single-tier ADRs, all in `planning/adrs/`); features spanning ≥3 layers, perf/security-critical, design-first (SDD), or under audit/regulatory pressure → **`--with-specs`** (two-tier ADRs: `planning/adrs/` + `specs/<feature>/adrs/`, one continuous global numbering). Clear signals → state the chosen default and proceed. **Ambiguous → `AskUserQuestion`**, because the choice decides where *every future ADR* lives. ⚠️ The scaffolder defaults to `--with-specs`; pass `--no-specs` explicitly when the lighter layout was chosen.
+
+   - **(b) Backfill of undocumented work — ONLY on an existing project (HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH), never greenfield.** When the project already has code/features that shipped *without* the RE documentation this skill defines, **`AskUserQuestion`** whether to **backfill** it: retroactively write the `RF`/`RNF` for what already exists, the Epics/Features for what already shipped, and wire `RF ↔ EP ↔ F` both ways ([`references/10-estrutura-projeto.md §9 Step 2.7`](references/10-estrutura-projeto.md)). Backfill can be large, so offer the scope explicitly: **(1)** full backfill of all undone documentation now · **(2)** seed only the parts the current task touches · **(3)** structure only, backfill later. Recommend **(2)** unless the user wants a complete retroactive map. Greenfield has nothing to backfill — skip this question entirely.
+
+4. **Act on the verdict — never stop at "well, it already has a doc"** (run `--apply` with the flag chosen in 3a):
 
    | Verdict | Mandatory action |
    |---|---|
-   | **GREENFIELD** | `bash "$SC" --apply` → create the standard structure, then adapt the seeds (§9). |
-   | **HAS-STRUCTURE** | Re-apply (idempotent) to fill only gaps; never overwrite. |
-   | **LOOSE-FILES** | Re-apply → auto-reorganizes the stray files into the tree (ref §8). |
-   | **LEGACY-MONOLITH** | **Migrate.** Scaffold the structure, then **split** the monolithic document into per-module `RF-*` / `RNF-*` files, personas, and glossary — keeping the original monolith as a consolidated overview that links *into* the split. This is the upgrade path for any project built by a pre-structure version of the skill. |
+   | **GREENFIELD** | `bash "$SC" --apply` (± `--with-specs`/`--no-specs` per 3a) → create the standard structure, then adapt the seeds (§9). No backfill (nothing pre-existing). |
+   | **HAS-STRUCTURE** | Re-apply (idempotent) to fill only gaps; never overwrite. Offer backfill (3b) for undocumented existing work. |
+   | **LOOSE-FILES** | Re-apply → auto-reorganizes the stray files into the tree (ref §8). Offer backfill (3b). |
+   | **LEGACY-MONOLITH** | **Migrate.** Scaffold, then **split** the monolithic document into per-module `RF-*` / `RNF-*` files, personas, and glossary — keeping the original monolith as a consolidated overview that links *into* the split. Offer backfill (3b) for code/features that shipped beyond what the monolith documents. Upgrade path for any pre-structure project. |
 
-4. **Adapt the generic seeds to THIS project** (Adaptation protocol, [`references/10-estrutura-projeto.md §9`](references/10-estrutura-projeto.md)): one `RF` per real module, personas from real roles, glossary from real domain entities, only the RNFs that apply (quantitative). **Never commit placeholder files** (`<...>`, `RF-NNN`, `EP-NN`).
-5. **Only now** proceed to whatever the user asked — elicitation, a new feature, a backlog refinement. The structure already exists to receive it.
+5. **Adapt the generic seeds to THIS project** (Adaptation protocol, [`references/10-estrutura-projeto.md §9`](references/10-estrutura-projeto.md)): one `RF` per real module, personas from real roles, glossary from real domain entities, only the RNFs that apply (quantitative). **Never commit placeholder files** (`<...>`, `RF-NNN`, `EP-NN`).
+6. **Only now** proceed to whatever the user asked — elicitation, a new feature, a backlog refinement. The structure already exists to receive it.
 
 > **Migration trigger (the exact bug this section closes).** If a project contains requirements as a **single loose file** *and* has **no `docs/` spine**, you are looking at output from a version of this skill that predated the on-disk structure. The correct response is to run the migration in step 3 **immediately and automatically** — not to ask "do you want a structure?". The absence of the spine is the trigger.
 

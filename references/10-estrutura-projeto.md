@@ -312,7 +312,7 @@ The scaffolder drops **generic, placeholder-filled** templates. They are a skele
 4. **Glossary from entities**: seed `glossario.md` with the recurring domain nouns (alphabetical), each defined in business language.
 5. **RNFs that actually apply**: instantiate only the `RNF-<slug>.md` the project needs (perf, security, a11y, privacy, availability…), each with **quantitative** targets pulled from real budgets/gates.
 6. **Reorganize** loose pre-existing artifacts into the tree (the scaffolder moves files; you fix the cross-links — §8 checklist).
-7. **Backfill traceability** where history allows: if Epics/Features already shipped, write them retroactively and link `RF ↔ EP ↔ F` both ways.
+7. **Backfill traceability** where history allows: if Epics/Features already shipped, write them retroactively and link `RF ↔ EP ↔ F` both ways. On an **existing** project, this backfill is **offered to the user as an explicit first-run question** ([`SKILL.md §0 step 3b`](../SKILL.md)) — full backfill now / seed only what the current task touches / structure-only-now — because it can be a large effort and is the user's call (greenfield has nothing to backfill).
 
 ### Step 3 — Create the default (greenfield, nothing to analyze)
 
@@ -331,6 +331,8 @@ A committed file still containing `<...>`, `RF-NNN`, `EP-NN`, or `# Requisitos �
 ---
 
 ## 10. Decision: do you need `specs/`?
+
+> **This decision is surfaced at first-run** ([`SKILL.md §0 step 3a`](../SKILL.md)): it is genuinely the user's call because it **fixes the ADR tiering** — `--no-specs` keeps ADRs single-tier (`planning/adrs/`), `--with-specs` makes them two-tier (`planning/adrs/` + `specs/<feature>/adrs/`). Infer from the signals below; recommend the default; **ask the user only when the signals are ambiguous**. ⚠️ The scaffolder defaults to `--with-specs` — pass `--no-specs` explicitly for the lighter layout.
 
 | Signal | Recommendation |
 |---|---|
