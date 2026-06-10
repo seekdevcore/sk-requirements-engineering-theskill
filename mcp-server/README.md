@@ -13,7 +13,7 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 | URI | Content |
 |---|---|
 | `requirements://skill` | `SKILL.md` — 10-section entry-point map |
-| `requirements://reference/{name}` | One of the 10 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`) |
+| `requirements://reference/{name}` | One of the 11 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`, `10-estrutura-projeto`) |
 | `requirements://example/{name}` | One of the 5 `examples/` files (cases + templates + ready-to-copy Gherkin) |
 | `requirements://catalog` | JSON catalog of every available document — useful for enumerating without parsing markdown |
 
