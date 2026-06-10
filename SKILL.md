@@ -5,8 +5,8 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md, README.md, CHANGELOG.md), references/ (10 files), and examples/ (5 files) all translated. Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — full snapshot preserved at translations/pt-BR/
+  en-CA: complete — entry point (SKILL.md, README.md, CHANGELOG.md), references/ (11 files, incl. 10-estrutura-projeto.md), examples/ (5 files), and assets/scaffold-structure.sh. Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: complete — full snapshot preserved at translations/pt-BR/ (references/10 + scaffolder pending pt-BR mirror; English reference + pt-BR seed content already usable)
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
@@ -33,6 +33,7 @@ Invoke **before**:
 - Deciding between build vs. buy (feasibility study)
 - Eliciting non-functional requirements (performance, security, usability, accessibility, regulatory compliance)
 - Discussing traceability between requirement ↔ test ↔ code
+- Setting up or **reorganizing the on-disk documentation structure** of a project (`requirements/` + `backlog/` + `specs/` + ADRs) — see [references/10-estrutura-projeto.md](references/10-estrutura-projeto.md) + the scaffolder [assets/scaffold-structure.sh](assets/scaffold-structure.sh)
 - Supporting business analysis (mapping AS-IS, designing TO-BE)
 - Decisions with an ethical component: privacy, ML/AI, system decommissioning, failure to design for inclusion
 
@@ -194,6 +195,20 @@ PROJECT (= repository/context in OpenProject — NOT an EPIC)
 - 📋 [`examples/template-backlog-openproject.md`](examples/template-backlog-openproject.md) — complete backlog with *"Busca Editorial Interpop"* filled in + *"Cadastro de Atletas"* showing 4 levels of Epic
 - 📋 [`examples/template-documento-requisitos.md`](examples/template-documento-requisitos.md) — requirements document (IEEE 830 + Sommerville + Wiegers)
 - 🎬 [`examples/template-user-story.feature`](examples/template-user-story.feature) — ready Gherkin file with 4 scenarios + Scenario Outline + sample step definitions (Python + TypeScript)
+
+**On-disk project structure (folders, not just files) + scaffolder:**
+
+The templates above (in `examples/`) are single Interpop-filled files. To lay out an entire **repository** so the traceability spine is physical — everything under one root named **`docs/`**: `requirements/` (the *why/what*) · `backlog/` (the *who/what/when*) · `specs/` (the *how*, SDD) · two-tier ADRs (`planning/adrs/` project-level + `specs/<feature>/adrs/` feature-level, **one continuous global numbering**) — read [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md). It documents each folder's purpose, the two-tier ADR scheme, **how to adopt/reorganize**, and the **Adaptation protocol** (§9) — analyze the host project's modules/roles/domain and fit the generic templates to it (or create the default when greenfield).
+
+Two template layers: [`examples/`](examples/) = Interpop-filled *concrete reference*; [`assets/templates/`](assets/templates/) = **generic, adaptive** templates the scaffolder materializes. The scaffolder [`assets/scaffold-structure.sh`](assets/scaffold-structure.sh) runs **detect → create → reorganize** every time (root defaults to `docs/`; dry-run by default; never overwrites; auto-reorganizes loose files via `git mv`):
+
+```bash
+SC=assets/scaffold-structure.sh
+bash "$SC"                       # detect + preview (touches nothing)
+bash "$SC" --with-specs --apply  # create/fill/reorganize, with SDD (idempotent)
+bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs)
+# then follow the Adaptation protocol (ref §9): fill the seeds with THIS project's reality
+```
 
 **Critical distinction Feature ↔ User Story** (hard rule — anti-pattern "Feature with BDD" in [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):
 
