@@ -513,3 +513,4 @@ Multiple scenarios per User Story, prose description for the Feature, ACs in bet
 - **How to estimate US with ACs+BDD ready**: [05-estimativa.md](05-estimativa.md)
 - **How to validate (review ACs + prototype + Gherkin)**: [06-validacao.md](06-validacao.md)
 - **AC → BDD → code → test traceability**: [07-mudanca-rastreabilidade.md](07-mudanca-rastreabilidade.md)
+- **EARS — optional precise phrasing that feeds BDD** (`WHEN/QUANDO … THE SYSTEM SHALL/O SISTEMA DEVE …`): [11-ears.md](11-ears.md)

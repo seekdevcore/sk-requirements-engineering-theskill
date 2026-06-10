@@ -13,7 +13,7 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 | URI | Content |
 |---|---|
 | `requirements://skill` | `SKILL.md` — 10-section entry-point map |
-| `requirements://reference/{name}` | One of the 11 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`, `10-estrutura-projeto`) |
+| `requirements://reference/{name}` | One of the 12 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`, `10-estrutura-projeto`, `11-ears`) |
 | `requirements://example/{name}` | One of the 5 `examples/` files (cases + templates + ready-to-copy Gherkin) |
 | `requirements://catalog` | JSON catalog of every available document — useful for enumerating without parsing markdown |
 
@@ -25,7 +25,8 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 | `list_examples()` | Returns titles + 1-paragraph summaries of every example |
 | `list_hard_rules()` | Returns the 10 *"Interpop"* hard rules (non-negotiable backlog conventions) |
 | `validate_user_story(title, bdd?)` | INVEST + naming-convention check; optional BDD structural check |
-| `validate_acceptance_criterion(text)` | AC convention check: `[...]` rule, imperative wording, no qualitative adjectives, no technical terms |
+| `validate_acceptance_criterion(text)` | AC convention check: `[...]` rule, imperative wording, no qualitative adjectives, no technical terms; hints EARS phrasing when relevant |
+| `validate_ears(text)` | EARS check (reference 11, optional layer): exactly one `SHALL`/`DEVE`, no weak modals, measurable response, EARS structural keyword present (EN + pt-BR) |
 
 ---
 

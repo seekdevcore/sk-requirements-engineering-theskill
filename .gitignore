@@ -28,3 +28,10 @@ node_modules/
 
 # Anthropic Claude Code local state (per-skill)
 .claude-cache/
+
+# Local-only source material + working drafts — NEVER tracked.
+# Holds the primary corpus (IFPB ERS course slides, Sommerville 10e, SBC ethics PDF)
+# and maintainer working docs (plans, analyses). Excluded for two reasons:
+#   1) Copyright — the slides/book are third-party material, not redistributable.
+#   2) Size — the Sommerville 10e PDF alone is ~140MB.
+docs/

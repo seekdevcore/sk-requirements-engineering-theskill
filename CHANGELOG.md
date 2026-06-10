@@ -13,6 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.0] — 2026-06-10
+
+Adds **EARS** (Easy Approach to Requirements Syntax) as an **optional precision layer** and aligns the skill with the 2026 Spec-Driven Development vocabulary — both additive, neither regressing the v1.7.0 structure work. Driven by an external benchmark (kept locally) against AWS *Kiro* / GitHub *Spec Kit*; the recommended "slim SKILL.md replacement" from that analysis was **rejected** (it would have regressed §0 and introduced a wrong `docs/adr/` path) in favour of a conservative, additive change.
+
+### Added
+
+- **`references/11-ears.md`** — new reference on **EARS**, framed as an **opt-in precision layer** that *coexists with* (never replaces) the business-language pt-BR `RF` + BDD. Covers the five patterns (Ubiquitous / Event-driven / State-driven / Unwanted-behavior / Optional) in **both EN (`THE SYSTEM SHALL`) and pt-BR (`O SISTEMA DEVE`, `QUANDO`/`ENQUANTO`/`SE…ENTÃO`/`ONDE`)**, the `RF → EARS → CA → Gherkin` pipeline (CA IDs follow the `CANN` convention — corrected from the draft's `CA-NN.M`), an anti-patterns checklist, a "when NOT to use" section, and a note that **EARS lives in the RF body / CA, never in the business title** (naming rule 2).
+- **`SKILL.md` §3.1 — "Alignment with Spec-Driven Development (Requirements → Design → Tasks)"**: a **traceability alignment** (not a waterfall gate) mapping the artifacts the skill already produces to the SDD vocabulary — Requirements ↔ `docs/requirements/`+`docs/backlog/`, Design ↔ the two-tier ADRs (`docs/planning/adrs/` + `docs/specs/<feature>/adrs/`), Tasks ↔ `T`/`TX`. Explicitly keeps the agile/iterative spiral and the `docs/planning/adrs/` path (the rejected draft's flat `docs/adr/` was **not** adopted).
+- **`mcp-server` — `validate_ears(text)` tool**: flags EARS violations (missing or multiple `SHALL`/`DEVE`, weak modals `should/must/will`/`deveria/pode`, subjective/non-measurable response, missing EARS structural keyword, EARS leaking into a title). EN + pt-BR aware, advisory (matching EARS's optional nature). `validate_acceptance_criterion` now emits an EARS hint when relevant. Verified: `py_compile` clean; smoke test green (references `11 → 12`); manual good/bad cases pass.
+
+### Changed
+
+- **`SKILL.md`**: §5 Phase B gained an "EARS — optional precision layer" subsection pointing to `references/11-ears.md`; frontmatter `description` gained the EARS trigger (EN + pt-BR); `content_status` updated (references `11 → 12`, §3.1 noted).
+- **`README.md`**: reference count `11 → 12` + `11-ears.md` listed; `references/04-bdd-criterios-aceitacao.md` cross-links to EARS.
+- **`mcp-server/README.md`** + **`tests/smoke.py`**: reference count `11 → 12`; `validate_ears` documented in the tools table.
+- **`.gitignore`** + **`CONTRIBUTING.md`**: the primary source material (IFPB ERS slides, Sommerville 10e PDF ~140MB, SBC ethics PDF) and maintainer working docs now live **locally only** under a git-ignored `docs/` (`docs/material-fonte/`), excluded for **copyright** and **size**. The skill cites the corpus bibliographically; it does not depend on the files being in the repo. Documented as a maintainer note in CONTRIBUTING §2.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.7.0 → 1.8.0`.
+
+---
+
 ## [1.7.0] — 2026-06-10
 
 Makes the on-disk structure (added in v1.6.0) **mandatory and automatic** instead of one optional trigger among many. The root cause this release fixes: when the skill was applied to a project, it would happily produce a loose `REQUISITOS_UNIFICADO.md` and **never build the `docs/` traceability spine**, and a project upgrading from a pre-`docs/` version was silently misclassified as GREENFIELD — its existing monolithic requirements doc ignored. The structure check is now the **first action** the skill takes on any project (§0), and the scaffolder gained a fourth detection verdict to recognize legacy monoliths.

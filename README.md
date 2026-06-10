@@ -22,7 +22,7 @@
 
 | Language | Status | Current content |
 |---|---|---|
-| **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (11 files), [`examples/`](./examples/) (5 files), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
+| **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (12 files), [`examples/`](./examples/) (5 files), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
 | **pt-BR** | 🟢 Complete | **Full snapshot preserved at [`translations/pt-BR/`](./translations/pt-BR/)** — the original source, *"IFPB"* course taught in Portuguese. Authoritative for compliance/audit reference. |
 
 > **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
@@ -196,7 +196,8 @@ engenharia-de-requisitos/
 │   ├── 07-mudanca-rastreabilidade.md  (change management, RTM, enduring vs volatile requirements)
 │   ├── 08-analista-negocios.md    (BABOK, AS-IS/TO-BE, MoSCoW, RICE, Kano)
 │   ├── 09-etica-sbc.md            (SBC 002/2024 Code applied to RE)
-│   └── 10-estrutura-projeto.md    (on-disk structure: requirements/+backlog/+specs/+two-tier ADRs; detect→create→reorganize; LEGACY-MONOLITH migration)
+│   ├── 10-estrutura-projeto.md    (on-disk structure: requirements/+backlog/+specs/+two-tier ADRs; detect→create→reorganize; LEGACY-MONOLITH migration)
+│   └── 11-ears.md                 (EARS — optional precision layer; 5 patterns EN/pt-BR; RF→EARS→CA→Gherkin)
 ├── assets/
 │   ├── scaffold-structure.sh      (detect → create → reorganize scaffolder; GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH)
 │   └── templates/                 (generic, adaptive template tree the scaffolder materializes)

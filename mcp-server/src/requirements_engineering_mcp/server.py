@@ -371,6 +371,95 @@ def validate_acceptance_criterion(text: str) -> str:
     else:
         findings.append("✅ **Rule 2 (no technical terms)** — AC stays in business language.")
 
+    # EARS hint (optional precision layer — reference 11)
+    if not re.search(r"\b(shall|deve|when|while|if|where|quando|enquanto|se|onde)\b", text, flags=re.IGNORECASE):
+        findings.append(
+            "💡 **EARS (optional)** — for an unambiguous, AI-parseable phrasing, consider EARS in the "
+            "requirement body (`WHEN/QUANDO … THE SYSTEM SHALL/O SISTEMA DEVE …`). Run `validate_ears(text)`."
+        )
+
+    return "\n".join(findings)
+
+
+@mcp.tool()
+def validate_ears(text: str) -> str:
+    """Validate an EARS statement (reference 11 — optional precision layer).
+
+    EARS (Easy Approach to Requirements Syntax) phrases a requirement as one of five
+    templates around a single obligation keyword `SHALL` (EN) / `DEVE` (pt-BR):
+      - Ubiquitous:      THE SYSTEM SHALL / O SISTEMA DEVE ...
+      - Event-driven:    WHEN/QUANDO <trigger> THE SYSTEM SHALL/O SISTEMA DEVE ...
+      - State-driven:    WHILE/ENQUANTO <state> ...
+      - Unwanted:        IF/SE <condition> THEN/ENTÃO ...
+      - Optional:        WHERE/ONDE <feature> ...
+
+    Advisory only — EARS is opt-in and coexists with business-language `RF` + BDD.
+    Checks: exactly one obligation keyword, no weak modals, no subjective adjectives,
+    an EARS structural keyword is present, and EARS keywords do not leak into a title.
+    """
+    findings: list[str] = []
+    lowered = text.lower()
+
+    # 1) Exactly one obligation keyword (SHALL / DEVE)
+    obligations = re.findall(r"\b(shall|deve|deverá|devem)\b", text, flags=re.IGNORECASE)
+    if len(obligations) == 0:
+        findings.append(
+            "❌ **Obligation keyword** — no `SHALL`/`DEVE` found. An EARS statement needs exactly "
+            "one obligation keyword (`THE SYSTEM SHALL …` / `O SISTEMA DEVE …`)."
+        )
+    elif len(obligations) > 1:
+        findings.append(
+            f"❌ **One behaviour per statement** — found {len(obligations)} obligation keywords "
+            f"(`{', '.join(o.lower() for o in obligations)}`). Two `SHALL`/`DEVE` = two requirements; split them."
+        )
+    else:
+        findings.append("✅ **Obligation keyword** — exactly one `SHALL`/`DEVE`.")
+
+    # 2) Weak modals instead of SHALL/DEVE
+    weak = [w for w in ["should", "must", "will", "deveria", "poderá", "pode", "irá", "vai"]
+            if re.search(rf"\b{re.escape(w)}\b", text, flags=re.IGNORECASE)]
+    if weak:
+        findings.append(
+            f"⚠️ **Weak modal** — found `{', '.join(weak)}`. EARS uses the obligation `SHALL`/`DEVE`, "
+            "never `should/must/will` / `deveria/pode/irá`."
+        )
+    else:
+        findings.append("✅ **No weak modals**.")
+
+    # 3) Subjective / non-measurable response
+    subjective = [
+        "amigável", "intuitivo", "fácil", "bonito", "rápido", "rapidamente",
+        "friendly", "intuitive", "easy", "nice", "fast", "modern", "responsivo",
+    ]
+    leaked = [s for s in subjective if re.search(rf"\b{re.escape(s)}\b", lowered)]
+    if leaked:
+        findings.append(
+            f"❌ **Measurable response** — found subjective term(s): `{', '.join(leaked)}`. "
+            "The response after `SHALL`/`DEVE` must be an observable, measurable outcome."
+        )
+    else:
+        findings.append("✅ **Measurable response** — no subjective adjectives.")
+
+    # 4) An EARS structural keyword is present (else it may just be prose)
+    structural = re.search(
+        r"\b(when|while|if|then|where|the system|quando|enquanto|se|então|onde|o sistema)\b",
+        text, flags=re.IGNORECASE,
+    )
+    if structural:
+        findings.append("✅ **EARS structure** — a recognized keyword is present.")
+    else:
+        findings.append(
+            "⚠️ **EARS structure** — no `WHEN/WHILE/IF/WHERE/THE SYSTEM` (or `QUANDO/ENQUANTO/SE/ONDE/"
+            "O SISTEMA`) keyword detected. If this is event/state/error behaviour, add the trigger clause."
+        )
+
+    # 5) EARS keywords must not land in a business title (heuristic: a short single line in a title-like form)
+    if re.match(r"^\s*(RF|RNF)[- ]?\d", text, flags=re.IGNORECASE) and structural and len(text.splitlines()) == 1:
+        findings.append(
+            "ℹ️ **Reminder** — EARS belongs in the requirement **body**, never in the business-language "
+            "title (naming rule 2). Keep the catalog title jargon-free."
+        )
+
     return "\n".join(findings)
 
 
