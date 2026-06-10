@@ -313,7 +313,7 @@ Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business ru
    - 🔴 **Immediate** — blocks other items; must be done in the current sprint
    - 🟠 **High** — current sprint or next
    - 🟡 **Normal** — prioritized backlog
-   - ⚪ **Low** — nice to have, no deadline
+   - 🟢 **Low** — nice to have, no deadline
 
    > MoSCoW (Must/Should/Could/Won't) is a theoretical equivalent, but the *"Interpop"* team uses Immediate/High/Normal/Low. Use this scale in this author's Brazilian projects.
 
@@ -425,7 +425,7 @@ Before accepting Epic/Feature/US in the backlog:
 - [ ] Title **does NOT contain technical terms** (no `endpoint`/`hook`/`migration`/`API`/`schema`/`config`)
 - [ ] Title in **plain language** readable by a non-technical stakeholder
 - [ ] Item **is customer-deliverable** (if it is a technical configuration, move it to a cross-cutting Task `TX-NN`)
-- [ ] Priority declared (🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low)
+- [ ] Priority declared (🔴 Immediate / 🟠 High / 🟡 Normal / 🟢 Low)
 - [ ] **Feature** has a **paragraph description** · **User Story** has **BDD `Given/When/Then`** (do not swap)
 - [ ] Every User Story has **explicitly associated ACs** (traceable relation)
 - [ ] Every Task has a **Task ID** (`TNN.M.K` or `TX-NN`) so it appears in commit/PR

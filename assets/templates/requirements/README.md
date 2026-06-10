@@ -50,7 +50,7 @@ requirements/
 
 - **Linguagem de negócio**. Sem verbo no infinitivo no título; sem termo técnico (jargão fica em ADRs/specs).
 - **IDs imutáveis**: `RF-NNN`, `RNF-<slug>`. Descontinuado → `RF-NNN-deprecated.md` (não some).
-- **Prioridade**: 🔴 Imediato · 🟠 Alta · 🟡 Normal · ⚪ Baixa.
+- **Prioridade**: 🔴 Imediato · 🟠 Alta · 🟡 Normal · 🟢 Baixa.
 - **RNF é sempre quantitativo** — "rápido" é desejo; "p95 ≤ 300ms" é requisito.
 - Cada arquivo tem `## Realizado por` (Epics/Features que o executam).
 

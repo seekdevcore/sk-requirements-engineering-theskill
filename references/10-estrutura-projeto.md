@@ -78,7 +78,7 @@ requirements/
 
 **RF file anatomy** (see the full *"Interpop"* example `RF-007`):
 
-- Header block: `Tipo` · `Prioridade` (🔴/🟠/🟡/⚪) · `Status`.
+- Header block: `Tipo` · `Prioridade` (🔴/🟠/🟡/🟢) · `Status`.
 - `## Enunciado de negócio` — one quoted paragraph, pt-BR business language, **no technical term** (`SKILL.md §5 naming rule 2`).
 - `## Justificativa` — why the requirement exists (product impact, KPI).
 - `## Realizado por (↓)` — table of Epics/Features executing it (bidirectional link down).

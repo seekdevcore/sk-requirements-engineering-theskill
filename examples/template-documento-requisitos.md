@@ -24,7 +24,7 @@
 3. **Every rule is testable**. If the sentence contains vague adjectives ("fast", "friendly", "intuitive", "robust"), it is not a requirement — it is a wish. Rewrite with a metric or observable behaviour.
 4. **Stable IDs** (`RF-NN`, `RNF-NN`, `G-NN`). IDs do not change when content evolves — only the version does.
 5. **Every RF/RNF declares a source** (stakeholder, normative document, observation) — to validate and justify in review.
-6. **Every RF/RNF declares a priority** (🔴 Immediate, 🟠 High, 🟡 Normal, ⚪ Low) — so the backlog inherits the order.
+6. **Every RF/RNF declares a priority** (🔴 Immediate, 🟠 High, 🟡 Normal, 🟢 Low) — so the backlog inherits the order.
 
 ---
 
@@ -344,7 +344,7 @@ Os temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital) são de
 
 - [ ] Does every RF/RNF/G have a **description** in pt-BR without technical terms (no URL, no method name, no table name)?
 - [ ] Does every RF/RNF/G have a **declared source** (who asked, when)?
-- [ ] Does every RF/RNF/G have a **priority** (🔴/🟠/🟡/⚪)?
+- [ ] Does every RF/RNF/G have a **priority** (🔴/🟠/🟡/🟢)?
 - [ ] Have vague adjectives ("fast", "friendly", "intuitive", "robust") been replaced by **a metric or observable behaviour**?
 - [ ] Are constraints, assumptions, and dependencies **explicit** (§3.3, §3.4)?
 - [ ] Are stakeholders identified by Wiegers's 5 criteria (§4)?

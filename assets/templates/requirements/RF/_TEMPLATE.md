@@ -2,7 +2,7 @@
 # RF-NNN — <título de negócio, sem infinitivo, sem termo técnico>
 
 > **Tipo**: Requisito Funcional
-> **Prioridade**: 🔴 Imediato | 🟠 Alta | 🟡 Normal | ⚪ Baixa
+> **Prioridade**: 🔴 Imediato | 🟠 Alta | 🟡 Normal | 🟢 Baixa
 > **Status**: 📝 Proposto | 🚧 Parcial | ✅ Realizado | 🗄️ Deprecated
 
 ---

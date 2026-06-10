@@ -494,7 +494,7 @@ Regras a serem aplicadas:
 - [ ] Is every AC **inside a `CA - <Theme>` group** (even Features with only 1 AC)?
 - [ ] Is the Epic **nested** when the domain has sub-classifications?
 - [ ] Is every cross-cutting Task in **`TX-NN`**, outside the Epic/Feature/US hierarchy?
-- [ ] **Priority** (🔴/🟠/🟡/⚪) on every node?
+- [ ] **Priority** (🔴/🟠/🟡/🟢) on every node?
 - [ ] **Stable IDs** (not renumbered on later changes)?
 - [ ] **Traceability** RF/RNF → Feature → US → AC → BDD → Task → Test **complete** for each Feature?
 - [ ] **Falbo validation** filled with a 1-line justification per dimension?

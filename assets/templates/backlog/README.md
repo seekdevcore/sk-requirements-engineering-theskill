@@ -42,7 +42,7 @@ backlog/
 
 ## Prioridade
 
-🔴 Imediato (bloqueia MVP/security) · 🟠 Alta (release atual) · 🟡 Normal (próxima sprint) · ⚪ Baixa.
+🔴 Imediato (bloqueia MVP/security) · 🟠 Alta (release atual) · 🟡 Normal (próxima sprint) · 🟢 Baixa.
 
 ## Definition of Done de Feature
 

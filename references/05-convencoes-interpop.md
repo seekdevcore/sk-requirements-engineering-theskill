@@ -105,7 +105,7 @@ Use the *"Interpop"* scale on every Epic, Feature, US, and Task:
 | 🔴 | **Immediate** | Blocks other items; current sprint, mandatory |
 | 🟠 | **High** | Current sprint or the next |
 | 🟡 | **Normal** | Prioritized backlog |
-| ⚪ | **Low** | Nice to have, no deadline |
+| 🟢 | **Low** | Nice to have, no deadline |
 
 > **Theoretical equivalence with MoSCoW** (Wiegers/Cohn): Must = Immediate · Should = High · Could = Normal · Won't = Low. But in *"Interpop"* **use the Immediate/High/Normal/Low scale** — it is the one in the tools (OpenProject) and the one the team consumes.
 
@@ -227,14 +227,14 @@ git commit -m "fix(search): corrige race em cursor [CA02]"
 # Backlog — <Feature/Module in pt-BR>
 
 > Hierarchy: Epic → Feature → AC · US → BDD · Task
-> Conventions: pt-BR without infinitive · no technical terms in Epic/Feature/US · Feature has description · US has BDD · priorities 🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low on every node
+> Conventions: pt-BR without infinitive · no technical terms in Epic/Feature/US · Feature has description · US has BDD · priorities 🔴 Immediate / 🟠 High / 🟡 Normal / 🟢 Low on every node
 
 ## 🟦 EP-NN <Descriptive pt-BR title, no infinitive>
 
 | Field | Value |
 |---|---|
 | ID | EP-NN |
-| Priority | 🔴 / 🟠 / 🟡 / ⚪ |
+| Priority | 🔴 / 🟠 / 🟡 / 🟢 |
 | Status | New / Refining / Ready / In Progress / Review / Done |
 | Target sprint | Sprint X (and Sprint Y, if it spans) |
 | Description | <explicit pt-BR paragraph, no technical terms> |
@@ -457,7 +457,7 @@ Before accepting a `BACKLOG.md`, run this mental grep:
 - [ ] Do ACs with sub-rules end with **`[...]`** and have `Regras a serem aplicadas:` in the body? Are ACs without `[...]` self-sufficient in the title?
 - [ ] Is **the Epic nested** when the domain has sub-classifications (module → group → operation)?
 - [ ] Does the **backlog have multiple sibling root Epics** (independent project fronts) rather than a single "project-Epic" as the grandparent of everything? (Rule 9)
-- [ ] Is any node **without declared priority**? If yes → assign 🔴/🟠/🟡/⚪.
+- [ ] Is any node **without declared priority**? If yes → assign 🔴/🟠/🟡/🟢.
 - [ ] Does each US have **explicitly associated ACs** (traceability)?
 - [ ] Do IDs follow the pattern (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN` — nested Epic: `EP-NN.M`)?
 
