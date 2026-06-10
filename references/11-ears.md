@@ -62,21 +62,27 @@ Patterns **combine** (the "complex" requirement): keywords stack in the order
 Examples are drawn from the *"Interpop"* domain (editorial moderation) to stay consistent with `examples/`.
 
 ### 3.1 Ubiquitous — standing property
+
 ```
 RF-12  O SISTEMA DEVE armazenar senhas com hash Argon2id (fator de trabalho >= 3).
 RNF-04 O SISTEMA DEVE servir todo artigo publicado sobre HTTPS.
 ```
+
 Maps to an invariant CA — often a security/lint check rather than a behavioral scenario.
 
 ### 3.2 Event-driven — `QUANDO … O SISTEMA DEVE`
+
 The most common pattern: a discrete trigger produces a response.
+
 ```
 RF-21  QUANDO um editor submete um artigo para revisão
        O SISTEMA DEVE mover o artigo para a fila "pending-moderation".
 RF-22  QUANDO um moderador aprova um artigo pendente
        O SISTEMA DEVE publicá-lo e notificar o autor.
 ```
+
 Maps almost directly to Gherkin:
+
 ```gherkin
 Funcionalidade: Submissão para moderação
   Cenário: Artigo enviado entra na fila
@@ -85,7 +91,9 @@ Funcionalidade: Submissão para moderação
 ```
 
 ### 3.3 State-driven — `ENQUANTO … O SISTEMA DEVE`
+
 Behavior that must hold for the *duration* of a state, not just at an instant.
+
 ```
 RF-30  ENQUANTO uma conta de usuário está suspensa
        O SISTEMA DEVE rejeitar todas as ações de publicar e comentar dessa conta.
@@ -94,8 +102,10 @@ RF-31  ENQUANTO a plataforma está em modo de manutenção somente-leitura
 ```
 
 ### 3.4 Unwanted behavior — `SE … ENTÃO O SISTEMA DEVE`
+
 Reserved for errors, faults, and edge cases — the part most often forgotten in prose, and the highest-value
 addition EARS brings.
+
 ```
 RF-40  SE um moderador tenta aprovar um artigo que foi excluído
        ENTÃO O SISTEMA DEVE rejeitar a ação e exibir "artigo não existe mais".
@@ -104,13 +114,16 @@ RF-41  SE o login falha 5 vezes em 10 minutos
 ```
 
 ### 3.5 Optional feature — `ONDE … O SISTEMA DEVE`
+
 Behavior that exists only when a feature/config is present (multi-tenant / white-label).
+
 ```
 RF-50  ONDE o módulo white-label está habilitado
        O SISTEMA DEVE servir o domínio custom do tenant via delegação CNAME.
 ```
 
 ### 3.6 Complex (combined)
+
 ```
 RF-60  ENQUANTO uma assinatura está ativa
        QUANDO a data de renovação é atingida
