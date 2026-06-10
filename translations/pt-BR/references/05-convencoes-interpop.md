@@ -102,7 +102,7 @@ Use a escala Interpop em todo Epic, Feature, US e Task:
 | 🔴 | **Immediate** | Bloqueia outros itens; sprint atual obrigatoriamente |
 | 🟠 | **High** | Sprint atual ou próxima |
 | 🟡 | **Normal** | Backlog priorizado |
-| ⚪ | **Low** | Nice to have, sem deadline |
+| 🟢 | **Low** | Nice to have, sem deadline |
 
 > **Equivalência teórica com MoSCoW** (Wiegers/Cohn): Must = Immediate · Should = High · Could = Normal · Won't = Low. Mas no Interpop **use a escala Immediate/High/Normal/Low** — é a que está nas ferramentas (OpenProject) e a que o time consome.
 
@@ -223,14 +223,14 @@ git commit -m "fix(search): corrige race em cursor [CA02]"
 # Backlog — <Feature/Módulo em pt-BR>
 
 > Hierarquia: Epic → Feature → CA · US → BDD · Task
-> Convenções: pt-BR sem infinitivo · sem termos técnicos em Epic/Feature/US · Feature tem descrição · US tem BDD · prioridades 🔴 Immediate / 🟠 High / 🟡 Normal / ⚪ Low em todos os nós
+> Convenções: pt-BR sem infinitivo · sem termos técnicos em Epic/Feature/US · Feature tem descrição · US tem BDD · prioridades 🔴 Immediate / 🟠 High / 🟡 Normal / 🟢 Low em todos os nós
 
 ## 🟦 EP-NN <Título descritivo em pt-BR sem infinitivo>
 
 | Campo | Valor |
 |---|---|
 | ID | EP-NN |
-| Prioridade | 🔴 / 🟠 / 🟡 / ⚪ |
+| Prioridade | 🔴 / 🟠 / 🟡 / 🟢 |
 | Status | New / Refining / Ready / In Progress / Review / Done |
 | Sprint alvo | Sprint X (e Sprint Y, se cruzar) |
 | Descrição | <parágrafo em pt-BR explícito, sem termos técnicos> |
@@ -447,7 +447,7 @@ Antes de aceitar um `BACKLOG.md`, rode este grep mental:
 - [ ] CAs com sub-regras encerram com **`[...]`** e têm `Regras a serem aplicadas:` no corpo? CAs sem `[...]` são autossuficientes no título?
 - [ ] **Epic está aninhado** quando o domínio tem sub-classificações (módulo → grupo → operação)?
 - [ ] **Backlog tem múltiplos Epics-raiz irmãos** (frentes independentes do projeto) em vez de um único "Epic-projeto" como avô de tudo? (Regra 9)
-- [ ] Algum nó **sem prioridade declarada**? Se sim → atribuir 🔴/🟠/🟡/⚪.
+- [ ] Algum nó **sem prioridade declarada**? Se sim → atribuir 🔴/🟠/🟡/🟢.
 - [ ] Cada US tem **CAs explicitamente associados** (rastreabilidade)?
 - [ ] IDs seguem padrão (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN` — Epic aninhado: `EP-NN.M`)?
 

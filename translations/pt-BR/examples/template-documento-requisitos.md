@@ -22,7 +22,7 @@
 3. **Toda regra é testável**. Se a frase contém adjetivos vagos ("rápido", "amigável", "intuitivo", "robusto"), não é requisito — é desejo. Reescreva com métrica ou comportamento observável.
 4. **IDs estáveis** (`RF-NN`, `RNF-NN`, `G-NN`). IDs não mudam quando o conteúdo evolui — só a versão.
 5. **Cada RF/RNF declara fonte** (stakeholder, documento normativo, observação) — para validar e justificar em revisão.
-6. **Cada RF/RNF declara prioridade** (🔴 Immediate, 🟠 High, 🟡 Normal, ⚪ Low) — para o backlog herdar a ordem.
+6. **Cada RF/RNF declara prioridade** (🔴 Immediate, 🟠 High, 🟡 Normal, 🟢 Low) — para o backlog herdar a ordem.
 
 ---
 
@@ -342,7 +342,7 @@ Os temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital) são de
 
 - [ ] Toda RF/RNF/G tem **descrição** em pt-BR sem termo técnico (sem URL, sem nome de método, sem nome de tabela)?
 - [ ] Toda RF/RNF/G tem **fonte declarada** (quem pediu, quando)?
-- [ ] Toda RF/RNF/G tem **prioridade** (🔴/🟠/🟡/⚪)?
+- [ ] Toda RF/RNF/G tem **prioridade** (🔴/🟠/🟡/🟢)?
 - [ ] Adjetivos vagos ("rápido", "amigável", "intuitivo", "robusto") foram substituídos por **métrica ou comportamento observável**?
 - [ ] Restrições, premissas e dependências estão **explícitas** (§3.3, §3.4)?
 - [ ] Stakeholders identificados pelos 5 critérios de Wiegers (§4)?

@@ -37,11 +37,20 @@ requirements/
 > **Adapte ao projeto**: crie um `RF-NNN-<modulo>.md` por módulo/app real do sistema
 > (ex.: um por bounded context, app Django, pacote, ou área de domínio).
 
+> ⚠️ **1 arquivo por MÓDULO, não 1 por requisito** (confusão comum — leia antes de achar que falta algo).
+> Cada arquivo em `RF/` documenta um **módulo inteiro** (um Epic), nomeado pelo seu **primeiro** requisito:
+> `RF-01-<modulo>.md` contém RF-01..RF-04; `RF-05-<modulo>.md` contém RF-05..RF-08; e assim por diante.
+> Os requisitos individuais ficam como seções `### RF-NN` **dentro** do arquivo. Por isso, uma pasta que
+> mostra `RF-01, RF-05, RF-09…` **não** está sem o RF-02/03/04 — eles são seções do primeiro arquivo.
+> Os "saltos" nos **nomes dos arquivos** são fronteiras de módulo (faixas contíguas), nunca requisitos
+> faltando. *(Se preferir 1 arquivo por requisito, é uma variante válida — mas o padrão e o scaffolder
+> assumem 1-arquivo-por-módulo.)*
+
 ## Convenções
 
 - **Linguagem de negócio**. Sem verbo no infinitivo no título; sem termo técnico (jargão fica em ADRs/specs).
 - **IDs imutáveis**: `RF-NNN`, `RNF-<slug>`. Descontinuado → `RF-NNN-deprecated.md` (não some).
-- **Prioridade**: 🔴 Imediato · 🟠 Alta · 🟡 Normal · ⚪ Baixa.
+- **Prioridade**: 🔴 Imediato · 🟠 Alta · 🟡 Normal · 🟢 Baixa.
 - **RNF é sempre quantitativo** — "rápido" é desejo; "p95 ≤ 300ms" é requisito.
 - Cada arquivo tem `## Realizado por` (Epics/Features que o executam).
 

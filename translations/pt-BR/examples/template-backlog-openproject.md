@@ -492,7 +492,7 @@ Regras a serem aplicadas:
 - [ ] Todo CA está **dentro de um grupo `CA - <Tema>`** (mesmo Feature com 1 só CA)?
 - [ ] Epic está **aninhado** quando o domínio tem sub-classificações?
 - [ ] Toda Task transversal está em **`TX-NN`**, fora da hierarquia Epic/Feature/US?
-- [ ] **Prioridade** (🔴/🟠/🟡/⚪) em todos os nós?
+- [ ] **Prioridade** (🔴/🟠/🟡/🟢) em todos os nós?
 - [ ] **IDs estáveis** (não renumerados em mudanças posteriores)?
 - [ ] **Rastreabilidade** RF/RNF → Feature → US → CA → BDD → Task → Teste **completa** para cada Feature?
 - [ ] **Validação Falbo** preenchida com justificativa de 1 linha por dimensão?

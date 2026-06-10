@@ -7,7 +7,7 @@
 > **Two standing rules (apply every time):**
 >
 > 1. **Single root named `docs/`.** The entire structure lives under one root directory called `docs/` (`docs/requirements/`, `docs/backlog/`, `docs/specs/`, `docs/planning/adrs/`). Never scatter requirement/backlog files at the repo root.
-> 2. **Always detect before acting.** Before creating anything, inspect the target: if a structure (or loose requirement/backlog files) already exists → **analyze and reorganize**; if nothing exists → **create the standard default**. The scaffolder does this classification automatically (§7); you do the content adaptation (§9).
+> 2. **Always detect before acting — and this is the FIRST action, automatic, every time the skill touches a project.** Before creating anything, inspect the target: if a structure (or loose requirement/backlog files) already exists → **analyze and reorganize**; if a single monolithic requirements doc from an older skill version exists with no spine → **migrate** (§8.1); if nothing exists → **create the standard default**. The scaffolder does this classification automatically (§7); you do the content adaptation (§9). The user never has to *ask* for the structure — its absence is the trigger to build it ([`SKILL.md §0`](../SKILL.md)).
 >
 > **Two layers of templates — do not confuse them.** The [`examples/`](../examples/) folder holds the **Interpop-filled** documents (`template-documento-requisitos.md`, `template-backlog-openproject.md`, the case studies) — a *concrete reference* showing the standard fully applied. The [`assets/templates/`](../assets/templates/) folder holds **generic, placeholder-based** templates the scaffolder materializes — the *adaptive* layer, meant to be filled with **your** project's modules, personas, and domain (§9). Interpop = "here is what done looks like"; generic templates = "here is your starting point".
 
@@ -78,7 +78,7 @@ requirements/
 
 **RF file anatomy** (see the full *"Interpop"* example `RF-007`):
 
-- Header block: `Tipo` · `Prioridade` (🔴/🟠/🟡/⚪) · `Status`.
+- Header block: `Tipo` · `Prioridade` (🔴/🟠/🟡/🟢) · `Status`.
 - `## Enunciado de negócio` — one quoted paragraph, pt-BR business language, **no technical term** (`SKILL.md §5 naming rule 2`).
 - `## Justificativa` — why the requirement exists (product impact, KPI).
 - `## Realizado por (↓)` — table of Epics/Features executing it (bidirectional link down).
@@ -88,6 +88,16 @@ requirements/
 **RNF file anatomy** adds a **mandatory metrics table** — every NFR must be *quantitative* (`SKILL.md §4.2`, golden rule). "Fast" is a wish; "p95 ≤ 300ms server at 50k articles" is a requirement. Each metric row carries an `Alvo` (target) and a `Quando medir` (how/where measured), plus a `## Como verificar` gates table.
 
 **ID rule**: `RF-NNN`, `RNF-<slug>`. Immutable after creation. A discontinued requirement becomes `RF-NNN-deprecated.md` — it never disappears (kept for audit).
+
+> ⚠️ **One file per MODULE, not one file per requirement (the most common point of confusion).** Each `RF/`
+> file documents a whole **module** (one Epic / bounded context / app), and is named by its **first**
+> requirement: `RF-01-<module>.md` holds `RF-01..RF-04`; `RF-05-<module>.md` holds `RF-05..RF-08`; and so on.
+> The individual requirements live as `### RF-NN` sections **inside** the file. Therefore a folder listing
+> `RF-01, RF-05, RF-09…` is **not** missing `RF-02/03/04` — those are sections of the first file. **Gaps in the
+> *filenames* are module boundaries (contiguous ranges), never missing requirements.** A reader who counts
+> files counts *modules*; to count requirements, `grep -c '^### RF-' RF/*.md`. (One-file-per-requirement is a
+> valid variant, but the default — and what the scaffolder/Adaptation-protocol assume — is one-file-per-module.
+> The same logic applies to `RNF/`: group by quality attribute or by Sommerville class, not necessarily one file per `RNF-NN`.)
 
 ---
 
@@ -204,7 +214,9 @@ specs/
 
 ## 7. Running the scaffolder (detect → create → reorganize)
 
-The scaffolder runs the same three steps every time, in order: **(1) detect** the target and classify it (GREENFIELD / HAS-STRUCTURE / LOOSE-FILES), **(2) create** any missing folder/template (never overwriting), **(3) reorganize** loose files into place (auto-enabled when detection finds any). Root defaults to `docs/`; dry-run is the default.
+The scaffolder runs the same three steps every time, in order: **(1) detect** the target and classify it (GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / **LEGACY-MONOLITH**), **(2) create** any missing folder/template (never overwriting), **(3) reorganize** loose files into place (auto-enabled when detection finds any). Root defaults to `docs/`; dry-run is the default.
+
+> **LEGACY-MONOLITH** is the verdict for a project carrying its requirements as a **single loose document** (e.g. `REQUISITOS_UNIFICADO.md`, `requisitos.md`, a filled `template-documento-requisitos.md`) with **no `docs/` spine** — the typical output of a pre-structure version of this skill. The scaffolder **creates the structure but never auto-splits the monolith** (splitting prose into per-module RF/RNF needs judgment); it reports the file and the migration is yours to run (§8.1).
 
 ```bash
 SC=~/.claude/skills/engenharia-de-requisitos/assets/scaffold-structure.sh
@@ -250,6 +262,22 @@ What reorganize does (conservative — only unambiguous matches):
 - `ADR-*.md` loose under the root or planning → `planning/adrs/` (tier 1). Feature-scoped ADRs already under a `specs/<feature>/` subtree are left in place (tier 2).
 - Anything ambiguous is **reported, not moved** — you decide.
 
+### 8.1 Migrating a LEGACY-MONOLITH (upgrading from a pre-`docs/` skill version)
+
+The most common reorganization in practice: a project where an **older version of this skill** produced requirements as one loose document (e.g. `REQUISITOS_UNIFICADO.md`) and stopped there — no `requirements/RF`, no `backlog/`, no traceability spine. Detection classifies it **LEGACY-MONOLITH**. Because splitting prose safely needs judgment, the scaffolder **reports but does not auto-split** it. Run the migration yourself:
+
+1. **Scaffold the spine** (`bash "$SC" --apply`) so the empty tree exists to receive the split.
+2. **Read the monolith and decompose it** along its natural module boundaries:
+   - one `requirements/RF/RF-NNN-<module>.md` per functional area / Epic block (preserve the original `RF-NN` IDs *inside* the files so existing cross-references survive);
+   - one `requirements/RNF/RNF-<slug>.md` (or one per Sommerville class) for the non-functional requirements, each with its **quantitative** metric table;
+   - seed `requirements/personas-e-cenarios.md` from the stakeholders/roles the monolith names;
+   - seed `backlog/glossario.md` from the monolith's glossary/domain terms.
+3. **Keep the original monolith as a consolidated overview** — do **not** delete it. Move it under `docs/requirements/` and add a banner linking *into* the split (it now carries the analysis/feasibility/phasing narrative that does not fit the per-file split, while the split carries the granular source of truth). This avoids duplicate-truth: prose narrative lives in the overview, atomic requirements live in the split.
+4. **Backfill traceability** (§9 Step 2.7): if Epics/Features already exist, write them under `backlog/` and link `RF ↔ EP ↔ F` both ways.
+5. Run the checklist below.
+
+> Greenfield projects skip this entirely. This subsection exists so that **upgrading an old project is a one-pass, automatic migration** — exactly what [`SKILL.md §0`](../SKILL.md) mandates as the first action.
+
 **Manual checklist after any reorganization** (the scaffolder moves files; it cannot rewrite cross-links for you):
 
 - [ ] Every moved file's relative links (`../../requirements/...`) still resolve.
@@ -284,7 +312,7 @@ The scaffolder drops **generic, placeholder-filled** templates. They are a skele
 4. **Glossary from entities**: seed `glossario.md` with the recurring domain nouns (alphabetical), each defined in business language.
 5. **RNFs that actually apply**: instantiate only the `RNF-<slug>.md` the project needs (perf, security, a11y, privacy, availability…), each with **quantitative** targets pulled from real budgets/gates.
 6. **Reorganize** loose pre-existing artifacts into the tree (the scaffolder moves files; you fix the cross-links — §8 checklist).
-7. **Backfill traceability** where history allows: if Epics/Features already shipped, write them retroactively and link `RF ↔ EP ↔ F` both ways.
+7. **Backfill traceability** where history allows: if Epics/Features already shipped, write them retroactively and link `RF ↔ EP ↔ F` both ways. On an **existing** project, this backfill is **offered to the user as an explicit first-run question** ([`SKILL.md §0 step 3b`](../SKILL.md)) — full backfill now / seed only what the current task touches / structure-only-now — because it can be a large effort and is the user's call (greenfield has nothing to backfill).
 
 ### Step 3 — Create the default (greenfield, nothing to analyze)
 
@@ -303,6 +331,8 @@ A committed file still containing `<...>`, `RF-NNN`, `EP-NN`, or `# Requisitos �
 ---
 
 ## 10. Decision: do you need `specs/`?
+
+> **This decision is surfaced at first-run** ([`SKILL.md §0 step 3a`](../SKILL.md)): it is genuinely the user's call because it **fixes the ADR tiering** — `--no-specs` keeps ADRs single-tier (`planning/adrs/`), `--with-specs` makes them two-tier (`planning/adrs/` + `specs/<feature>/adrs/`). Infer from the signals below; recommend the default; **ask the user only when the signals are ambiguous**. ⚠️ The scaffolder defaults to `--with-specs` — pass `--no-specs` explicitly for the lighter layout.
 
 | Signal | Recommendation |
 |---|---|
