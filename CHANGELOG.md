@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+*No changes yet. New entries will accrue here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.*
+
+---
+
+## [1.6.0] — 2026-06-09
+
+The skill gains an **on-disk project-structure layer**: a canonical reference for the `requirements/` + `backlog/` + `specs/` + two-tier-ADR layout (everything under a single `docs/` root), a safety-first `detect → create → reorganize` scaffolder, and a generic, adaptive template tree (distinct from the Interpop-filled `examples/`). Two latent repo bugs surfaced while wiring CI for the release were fixed in passing.
+
 ### Added
 
 - **`references/10-estrutura-projeto.md`** — new canonical reference for the **on-disk project structure** that materializes the traceability spine: `requirements/` (the *why/what*), `backlog/` (the *who/what/when*), `specs/` (the *how* — SDD), and the **two-tier ADR scheme**. Documents the purpose of each folder, the file anatomy of every artifact (RF, RNF, Epic, Feature), and — the part most projects get wrong — the **single continuous global ADR numbering across both tiers** (`planning/adrs/` for project-level decisions, `specs/<feature>/adrs/` for feature-level, with `INDEX.md` by layer + a living `tracker.md` ADR↔Task↔Test matrix, variant tags `-DB`/`-FE`/`-UI`, never-renumber / never-edit-a-decided-ADR rules). Includes "adopt in a new project" and "reorganize an existing project" playbooks + a SDD decision table. Mirrors the canonical *"Interpop"* reference implementation.
@@ -19,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`references/10-estrutura-projeto.md`**: added the **two standing rules** (single root named `docs/`; always detect before acting), the **two-template-layers** clarification (Interpop `examples/` vs generic `assets/templates/`), a new **§9 "Adaptation protocol"** (detect the host project's language/modules/roles/domain → adapt the seeds, or create the default when greenfield; hard rule: never commit placeholder files), and rewrote §7/§8 around the detect-driven scaffolder. Renumbered the SDD-decision and cross-reference sections (now §10/§11).
 - **SKILL.md**: added an on-disk-structure trigger to §1 and an "On-disk project structure (folders, not just files) + scaffolder" subsection to §5 Phase B (Specification), updated to emphasize the `docs/` root, the generic-vs-Interpop template layers, and the Adaptation protocol. Updated `content_status.en-CA`.
+- **Version alignment**: `SKILL.md` `1.5.0 → 1.6.0`, and `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` `1.3.0 → 1.6.0` (the two manifests had drifted behind `SKILL.md` since v1.4.0 — now realigned).
+
+### Fixed
+
+- **`.github/workflows/quality.yml`** — the 5 quality jobs were guarded on `github.repository == 'seekdevcore/sk-requirements-engineering'`, but the repo had been renamed (canonical is now `…-theskill`), so **every job was skipping repo-wide** — the quality gate was silently disabled. Switched to `github.repository_owner == 'seekdevcore'`, which survives the current rename and a future reclaim of the old name. Also added `--exclude-path assets/templates` to the lychee link-check (generic templates carry intentional, non-resolvable placeholder links).
+- **`mcp-server/tests/smoke.py`** — the hardcoded `references count == 10` assertion now expects `11` (accounts for the new `10-estrutura-projeto.md`); `mcp-server/README.md` resource table updated to match.
 
 ---
 
