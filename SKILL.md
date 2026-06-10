@@ -1,17 +1,17 @@
 ---
 name: engenharia-de-requisitos
-description: Use when the user is doing requirements engineering, business analysis, or software engineering tasks that involve discovering, specifying, validating, or managing software requirements. Triggers include (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Applies to new projects (no requirements yet) and to evolutions (changes in existing requirements). Not the right skill for pure code implementation — it is for the STAGE BEFORE (discovering what to build) and AFTER (validating that what was built is correct).
+description: Use when the user is doing requirements engineering, business analysis, or software engineering tasks that involve discovering, specifying, validating, or managing software requirements. Triggers include (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, writing EARS statements, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, escrever requisitos em EARS, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Applies to new projects (no requirements yet) and to evolutions (changes in existing requirements). Not the right skill for pure code implementation — it is for the STAGE BEFORE (discovering what to build) and AFTER (validating that what was built is correct).
 language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check, README.md, CHANGELOG.md), references/ (11 files, incl. 10-estrutura-projeto.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (12 files, incl. 10-estrutura-projeto.md + 11-ears.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
   pt-BR: complete — full snapshot preserved at translations/pt-BR/ (references/10 + scaffolder pending pt-BR mirror; English reference + pt-BR seed content already usable)
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.7.0
+version: 1.8.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -136,6 +136,23 @@ Crossing the 3 phases, **two continuous processes**:
 
 Sub-process within Elicitation (Sommerville Fig 4.7):
 **Discovery → Classification/Organization → Prioritization/Negotiation → Documentation** (in a loop, with continuous feedback).
+
+### 3.1 Alignment with Spec-Driven Development (Requirements → Design → Tasks)
+
+The 2026 SDD tools (AWS *Kiro*, GitHub *Spec Kit*) converged on a three-phase vocabulary. This skill already
+produces every one of those artifacts — the table below is a **traceability alignment**, a *re-labeling* that
+lets the skill plug into the SDD ecosystem. It is **NOT a waterfall gate**: the spiral above still rules
+(elicitation iterates, design evolves, INVEST + sprints/ondas stay agile). Use the SDD names when talking to
+SDD tooling; use the RE process when actually working.
+
+| SDD phase | "the spec is the prompt" → produces | Where it already lives in this skill |
+|---|---|---|
+| **Requirements** | *what* to build | `docs/requirements/` (`RF`/`RNF`) + `docs/backlog/` (Epic→Feature→CA·US·BDD) — Phase A/B, optionally phrased in EARS (§5 Phase B, [`references/11-ears.md`](references/11-ears.md)) |
+| **Design** | *how* to build it | the **ADRs** — `docs/planning/adrs/` (tier-1) + `docs/specs/<feature>/adrs/` (tier-2), one global numbering ([`references/10-estrutura-projeto.md §5`](references/10-estrutura-projeto.md)) |
+| **Tasks** | *in what order* | the `T`/`TX` Tasks inside each Feature (`docs/backlog/features/F-NN.md`) |
+
+> ADRs live in `docs/planning/adrs/` (+ `docs/specs/<feature>/adrs/`) — **not** a flat `docs/adr/`. Keep the
+> two-tier scheme; the SDD framing does not change the on-disk paths.
 
 ---
 
@@ -329,6 +346,13 @@ Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business ru
 - **BDD** is an executable scenario per user story: "GIVEN the user is logged in and has permission / WHEN they access the administrative menu > Athletes / THEN the system displays the basic list of athletes."
 
 CA defines the **invariant**; BDD defines the **interaction**. Use both. Detail in [references/04-bdd-criterios-aceitacao.md](references/04-bdd-criterios-aceitacao.md).
+
+**EARS — optional precision layer.** When a requirement must be unambiguous for an AI implementer, for an
+edge/error case, or for a regulated feature, phrase it (in the RF **body**, never the business title) using one
+of the five EARS templates — `WHEN/QUANDO <trigger> THE SYSTEM SHALL/O SISTEMA DEVE <response>` (+ `WHILE/ENQUANTO`,
+`IF…THEN/SE…ENTÃO`, `WHERE/ONDE`, ubiquitous). One `SHALL`/`DEVE` per statement → one `CA` group → one or more
+`Cenário`. **EARS is opt-in** and coexists with the business-language `RF` + BDD; it never replaces them. Full
+patterns (EN + pt-BR), anti-patterns, and the `RF → EARS → CA → Gherkin` pipeline in [references/11-ears.md](references/11-ears.md).
 
 ### Phase C — ESTIMATION (sizing)
 

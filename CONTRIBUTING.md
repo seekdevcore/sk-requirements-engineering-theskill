@@ -23,6 +23,9 @@ Thanks for considering a contribution. This document explains **what** is welcom
 - **Promotional content** for paid tools without disclosure (an Atlassian-vs-Linear comparison sponsored by either is out of scope).
 - **Renaming pt-BR siglas** to English (`RF` → `FR`, `CA` → `AC`, `EP-NN` → `EP-NN`) — these are stable identifiers used by real projects; renumbering breaks years of OpenProject and Git traceability. See [README §Vocabulary](./README.md#-vocabulary-pt-br--en-ca-glossary).
 - **Removal of pt-BR domain terms** preserved in *italic + quotes* (*"IFPB"*, *"Interpop"*, *"ABCD"*, *"COB"*, *"WADA"*, *"STJD"*, *"LGPD"*, *"SBC"*, *"CNPq"*, etc.). These are proper nouns whose meaning collapses if translated.
+- **The primary source material itself** (the *"IFPB"* ERS course slides, the *Sommerville 10e* PDF, the *"SBC"* 002/2024 ethics PDF). It is **third-party, copyrighted** and is **never committed**.
+
+> **Maintainer note — where the source material lives.** The primary corpus is kept **locally only**, under `docs/material-fonte/` (git-ignored — see [`.gitignore`](./.gitignore)). It is excluded for two reasons: **copyright** (the slides and Sommerville's book are not redistributable) and **size** (the *Sommerville 10e* PDF alone is ~140MB). The skill content cites this material **bibliographically** (see [README §Citing the source material](./README.md)); it does not depend on the files being present in the repo. To work with the corpus locally, place the course PDFs under `docs/material-fonte/`.
 
 ## 3. Process — 6 steps
 
