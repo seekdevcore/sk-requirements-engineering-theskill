@@ -5,18 +5,52 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md, README.md, CHANGELOG.md), references/ (11 files, incl. 10-estrutura-projeto.md), examples/ (5 files), and assets/scaffold-structure.sh. Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check, README.md, CHANGELOG.md), references/ (11 files, incl. 10-estrutura-projeto.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
   pt-BR: complete — full snapshot preserved at translations/pt-BR/ (references/10 + scaffolder pending pt-BR mirror; English reference + pt-BR seed content already usable)
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.6.0
+version: 1.7.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
 
 > Skill built from the 11 lectures of the ERS course (*Engenharia de Requisitos de Software* / Software Requirements Engineering) of *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Ch. 4), Pressman, Wiegers, Falbo, BABOK, and the SBC 002/2024 Code of Ethics. **Note on terminology**: the original source course is in Brazilian Portuguese; this default English content keeps Brazilian domain-specific terms in *"pt-BR with italics + quotes"* (e.g., *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). Gherkin keywords are translated to Given/When/Then; the pt-BR equivalents (Dado/Quando/Então) are available in `translations/pt-BR/`.
+
+---
+
+## 0. FIRST ACTION — structure-state check (MANDATORY, runs once per project, before anything else)
+
+> 🔴 **This is not optional and it is not last — it is the FIRST thing this skill does the moment it is applied to a project/folder, before producing or editing a single requirement.** Just as elicitation precedes specification, the on-disk structure precedes the first requirement. **The user does not have to ask for it.** Detecting that the structure is missing *is itself the instruction to build it*. Skipping this step is the #1 failure mode of older versions of this skill — they wrote a loose `REQUISITOS*.md` and never built the traceability spine, leaving every later artifact homeless.
+
+**Why first.** A requirement with nowhere to live is an orphan. The on-disk structure — `docs/requirements/` (the *why/what*) + `docs/backlog/` (the *who/what/when*) + ADRs, everything under a single `docs/` root (§5 Phase B + [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)) — **is** the physical source of truth (§2.1, rule zero). If it does not exist, traceability is impossible and the backlog has no anchor. So the structure comes **before** the first interview note.
+
+### The protocol (run in order — do NOT skip to elicitation)
+
+1. **Analyze the project automatically — gain context before asking the user anything you can read yourself.** Inspect what is already there: a `references/` folder, any existing requirements / spec / proposal documents (`.md`, `.pdf`, `.docx`), the `README`, source modules, roles/auth tiers, domain entities, stack manifests. This is Step 1 of the Adaptation protocol ([`references/10-estrutura-projeto.md §9`](references/10-estrutura-projeto.md)). Read first; ask only what the project cannot tell you.
+2. **Detect the structure state.** Run the scaffolder in dry-run — it classifies the target and touches nothing:
+
+   ```bash
+   SC=~/.claude/skills/engenharia-de-requisitos/assets/scaffold-structure.sh
+   bash "$SC"            # detect + preview only
+   ```
+
+   Verdicts: **GREENFIELD** (no `docs/` spine) · **HAS-STRUCTURE** (already laid out) · **LOOSE-FILES** (stray `RF-*`/`RNF-*`/`EP-*`/`F-*`/… outside their homes) · **LEGACY-MONOLITH** (a single requirements document — e.g. `REQUISITOS*.md`, `requisitos.md`, a filled `template-documento-requisitos.md` — produced by a pre-`docs/` version of this skill and never split into the spine).
+
+3. **Act on the verdict — never stop at "well, it already has a doc":**
+
+   | Verdict | Mandatory action |
+   |---|---|
+   | **GREENFIELD** | `bash "$SC" --apply` → create the standard structure, then adapt the seeds (§9). |
+   | **HAS-STRUCTURE** | Re-apply (idempotent) to fill only gaps; never overwrite. |
+   | **LOOSE-FILES** | Re-apply → auto-reorganizes the stray files into the tree (ref §8). |
+   | **LEGACY-MONOLITH** | **Migrate.** Scaffold the structure, then **split** the monolithic document into per-module `RF-*` / `RNF-*` files, personas, and glossary — keeping the original monolith as a consolidated overview that links *into* the split. This is the upgrade path for any project built by a pre-structure version of the skill. |
+
+4. **Adapt the generic seeds to THIS project** (Adaptation protocol, [`references/10-estrutura-projeto.md §9`](references/10-estrutura-projeto.md)): one `RF` per real module, personas from real roles, glossary from real domain entities, only the RNFs that apply (quantitative). **Never commit placeholder files** (`<...>`, `RF-NNN`, `EP-NN`).
+5. **Only now** proceed to whatever the user asked — elicitation, a new feature, a backlog refinement. The structure already exists to receive it.
+
+> **Migration trigger (the exact bug this section closes).** If a project contains requirements as a **single loose file** *and* has **no `docs/` spine**, you are looking at output from a version of this skill that predated the on-disk structure. The correct response is to run the migration in step 3 **immediately and automatically** — not to ask "do you want a structure?". The absence of the spine is the trigger.
 
 ---
 
@@ -33,6 +67,7 @@ Invoke **before**:
 - Deciding between build vs. buy (feasibility study)
 - Eliciting non-functional requirements (performance, security, usability, accessibility, regulatory compliance)
 - Discussing traceability between requirement ↔ test ↔ code
+- **Being applied to a project for the first time (or migrating one from an older skill version)** — the on-disk structure check in **[§0](#0-first-action--structure-state-check-mandatory-runs-once-per-project-before-anything-else)** is the mandatory first action; it is not just one trigger among many
 - Setting up or **reorganizing the on-disk documentation structure** of a project (`requirements/` + `backlog/` + `specs/` + ADRs) — see [references/10-estrutura-projeto.md](references/10-estrutura-projeto.md) + the scaffolder [assets/scaffold-structure.sh](assets/scaffold-structure.sh)
 - Supporting business analysis (mapping AS-IS, designing TO-BE)
 - Decisions with an ethical component: privacy, ML/AI, system decommissioning, failure to design for inclusion
@@ -197,6 +232,8 @@ PROJECT (= repository/context in OpenProject — NOT an EPIC)
 - 🎬 [`examples/template-user-story.feature`](examples/template-user-story.feature) — ready Gherkin file with 4 scenarios + Scenario Outline + sample step definitions (Python + TypeScript)
 
 **On-disk project structure (folders, not just files) + scaffolder:**
+
+> ⚠️ This is the same structure that **[§0](#0-first-action--structure-state-check-mandatory-runs-once-per-project-before-anything-else)** requires you to detect and build **as the first action** on any project. The detail below is the *how*; §0 is the *when* (always, first).
 
 The templates above (in `examples/`) are single Interpop-filled files. To lay out an entire **repository** so the traceability spine is physical — everything under one root named **`docs/`**: `requirements/` (the *why/what*) · `backlog/` (the *who/what/when*) · `specs/` (the *how*, SDD) · two-tier ADRs (`planning/adrs/` project-level + `specs/<feature>/adrs/` feature-level, **one continuous global numbering**) — read [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md). It documents each folder's purpose, the two-tier ADR scheme, **how to adopt/reorganize**, and the **Adaptation protocol** (§9) — analyze the host project's modules/roles/domain and fit the generic templates to it (or create the default when greenfield).
 

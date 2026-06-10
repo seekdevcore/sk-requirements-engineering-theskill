@@ -22,7 +22,7 @@
 
 | Language | Status | Current content |
 |---|---|---|
-| **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (10 files), [`examples/`](./examples/) (5 files). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
+| **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (11 files), [`examples/`](./examples/) (5 files), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
 | **pt-BR** | 🟢 Complete | **Full snapshot preserved at [`translations/pt-BR/`](./translations/pt-BR/)** — the original source, *"IFPB"* course taught in Portuguese. Authoritative for compliance/audit reference. |
 
 > **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
@@ -132,6 +132,7 @@ Full setup with copy-pasteable config blocks for Claude Desktop, Cursor, Cline, 
 
 Invoke when you (or Claude on your behalf) are doing:
 
+- **First contact with a project (mandatory first action)** — the moment the skill is applied to a folder, it auto-analyzes the project and **detects/builds the on-disk structure** (`docs/requirements/` + `docs/backlog/` + ADRs) before any other work, including **migrating projects from older skill versions** that left a loose `REQUISITOS*.md` with no traceability spine (see [`SKILL.md §0`](./SKILL.md))
 - **Requirements discovery** — interviews, surveys, brainstorming, ethnography, document analysis, stories and scenarios
 - **Specification** — building a hierarchical backlog (Epic → Feature [+ description + ACs] → User Story [+ BDD] → Task)
 - **User Stories with BDD** — writing `Given / When / Then` that bridges requirement and executable test
@@ -194,7 +195,11 @@ engenharia-de-requisitos/
 │   ├── 06-validacao.md            (5 checks + 7 dimensions + prototypes)
 │   ├── 07-mudanca-rastreabilidade.md  (change management, RTM, enduring vs volatile requirements)
 │   ├── 08-analista-negocios.md    (BABOK, AS-IS/TO-BE, MoSCoW, RICE, Kano)
-│   └── 09-etica-sbc.md            (SBC 002/2024 Code applied to RE)
+│   ├── 09-etica-sbc.md            (SBC 002/2024 Code applied to RE)
+│   └── 10-estrutura-projeto.md    (on-disk structure: requirements/+backlog/+specs/+two-tier ADRs; detect→create→reorganize; LEGACY-MONOLITH migration)
+├── assets/
+│   ├── scaffold-structure.sh      (detect → create → reorganize scaffolder; GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH)
+│   └── templates/                 (generic, adaptive template tree the scaffolder materializes)
 └── examples/
     ├── caso-controle-dopagem.md         (real CNPq case — *"ABCD"*/*"COB"*)
     ├── caso-interpop-moderacao.md       (Interpop project case — ban hierarchy)
@@ -205,7 +210,7 @@ engenharia-de-requisitos/
 
 > **Note on `references/` and `examples/` filenames**: the filenames are kept in pt-BR for backward compatibility with projects that already reference them (e.g., *"Interpop"*). Their **internal content was translated to en-CA in v1.2.0**. The verbatim pt-BR snapshot remains reachable at `translations/pt-BR/`.
 
-**Usage pattern**: `SKILL.md` is a 10-section map with links to detail. You read `SKILL.md` to locate the answer; you read a `reference` only when you need full detail on that topic.
+**Usage pattern**: `SKILL.md` is a map (§0 mandatory first-run structure check, then §1–§10) with links to detail. You read `SKILL.md` to locate the answer; you read a `reference` only when you need full detail on that topic.
 
 ---
 

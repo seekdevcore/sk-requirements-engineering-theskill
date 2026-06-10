@@ -8,7 +8,9 @@
 # assets/templates/. The concrete "Interpop" reference implementation lives in examples/.
 #
 # WORKFLOW (the rule: "always verify first"):
-#   1. DETECT  — classify the target: GREENFIELD | HAS-STRUCTURE | LOOSE-FILES.
+#   1. DETECT  — classify the target: GREENFIELD | HAS-STRUCTURE | LOOSE-FILES | LEGACY-MONOLITH.
+#                LEGACY-MONOLITH = a single loose requirements doc (e.g. REQUISITOS*.md) from a
+#                pre-`docs/` skill version; it is REPORTED with migration guidance, never auto-split.
 #   2. CREATE  — seed any missing folder/template (never overwrites an existing file).
 #   3. REORGANIZE — if loose RF/RNF/EP/F/sprint/ADR files are found, move them into place
 #                   (auto-enabled on detection; `git mv` inside a repo to preserve history).
@@ -126,8 +128,29 @@ for f in "$ROOT"/ADR-*.md "$ROOT"/planning/ADR-*.md;  do case "$f" in "$ROOT"/sp
 # dedup (globstar ** can match a top-level file twice)
 [ "${#loose[@]}" -gt 0 ] && mapfile -t loose < <(printf '%s\n' "${loose[@]}" | sort -u)
 
-if [ ! -d "$ROOT" ]; then
+# collect LEGACY-MONOLITH candidates: a single requirements document produced by a
+# pre-`docs/` version of the skill, sitting loose at the repo root (CWD) or at the
+# docs root, never split into requirements/RF + requirements/RNF. We only REPORT
+# these — splitting prose into per-module RF/RNF needs human/LLM judgment, so the
+# scaffolder never auto-moves or auto-splits a monolith (it would destroy meaning).
+monoliths=()
+shopt -s nocaseglob 2>/dev/null || true
+for f in \
+  ./requisito*.md ./requirements.md ./srs*.md ./documento*requisito*.md ./*requisitos*unificad*.md \
+  "$ROOT"/requisito*.md "$ROOT"/requirements.md "$ROOT"/srs*.md "$ROOT"/documento*requisito*.md "$ROOT"/*requisitos*unificad*.md
+do
+  case "$f" in "$ROOT"/requirements/*) continue;; esac
+  [ -e "$f" ] && monoliths+=("$f")
+done
+shopt -u nocaseglob 2>/dev/null || true
+[ "${#monoliths[@]}" -gt 0 ] && mapfile -t monoliths < <(printf '%s\n' "${monoliths[@]}" | sort -u)
+
+if [ ! -d "$ROOT" ] && [ "${#monoliths[@]}" -gt 0 ]; then
+  verdict="LEGACY-MONOLITH (${#monoliths[@]} loose requirements doc(s), no '${ROOT}/' spine) — will CREATE the structure; you MUST then MIGRATE (split) the monolith."
+elif [ ! -d "$ROOT" ]; then
   verdict="GREENFIELD (no '${ROOT}/' yet) — will CREATE the standard structure."
+elif [ "${#monoliths[@]}" -gt 0 ] && [ "$has_structure" -eq 0 ]; then
+  verdict="LEGACY-MONOLITH (${#monoliths[@]} loose requirements doc(s), '${ROOT}/' exists but no RE spine) — will CREATE the structure; you MUST then MIGRATE (split) the monolith."
 elif [ "${#loose[@]}" -gt 0 ]; then
   verdict="LOOSE-FILES (${#loose[@]} stray artifact(s)) — will CREATE missing + REORGANIZE."
 elif [ "$has_structure" -eq 1 ]; then
@@ -138,6 +161,13 @@ fi
 say "  verdict: $verdict"
 if [ "${#loose[@]}" -gt 0 ]; then
   say "  loose files detected:"; for f in "${loose[@]}"; do say "    - $f"; done
+fi
+if [ "${#monoliths[@]}" -gt 0 ]; then
+  warn "  LEGACY-MONOLITH candidate(s) — NOT auto-moved (prose split needs judgment):"
+  for f in "${monoliths[@]}"; do say "    - $f"; done
+  warn "  → After scaffolding, MIGRATE: split each into requirements/RF/RF-*.md + requirements/RNF/RNF-*.md,"
+  warn "    seed personas-e-cenarios.md + glossario.md from it, and keep the original as a consolidated"
+  warn "    overview that links INTO the split. See references/10-estrutura-projeto.md §8 (reorganizing)."
 fi
 # resolve auto reorganize
 do_reorg=0
@@ -203,6 +233,11 @@ if [ "$APPLY" -eq 1 ]; then
   say "  • detect language + rename/seed one RF per real module of the system"
   say "  • derive personas from the project's roles; seed the glossary from domain entities"
   say "  • see references/10-estrutura-projeto.md §\"Adaptation protocol\""
+  if [ "${#monoliths[@]}" -gt 0 ]; then
+    warn "  • MIGRATE the LEGACY-MONOLITH listed above: split it into requirements/RF + requirements/RNF,"
+    warn "    seed personas + glossary from it, keep the original as a linked consolidated overview."
+  fi
 else
   warn "Dry-run complete. Re-run with --apply to execute the plan above."
+  [ "${#monoliths[@]}" -gt 0 ] && warn "A LEGACY-MONOLITH was detected — see migration guidance above (it will NOT be auto-split)."
 fi

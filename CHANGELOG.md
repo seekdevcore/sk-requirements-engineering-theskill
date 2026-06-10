@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.0] — 2026-06-10
+
+Makes the on-disk structure (added in v1.6.0) **mandatory and automatic** instead of one optional trigger among many. The root cause this release fixes: when the skill was applied to a project, it would happily produce a loose `REQUISITOS_UNIFICADO.md` and **never build the `docs/` traceability spine**, and a project upgrading from a pre-`docs/` version was silently misclassified as GREENFIELD — its existing monolithic requirements doc ignored. The structure check is now the **first action** the skill takes on any project (§0), and the scaffolder gained a fourth detection verdict to recognize legacy monoliths.
+
+### Added
+
+- **`SKILL.md` §0 — "FIRST ACTION — structure-state check (MANDATORY, runs once per project, before anything else)"**. A new top-of-file section, placed *before* §1, that makes detecting/building the on-disk structure the **first thing the skill does** when applied to a project — analogous to elicitation preceding specification. It defines a 5-step protocol (auto-analyze the project for context → detect the structure state → act on the verdict → adapt the seeds → only then proceed) and a verdict→action table. The explicit principle: **the user never has to ask for the structure; its absence is the trigger to build it.** Closes the failure mode where older versions wrote a loose requirements doc and stopped.
+- **`assets/scaffold-structure.sh` — `LEGACY-MONOLITH` detection (4th verdict)**. The detect step now also scans the repo root (CWD) and the docs root for a single loose requirements document (`requisito*.md`, `requirements.md`, `srs*.md`, `documento*requisito*.md`, `*requisitos*unificad*.md`, case-insensitive, excluding the structured `requirements/` subtree). When found with no spine, the target is classified **LEGACY-MONOLITH** instead of GREENFIELD, the candidate file(s) are reported, and migration guidance is printed. The scaffolder **never auto-splits** a monolith (prose decomposition into per-module RF/RNF needs judgment) — it creates the structure and hands the split to the operator. Verified: `bash -n` clean; smoke-tested that a loose `REQUISITOS_UNIFICADO.md` now yields LEGACY-MONOLITH while an empty dir still yields GREENFIELD (no false positives).
+- **`references/10-estrutura-projeto.md` §8.1 — "Migrating a LEGACY-MONOLITH (upgrading from a pre-`docs/` skill version)"**. A step-by-step migration playbook: scaffold the spine → decompose the monolith into `RF/`+`RNF/` (preserving original `RF-NN` IDs), seed personas + glossary from it → keep the original as a linked consolidated overview (no duplicate-truth) → backfill `RF ↔ EP ↔ F` traceability.
+
+### Changed
+
+- **`SKILL.md` §1 (triggers)**: added a first-line trigger — *"Being applied to a project for the first time (or migrating one from an older skill version)"* — pointing to §0, so the structure step reads as the mandatory first action, not just one bullet among the elicitation/specification triggers. Updated the §5 Phase B scaffolder subsection with a banner cross-linking back to §0 (the *when*; §5 is the *how*). Updated `content_status.en-CA`.
+- **`references/10-estrutura-projeto.md`**: standing rule 2 ("always detect before acting") now states it is the **first, automatic action every time the skill touches a project**, lists the LEGACY-MONOLITH path, and links to `SKILL.md §0`. §7 documents the new fourth verdict and the never-auto-split policy.
+- **`README.md`**: added a "First contact with a project (mandatory first action)" bullet to *When to invoke*; added `references/10-estrutura-projeto.md` + the `assets/` tree (scaffolder + generic templates) to the repository-structure listing; corrected the en-CA reference count `10 → 11 files`; updated the usage-pattern line to mention §0.
+- **Version**: `SKILL.md` frontmatter, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json` `1.6.0 → 1.7.0` (the three manifests stay aligned this release).
+
+---
+
 ## [1.6.0] — 2026-06-09
 
 The skill gains an **on-disk project-structure layer**: a canonical reference for the `requirements/` + `backlog/` + `specs/` + two-tier-ADR layout (everything under a single `docs/` root), a safety-first `detect → create → reorganize` scaffolder, and a generic, adaptive template tree (distinct from the Interpop-filled `examples/`). Two latent repo bugs surfaced while wiring CI for the release were fixed in passing.
