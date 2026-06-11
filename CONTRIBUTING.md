@@ -38,7 +38,7 @@ Trivial fixes (typo, broken link, citation update) — skip the issue, go straig
 ### 3.2 Fork + branch
 
 ```bash
-gh repo fork seekdevcore/sk-requirements-engineering --clone --remote
+gh repo fork seekdevcore/sk-requirements-engineering-theskill --clone --remote
 cd sk-requirements-engineering
 git checkout -b <kind>/<short-description>
 ```
