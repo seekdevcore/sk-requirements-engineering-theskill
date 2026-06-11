@@ -6,6 +6,16 @@
 > validation, ethics, traceability); the SDD framework owns the **execution cycle** (spec → code → review).
 > This file is the bridge. **Optional** — skip entirely if the project has no SDD framework (§6).
 
+> **The two frameworks (durable reference links — repos may move, so learn them from source):**
+>
+> - **OpenSpec** (Fission-AI) — change-folder model with delta specs (`ADDED`/`MODIFIED`/`REMOVED`) and
+>   archiving. Repo: <https://github.com/Fission-AI/OpenSpec>.
+> - **GitHub Spec Kit** — a four-phase `Spec → Plan → Tasks → Implement` loop with a write-once
+>   `constitution.md`. Repo: <https://github.com/github/spec-kit>.
+>
+> Both assume a coding agent implements *from* the spec. If a link 404s, search the org/name — the model
+> below is framework-shape, not version-pinned.
+
 ---
 
 ## 1. The division of labour
@@ -68,6 +78,10 @@ openspec/changes/<feature-slug>/
 
 ### 3.1 Projection recipe (this skill → OpenSpec)
 
+> **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target openspec --apply` — it
+> reads the feature file, preserves the `[RF-NN]` tags, and writes the folder below (dry-run by default; never
+> overwrites). Then fill the EARS prose and run `check_projection_drift`. The steps below are what it generates:
+
 1. One OpenSpec **change folder per Feature (`F-NN`)**. Slug = feature name.
 2. `proposal.md`:
    - "Why" ← the `EP` goal + the `G-NN` business rules that motivate it.
@@ -108,6 +122,10 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 ```
 
 ### 4.1 Projection recipe (this skill → Spec Kit)
+
+> **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target speckit --apply` (writes
+> `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` once; `[RF-NN]` tags preserved;
+> dry-run by default). Then fill the EARS prose and run `check_projection_drift`.
 
 1. **`constitution.md` (once per project)** ← your hard conventions (`05-convencoes-interpop.md` 10 rules) +
    the SBC ethics guardrails (§9). The natural home for "rules the agent must always follow".
@@ -156,6 +174,11 @@ This reconciliation is **automated (advisory)** by the MCP tool
 > - `ears_weakened` is **tag/keyword-based**. In **pt-BR**, `DEVE` is the EARS *obligation* (not a weak
 >   modal), so the weak-modal set is `should/must/will` (EN) + `deveria/pode/poderá/irá/vai` (pt-BR) — it does
 >   **not** treat `DEVE` as weak. A correctly-phrased `O SISTEMA DEVE …` line is never flagged.
+> - **Whole-dir vs per-feature**: the tool compares the **entire** `docs/requirements/` against the
+>   projection. The adapter (`assets/project-to-sdd.sh`) projects **one Feature at a time**, so running drift
+>   right after projecting a single `F-NN` will list every *other* feature's RF as `missing_in_projection` —
+>   expected, not a defect. Run drift against the **full** projection (all features projected), or read the
+>   `missing` list as "RFs not yet projected".
 
 The tool is tag-based (anchored on `RF-NN`), stdlib-only, and EN+pt-BR aware. It defaults to
 `docs/requirements` ↔ `openspec`; pass `projection_dir="specs"` (or `.specify`) for Spec Kit. Run it after
@@ -199,5 +222,7 @@ phrasing are what carry the rigor across the boundary — preserve both. The `ch
 
 *Cross-references: `05-convencoes-interpop.md` (hard rules, ID preservation), `07-mudanca-rastreabilidade.md`
 (RTM, change management), `09-etica-sbc.md` (ethics guardrails), `10-estrutura-projeto.md` (docs/ spine,
-LEGACY-MONOLITH), `11-ears.md` (EARS phrasing), `../mcp-server/README.md` (`check_projection_drift`). External:
-OpenSpec (Fission-AI), GitHub Spec Kit. Adopted here as an **optional** execution-layer bridge.*
+LEGACY-MONOLITH), `11-ears.md` (EARS phrasing), `../assets/project-to-sdd.sh` (projection scaffolder),
+`../mcp-server/README.md` (`check_projection_drift`). External frameworks (durable links — repos may move):
+**OpenSpec** <https://github.com/Fission-AI/OpenSpec>, **GitHub Spec Kit** <https://github.com/github/spec-kit>.
+Adopted here as an **optional** execution-layer bridge.*

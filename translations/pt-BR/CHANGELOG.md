@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## Status do snapshot pt-BR — alinhado à release v1.10.0 (2026-06-10)
+
+> Este `translations/pt-BR/` é um **snapshot preservado da v1.0.x** (quando o pt-BR era o conteúdo default).
+> O conteúdo **vivo e autoritativo** evoluiu em **en-CA na raiz do repositório** até a **v1.10.0**. Mudanças
+> en-CA pós-1.0 ainda **não** espelhadas integralmente em pt-BR:
+>
+> - **v1.6.0** — estrutura on-disk `docs/` + `references/10-estrutura-projeto.md` + scaffolder.
+> - **v1.7.0** — **§0 first-run obrigatório** + detecção `LEGACY-MONOLITH` + migração.
+> - **v1.8.0** — **`references/11-ears.md`** (EARS, camada opcional) + alinhamento SDD (§3.1) + validador MCP `validate_ears`.
+> - **v1.9.0** — **`references/12-sdd-interop.md`** (interop OpenSpec/Spec Kit) + validador MCP `check_projection_drift`.
+> - **v1.10.0** — adaptador **`assets/project-to-sdd.sh`** (projeção `docs/` → framework SDD).
+>
+> Stubs pt-BR apontando para o en-CA autoritativo foram adicionados em `references/10–12`. A **retradução
+> pt-BR completa** desses itens está pendente como esforço dedicado. Para qualquer recurso pós-1.0, use o en-CA.
+
+---
+
 ## [1.0.1] — 2026-06-06
 
 ### Added — Source instructor attribution

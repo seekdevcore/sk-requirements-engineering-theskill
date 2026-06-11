@@ -5,14 +5,21 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: roadmap
-  pt-BR: available (current default content)
-source: https://github.com/seekdevcore/sk-requirements-engineering-skill
+  en-CA: complete (now the live default at the repo root, ../../SKILL.md, at this version)
+  pt-BR: preserved v1.0.x snapshot — references 01–09 fully in pt-BR. Post-1.0 features (§0 first-run structure, references 10/11/12, scaffolder, project-to-sdd adapter, MCP validators) are en-CA at the repo root and authoritative there; full pt-BR re-translation pending.
+source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.0.0
+version: 1.10.0
 ---
+
+> ⚠️ **Snapshot pt-BR (preservado).** Esta é a versão pt-BR original (v1.0.x), mantida por valor de
+> referência/compliance. O conteúdo **vivo e autoritativo** é o en-CA na raiz do repositório
+> ([`../../SKILL.md`](../../SKILL.md)), que inclui recursos posteriores ainda **não** espelhados aqui:
+> o **§0 first-run** (estrutura `docs/` obrigatória), as **references 10** (estrutura) / **11** (EARS) /
+> **12** (interop SDD), o **scaffolder** + adaptador **project-to-sdd** e os **validadores MCP**. Para esses,
+> use o en-CA. Uma retradução pt-BR completa está pendente.
 
 # Engenharia de Requisitos (ER) + Análise de Negócios + Ética Profissional
 
