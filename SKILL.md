@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (13 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), examples/ (5 files), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.10.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–12, and examples (5 files), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (14 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md + 13-confiabilidade-seguranca.md), examples/ (5 files), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.11.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (5 files), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.10.1
+version: 1.11.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -186,7 +186,7 @@ Both coexist in the document. The user understands the top one; the developer im
 
 > **NFRs are frequently MORE CRITICAL than FRs.** Sommerville (4.1.2): *"Failure to meet a non-functional requirement may mean that the entire system becomes unusable."* System works but is slow → nobody uses it. System works but leaks data → *"LGPD"* fine + shutdown.
 
-**Golden rule of NFR: it must be quantitative.** "Easy to use" ❌ → "User must complete task X in ≤2 min after 1h of training, with ≤2 errors/h" ✅. See metrics in [references/01-fundamentos.md](references/01-fundamentos.md).
+**Golden rule of NFR: it must be quantitative.** "Easy to use" ❌ → "User must complete task X in ≤2 min after 1h of training, with ≤2 errors/h" ✅. See metrics in [references/01-fundamentos.md](references/01-fundamentos.md). For the **dependability/security** NFR families — reliability (`POFOD`/`ROCOF`/`MTTF`/`AVAIL`), safety (hazard-driven), information security (risk-driven asset→threat→control), and resilience (RTO/RPO + the 4R) — and how to phrase each as a quantitative, EARS-able, traceable `RNF`, see [references/13-confiabilidade-seguranca.md](references/13-confiabilidade-seguranca.md).
 
 ### 4.3 Stakeholders
 

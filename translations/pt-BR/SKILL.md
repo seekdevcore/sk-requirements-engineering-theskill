@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (13 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), examples/ (5 files), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.10.1 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 13 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), os exemplos, os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — projeção OpenSpec/Spec Kit) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (14 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md + 13-confiabilidade-seguranca.md), examples/ (5 files), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: complete — espelho fiel da v1.11.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 14 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md + 13-confiabilidade-seguranca.md), os exemplos, os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — projeção OpenSpec/Spec Kit) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.10.1
+version: 1.11.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -186,7 +186,7 @@ Ambos coexistem no documento. O usuário entende o de cima; o desenvolvedor impl
 
 > **RNFs são frequentemente MAIS CRÍTICOS que RFs.** Sommerville (4.1.2): *"Failure to meet a non-functional requirement may mean that the entire system becomes unusable."* Sistema funciona mas é lento → ninguém usa. Sistema funciona mas vaza dados → multa da *"LGPD"* + shutdown.
 
-**Regra de ouro do RNF: deve ser quantitativo.** "Fácil de usar" ❌ → "Usuário deve completar a tarefa X em ≤2 min após 1h de treino, com ≤2 erros/h" ✅. Veja métricas em [references/01-fundamentos.md](references/01-fundamentos.md).
+**Regra de ouro do RNF: deve ser quantitativo.** "Fácil de usar" ❌ → "Usuário deve completar a tarefa X em ≤2 min após 1h de treino, com ≤2 erros/h" ✅. Veja métricas em [references/01-fundamentos.md](references/01-fundamentos.md). Para as famílias de RNF de **dependabilidade/segurança** — confiabilidade (`POFOD`/`ROCOF`/`MTTF`/`AVAIL`), segurança (safety, orientada a perigos), segurança da informação (orientada a risco: ativo→ameaça→controle) e resiliência (RTO/RPO + os 4R) — e como redigir cada uma como um `RNF` quantitativo, EARS-ável e rastreável, veja [references/13-confiabilidade-seguranca.md](references/13-confiabilidade-seguranca.md).
 
 ### 4.3 Stakeholders
 
