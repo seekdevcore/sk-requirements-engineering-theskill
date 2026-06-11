@@ -23,11 +23,11 @@
 | Language | Status | Current content |
 |---|---|---|
 | **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (13 files), [`examples/`](./examples/) (5 files), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
-| **pt-BR** | 🟢 Complete | **Full snapshot preserved at [`translations/pt-BR/`](./translations/pt-BR/)** — the original source, *"IFPB"* course taught in Portuguese. Authoritative for compliance/audit reference. |
+| **pt-BR** | 🟢 Complete | **Full pt-BR translation at [`translations/pt-BR/`](./translations/pt-BR/)** — a faithful mirror of the en-CA source kept current through v1.10.1 (`SKILL.md` incl. §0 first-run / §3.1 SDD / EARS, `references/` 01–12, `examples/`). The original *"IFPB"* course language; authoritative for compliance/audit reference. |
 
 > **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
 >
-> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — snapshot autoritativo. Continua íntegro e atualizado.
+> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — espelho fiel da fonte en-CA, mantido até a v1.10.1 (SKILL.md com §0/§3.1/EARS, referências 01–12, exemplos). Continua íntegro e atualizado.
 
 ---
 

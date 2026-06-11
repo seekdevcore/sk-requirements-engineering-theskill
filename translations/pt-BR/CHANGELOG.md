@@ -7,20 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## Status do snapshot pt-BR — alinhado à release v1.10.0 (2026-06-10)
+## Status do pt-BR — espelho completo da v1.10.1 (2026-06-11)
 
-> Este `translations/pt-BR/` é um **snapshot preservado da v1.0.x** (quando o pt-BR era o conteúdo default).
-> O conteúdo **vivo e autoritativo** evoluiu em **en-CA na raiz do repositório** até a **v1.10.0**. Mudanças
-> en-CA pós-1.0 ainda **não** espelhadas integralmente em pt-BR:
+> A partir da **v1.10.1**, `translations/pt-BR/` deixou de ser um snapshot congelado da v1.0.x e passou a ser um
+> **espelho fiel** do conteúdo autoritativo en-CA. Tudo que evoluiu pós-1.0 está agora em pt-BR:
 >
-> - **v1.6.0** — estrutura on-disk `docs/` + `references/10-estrutura-projeto.md` + scaffolder.
-> - **v1.7.0** — **§0 first-run obrigatório** + detecção `LEGACY-MONOLITH` + migração.
-> - **v1.8.0** — **`references/11-ears.md`** (EARS, camada opcional) + alinhamento SDD (§3.1) + validador MCP `validate_ears`.
-> - **v1.9.0** — **`references/12-sdd-interop.md`** (interop OpenSpec/Spec Kit) + validador MCP `check_projection_drift`.
-> - **v1.10.0** — adaptador **`assets/project-to-sdd.sh`** (projeção `docs/` → framework SDD).
+> - **SKILL.md** — retraduzida por inteiro: **§0** (checagem de estrutura obrigatória na primeira execução),
+>   **§3.1** (alinhamento SDD), a subseção **EARS** na Fase B, e todas as regras/anti-padrões.
+> - **`references/10-estrutura-projeto.md`** — estrutura on-disk `docs/` + `LEGACY-MONOLITH` + migração (v1.6/v1.7).
+> - **`references/11-ears.md`** — EARS como camada de precisão opcional, com a tabela bilíngue dos 5 padrões (v1.8).
+> - **`references/12-sdd-interop.md`** — interop OpenSpec/Spec Kit + links de referência dos frameworks (v1.9/v1.10).
+> - **`references/01–09`** + **`examples/`** — permanecem em pt-BR (idioma original do material-fonte).
 >
-> Stubs pt-BR apontando para o en-CA autoritativo foram adicionados em `references/10–12`. A **retradução
-> pt-BR completa** desses itens está pendente como esforço dedicado. Para qualquer recurso pós-1.0, use o en-CA.
+> Os stubs-ponteiro da v1.10.0 (`references/10–12`) foram **substituídos** por traduções completas.
+>
+> **Fonte autoritativa**: o en-CA na raiz do repositório continua sendo a fonte versionada e *lintada*. As referências
+> `01–09` carregam apenas um drift **cosmético** de linhas em branco (markdownlint MD022/031/032) em relação ao en-CA —
+> estrutura, headings, cercas de código e identificadores `RF`/`CA` verificados **idênticos**, sem lacuna de conteúdo.
+> O CI roda markdownlint só no en-CA por design. Os assets (`scaffold-structure.sh`, `project-to-sdd.sh`) e o servidor
+> MCP permanecem na raiz como artefatos executáveis únicos (não se traduzem).
 
 ---
 

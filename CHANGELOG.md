@@ -13,6 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.1] — 2026-06-11
+
+Completes the **full pt-BR translation** of the post-1.0 content. `translations/pt-BR/` is no longer a frozen v1.0.x snapshot — it is now a faithful mirror of the en-CA source at this version. en-CA prose is byte-unchanged at 1.10.1 apart from `content_status` + version; this release exists to ship and tag the completed translation as a traceable milestone.
+
+### Added
+
+- **`translations/pt-BR/references/{10-estrutura-projeto,11-ears,12-sdd-interop}.md`** — full Brazilian-Portuguese translations replacing the v1.10.0 pointer stubs (on-disk structure / §0 first-run / `LEGACY-MONOLITH`; EARS optional precision layer; SDD interop + framework links). Code blocks, paths, URLs and identifiers (`RF`/`RNF`/`CA`/`CANN`/`US`/`EP-NN`/`EARS`/`SHALL`·`DEVE`) preserved verbatim; the bilingual EARS pattern table kept both columns.
+
+### Changed
+
+- **`translations/pt-BR/SKILL.md`** — re-translated from the v1.0.x snapshot to a full v1.10.x mirror: §0 mandatory first-run structure check, §3.1 SDD alignment, the EARS subsection in Phase B, and all hard rules / anti-patterns now in pt-BR. Frontmatter `content_status.pt-BR` → `complete`.
+- **`SKILL.md` `content_status.pt-BR`** → `complete` (was `partial`); references 01–09 confirmed structurally identical to en-CA (heading / code-fence / `RF`·`CA` counts match) — only cosmetic blank-line-lint drift remains, and CI lints the en-CA tree only.
+- **`translations/pt-BR/CHANGELOG.md`** — the snapshot banner replaced with a "complete mirror" status note.
+- **`.claude-plugin/plugin.json` + `marketplace.json`** — descriptions updated `pt-BR snapshot` → `full pt-BR translation`.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.10.0 → 1.10.1`.
+
+---
+
 ## [1.10.0] — 2026-06-10
 
 Completes the SDD-interop pair started in v1.9.0: the **`project-to-sdd.sh` adapter** that *generates* the OpenSpec/Spec Kit projection from the `docs/` spine (v1.9.0's `check_projection_drift` *verifies* it). Plus a full-skill consistency sweep and a refreshed pt-BR translation snapshot.
