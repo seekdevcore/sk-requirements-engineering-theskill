@@ -4,7 +4,7 @@
 #
 # Complement of the check_projection_drift MCP tool (v1.9.0): this GENERATES the
 # projection skeleton; that one VERIFIES it stayed in sync. The source of truth
-# stays in docs/ — the framework folder is a projection. See references/12-sdd-interop.md.
+# stays in docs/ — the framework folder is a projection. See references/integrations/sdd-interop.md.
 #
 # Usage:
 #   project-to-sdd.sh <feature-id-or-slug> [--target openspec|speckit] [--root docs] [--apply]

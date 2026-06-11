@@ -23,11 +23,11 @@
 | Language | Status | Current content |
 |---|---|---|
 | **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (14 files), [`examples/`](./examples/) (8 files — incl. SaaS multi-tenant / fintech / government worked case studies + `feature-step-defs/` — 6-stack BDD bindings), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
-| **pt-BR** | 🟢 Complete | **Full pt-BR translation at [`translations/pt-BR/`](./translations/pt-BR/)** — a faithful mirror of the en-CA source kept current through v1.14.0 (`SKILL.md` incl. §0 first-run / §3.1 SDD / EARS, `references/` 01–13, `examples/` (8, incl. SaaS/fintech/government case studies) + `feature-step-defs/`). The original *"IFPB"* course language; authoritative for compliance/audit reference. |
+| **pt-BR** | 🟢 Complete | **Full pt-BR translation at [`translations/pt-BR/`](./translations/pt-BR/)** — a faithful mirror of the en-CA source kept current through v1.15.0 (`SKILL.md` incl. §0 first-run / §3.1 SDD / EARS, `references/` 01–13, `examples/` (8, incl. SaaS/fintech/government case studies) + `feature-step-defs/`). The original *"IFPB"* course language; authoritative for compliance/audit reference. |
 
 > **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
 >
-> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — espelho fiel da fonte en-CA, mantido até a v1.14.0 (SKILL.md com §0/§3.1/EARS, referências 01–13, exemplos (8, incl. casos SaaS/fintech/governo) + feature-step-defs/). Continua íntegro e atualizado.
+> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — espelho fiel da fonte en-CA, mantido até a v1.15.0 (SKILL.md com §0/§3.1/EARS, referências 01–13, exemplos (8, incl. casos SaaS/fintech/governo) + feature-step-defs/). Continua íntegro e atualizado.
 
 ---
 
@@ -198,10 +198,14 @@ engenharia-de-requisitos/
 │   ├── 09-etica-sbc.md            (SBC 002/2024 Code applied to RE)
 │   ├── 10-estrutura-projeto.md    (on-disk structure: requirements/+backlog/+specs/+two-tier ADRs; detect→create→reorganize; LEGACY-MONOLITH migration)
 │   ├── 11-ears.md                 (EARS — optional precision layer; 5 patterns EN/pt-BR; RF→EARS→CA→Gherkin)
-│   └── 12-sdd-interop.md          (optional SDD bridge — OpenSpec/Spec Kit crosswalk; check_projection_drift)
+│   ├── 13-confiabilidade-seguranca.md  (dependability & security RNF — reliability/safety/security/resilience)
+│   └── integrations/              (per-integration docs — one .md per tool integration)
+│       ├── README.md              (integrations index → doc · adapter · validator)
+│       └── sdd-interop.md         (optional SDD bridge — OpenSpec/Spec Kit crosswalk; check_projection_drift)
 ├── assets/
 │   ├── scaffold-structure.sh      (detect → create → reorganize scaffolder; GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH)
-│   ├── project-to-sdd.sh          (project docs/ → OpenSpec/Spec Kit, preserving [RF-NN]; pairs with check_projection_drift)
+│   ├── integrations/              (per-integration adapters)
+│   │   └── project-to-sdd.sh      (project docs/ → OpenSpec/Spec Kit, preserving [RF-NN]; pairs with check_projection_drift)
 │   └── templates/                 (generic, adaptive template tree the scaffolder materializes)
 └── examples/
     ├── caso-controle-dopagem.md         (real CNPq case — *"ABCD"*/*"COB"*)

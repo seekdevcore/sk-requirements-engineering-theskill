@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (14 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.14.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (14 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.15.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.14.0
+version: 1.15.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -155,11 +155,11 @@ SDD tooling; use the RE process when actually working.
 > two-tier scheme; the SDD framing does not change the on-disk paths.
 
 **Actually running an SDD framework?** When the project uses **OpenSpec** or **GitHub Spec Kit** as its
-execution loop, [`references/12-sdd-interop.md`](references/12-sdd-interop.md) is the bridge: the artifact
+execution loop, [`references/integrations/sdd-interop.md`](references/integrations/sdd-interop.md) is the bridge: the artifact
 crosswalk, the projection recipes (`docs/` → framework files, `[RF-NN]` tags preserved), and the **advisory
 MCP tool `check_projection_drift`** that keeps the `docs/requirements/` source of truth and the framework
 projection in sync (reports missing/duplicated/orphan/EARS-weakened drift, never blocks). **Generate ↔
-verify**: `assets/project-to-sdd.sh <F-NN> --target openspec|speckit` scaffolds the projection (preserving
+verify**: `assets/integrations/project-to-sdd.sh <F-NN> --target openspec|speckit` scaffolds the projection (preserving
 `[RF-NN]` tags); `check_projection_drift` then confirms nothing drifted. Optional — skip if there is no SDD
 framework.
 
