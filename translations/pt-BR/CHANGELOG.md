@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## Status do pt-BR — espelho completo da v1.11.0 (2026-06-11)
+## Status do pt-BR — espelho completo da v1.12.0 (2026-06-11)
 
 > A partir da **v1.10.1** (e mantido na **v1.11.0**), `translations/pt-BR/` deixou de ser um snapshot congelado da v1.0.x e passou a ser um
 > **espelho fiel** do conteúdo autoritativo en-CA. Tudo que evoluiu pós-1.0 está agora em pt-BR:
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > - **`references/12-sdd-interop.md`** — interop OpenSpec/Spec Kit + links de referência dos frameworks (v1.9/v1.10).
 > - **`references/13-confiabilidade-seguranca.md`** — RNF de dependabilidade & segurança: confiabilidade (POFOD/ROCOF/MTTF/AVAIL), segurança (safety/security, orientada a risco), resiliência (4R, RTO/RPO) (v1.11).
 > - **`references/01–09`** + **`examples/`** — permanecem em pt-BR (idioma original do material-fonte).
+> - **`examples/feature-step-defs/`** — step-defs BDD para 6 stacks (pytest-bdd/behave/cucumber-js/cucumber-playwright/Reqnroll/Behat); o **código** é neutro de idioma e vive na raiz, com README traduzido em pt-BR (v1.12).
 >
 > Os stubs-ponteiro da v1.10.0 (`references/10–12`) foram **substituídos** por traduções completas.
 >
