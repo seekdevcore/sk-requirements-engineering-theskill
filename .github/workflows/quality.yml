@@ -53,10 +53,15 @@ jobs:
         with:
           # Internal anchors + external HTTP(S) links. Exclude noisy domains
           # via .lycheeignore. Cache results to keep PRs fast.
+          # Resilience: retry transient failures (slow external sites time out
+          # — e.g. contributor-covenant.org) before failing, so a flaky network
+          # never turns the badge red on a green release. Still checks every link.
           args: >-
             --no-progress
             --max-concurrency 8
-            --timeout 20
+            --timeout 30
+            --max-retries 5
+            --retry-wait-time 2
             --cache
             --max-cache-age 14d
             --exclude-path translations/pt-BR
