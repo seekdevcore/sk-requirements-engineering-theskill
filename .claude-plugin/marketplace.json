@@ -9,7 +9,7 @@
     "description": "Requirements Engineering skill for Claude Code — methodology corpus from IFPB ERS course (Prof. Dr. Juliana Dantas Ribeiro Viana de Medeiros) + canonical bibliography (Sommerville, Pressman, Wiegers, Cohn, BABOK v3, SBC 002/2024).",
     "version": "1.13.0",
     "license": "CC-BY-SA-4.0",
-    "homepage": "https://github.com/seekdevcore/sk-requirements-engineering"
+    "homepage": "https://github.com/seekdevcore/sk-requirements-engineering-theskill"
   },
   "plugins": [
     {

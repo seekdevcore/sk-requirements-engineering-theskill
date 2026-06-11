@@ -8,8 +8,8 @@
 [![Skill: engenharia-de-requisitos](https://img.shields.io/badge/Skill-engenharia--de--requisitos-blue)](./SKILL.md)
 [![Language: en-CA default](https://img.shields.io/badge/Language-en--CA%20(default)-success)](#language-status)
 [![Translation: pt-BR available](https://img.shields.io/badge/Translation-pt--BR%20available-yellow)](#language-status)
-[![Latest release](https://img.shields.io/github/v/release/seekdevcore/sk-requirements-engineering?label=Release&color=informational)](https://github.com/seekdevcore/sk-requirements-engineering/releases/latest)
-[![CI quality](https://img.shields.io/github/actions/workflow/status/seekdevcore/sk-requirements-engineering/quality.yml?branch=main&label=CI)](https://github.com/seekdevcore/sk-requirements-engineering/actions/workflows/quality.yml)
+[![Latest release](https://img.shields.io/github/v/release/seekdevcore/sk-requirements-engineering?label=Release&color=informational)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/releases/latest)
+[![CI quality](https://img.shields.io/github/actions/workflow/status/seekdevcore/sk-requirements-engineering/quality.yml?branch=main&label=CI)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/actions/workflows/quality.yml)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-purple.svg)](./CODE_OF_CONDUCT.md)
 
 > **Skill for [Claude Code](https://claude.com/claude-code)** that loads canonical knowledge of **Requirements Engineering**, **Business Analysis**, and **Professional Ethics in Computing** into any Claude session — built from the full course material of *"IFPB"* (*"Instituto Federal da Paraíba"*) plus the canonical bibliography of the field (Sommerville, Pressman, Wiegers, Cohn, Robertson, Hull, Falbo, BABOK v3, *"SBC"* 002/2024).
@@ -71,7 +71,7 @@ readlink ~/.claude/skills/engenharia-de-requisitos
 ### Option 3 — HTTPS clone (if you don't have SSH keys configured)
 
 ```bash
-git clone https://github.com/seekdevcore/sk-requirements-engineering.git ~/.claude/skills/engenharia-de-requisitos
+git clone https://github.com/seekdevcore/sk-requirements-engineering-theskill.git ~/.claude/skills/engenharia-de-requisitos
 ```
 
 ### Verifying installation
@@ -118,7 +118,7 @@ This route uses [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace
 Quick start:
 
 ```bash
-git clone https://github.com/seekdevcore/sk-requirements-engineering.git
+git clone https://github.com/seekdevcore/sk-requirements-engineering-theskill.git
 cd sk-requirements-engineering/mcp-server
 uv sync
 uv run requirements-engineering-mcp        # boots on stdio

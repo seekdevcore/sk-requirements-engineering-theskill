@@ -22,7 +22,7 @@ applicable boxes. Items that do not apply may stay unchecked or be removed.
 
 - [ ] Linked to issue **#____**
 - [ ] No issue — trivial fix (typo, broken link)
-- [ ] No issue — discussed via [Discussions](https://github.com/seekdevcore/sk-requirements-engineering/discussions)
+- [ ] No issue — discussed via [Discussions](https://github.com/seekdevcore/sk-requirements-engineering-theskill/discussions)
 
 ## Hard-rules checklist (per `references/05-convencoes-interpop.md`)
 
