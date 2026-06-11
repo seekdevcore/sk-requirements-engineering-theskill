@@ -63,7 +63,7 @@ def main() -> int:
     print(f"  references/.md   = {len(refs)} → {refs}")
     print(f"  examples/.md     = {len(exs_md)} → {exs_md}")
     print(f"  examples/.feat   = {len(exs_ft)} → {exs_ft}")
-    check("references count == 13", len(refs) == 13, len(refs))
+    check("references count == 14", len(refs) == 14, len(refs))
     check("examples count (md + feature) == 5", len(exs_md) + len(exs_ft) == 5, len(exs_md) + len(exs_ft))
     print()
 
