@@ -13,6 +13,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.9.0] — 2026-06-10
+
+Adds the **SDD interop layer**: a reference that bridges this skill (the *quality/methodology* layer) to an SDD execution framework (**OpenSpec** / **GitHub Spec Kit**), plus an advisory MCP tool that keeps the `docs/requirements/` source of truth and the framework projection in sync. Additive over v1.8.0 — nothing regresses §0 or the `docs/` spine. Driven by an external suggestion (kept locally under `docs/material-fonte/`); the four caveats found in review were fixed before commit.
+
+### Added
+
+- **`references/12-sdd-interop.md`** — optional **execution-layer bridge** to OpenSpec / Spec Kit. Frames the skill as the *quality* layer (elicitation, EARS, ACs, validation, ethics, RTM) that **feeds** the framework's *execution* loop (spec → code), never competes with it. Includes the division-of-labour table, an artifact crosswalk (`RF/RNF/CANN/Cenário/G/EP/F/T/ADR` → OpenSpec & Spec Kit files), projection recipes (`[RF-NN]` tag preserved across the boundary), OpenSpec delta-spec ↔ RTM mapping, Spec Kit `constitution.md` as the home for hard rules + ethics, round-trip-integrity rules (§5), and a "when NOT to use a framework" (§6). **Optional** — skip entirely with no SDD framework.
+- **`mcp-server` — `check_projection_drift(requirements_dir, projection_dir)` tool** (advisory; reference 12 §5). Compares `docs/requirements/` ↔ an OpenSpec (`openspec/`) or Spec Kit (`specs/`) projection by `RF-NN` tag and reports five findings: `missing_in_projection`, `duplicated_in_projection`, `orphan_in_projection`, `ca_without_scenario` (coarse/global), `ears_weakened`. Stdlib-only, pure, never blocks (returns a structured dict), EN + pt-BR. The `references/12 §5` documents a copy-paste **non-blocking CI step** for *consumer* projects (the skill's own repo ships no such gate — it has no projection).
+
+### Changed
+
+- **`SKILL.md` §3.1** gained an "Actually running an SDD framework?" pointer to `references/12-sdd-interop.md`; frontmatter `content_status` references `12 → 13`.
+- **`README.md`**: reference count `12 → 13`; `12-sdd-interop.md` listed.
+- **`mcp-server/README.md`** + **`tests/smoke.py`**: reference count `12 → 13`; `check_projection_drift` documented in the tools table and exercised by a smoke assertion (advisory dict on a missing dir).
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.8.0 → 1.9.0`.
+
+### Fixed
+
+Four review caveats corrected before committing the externally-suggested code (so the tool ships consistent with the skill's own conventions):
+
+- **CA-id convention** — the suggested tool normalized acceptance-criteria ids to the hyphenated `CA-02.1`; this skill's convention (fixed in the v1.8.0 EARS reference) is **`CANN`** (`CA02`, no hyphen). `_norm_ca` now emits `CA02` / `CA02.1`.
+- **pt-BR weak-modal contradiction** — the suggested weak-modal set included `deve`, but in pt-BR `DEVE` is the EARS *obligation* (not weak), which meant pt-BR weak phrasing could never be detected. Removed `deve` from the weak set and added genuinely-weak pt-BR modals (`deveria/pode/poderá/irá/vai`), so `O SISTEMA DEVE …` is treated as an obligation while `o sistema pode …` is flagged.
+- **`exactly-one` claim** — the §5 checklist promised "every RF in exactly one spec", but the code only checked "at least one". Added a `duplicated_in_projection` finding (RF tag in >1 spec file) so the code matches the claim.
+- **`ca_without_scenario` over-claim** — documented honestly as a **coarse, global** heuristic (fires only when the projection has *no* scenario block at all), not a per-`CANN` check, in both the docstring and `references/12 §5`.
+
+---
+
 ## [1.8.0] — 2026-06-10
 
 Adds **EARS** (Easy Approach to Requirements Syntax) as an **optional precision layer** and aligns the skill with the 2026 Spec-Driven Development vocabulary — both additive, neither regressing the v1.7.0 structure work. Driven by an external benchmark (kept locally) against AWS *Kiro* / GitHub *Spec Kit*; the recommended "slim SKILL.md replacement" from that analysis was **rejected** (it would have regressed §0 and introduced a wrong `docs/adr/` path) in favour of a conservative, additive change.

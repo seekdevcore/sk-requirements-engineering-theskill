@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (12 files, incl. 10-estrutura-projeto.md + 11-ears.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (13 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
   pt-BR: complete — full snapshot preserved at translations/pt-BR/ (references/10 + scaffolder pending pt-BR mirror; English reference + pt-BR seed content already usable)
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.8.0
+version: 1.9.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -153,6 +153,13 @@ SDD tooling; use the RE process when actually working.
 
 > ADRs live in `docs/planning/adrs/` (+ `docs/specs/<feature>/adrs/`) — **not** a flat `docs/adr/`. Keep the
 > two-tier scheme; the SDD framing does not change the on-disk paths.
+
+**Actually running an SDD framework?** When the project uses **OpenSpec** or **GitHub Spec Kit** as its
+execution loop, [`references/12-sdd-interop.md`](references/12-sdd-interop.md) is the bridge: the artifact
+crosswalk, the projection recipes (`docs/` → framework files, `[RF-NN]` tags preserved), and the **advisory
+MCP tool `check_projection_drift`** that keeps the `docs/requirements/` source of truth and the framework
+projection in sync (reports missing/duplicated/orphan/EARS-weakened drift, never blocks). Optional — skip if
+there is no SDD framework.
 
 ---
 
