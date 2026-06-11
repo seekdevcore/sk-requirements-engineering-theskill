@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.0] — 2026-06-11
+
+Enhances the SDD projection adapter (`project-to-sdd.sh`) to carry the **real BDD scenarios and the User Stories** across the boundary — closing the gap where only `RF`/`RNF`/`CA`/`Tasks` were projected and the scenarios were a placeholder.
+
+### Changed
+
+- **`assets/project-to-sdd.sh`** — the generator now (a) **copies the feature's real `gherkin`-fenced `Cenário` blocks verbatim** into the projection's `## Scenarios` (was a `<caminho feliz>` placeholder), and (b) **extracts and lists the covered `US-NN.M`** as a `spec.md` traceability note (`_User stories projected: …_`). A feature with no Gherkin still gets the placeholder. Preserves the `US → Cenário → test` chain the previous placeholder severed; works for both `--target openspec` and `--target speckit`. Verified on a fixture (real scenarios copied; US listed; `[RF-NN]` tags preserved; placeholder fallback intact).
+- **`references/12-sdd-interop.md`** — §2 crosswalk gains a **`USNN.M` row**; §3.1 / §4.1 recipes note the adapter now copies real scenarios + lists US. pt-BR mirror updated.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.13.0 → 1.14.0`.
+
+---
+
 ## [1.13.0] — 2026-06-11
 
 Closes the post-1.0 roadmap with **three new worked case studies** — the methodology applied end-to-end in three domains the skill had not yet shown, each surfacing its domain-specific NFR families.

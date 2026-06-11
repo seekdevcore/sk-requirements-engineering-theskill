@@ -50,7 +50,8 @@ How this skill's artifacts map onto each framework's expected files.
 | `RNF-NN` (non-functional req.) | `spec.md` → "Non-functional / constraints" | `spec.md` → NFR / constraints |
 | EARS statement (§11) | requirement line inside `spec.md` | requirement line inside `spec.md` |
 | `CANN` (acceptance criteria — `CA01`, no hyphen, per `05-convencoes-interpop.md`) | `spec.md` → "Scenarios / acceptance" | `spec.md` → acceptance criteria |
-| BDD `Cenário` (Gherkin) | scenario block in `spec.md` | scenario block, feeds `/speckit` tasks |
+| BDD `Cenário` (Gherkin) | scenario block in `spec.md` (the adapter copies the real `gherkin`-fenced blocks verbatim) | scenario block, feeds `/speckit` tasks |
+| `USNN.M` (User Story — sprint slice) | no native slot — dissolves into the change folder + its scenarios; the adapter lists the covered `US-NN.M` as a `spec.md` traceability note | same — listed as a `spec.md` traceability note |
 | `G-NN` (business rule) | captured in `design.md` rationale | captured in `plan.md` constraints |
 | `EP`/`F` hierarchy | one change folder per `F` | one feature dir per `F` |
 | Design decision / ADR (§10) | `design.md` | `plan.md` + `constitution.md` |
@@ -79,8 +80,10 @@ openspec/changes/<feature-slug>/
 ### 3.1 Projection recipe (this skill → OpenSpec)
 
 > **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target openspec --apply` — it
-> reads the feature file, preserves the `[RF-NN]` tags, and writes the folder below (dry-run by default; never
-> overwrites). Then fill the EARS prose and run `check_projection_drift`. The steps below are what it generates:
+> reads the feature file, preserves the `[RF-NN]` tags, **copies the real `gherkin`-fenced `Cenário` blocks
+> verbatim into the spec, and lists the covered `US-NN.M` as a traceability note**, and writes the folder below (dry-run
+> by default; never overwrites). Then fill the EARS prose and run `check_projection_drift`. The steps below are
+> what it generates:
 
 1. One OpenSpec **change folder per Feature (`F-NN`)**. Slug = feature name.
 2. `proposal.md`:
@@ -90,7 +93,7 @@ openspec/changes/<feature-slug>/
 3. `specs/spec.md`:
    - Each `RF-NN` → a requirement section, phrased in **EARS** (§11), with the `[RF-NN]` tag preserved.
    - Each `CANN` → a scenario / acceptance entry.
-   - Each `Cenário` (Gherkin) → a scenario block.
+   - Each `Cenário` (Gherkin) → **copied verbatim** into the Scenarios block (the adapter pulls the feature's `gherkin`-fenced blocks automatically; a feature with no Gherkin gets a placeholder to fill). The covered `US-NN.M` are listed as a `spec.md` note so the `US → Cenário → test` chain survives.
 4. `design.md` ← your tier-1/tier-2 ADR content (§10).
 5. `tasks.md` ← your `T`/`TX` items, in checklist form.
 
@@ -124,8 +127,9 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 ### 4.1 Projection recipe (this skill → Spec Kit)
 
 > **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target speckit --apply` (writes
-> `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` once; `[RF-NN]` tags preserved;
-> dry-run by default). Then fill the EARS prose and run `check_projection_drift`.
+> `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` once; `[RF-NN]` tags preserved; the
+> real `Gherkin` scenarios copied + the covered `US-NN.M` listed; dry-run by default). Then fill the EARS prose
+> and run `check_projection_drift`.
 
 1. **`constitution.md` (once per project)** ← your hard conventions (`05-convencoes-interpop.md` 10 rules) +
    the SBC ethics guardrails (§9). The natural home for "rules the agent must always follow".

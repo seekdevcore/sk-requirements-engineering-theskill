@@ -50,7 +50,8 @@ Como os artefatos desta skill mapeiam nos arquivos esperados por cada framework.
 | `RNF-NN` (req. não-funcional) | `spec.md` → "Non-functional / constraints" | `spec.md` → RNF / constraints |
 | Declaração EARS (§11) | linha de requisito dentro de `spec.md` | linha de requisito dentro de `spec.md` |
 | `CANN` (critério de aceitação — `CA01`, sem hífen, conforme `05-convencoes-interpop.md`) | `spec.md` → "Scenarios / acceptance" | `spec.md` → critérios de aceitação |
-| BDD `Cenário` (Gherkin) | bloco de cenário em `spec.md` | bloco de cenário, alimenta as tarefas `/speckit` |
+| BDD `Cenário` (Gherkin) | bloco de cenário em `spec.md` (o adaptador copia os blocos com cerca `gherkin` verbatim) | bloco de cenário, alimenta as tarefas `/speckit` |
+| `USNN.M` (User Story — fatia de sprint) | sem slot nativo — dissolve na pasta de mudança + seus cenários; o adaptador lista as `US-NN.M` cobertas como nota de rastreabilidade no `spec.md` | idem — listada como nota de rastreabilidade no `spec.md` |
 | `G-NN` (regra de negócio) | capturada na justificativa do `design.md` | capturada nas constraints do `plan.md` |
 | Hierarquia `EP`/`F` | uma pasta de mudança por `F` | um diretório de feature por `F` |
 | Decisão de design / ADR (§10) | `design.md` | `plan.md` + `constitution.md` |
@@ -79,8 +80,9 @@ openspec/changes/<feature-slug>/
 ### 3.1 Receita de projeção (esta skill → OpenSpec)
 
 > **Faça o scaffold automaticamente** com `bash assets/project-to-sdd.sh <F-NN> --target openspec --apply` — ele
-> lê o arquivo da feature, preserva as tags `[RF-NN]` e escreve a pasta abaixo (dry-run por padrão; nunca
-> sobrescreve). Depois preencha a prosa EARS e rode `check_projection_drift`. Os passos abaixo são o que ele gera:
+> lê o arquivo da feature, preserva as tags `[RF-NN]`, **copia os blocos `Cenário` (cerca `gherkin`) verbatim
+> para o spec e lista as `US-NN.M` cobertas como nota de rastreabilidade**, e escreve a pasta abaixo (dry-run por
+> padrão; nunca sobrescreve). Depois preencha a prosa EARS e rode `check_projection_drift`. Os passos abaixo são o que ele gera:
 
 1. Uma **pasta de mudança** OpenSpec **por Feature (`F-NN`)**. Slug = nome da feature.
 2. `proposal.md`:
@@ -90,7 +92,7 @@ openspec/changes/<feature-slug>/
 3. `specs/spec.md`:
    - Cada `RF-NN` → uma seção de requisito, fraseada em **EARS** (§11), com a tag `[RF-NN]` preservada.
    - Cada `CANN` → uma entrada de cenário / aceitação.
-   - Cada `Cenário` (Gherkin) → um bloco de cenário.
+   - Cada `Cenário` (Gherkin) → **copiado verbatim** para o bloco de Scenarios (o adaptador puxa os blocos com cerca `gherkin` da feature automaticamente; uma feature sem Gherkin recebe um placeholder a preencher). As `US-NN.M` cobertas são listadas como nota no `spec.md` para a cadeia `US → Cenário → teste` sobreviver.
 4. `design.md` ← seu conteúdo de ADR tier-1/tier-2 (§10).
 5. `tasks.md` ← seus itens `T`/`TX`, em forma de checklist.
 
@@ -124,8 +126,9 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 ### 4.1 Receita de projeção (esta skill → Spec Kit)
 
 > **Faça o scaffold automaticamente** com `bash assets/project-to-sdd.sh <F-NN> --target speckit --apply` (escreve
-> `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` uma vez; tags `[RF-NN]` preservadas;
-> dry-run por padrão). Depois preencha a prosa EARS e rode `check_projection_drift`.
+> `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` uma vez; tags `[RF-NN]` preservadas; os
+> cenários `Gherkin` reais copiados + as `US-NN.M` cobertas listadas; dry-run por padrão). Depois preencha a
+> prosa EARS e rode `check_projection_drift`.
 
 1. **`constitution.md` (uma vez por projeto)** ← suas convenções duras (as 10 regras de `05-convencoes-interpop.md`) +
    os guard-rails de ética da SBC (§9). O lar natural para "regras que o agente deve sempre seguir".
