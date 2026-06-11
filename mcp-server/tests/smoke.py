@@ -64,7 +64,7 @@ def main() -> int:
     print(f"  examples/.md     = {len(exs_md)} → {exs_md}")
     print(f"  examples/.feat   = {len(exs_ft)} → {exs_ft}")
     check("references count == 14", len(refs) == 14, len(refs))
-    check("examples count (md + feature) == 5", len(exs_md) + len(exs_ft) == 5, len(exs_md) + len(exs_ft))
+    check("examples count (md + feature) == 8", len(exs_md) + len(exs_ft) == 8, len(exs_md) + len(exs_ft))
     print()
 
     print("=== Tool outputs ===")
