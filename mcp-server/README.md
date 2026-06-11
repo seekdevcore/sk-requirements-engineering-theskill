@@ -46,7 +46,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh   # if you don't have uv
 Clone the repo, install dependencies, and the entry point is available as a uv-managed command:
 
 ```bash
-git clone https://github.com/seekdevcore/sk-requirements-engineering.git
+git clone https://github.com/seekdevcore/sk-requirements-engineering-theskill.git
 cd sk-requirements-engineering/mcp-server
 uv sync                                  # installs mcp[cli] in .venv
 uv run requirements-engineering-mcp      # boots on stdio

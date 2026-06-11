@@ -64,7 +64,7 @@ requirements/
 
 ## Skill canônica
 
-[`engenharia-de-requisitos`](https://github.com/seekdevcore/sk-requirements-engineering) — IFPB ERS + Sommerville/Pressman/Wiegers/Cohn/BABOK v3 + Ética SBC 002/2024.
+[`engenharia-de-requisitos`](https://github.com/seekdevcore/sk-requirements-engineering-theskill) — IFPB ERS + Sommerville/Pressman/Wiegers/Cohn/BABOK v3 + Ética SBC 002/2024.
 
 ## Cross-references
 

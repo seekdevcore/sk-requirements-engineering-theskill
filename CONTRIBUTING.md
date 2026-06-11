@@ -129,6 +129,6 @@ All contributors are listed in the GitHub contributors page automatically. Signi
 
 ## 7. Questions?
 
-- General questions about the skill: open a [Discussion](https://github.com/seekdevcore/sk-requirements-engineering/discussions).
-- Specific contribution proposal: open an [Issue](https://github.com/seekdevcore/sk-requirements-engineering/issues/new/choose).
+- General questions about the skill: open a [Discussion](https://github.com/seekdevcore/sk-requirements-engineering-theskill/discussions).
+- Specific contribution proposal: open an [Issue](https://github.com/seekdevcore/sk-requirements-engineering-theskill/issues/new/choose).
 - Direct contact (maintainer): [@GabeMarques-Intetsu](https://github.com/GabeMarques-Intetsu).
