@@ -89,7 +89,7 @@ Permite que o *pagador* pague um *pedido* com cartão de crédito e mantenha o t
 
 ### 4.0 Goals (G) and Non-Functional Requirements (NFR)
 
-> Domain differential. **Goals (G)** are invariants the system must never violate. **NFRs are always quantitative** with a measurement method; EARS phrasing is offered as the optional precision layer (see [10-ears.md](../references/10-ears.md)). The `[...]` convention links to detail.
+> Domain differential. **Goals (G)** are invariants the system must never violate. **NFRs are always quantitative** with a measurement method; EARS phrasing is offered as the optional precision layer (see [11-ears.md](../references/11-ears.md)). The `[...]` convention links to detail.
 
 #### 🎯 Goals (invariants)
 

@@ -89,7 +89,7 @@ Permite que o *pagador* pague um *pedido* com cartão de crédito e mantenha o t
 
 ### 4.0 Goals (G) and Non-Functional Requirements (NFR)
 
-> Diferencial de domínio. **Goals (G)** são invariantes que o sistema nunca pode violar. **NFRs são sempre quantitativos** com um método de medição; a fraseologia EARS é oferecida como camada opcional de precisão (ver [10-ears.md](../references/10-ears.md)). A convenção `[...]` aponta para o detalhe.
+> Diferencial de domínio. **Goals (G)** são invariantes que o sistema nunca pode violar. **NFRs são sempre quantitativos** com um método de medição; a fraseologia EARS é oferecida como camada opcional de precisão (ver [11-ears.md](../references/11-ears.md)). A convenção `[...]` aponta para o detalhe.
 
 #### 🎯 Goals (invariants)
 
