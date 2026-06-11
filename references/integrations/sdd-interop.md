@@ -79,7 +79,7 @@ openspec/changes/<feature-slug>/
 
 ### 3.1 Projection recipe (this skill → OpenSpec)
 
-> **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target openspec --apply` — it
+> **Scaffold it automatically** with `bash assets/integrations/project-to-sdd.sh <F-NN> --target openspec --apply` — it
 > reads the feature file, preserves the `[RF-NN]` tags, **copies the real `gherkin`-fenced `Cenário` blocks
 > verbatim into the spec, and lists the covered `US-NN.M` as a traceability note**, and writes the folder below (dry-run
 > by default; never overwrites). Then fill the EARS prose and run `check_projection_drift`. The steps below are
@@ -126,7 +126,7 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 
 ### 4.1 Projection recipe (this skill → Spec Kit)
 
-> **Scaffold it automatically** with `bash assets/project-to-sdd.sh <F-NN> --target speckit --apply` (writes
+> **Scaffold it automatically** with `bash assets/integrations/project-to-sdd.sh <F-NN> --target speckit --apply` (writes
 > `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` once; `[RF-NN]` tags preserved; the
 > real `Gherkin` scenarios copied + the covered `US-NN.M` listed; dry-run by default). Then fill the EARS prose
 > and run `check_projection_drift`.
@@ -179,7 +179,7 @@ This reconciliation is **automated (advisory)** by the MCP tool
 >   modal), so the weak-modal set is `should/must/will` (EN) + `deveria/pode/poderá/irá/vai` (pt-BR) — it does
 >   **not** treat `DEVE` as weak. A correctly-phrased `O SISTEMA DEVE …` line is never flagged.
 > - **Whole-dir vs per-feature**: the tool compares the **entire** `docs/requirements/` against the
->   projection. The adapter (`assets/project-to-sdd.sh`) projects **one Feature at a time**, so running drift
+>   projection. The adapter (`assets/integrations/project-to-sdd.sh`) projects **one Feature at a time**, so running drift
 >   right after projecting a single `F-NN` will list every *other* feature's RF as `missing_in_projection` —
 >   expected, not a defect. Run drift against the **full** projection (all features projected), or read the
 >   `missing` list as "RFs not yet projected".
@@ -226,7 +226,7 @@ phrasing are what carry the rigor across the boundary — preserve both. The `ch
 
 *Cross-references: `05-convencoes-interpop.md` (hard rules, ID preservation), `07-mudanca-rastreabilidade.md`
 (RTM, change management), `09-etica-sbc.md` (ethics guardrails), `10-estrutura-projeto.md` (docs/ spine,
-LEGACY-MONOLITH), `11-ears.md` (EARS phrasing), `../assets/project-to-sdd.sh` (projection scaffolder),
-`../mcp-server/README.md` (`check_projection_drift`). External frameworks (durable links — repos may move):
+LEGACY-MONOLITH), `11-ears.md` (EARS phrasing), `../../assets/integrations/project-to-sdd.sh` (projection scaffolder),
+`../../mcp-server/README.md` (`check_projection_drift`). External frameworks (durable links — repos may move):
 **OpenSpec** <https://github.com/Fission-AI/OpenSpec>, **GitHub Spec Kit** <https://github.com/github/spec-kit>.
 Adopted here as an **optional** execution-layer bridge.*

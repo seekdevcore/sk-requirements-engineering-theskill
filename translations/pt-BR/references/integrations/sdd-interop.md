@@ -79,7 +79,7 @@ openspec/changes/<feature-slug>/
 
 ### 3.1 Receita de projeção (esta skill → OpenSpec)
 
-> **Faça o scaffold automaticamente** com `bash assets/project-to-sdd.sh <F-NN> --target openspec --apply` — ele
+> **Faça o scaffold automaticamente** com `bash assets/integrations/project-to-sdd.sh <F-NN> --target openspec --apply` — ele
 > lê o arquivo da feature, preserva as tags `[RF-NN]`, **copia os blocos `Cenário` (cerca `gherkin`) verbatim
 > para o spec e lista as `US-NN.M` cobertas como nota de rastreabilidade**, e escreve a pasta abaixo (dry-run por
 > padrão; nunca sobrescreve). Depois preencha a prosa EARS e rode `check_projection_drift`. Os passos abaixo são o que ele gera:
@@ -125,7 +125,7 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 
 ### 4.1 Receita de projeção (esta skill → Spec Kit)
 
-> **Faça o scaffold automaticamente** com `bash assets/project-to-sdd.sh <F-NN> --target speckit --apply` (escreve
+> **Faça o scaffold automaticamente** com `bash assets/integrations/project-to-sdd.sh <F-NN> --target speckit --apply` (escreve
 > `specs/<slug>/{spec,plan,tasks}.md` + `.specify/memory/constitution.md` uma vez; tags `[RF-NN]` preservadas; os
 > cenários `Gherkin` reais copiados + as `US-NN.M` cobertas listadas; dry-run por padrão). Depois preencha a
 > prosa EARS e rode `check_projection_drift`.
@@ -178,7 +178,7 @@ Essa reconciliação é **automatizada (consultiva)** pela ferramenta MCP
 >   fraco), então o conjunto de modais fracos é `should/must/will` (EN) + `deveria/pode/poderá/irá/vai` (pt-BR) — ele
 >   **não** trata `DEVE` como fraco. Uma linha corretamente fraseada `O SISTEMA DEVE …` nunca é sinalizada.
 > - **Dir-inteiro vs por-feature**: a ferramenta compara o `docs/requirements/` **inteiro** contra a
->   projeção. O adaptador (`assets/project-to-sdd.sh`) projeta **uma Feature por vez**, então rodar o drift
+>   projeção. O adaptador (`assets/integrations/project-to-sdd.sh`) projeta **uma Feature por vez**, então rodar o drift
 >   logo após projetar uma única `F-NN` vai listar o RF de toda *outra* feature como `missing_in_projection` —
 >   esperado, não um defeito. Rode o drift contra a projeção **completa** (todas as features projetadas), ou leia a
 >   lista `missing` como "RFs ainda não projetados".
@@ -225,7 +225,7 @@ EARS são o que carrega o rigor através da fronteira — preserve ambos. A ferr
 
 *Referências cruzadas: `05-convencoes-interpop.md` (regras duras, preservação de ID), `07-mudanca-rastreabilidade.md`
 (RTM, gestão de mudança), `09-etica-sbc.md` (guard-rails de ética), `10-estrutura-projeto.md` (espinha docs/,
-LEGACY-MONOLITH), `11-ears.md` (fraseado EARS), `../assets/project-to-sdd.sh` (scaffolder de projeção),
-`../mcp-server/README.md` (`check_projection_drift`). Frameworks externos (links duráveis — repos podem mudar de lugar):
+LEGACY-MONOLITH), `11-ears.md` (fraseado EARS), `../../assets/integrations/project-to-sdd.sh` (scaffolder de projeção),
+`../../mcp-server/README.md` (`check_projection_drift`). Frameworks externos (links duráveis — repos podem mudar de lugar):
 **OpenSpec** <https://github.com/Fission-AI/OpenSpec>, **GitHub Spec Kit** <https://github.com/github/spec-kit>.
 Adotados aqui como uma ponte **opcional** na camada de execução.*

@@ -60,6 +60,22 @@ def _list_md(dir_path: Path) -> list[str]:
     return sorted(p.stem for p in dir_path.glob("*.md"))
 
 
+def _list_refs() -> list[str]:
+    """Reference doc stems, scanned recursively under references/ (so
+    references/integrations/*.md is exposed too), excluding README indexes."""
+    if not REFERENCES_DIR.exists():
+        return []
+    return sorted(p.stem for p in REFERENCES_DIR.rglob("*.md") if p.name != "README.md")
+
+
+def _ref_path(name: str) -> Path:
+    """Resolve a reference by stem anywhere under references/ (excl. README index)."""
+    for p in REFERENCES_DIR.rglob(f"{name}.md"):
+        if p.name != "README.md":
+            return p
+    return REFERENCES_DIR / f"{name}.md"  # fallback (404s in _read_or_error)
+
+
 def _extract_first_paragraph(text: str) -> str:
     """Return the first non-heading non-blockquote paragraph as a short summary."""
     for block in text.split("\n\n"):
@@ -98,8 +114,9 @@ def skill_map() -> str:
 
 @mcp.resource("requirements://reference/{name}")
 def reference_doc(name: str) -> str:
-    """A specific reference file from references/<name>.md (en-CA)."""
-    return _read_or_error(REFERENCES_DIR / f"{name}.md")
+    """A specific reference file from references/<name>.md (en-CA), resolved
+    recursively so references/integrations/<name>.md works too."""
+    return _read_or_error(_ref_path(name))
 
 
 @mcp.resource("requirements://example/{name}")
@@ -118,7 +135,7 @@ def example_doc(name: str) -> str:
 def catalog() -> str:
     """JSON catalog of every available document — useful for clients to
     enumerate the corpus without parsing markdown."""
-    refs = _list_md(REFERENCES_DIR)
+    refs = _list_refs()
     exs_md = _list_md(EXAMPLES_DIR)
     exs_feat = sorted(p.stem for p in EXAMPLES_DIR.glob("*.feature")) if EXAMPLES_DIR.exists() else []
     return json.dumps(
@@ -150,13 +167,13 @@ def list_references() -> str:
     H1. Useful when the client wants a quick map of the corpus before deciding
     which reference to fetch in full.
     """
-    refs = _list_md(REFERENCES_DIR)
+    refs = _list_refs()
     if not refs:
         return "(references/ directory is empty or missing)"
 
     lines: list[str] = []
     for name in refs:
-        text = (REFERENCES_DIR / f"{name}.md").read_text(encoding="utf-8")
+        text = _ref_path(name).read_text(encoding="utf-8")
         first_line = text.split("\n", 1)[0].lstrip("# ").strip()
         summary = _extract_first_paragraph(text)
         lines.append(f"## {name}\n**{first_line}**\n\n{summary}\n")
@@ -465,7 +482,7 @@ def validate_ears(text: str) -> str:
 
 # ---------------------------------------------------------------------------
 # check_projection_drift — advisory drift report between docs/requirements and
-# its SDD projection (OpenSpec / Spec Kit). See references/12-sdd-interop.md §5.
+# its SDD projection (OpenSpec / Spec Kit). See references/integrations/sdd-interop.md §5.
 # ---------------------------------------------------------------------------
 
 _RF_RE = re.compile(r"\b(RF|RNF)-?(\d{1,3})\b", re.IGNORECASE)
@@ -513,7 +530,7 @@ def _check_projection_drift(
 ) -> dict:
     """Advisory report: drift between the requirement source of truth and its SDD projection.
 
-    Implements references/12-sdd-interop.md §5. Never raises on a "fail" — returns
+    Implements references/integrations/sdd-interop.md §5. Never raises on a "fail" — returns
     a structured report the agent (or a CI job) reads. Tag-based (anchored on
     RF-NN), stdlib-only, EN+pt-BR aware.
     """
@@ -644,7 +661,7 @@ def check_projection_drift(
     `docs/requirements` spine and an OpenSpec (`openspec/`) or Spec Kit (`specs/`)
     projection. Findings: missing_in_projection, duplicated_in_projection,
     orphan_in_projection, ca_without_scenario (coarse/global), ears_weakened.
-    EN + pt-BR (`SHALL`/`DEVE`). See references/12-sdd-interop.md §5.
+    EN + pt-BR (`SHALL`/`DEVE`). See references/integrations/sdd-interop.md §5.
     """
     return _check_projection_drift(requirements_dir, projection_dir)
 

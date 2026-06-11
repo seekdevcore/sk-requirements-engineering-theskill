@@ -13,6 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.15.0] — 2026-06-11
+
+Reorganizes tool **integrations** into a dedicated, discoverable home as the methodology grows toward several integrations (SDD now; **OpenProject** planned). Function-based taxonomy preserved — docs stay under `references/`, executables under `assets/`.
+
+### Changed
+
+- **New `references/integrations/`** — per-integration docs. `12-sdd-interop.md` **moved** here as `sdd-interop.md` (history preserved via `git mv`) + a `README.md` index mapping each integration to its 3 parts (doc · adapter · validator). The MCP server now scans `references/` **recursively** (excluding `README.md` indexes), so `requirements://reference/sdd-interop` resolves and `list_references`/`catalog` include it.
+- **New `assets/integrations/`** — per-integration adapters. `project-to-sdd.sh` **moved** here.
+- **`mcp-server/`** — new `_list_refs()` + `_ref_path()` helpers (recursive, README-excluded) feed `reference_doc` / `catalog` / `list_references`; `smoke.py` reference count switched to recursive (stays 14).
+- Internal links, the `SKILL.md` references map + `content_status`, the `README.md` directory tree (also restored the missing `13-confiabilidade-seguranca.md` row), and `mcp-server/README.md` updated to the new paths. pt-BR mirror updated. CHANGELOG history left intact.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.14.0 → 1.15.0`.
+
+### Notes
+
+- No behaviour change to the SDD integration itself — only its on-disk home. `references/integrations/README.md` documents how to add the next integration (the planned **OpenProject** Excel-sync among them).
+
+---
+
 ## [1.14.0] — 2026-06-11
 
 Enhances the SDD projection adapter (`project-to-sdd.sh`) to carry the **real BDD scenarios and the User Stories** across the boundary — closing the gap where only `RF`/`RNF`/`CA`/`Tasks` were projected and the scenarios were a placeholder.

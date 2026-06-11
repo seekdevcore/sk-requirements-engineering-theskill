@@ -57,7 +57,7 @@ def main() -> int:
     print()
 
     print("=== Corpus discovery ===")
-    refs = sorted(p.name for p in REFERENCES_DIR.glob("*.md")) if REFERENCES_DIR.exists() else []
+    refs = sorted(p.name for p in REFERENCES_DIR.rglob("*.md") if p.name != "README.md") if REFERENCES_DIR.exists() else []
     exs_md = sorted(p.name for p in EXAMPLES_DIR.glob("*.md")) if EXAMPLES_DIR.exists() else []
     exs_ft = sorted(p.name for p in EXAMPLES_DIR.glob("*.feature")) if EXAMPLES_DIR.exists() else []
     print(f"  references/.md   = {len(refs)} → {refs}")
