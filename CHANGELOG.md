@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.0] — 2026-06-11
+
+Closes the post-1.0 roadmap with **three new worked case studies** — the methodology applied end-to-end in three domains the skill had not yet shown, each surfacing its domain-specific NFR families.
+
+### Added
+
+- **`examples/caso-saas-multitenant.md`** (*"GestorPro"*) — multi-tenant SaaS: tenant data isolation (cross-tenant-access denial as a misuse-case BDD), per-tenant quota/rate limit, atomic tenant provisioning, per-tenant export/erasure (LGPD). Grounded in the `saas-multi-tenant` discipline.
+- **`examples/caso-fintech-pagamentos.md`** (*"PagLeve"*) — payments/wallet: PCI data handling (never store CVV/track/PIN, tokenized PAN, masked display), charge idempotency, reconciliation, anti-fraud limits + strong auth, immutable audit trail. Grounded in `pci-compliance`.
+- **`examples/caso-governo-servicos.md`** (*"Portal do Cidadão"*) — government digital service: accessibility (eMAG/WCAG AA), LGPD data minimization/consent/retention, public transparency + audit trail, availability with a non-digital fallback for low-connectivity citizens. Grounded in `privacy-by-design`.
+- Each follows the 10-section worked-example structure (context → stakeholders → AS-IS/TO-BE → Feature+CA+`[...]`+annex → US+BDD → Sommerville-5/Falbo-7 validation → traceability → SBC 002/2024 ethics → lessons → template-reuse), with quantitative `RNF` (optionally EARS), `G` business rules, and full `RF↔EP↔F↔CA↔US↔test` traceability. Full pt-BR mirrors added.
+
+### Changed
+
+- **`mcp-server/tests/smoke.py`** — examples-count assertion `5 → 8`.
+- **`SKILL.md` §5 Phase B + content_status** + **`README.md`** — the three case studies are listed; pt-BR `SKILL.md`/`CHANGELOG` mirrored.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.12.0 → 1.13.0`.
+
+---
+
 ## [1.12.0] — 2026-06-11
 
 Adds the **`.feature` step-definition variants per stack** — second post-1.0 roadmap item. The canonical pt-BR Gherkin feature can now be bound in six BDD ecosystems without rewriting the requirement.
