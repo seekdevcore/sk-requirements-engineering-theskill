@@ -464,6 +464,192 @@ def validate_ears(text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
+# check_projection_drift — advisory drift report between docs/requirements and
+# its SDD projection (OpenSpec / Spec Kit). See references/12-sdd-interop.md §5.
+# ---------------------------------------------------------------------------
+
+_RF_RE = re.compile(r"\b(RF|RNF)-?(\d{1,3})\b", re.IGNORECASE)
+# CANN / CA-NN / CANN.M (sub optional). Normalized to the skill's `CANN` (no hyphen).
+_CA_RE = re.compile(r"\bCA-?(\d{1,3})(?:\.(\d{1,3}))?\b", re.IGNORECASE)
+# Weak modals signalling lost EARS phrasing. NOTE: pt-BR `DEVE` is the EARS
+# OBLIGATION (see _SHALL_RE), NOT weak — deliberately excluded; pt-BR weakness
+# is `deveria/pode/poderá/irá/vai`.
+_WEAK_MODAL_RE = re.compile(
+    r"\b(should|must|will|is able to|deveria|poder[áa]|pode|ir[áa]|vai)\b", re.IGNORECASE
+)
+_SHALL_RE = re.compile(r"\b(SHALL|DEVE)\b")
+_SPEC_GLOBS = ("spec.md", "*.spec.md", "specs/**/*.md", "**/spec.md")
+
+
+def _norm_rf(kind: str, number: str) -> str:
+    """Normalize 'rf21' / 'RF-21' -> 'RF-21'."""
+    return f"{kind.upper()}-{int(number):02d}"
+
+
+def _norm_ca(nn: str, m: Optional[str]) -> str:
+    """Normalize to the skill's `CANN` convention (no hyphen): 'CA-02.1' -> 'CA02.1'."""
+    base = f"CA{int(nn):02d}"
+    return f"{base}.{int(m)}" if m else base
+
+
+def _collect_ids_from_text(text: str) -> tuple[set[str], set[str]]:
+    rf = {_norm_rf(k, n) for k, n in _RF_RE.findall(text)}
+    ca = {_norm_ca(nn, m or None) for nn, m in _CA_RE.findall(text)}
+    return rf, ca
+
+
+def _iter_md_files(root: Path, patterns: tuple[str, ...]) -> list[Path]:
+    seen: set[Path] = set()
+    for pat in patterns:
+        for f in root.glob(pat):
+            if f.is_file() and f.suffix == ".md":
+                seen.add(f.resolve())
+    return sorted(seen)
+
+
+def _check_projection_drift(
+    requirements_dir: str = "docs/requirements",
+    projection_dir: str = "openspec",
+) -> dict:
+    """Advisory report: drift between the requirement source of truth and its SDD projection.
+
+    Implements references/12-sdd-interop.md §5. Never raises on a "fail" — returns
+    a structured report the agent (or a CI job) reads. Tag-based (anchored on
+    RF-NN), stdlib-only, EN+pt-BR aware.
+    """
+    req_root = Path(requirements_dir)
+    proj_root = Path(projection_dir)
+
+    report: dict = {
+        "requirements_dir": str(req_root),
+        "projection_dir": str(proj_root),
+        "ok": True,
+        "summary": "",
+        "findings": {
+            "missing_in_projection": [],      # RF/RNF in docs/ absent from specs
+            "duplicated_in_projection": [],   # RF/RNF tag in >1 spec file (should be exactly one)
+            "orphan_in_projection": [],       # spec requirement lines w/o RF tag
+            "ca_without_scenario": [],        # CA ids present but NO scenario block at all (coarse)
+            "ears_weakened": [],              # weak-modal / no-SHALL req lines
+        },
+        "counts": {},
+        "notes": [],
+    }
+
+    if not req_root.exists():
+        report["ok"] = False
+        report["summary"] = f"requirements_dir not found: {req_root}"
+        return report
+    if not proj_root.exists():
+        report["ok"] = False
+        report["summary"] = f"projection_dir not found: {proj_root}"
+        return report
+
+    # 1. Source-of-truth ids
+    req_files = _iter_md_files(req_root, ("**/*.md",))
+    src_rf: set[str] = set()
+    src_ca: set[str] = set()
+    for f in req_files:
+        rf, ca = _collect_ids_from_text(f.read_text(encoding="utf-8", errors="replace"))
+        src_rf |= rf
+        src_ca |= ca
+
+    # 2. Projection ids (+ per-file RF counts for duplication) + line-level signals
+    spec_files = _iter_md_files(proj_root, _SPEC_GLOBS) or _iter_md_files(proj_root, ("**/*.md",))
+    proj_rf: set[str] = set()
+    rf_file_count: dict[str, int] = {}
+    has_scenario = False
+    for f in spec_files:
+        text = f.read_text(encoding="utf-8", errors="replace")
+        rf, _ = _collect_ids_from_text(text)
+        proj_rf |= rf
+        for tag in rf:
+            rf_file_count[tag] = rf_file_count.get(tag, 0) + 1
+        if re.search(r"^\s*(Scenario|Cenário|Scenarios?)\b", text, re.IGNORECASE | re.MULTILINE):
+            has_scenario = True
+
+        for ln, line in enumerate(text.splitlines(), start=1):
+            stripped = line.strip()
+            if not stripped or stripped.startswith(("#", ">", "|", "```")):
+                continue
+            has_shall = bool(_SHALL_RE.search(stripped))
+            has_weak = bool(_WEAK_MODAL_RE.search(stripped))
+            has_rf = bool(_RF_RE.search(stripped))
+            mentions_system = bool(re.search(r"\b(the system|o sistema)\b", stripped, re.IGNORECASE))
+            looks_req = has_shall or (has_weak and mentions_system) or has_rf
+            if looks_req and not has_rf:
+                report["findings"]["orphan_in_projection"].append(
+                    {"file": str(f), "line": ln, "text": stripped[:160]}
+                )
+            if looks_req and has_weak and not has_shall:
+                report["findings"]["ears_weakened"].append(
+                    {"file": str(f), "line": ln, "text": stripped[:160]}
+                )
+
+    # 3. Reconcile
+    fnd = report["findings"]
+    fnd["missing_in_projection"] = sorted(src_rf - proj_rf)
+    fnd["duplicated_in_projection"] = sorted(t for t, c in rf_file_count.items() if c > 1)
+    if src_ca and not has_scenario:
+        fnd["ca_without_scenario"] = sorted(src_ca)
+
+    report["counts"] = {
+        "requirements_files": len(req_files),
+        "projection_spec_files": len(spec_files),
+        "rf_in_source": len(src_rf),
+        "rf_in_projection": len(proj_rf),
+        "ca_in_source": len(src_ca),
+        "missing": len(fnd["missing_in_projection"]),
+        "duplicated": len(fnd["duplicated_in_projection"]),
+        "orphans": len(fnd["orphan_in_projection"]),
+        "ears_weakened": len(fnd["ears_weakened"]),
+    }
+
+    problems = (
+        len(fnd["missing_in_projection"])
+        + len(fnd["duplicated_in_projection"])
+        + len(fnd["orphan_in_projection"])
+        + len(fnd["ca_without_scenario"])
+        + len(fnd["ears_weakened"])
+    )
+    report["ok"] = problems == 0
+    if not spec_files:
+        report["notes"].append("No projection spec files found — is the framework folder populated?")
+    if report["ok"]:
+        report["summary"] = f"In sync: {len(src_rf)} RF/RNF projected, {len(src_ca)} CA, no drift detected."
+    else:
+        bits: list[str] = []
+        if fnd["missing_in_projection"]:
+            bits.append(f"{len(fnd['missing_in_projection'])} missing from projection")
+        if fnd["duplicated_in_projection"]:
+            bits.append(f"{len(fnd['duplicated_in_projection'])} duplicated across specs")
+        if fnd["orphan_in_projection"]:
+            bits.append(f"{len(fnd['orphan_in_projection'])} orphan line(s)")
+        if fnd["ca_without_scenario"]:
+            bits.append("CA ids without any scenario block")
+        if fnd["ears_weakened"]:
+            bits.append(f"{len(fnd['ears_weakened'])} weak-modal line(s)")
+        report["summary"] = "Drift detected: " + "; ".join(bits) + "."
+    return report
+
+
+@mcp.tool()
+def check_projection_drift(
+    requirements_dir: str = "docs/requirements",
+    projection_dir: str = "openspec",
+) -> dict:
+    """Report drift between docs/requirements (source of truth) and its SDD projection.
+
+    Advisory (never blocks). Compares RF/RNF/CA tags between the skill's
+    `docs/requirements` spine and an OpenSpec (`openspec/`) or Spec Kit (`specs/`)
+    projection. Findings: missing_in_projection, duplicated_in_projection,
+    orphan_in_projection, ca_without_scenario (coarse/global), ears_weakened.
+    EN + pt-BR (`SHALL`/`DEVE`). See references/12-sdd-interop.md §5.
+    """
+    return _check_projection_drift(requirements_dir, projection_dir)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 

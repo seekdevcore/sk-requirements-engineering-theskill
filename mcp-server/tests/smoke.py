@@ -18,6 +18,7 @@ from requirements_engineering_mcp.server import (
     REFERENCES_DIR,
     SKILL_MD,
     SKILL_ROOT,
+    check_projection_drift,
     list_examples,
     list_hard_rules,
     list_references,
@@ -62,7 +63,7 @@ def main() -> int:
     print(f"  references/.md   = {len(refs)} → {refs}")
     print(f"  examples/.md     = {len(exs_md)} → {exs_md}")
     print(f"  examples/.feat   = {len(exs_ft)} → {exs_ft}")
-    check("references count == 12", len(refs) == 12, len(refs))
+    check("references count == 13", len(refs) == 13, len(refs))
     check("examples count (md + feature) == 5", len(exs_md) + len(exs_ft) == 5, len(exs_md) + len(exs_ft))
     print()
 
@@ -100,6 +101,15 @@ def main() -> int:
         check("validate_acceptance_criterion returns str", isinstance(vac, str) and len(vac) > 0)
     except Exception as exc:  # noqa: BLE001
         check(f"validate_acceptance_criterion did not raise (got {type(exc).__name__}: {exc})", False)
+
+    try:
+        drift = check_projection_drift("___nonexistent_req___", "___nonexistent_proj___")
+        check(
+            "check_projection_drift returns advisory dict (ok=False on missing dir)",
+            isinstance(drift, dict) and drift.get("ok") is False and "summary" in drift,
+        )
+    except Exception as exc:  # noqa: BLE001
+        check(f"check_projection_drift did not raise (got {type(exc).__name__}: {exc})", False)
     print()
 
     if failed:

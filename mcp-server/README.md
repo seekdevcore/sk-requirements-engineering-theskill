@@ -13,7 +13,7 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 | URI | Content |
 |---|---|
 | `requirements://skill` | `SKILL.md` — 10-section entry-point map |
-| `requirements://reference/{name}` | One of the 12 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`, `10-estrutura-projeto`, `11-ears`) |
+| `requirements://reference/{name}` | One of the 13 `references/` files (e.g., `01-fundamentos`, `04-bdd-criterios-aceitacao`, `10-estrutura-projeto`, `11-ears`, `12-sdd-interop`) |
 | `requirements://example/{name}` | One of the 5 `examples/` files (cases + templates + ready-to-copy Gherkin) |
 | `requirements://catalog` | JSON catalog of every available document — useful for enumerating without parsing markdown |
 
@@ -27,6 +27,7 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 | `validate_user_story(title, bdd?)` | INVEST + naming-convention check; optional BDD structural check |
 | `validate_acceptance_criterion(text)` | AC convention check: `[...]` rule, imperative wording, no qualitative adjectives, no technical terms; hints EARS phrasing when relevant |
 | `validate_ears(text)` | EARS check (reference 11, optional layer): exactly one `SHALL`/`DEVE`, no weak modals, measurable response, EARS structural keyword present (EN + pt-BR) |
+| `check_projection_drift(requirements_dir, projection_dir)` | SDD-interop drift report (reference 12, advisory): compares `docs/requirements` ↔ an OpenSpec/Spec Kit projection by `RF-NN` tag. Findings: missing / duplicated / orphan / `ca_without_scenario` (coarse) / `ears_weakened`. Never blocks (EN + pt-BR) |
 
 ---
 
