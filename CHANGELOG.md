@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.0] — 2026-06-11
+
+Adds the **`.feature` step-definition variants per stack** — second post-1.0 roadmap item. The canonical pt-BR Gherkin feature can now be bound in six BDD ecosystems without rewriting the requirement.
+
+### Added
+
+- **`examples/feature-step-defs/`** — ready step-definition skeletons that bind `examples/template-user-story.feature` (pt-BR Gherkin) in six stacks: `pytest_bdd_steps.py`, `behave_steps.py`, `cucumber_js.steps.js`, `cucumber_playwright.steps.ts`, `specflow_Steps.cs` (Reqnroll — SpecFlow's maintained successor), and `behat_FeatureContext.php` — plus a `README.md` mapping each stack to its install/run command, project layout, and the `# language: pt` note (all six parse pt-BR Gherkin natively). Every skeleton repeats the `@US/@F/@EP/@CAs/@Doc-Req` traceability header and binds the parametrized steps + the Scenario Outline. Composes with `references/04-bdd-criterios-aceitacao.md` and the `e2e-testing-patterns` discipline.
+
+### Changed
+
+- **`examples/template-user-story.feature`** — the technical note now points to `feature-step-defs/` for the full six-stack bindings.
+- **`SKILL.md` §5 Phase B** + `content_status` + **`README.md`** — the new folder is listed; pt-BR `SKILL.md`/`CHANGELOG` mirrored (with a `feature-step-defs/README.md` pt-BR pointer, since the step-def *code* is language-neutral and identical).
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.11.0 → 1.12.0`.
+
+---
+
 ## [1.11.0] — 2026-06-11
 
 Adds the **dependability & security requirements** depth layer — the first post-1.0 roadmap item (Sommerville Part 2). New `references/13-confiabilidade-seguranca.md` turns the four dependability dimensions into quantitative, EARS-able, traceable `RNF` that fit the existing spine — it adds rigour to §4.2, it does not replace it.

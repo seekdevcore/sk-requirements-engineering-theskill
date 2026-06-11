@@ -143,6 +143,11 @@ Funcionalidade: US30.1 — Apresentação básica e ordenação dos resultados d
 #   - Python backend  → pytest-bdd OR behave (we recommend pytest-bdd in Interpop).
 #   - Frontend E2E    → @cucumber/cucumber + Playwright (cucumber-playwright).
 #
+# READY STEP-DEFINITION SKELETONS for SIX stacks — pytest-bdd, behave, cucumber-js,
+# cucumber-playwright, Reqnroll/SpecFlow (C#), and Behat (PHP) — that bind THIS exact
+# feature live in  feature-step-defs/  (see feature-step-defs/README.md). Write the
+# Gherkin once; pick any stack without rewriting the requirement.
+#
 # Step definitions (Python — pytest-bdd):
 #
 #   from pytest_bdd import scenarios, given, when, then
