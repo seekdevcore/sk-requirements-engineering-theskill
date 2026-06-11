@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.11.0] — 2026-06-11
+
+Adds the **dependability & security requirements** depth layer — the first post-1.0 roadmap item (Sommerville Part 2). New `references/13-confiabilidade-seguranca.md` turns the four dependability dimensions into quantitative, EARS-able, traceable `RNF` that fit the existing spine — it adds rigour to §4.2, it does not replace it.
+
+### Added
+
+- **`references/13-confiabilidade-seguranca.md`** — reliability (`POFOD`/`ROCOF`/`MTTF`/`AVAIL`), safety (hazard-driven derivation, SIL, safety cases), information security (risk-driven `asset → exposure → threat → control → requirement`, misuse cases, the security-`RNF` types), and resilience (the 4R — recognition/resistance/recovery/reinstatement — plus RTO/RPO and redundancy×diversity). Grounded in Sommerville 10e Ch. 10 / §11.2 / §12.2 / §13.3 / Ch. 14; composes with the `security-requirement-extraction` threat→requirement process, EARS (`references/11`), ethics (`references/09`, principle 2.9) and traceability (`references/07`). Includes a worked "wish → quantitative `RNF`" example per dimension, 8 dependability-specific anti-patterns, and a per-asset elicitation checklist.
+- **`translations/pt-BR/references/13-confiabilidade-seguranca.md`** — full pt-BR mirror.
+
+### Changed
+
+- **`SKILL.md` §4.2** — the NFR golden-rule paragraph now points to `references/13` for the dependability/security families; `content_status` references count `13 → 14 files`. pt-BR `SKILL.md` mirrored (§4.2 pointer + counts).
+- **`README.md`** — language-status table references count `13 → 14`; pt-BR mirror line bumped to v1.11.0 / refs 01–13.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.10.1 → 1.11.0`.
+
+---
+
 ## [1.10.1] — 2026-06-11
 
 Completes the **full pt-BR translation** of the post-1.0 content. `translations/pt-BR/` is no longer a frozen v1.0.x snapshot — it is now a faithful mirror of the en-CA source at this version. en-CA prose is byte-unchanged at 1.10.1 apart from `content_status` + version; this release exists to ship and tag the completed translation as a traceable milestone.
