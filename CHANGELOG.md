@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.0] — 2026-06-10
+
+Completes the SDD-interop pair started in v1.9.0: the **`project-to-sdd.sh` adapter** that *generates* the OpenSpec/Spec Kit projection from the `docs/` spine (v1.9.0's `check_projection_drift` *verifies* it). Plus a full-skill consistency sweep and a refreshed pt-BR translation snapshot.
+
+### Added
+
+- **`assets/project-to-sdd.sh`** — projection scaffolder. From a Feature id/slug it reads `docs/backlog/features/<F-NN>.md`, extracts the realized `RF/RNF` tags, the Epic, `CANN`, and `T`/`TX` tasks, and scaffolds the framework folder — `openspec/changes/<slug>/{proposal,design,tasks}.md + specs/spec.md` (`--target openspec`, default) or `specs/<slug>/{spec,plan,tasks}.md + .specify/memory/constitution.md` (`--target speckit`). Every generated requirement keeps its **`[RF-NN]` tag** and a banner pointing back to `docs/` as source of truth; prose is left as `TODO: EARS (§11)` for the author to fill. **Dry-run by default**, `--apply` to write, **never overwrites** (`set -Eeuo pipefail`, quoted, input-validated — per `bash-defensive-patterns`). The `generate → fill → check_projection_drift` loop closes the round-trip. Verified end-to-end on a fixture (`bash -n` clean; detects/extracts; preserves `[RF-06]`; drift verified on the output).
+- **`references/12-sdd-interop.md`** — durable **framework reference links** (OpenSpec <https://github.com/Fission-AI/OpenSpec>, GitHub Spec Kit <https://github.com/github/spec-kit>) so users can learn the tools even if the repos move; §3.1/§4.1 cross-link the adapter; §5 gains a "whole-dir vs per-feature" honesty note (drift compares the *entire* `docs/requirements/`, while the adapter projects one Feature at a time — so a single-feature projection lists other features' RF as `missing`, expected).
+
+### Changed
+
+- **`README.md`** + **`SKILL.md` §3.1**: `assets/project-to-sdd.sh` listed; the **generate ↔ verify** pairing documented; `content_status` notes the adapter.
+- **Translations** — the `translations/pt-BR/` snapshot refreshed toward v1.10.0 (see the pt-BR `CHANGELOG`/`content_status` for exact coverage).
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.9.0 → 1.10.0`.
+
+---
+
 ## [1.9.0] — 2026-06-10
 
 Adds the **SDD interop layer**: a reference that bridges this skill (the *quality/methodology* layer) to an SDD execution framework (**OpenSpec** / **GitHub Spec Kit**), plus an advisory MCP tool that keeps the `docs/requirements/` source of truth and the framework projection in sync. Additive over v1.8.0 — nothing regresses §0 or the `docs/` spine. Driven by an external suggestion (kept locally under `docs/material-fonte/`); the four caveats found in review were fixed before commit.

@@ -5,13 +5,13 @@ language: en-CA
 available_translations:
   - pt-BR
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (13 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), examples/ (5 files), and assets/scaffold-structure.sh (detects GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / LEGACY-MONOLITH). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — full snapshot preserved at translations/pt-BR/ (references/10 + scaffolder pending pt-BR mirror; English reference + pt-BR seed content already usable)
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (13 files, incl. 10-estrutura-projeto.md + 11-ears.md + 12-sdd-interop.md), examples/ (5 files), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · project-to-sdd.sh — OpenSpec/Spec Kit projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  pt-BR: partial — translations/pt-BR/ is a preserved v1.0.x snapshot (references 01–09 fully in pt-BR). Post-1.0 additions — §0 first-run structure, references 10 (structure) / 11 (EARS) / 12 (SDD interop), the scaffolder + project-to-sdd adapter + MCP validators — are en-CA at the repo root and authoritative there; a full pt-BR re-translation of those is pending (pointer stubs at translations/pt-BR/references/10–12).
 source: https://github.com/seekdevcore/sk-requirements-engineering
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.9.0
+version: 1.10.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -158,8 +158,10 @@ SDD tooling; use the RE process when actually working.
 execution loop, [`references/12-sdd-interop.md`](references/12-sdd-interop.md) is the bridge: the artifact
 crosswalk, the projection recipes (`docs/` → framework files, `[RF-NN]` tags preserved), and the **advisory
 MCP tool `check_projection_drift`** that keeps the `docs/requirements/` source of truth and the framework
-projection in sync (reports missing/duplicated/orphan/EARS-weakened drift, never blocks). Optional — skip if
-there is no SDD framework.
+projection in sync (reports missing/duplicated/orphan/EARS-weakened drift, never blocks). **Generate ↔
+verify**: `assets/project-to-sdd.sh <F-NN> --target openspec|speckit` scaffolds the projection (preserving
+`[RF-NN]` tags); `check_projection_drift` then confirms nothing drifted. Optional — skip if there is no SDD
+framework.
 
 ---
 

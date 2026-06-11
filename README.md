@@ -201,6 +201,7 @@ engenharia-de-requisitos/
 │   └── 12-sdd-interop.md          (optional SDD bridge — OpenSpec/Spec Kit crosswalk; check_projection_drift)
 ├── assets/
 │   ├── scaffold-structure.sh      (detect → create → reorganize scaffolder; GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH)
+│   ├── project-to-sdd.sh          (project docs/ → OpenSpec/Spec Kit, preserving [RF-NN]; pairs with check_projection_drift)
 │   └── templates/                 (generic, adaptive template tree the scaffolder materializes)
 └── examples/
     ├── caso-controle-dopagem.md         (real CNPq case — *"ABCD"*/*"COB"*)
