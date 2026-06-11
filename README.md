@@ -8,8 +8,8 @@
 [![Skill: engenharia-de-requisitos](https://img.shields.io/badge/Skill-engenharia--de--requisitos-blue)](./SKILL.md)
 [![Language: en-CA default](https://img.shields.io/badge/Language-en--CA%20(default)-success)](#language-status)
 [![Translation: pt-BR available](https://img.shields.io/badge/Translation-pt--BR%20available-yellow)](#language-status)
-[![Latest release](https://img.shields.io/github/v/release/seekdevcore/sk-requirements-engineering?label=Release&color=informational)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/releases/latest)
-[![CI quality](https://img.shields.io/github/actions/workflow/status/seekdevcore/sk-requirements-engineering/quality.yml?branch=main&label=CI)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/actions/workflows/quality.yml)
+[![Latest release](https://img.shields.io/github/v/release/seekdevcore/sk-requirements-engineering-theskill?label=Release&color=informational)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/releases/latest)
+[![CI quality](https://img.shields.io/github/actions/workflow/status/seekdevcore/sk-requirements-engineering-theskill/quality.yml?branch=main&label=CI)](https://github.com/seekdevcore/sk-requirements-engineering-theskill/actions/workflows/quality.yml)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-purple.svg)](./CODE_OF_CONDUCT.md)
 
 > **Skill for [Claude Code](https://claude.com/claude-code)** that loads canonical knowledge of **Requirements Engineering**, **Business Analysis**, and **Professional Ethics in Computing** into any Claude session — built from the full course material of *"IFPB"* (*"Instituto Federal da Paraíba"*) plus the canonical bibliography of the field (Sommerville, Pressman, Wiegers, Cohn, Robertson, Hull, Falbo, BABOK v3, *"SBC"* 002/2024).
@@ -38,7 +38,7 @@
 > | Path | Best for | One-liner |
 > |---|---|---|
 > | **Native skill** (this section) | Claude Code CLI users | `git clone … ~/.claude/skills/engenharia-de-requisitos` |
-> | **Plugin marketplace** ([§Plugin install](#-claude-code-plugin-install-1-liner)) | Claude Code users who want managed install + auto-update | `/plugin marketplace add seekdevcore/sk-requirements-engineering` |
+> | **Plugin marketplace** ([§Plugin install](#-claude-code-plugin-install-1-liner)) | Claude Code users who want managed install + auto-update | `/plugin marketplace add seekdevcore/sk-requirements-engineering-theskill` |
 > | **MCP server** ([§MCP server](#-mcp-server-for-claude-desktop--cursor--cline--continue--zed--any-mcp-client)) | Claude Desktop · Cursor · Cline · Continue · Zed · OpenAI Responses · custom agents | `uv run requirements-engineering-mcp` |
 
 ### Option 1 — Clone directly into your global skills folder (recommended)
@@ -46,7 +46,7 @@
 ```bash
 # 1. Clone the repo into Claude Code's global skills directory
 cd ~/.claude/skills/
-git clone git@github.com:seekdevcore/sk-requirements-engineering.git engenharia-de-requisitos
+git clone git@github.com:seekdevcore/sk-requirements-engineering-theskill.git engenharia-de-requisitos
 
 # 2. Verify the skill loads
 ls ~/.claude/skills/engenharia-de-requisitos/SKILL.md
@@ -59,7 +59,7 @@ ls ~/.claude/skills/engenharia-de-requisitos/SKILL.md
 
 ```bash
 # 1. Clone wherever you keep your repos
-git clone git@github.com:seekdevcore/sk-requirements-engineering.git ~/repos/sk-requirements-engineering
+git clone git@github.com:seekdevcore/sk-requirements-engineering-theskill.git ~/repos/sk-requirements-engineering
 
 # 2. Create a symlink into Claude's skills folder
 ln -s ~/repos/sk-requirements-engineering ~/.claude/skills/engenharia-de-requisitos
@@ -97,7 +97,7 @@ You should see `engenharia-de-requisitos` in the list. Then invoke it explicitly
 In a Claude Code session:
 
 ```text
-/plugin marketplace add seekdevcore/sk-requirements-engineering
+/plugin marketplace add seekdevcore/sk-requirements-engineering-theskill
 /plugin install engenharia-de-requisitos
 ```
 

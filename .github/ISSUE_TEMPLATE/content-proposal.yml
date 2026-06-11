@@ -52,7 +52,7 @@ body:
     attributes:
       label: Alignment with the hard rules
       description: |
-        Confirm you understand the [10 hard rules](https://github.com/seekdevcore/sk-requirements-engineering/blob/main/references/05-convencoes-interpop.md) and explain any deviation you anticipate.
+        Confirm you understand the [10 hard rules](https://github.com/seekdevcore/sk-requirements-engineering-theskill/blob/main/references/05-convencoes-interpop.md) and explain any deviation you anticipate.
       render: markdown
     validations:
       required: false
@@ -73,7 +73,7 @@ body:
     attributes:
       label: Code of Conduct + License
       options:
-        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
+        - label: I have read the [Code of Conduct](https://github.com/seekdevcore/sk-requirements-engineering-theskill/blob/main/CODE_OF_CONDUCT.md) and agree to follow it.
           required: true
-        - label: I agree my contribution will be licensed under [CC BY-SA 4.0](https://github.com/seekdevcore/sk-requirements-engineering/blob/main/LICENSE) (the same as the rest of the skill).
+        - label: I agree my contribution will be licensed under [CC BY-SA 4.0](https://github.com/seekdevcore/sk-requirements-engineering-theskill/blob/main/LICENSE) (the same as the rest of the skill).
           required: true
