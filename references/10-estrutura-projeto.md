@@ -108,7 +108,9 @@ backlog/
 ├── README.md          purpose + naming table + IDs + priority + Definition of Done + close workflow
 ├── glossario.md       domain vocabulary (every US/CA/ADR must use these terms)
 ├── epics/             one file per Epic — description + child Features list
-│   └── EP-NN-<slug>.md
+│   ├── EP-NN-<slug>.md
+│   ├── EP-melhorias.md                 ← MANDATORY root Epic: Improvements (product enhancements)
+│   └── EP-atividades-complementares.md ← MANDATORY root Epic: Complementary Activities (home for cross-cutting TX)
 ├── features/          one file per Feature — description + CAs + USs (with BDD) + Tasks
 │   └── F-NN-<slug>.md
 ├── sprints/           one file per Sprint — temporal execution (US/Task mapping)
