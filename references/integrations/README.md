@@ -11,12 +11,13 @@
 | Integration | Doc | Adapter | Validator |
 |---|---|---|---|
 | **SDD — OpenSpec · GitHub Spec Kit** (project the `docs/` spine into a Spec-Driven Development execution loop, preserving `[RF-NN]` tags) | [`sdd-interop.md`](sdd-interop.md) | [`../../assets/integrations/project-to-sdd.sh`](../../assets/integrations/project-to-sdd.sh) | `check_projection_drift` ([`../../mcp-server/`](../../mcp-server/README.md)) |
+| **OpenProject — backlog → Excel sync** (project `docs/backlog/` Epics/Features/User Stories into OpenProject work packages: `Type`/`ID`/`Subject`/`Priority`) | [`openproject.md`](openproject.md) | [`../../assets/integrations/project-to-openproject.py`](../../assets/integrations/project-to-openproject.py) | — (round-trip via the `<our-id>` Subject prefix) |
 
 ## Planned
 
 | Integration | Status |
 |---|---|
-| **OpenProject** (sync the backlog — Epics/Features/US/Tasks — via the OpenProject ↔ Excel synchronization) | 🔜 planned — see [openproject.org Excel synchronization](https://www.openproject.org/docs/system-admin-guide/integrations/excel-synchronization/) |
+| *(none currently)* | propose one via the "how to add" steps below |
 
 ## How to add a new integration
 

@@ -11,12 +11,13 @@
 | Integração | Doc | Adaptador | Validador |
 |---|---|---|---|
 | **SDD — OpenSpec · GitHub Spec Kit** (projeta a espinha `docs/` num loop de execução Spec-Driven Development, preservando as tags `[RF-NN]`) | [`sdd-interop.md`](sdd-interop.md) | [`../../../assets/integrations/project-to-sdd.sh`](../../../assets/integrations/project-to-sdd.sh) | `check_projection_drift` ([`../../../mcp-server/`](../../../mcp-server/README.md)) |
+| **OpenProject — backlog → sync Excel** (projeta Epics/Features/User Stories do `docs/backlog/` em work packages do OpenProject: `Type`/`ID`/`Subject`/`Priority`) | [`openproject.md`](openproject.md) | [`../../../assets/integrations/project-to-openproject.py`](../../../assets/integrations/project-to-openproject.py) | — (round-trip via o prefixo `<nosso-id>` no Subject) |
 
 ## Planejadas
 
 | Integração | Status |
 |---|---|
-| **OpenProject** (sincroniza o backlog — Epics/Features/US/Tasks — via a sincronização OpenProject ↔ Excel) | 🔜 planejada — ver [openproject.org Excel synchronization](https://www.openproject.org/pt/docs/system-admin-guide/integrations/excel-synchronization/) |
+| *(nenhuma no momento)* | proponha uma pelos passos de "como adicionar" abaixo |
 
 ## Como adicionar uma nova integração
 
