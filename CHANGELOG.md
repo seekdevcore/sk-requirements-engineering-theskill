@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.17.0] — 2026-06-11
+
+Makes the OpenProject projection **set up the work-package hierarchy automatically** and carry the **BDD as the User Story description** — the user no longer wires parent/child relations by hand in OpenProject.
+
+### Changed
+
+- **`assets/integrations/project-to-openproject.py`** — the table now has **seven columns** (`Type · ID · Subject · Priority · Description · Parent · Relations`):
+  - **Hierarchy is automatic** — the `Subject` is indented **4 spaces per depth level** (Epic 0 · Feature 1 · User story 2 · Task 3); on upload OpenProject nests the tree and auto-fills `Parent` (the Excel-sync indentation method — no manual relations).
+  - **Description** — a **User Story's description is its BDD** (the Gherkin scenarios, extracted from the feature file); a Feature carries its business-language description, an Epic its product vision.
+  - **Relations** — emitted as an empty column, with the documented **two-pass** flow (import → export the work packages back from OpenProject for the ids → fill `<type> <openproject-id>` → re-import), since relations need OpenProject's numeric ids (English API types only).
+  - XLSX wraps the Description column. CSV always + XLSX (when `openpyxl`), dry-run default, never overwrites. Fixture-verified (indentation depth; US-description = BDD; both formats).
+- **`references/integrations/openproject.md`** — documents the auto-hierarchy (indentation), the Description rule (US = BDD), and the relations round-trip. Full pt-BR mirror.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.16.0 → 1.17.0`.
+
+---
+
 ## [1.16.0] — 2026-06-11
 
 Adds the **OpenProject integration** — the third tool bridge, and the first targeting a project-management tool rather than an SDD spec loop. Projects the `docs/backlog/` spine into OpenProject work packages via the Excel synchronization.
