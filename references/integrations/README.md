@@ -11,7 +11,7 @@
 | Integration | Doc | Adapter | Validator |
 |---|---|---|---|
 | **SDD — OpenSpec · GitHub Spec Kit** (project the `docs/` spine into a Spec-Driven Development execution loop, preserving `[RF-NN]` tags) | [`sdd-interop.md`](sdd-interop.md) | [`../../assets/integrations/project-to-sdd.sh`](../../assets/integrations/project-to-sdd.sh) | `check_projection_drift` ([`../../mcp-server/`](../../mcp-server/README.md)) |
-| **OpenProject — backlog → Excel sync** (project `docs/backlog/` Epics/Features/User Stories into OpenProject work packages: `Type`/`ID`/`Subject`/`Priority`) | [`openproject.md`](openproject.md) | [`../../assets/integrations/project-to-openproject.py`](../../assets/integrations/project-to-openproject.py) | — (round-trip via the `<our-id>` Subject prefix) |
+| **OpenProject — backlog ↔ work packages (REST API round-trip)** (pull + push `docs/backlog/` Epics/Features/User Stories straight to the OpenProject API v3; the Excel `.xlsm` is a Windows-only fallback) | [`openproject.md`](openproject.md) | [`../../assets/integrations/openproject-api.py`](../../assets/integrations/openproject-api.py) (primary) · [`../../assets/integrations/project-to-openproject.py`](../../assets/integrations/project-to-openproject.py) (Excel fallback) | — (round-trip via the `<our-id>` Subject prefix) |
 
 ## Planned
 
