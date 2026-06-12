@@ -6,12 +6,12 @@ available_translations:
   - pt-BR
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/project-to-openproject.py — OpenProject Excel projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.18.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.19.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.18.0
+version: 1.19.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -350,6 +350,10 @@ Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business ru
    - `EP-NN` (Epic, may be nested: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Acceptance Criterion) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (cross-cutting Task) · `G-NN` (business rule)
    - IDs are eternal (they do not get renumbered when content changes); the artifact version changes.
 
+9. **One Feature = one thing (atomicity).** A Feature delivers **exactly one** client-facing capability. If a candidate bundles two — e.g. *user registration* **and** *user update* — **split it into two Features** (atomic CRUD: one Feature per operation). One thing per Feature → cleaner estimation, one BDD focus, one-to-one traceability. Detail in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
+
+> **Two mandatory root Epics** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — enhancements to the product — and **`Atividades Complementares`** (*Complementary Activities*) — the home for cross-cutting `TX` (technical work, config, infra **not tied to a single Feature/US**, per rule 6). They are siblings to the project's feature-front Epics.
+
 **Full `BACKLOG.md` template** + examples from *"SIRA"* and *"Interpop"* projects in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 
 **Acceptance Criteria + BDD are complementary, not competing:**
@@ -436,6 +440,7 @@ Detail and application in [references/09-etica-sbc.md](references/09-etica-sbc.m
 11. **Feature with BDD instead of description** — pasting `GIVEN/WHEN/THEN` directly into the Feature instead of the business-language paragraph. Result: non-technical stakeholders do not read it, ACs become orphans, Sprint Planning stalls. BDD lives in the **User Story**. Detail and ❌/✅ examples in [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)
 12. **Backlog without origin in the requirements document** — an Epic/Feature/CA that appears in the backlog without `Origin (requirements)` pointing to `RF-NN`/`RNF-NN` is silent scope creep or technical refinement misplaced. Every change is born in the document; the backlog only materializes (see §2.1).
 13. **Technical term in an AC** — `CA: The endpoint POST /api/v1/bans/ returns HTTP 400 if hierarchy violated` forces the auditor/client to open a glossary. Rewrite in business language: `CA: When an administrator tries to ban another administrator, the system rejects the operation with the message "Operação não permitida".` Endpoint and HTTP status go in the Task.
+14. **Feature that bundles many capabilities** — a Feature doing *registration* AND *update* AND *deletion* is three Features. One Feature = one thing; split it (rule 9 / `05-convencoes-interpop.md` Rule 4b). A bundled Feature is impossible to estimate, gives the US one blurred BDD, and breaks one-to-one traceability.
 
 ---
 
@@ -465,6 +470,7 @@ Before accepting Epic/Feature/US in the backlog:
 - [ ] **Feature** has a **paragraph description** · **User Story** has **BDD `Given/When/Then`** (do not swap)
 - [ ] Every User Story has **explicitly associated ACs** (traceable relation)
 - [ ] Every Task has a **Task ID** (`TNN.M.K` or `TX-NN`) so it appears in commit/PR
+- [ ] **Feature delivers exactly ONE capability** — if it bundles two (e.g. registration + update), **split** it (rule 9 / Rule 4b)
 
 Failed ≥1 → not ready. Fix it before moving to implementation.
 

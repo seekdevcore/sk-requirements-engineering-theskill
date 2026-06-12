@@ -6,12 +6,12 @@ available_translations:
   - pt-BR
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/project-to-openproject.py — OpenProject Excel projection). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.18.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/project-to-openproject.py — projeção OpenProject Excel) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  pt-BR: complete — espelho fiel da v1.19.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/project-to-openproject.py — projeção OpenProject Excel) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.18.0
+version: 1.19.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -348,6 +348,10 @@ Aplica-se a TODOS os títulos de Epic, Feature, User Story, CA, **RF**, RNF, reg
    - `EP-NN` (Epic, pode ser aninhado: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Critério de Aceitação) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (Task transversal) · `G-NN` (regra de negócio)
    - IDs são eternos (não são renumerados quando o conteúdo muda); a versão do artefato muda.
 
+9. **Uma Feature = uma coisa (atomicidade).** Uma Feature entrega **exatamente uma** capacidade voltada ao cliente. Se junta duas — ex.: *cadastro* **e** *atualização* de usuário — **quebre em duas Features** (CRUD atômico: uma por operação). Uma coisa por Feature → estimativa mais limpa, um foco de BDD, rastreabilidade um-para-um. Detalhe em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
+
+> **Dois root Epics obrigatórios** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — aprimoramentos do produto — e **`Atividades Complementares`** (*Complementary Activities*) — o lar dos `TX` transversais (trabalho técnico, config, infra **não ligado a uma Feature/US**, conforme a regra 6). São irmãos dos Epics de funcionalidade do projeto.
+
 **Template completo do `BACKLOG.md`** + exemplos dos projetos *"SIRA"* e *"Interpop"* em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 
 **Critérios de Aceitação + BDD são complementares, não concorrentes:**
@@ -434,6 +438,7 @@ Detalhe e aplicação em [references/09-etica-sbc.md](references/09-etica-sbc.md
 11. **Feature com BDD em vez de descrição** — colar `GIVEN/WHEN/THEN` diretamente na Feature em vez do parágrafo em linguagem de negócio. Resultado: stakeholders não-técnicos não leem, CAs ficam órfãos, o Sprint Planning trava. BDD vive na **User Story**. Detalhe e exemplos ❌/✅ em [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)
 12. **Backlog sem origem no documento de requisitos** — um Epic/Feature/CA que aparece no backlog sem `Origem (requisitos)` apontando para `RF-NN`/`RNF-NN` é scope creep silencioso ou refinamento técnico mal colocado. Toda mudança nasce no documento; o backlog apenas materializa (veja §2.1).
 13. **Termo técnico em um CA** — `CA: O endpoint POST /api/v1/bans/ retorna HTTP 400 se hierarquia violada` força o auditor/cliente a abrir um glossário. Reescreva em linguagem de negócio: `CA: Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".` Endpoint e status HTTP vão na Task.
+14. **Feature que junta várias capacidades** — uma Feature fazendo *cadastro* E *atualização* E *exclusão* são três Features. Uma Feature = uma coisa; quebre (regra 9 / `05-convencoes-interpop.md` Rule 4b). Uma Feature agregada é impossível de estimar, dá à US um BDD borrado, e quebra a rastreabilidade um-para-um.
 
 ---
 
@@ -463,6 +468,7 @@ Antes de aceitar Epic/Feature/US no backlog:
 - [ ] **Feature** tem uma **descrição em parágrafo** · **User Story** tem **BDD `Given/When/Then`** (não troque)
 - [ ] Toda User Story tem **CAs explicitamente associados** (relação rastreável)
 - [ ] Toda Task tem um **Task ID** (`TNN.M.K` ou `TX-NN`) para que apareça em commit/PR
+- [ ] **Feature entrega exatamente UMA capacidade** — se junta duas (ex.: cadastro + atualização), **quebre** (regra 9 / Rule 4b)
 
 Falhou ≥1 → não está pronto. Corrija antes de passar para a implementação.
 

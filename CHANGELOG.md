@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.19.0] — 2026-06-12
+
+Adds the **Feature-atomicity rule** and the **two mandatory root Epics** (now seeded by the scaffolder) — distilled from the real *"SIRA"* project session and the author's guidance.
+
+### Added
+
+- **Feature atomicity — "one Feature = one thing".** A Feature delivers exactly one client-facing capability; if it bundles two (e.g. *user registration* AND *user update*), split it (atomic CRUD: one Feature per operation). Added to `SKILL.md` (naming rule 9 + the per-feature checklist + anti-pattern #14) and `references/05-convencoes-interpop.md` (Rule 4b). pt-BR mirror.
+- **Two mandatory root Epics, seeded by the scaffolder** — `assets/templates/backlog/epics/EP-melhorias.md` (**`Melhorias`** / *Improvements* — product enhancements) and `EP-atividades-complementares.md` (**`Atividades Complementares`** / *Complementary Activities* — the home for cross-cutting `TX`: technical work / config / infra **not tied to a single Feature/US**, per Rule 4). The scaffolder mirrors `templates/` recursively, so it now generates both (idempotent, never-overwrite — fixture-verified). Documented in `SKILL.md §5`, `references/05` (Rule 4), and the `references/10` structure tree.
+
+### Changed
+
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.18.0 → 1.19.0`.
+
+### Notes
+
+- The **OpenProject integration overhaul** (a REST API round-trip — the *"SIRA"* session proved the Excel-sync `.xlsm` macro is **Windows-only**, `winhttpcom.dll`) lands next (v1.20.0), informed by analyzing the real SIRA project.
+
+---
+
 ## [1.18.0] — 2026-06-11
 
 Adds a **plain-language "for you to use" guide** at the top of each integration doc — recipe-style steps for a non-technical user to connect and use the integration, with no jargon.

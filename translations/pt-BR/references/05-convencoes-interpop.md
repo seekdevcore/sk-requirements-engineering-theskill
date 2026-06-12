@@ -93,6 +93,10 @@ São Tasks transversais (`TX-NN`) — NÃO Features:
 | Criar arquivo de configuração JSON | Task transversal |
 | Configurar índice GIN no Postgres | Task da US relevante (não transversal — apoia US específica) |
 
+> **Onde os `TX` transversais vivem**: sob um **root Epic obrigatório `Atividades Complementares`** (*Complementary Activities*) — o lar do trabalho técnico **não ligado a uma Feature/US** (config, infra, setup, ferramental). As melhorias de produto vão sob o **outro root Epic obrigatório, `Melhorias`** (*Improvements*). Ambos são semeados pelo scaffolder — ver [`10-estrutura-projeto.md`](10-estrutura-projeto.md).
+
+**Rule 4b — Uma Feature = uma coisa (atomicidade).** Uma Feature entrega **exatamente uma** capacidade voltada ao cliente. Se um candidato junta duas — ex.: *cadastro de usuário* **e** *atualização de usuário* — **quebre em duas Features separadas** (CRUD atômico: uma Feature por operação). Uma coisa por Feature → estimativa mais limpa, um único foco de BDD, e rastreabilidade um-para-um. *(Confirmado no projeto *"SIRA"*: o backlog era atômico — uma Feature por operação de CRUD.)*
+
 ### Regra 5 — Prioridade Interpop (4 níveis em todos os nós)
 
 Use a escala Interpop em todo Epic, Feature, US e Task:
