@@ -18,6 +18,19 @@
 
 ---
 
+## ✅ For you to use it — plain steps (no jargon)
+
+Already using a "spec-first" tool (OpenSpec or GitHub's Spec Kit) to build with an AI coding assistant? This lets your requirements feed that tool instead of being retyped:
+
+1. **No login or code needed** — it just reads your requirements folder and writes the tool's files for you.
+2. **Ask me (or run the skill)** to "project feature F-XX to OpenSpec" (or to Spec Kit). I create that tool's folders and files, already filled with your requirement, keeping a small tag (like `[RF-06]`) so nothing gets lost.
+3. **Fill the blanks** the file leaves for you (a precise sentence or two), then let your AI assistant build from it.
+4. **Check it stayed in sync** — ask me to "check the projection drift"; I tell you if the requirement and the tool's copy drifted apart (I only warn, I never block).
+
+> Your original requirement always lives in your `docs/` folder — the tool's copy is just a projection of it. If you change one, tell me so I can line them up again.
+
+---
+
 ## 1. The division of labour
 
 This skill and an SDD framework are **different categories**, not competitors:

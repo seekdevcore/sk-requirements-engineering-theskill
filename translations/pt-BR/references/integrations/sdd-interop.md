@@ -18,6 +18,19 @@
 
 ---
 
+## ✅ Para você usar — passo a passo (sem jargão)
+
+Já usa uma ferramenta "spec-first" (OpenSpec ou o Spec Kit do GitHub) pra construir com um assistente de IA? Isto faz seus requisitos alimentarem essa ferramenta em vez de você redigitar:
+
+1. **Não precisa login nem código** — ela só lê a sua pasta de requisitos e escreve os arquivos da ferramenta pra você.
+2. **Peça pra mim (ou rode a skill)** "projetar a feature F-XX pro OpenSpec" (ou pro Spec Kit). Eu crio as pastas e arquivos daquela ferramenta, já preenchidos com o seu requisito, mantendo uma etiquetinha (tipo `[RF-06]`) pra nada se perder.
+3. **Preencha os espaços** que o arquivo deixa pra você (uma ou duas frases precisas) e deixe o seu assistente de IA construir a partir disso.
+4. **Confira se continua sincronizado** — peça pra mim "checar o drift da projeção"; eu te aviso se o requisito e a cópia da ferramenta se afastaram (eu só aviso, nunca bloqueio).
+
+> O seu requisito original mora sempre na sua pasta `docs/` — a cópia da ferramenta é só uma projeção dele. Se você mudar um, me avisa pra eu alinhar de novo.
+
+---
+
 ## 1. A divisão de trabalho
 
 Esta skill e um framework de SDD são **categorias diferentes**, não concorrentes:

@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.0] — 2026-06-11
+
+Adds a **plain-language "for you to use" guide** at the top of each integration doc — recipe-style steps for a non-technical user to connect and use the integration, with no jargon.
+
+### Added
+
+- **`references/integrations/openproject.md`** — a "✅ For you to use it — plain steps (no jargon)" section: get the access token (My account → Access tokens), download OpenProject's Excel-sync spreadsheet + allow macros + paste address/token/project, generate the list with the skill, paste, and send (Ctrl + B) — the nesting happens by itself; plus the plain note that relations are a second pass (they need the OpenProject ids).
+- **`references/integrations/sdd-interop.md`** — a matching plain-steps section (no login/token; ask the skill to project a feature, fill the blanks, check the drift).
+- Full pt-BR mirrors of both guides.
+
+### Changed
+
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.17.0 → 1.18.0`.
+
+---
+
 ## [1.17.0] — 2026-06-11
 
 Makes the OpenProject projection **set up the work-package hierarchy automatically** and carry the **BDD as the User Story description** — the user no longer wires parent/child relations by hand in OpenProject.
