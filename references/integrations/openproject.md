@@ -13,6 +13,22 @@
 
 ---
 
+## ✅ For you to use it — plain steps (no jargon)
+
+Want to put your whole backlog into OpenProject without typing item by item? Here is how:
+
+1. **Get your access code in OpenProject.** Sign in → click your name (top corner) → **My account** → **Access tokens** → create one. A code appears — copy it and keep it safe (treat it like a password; do not share it).
+2. **Download OpenProject's spreadsheet.** On OpenProject's Excel-synchronization page, download the spreadsheet they provide and open it. When asked, **allow the macros** (that is what lets the spreadsheet talk to OpenProject). In it, paste your OpenProject address, your access code (from step 1), and your project's name.
+3. **Generate your list with the skill.** Ask me (or run the skill) to "generate the backlog for OpenProject." I create a file (a small spreadsheet) with your Epics, Features and User Stories already in the right order.
+4. **Paste it into OpenProject's spreadsheet.** Copy the columns from the file I generated and paste them into OpenProject's spreadsheet.
+5. **Send.** Press the send button (Ctrl + B). Done — OpenProject creates everything and **nests one item inside the other by itself** (Epic on top, Feature under it, and so on). You do **not** have to link them by hand.
+
+> **Do I need an access code (token)?** Yes — just the one from your own account (step 1). It is free and takes a minute.
+>
+> **The "links" between tasks that depend on each other** (like "this one only after that one") can only be filled in **after** OpenProject has created everything: you download the list back from OpenProject (it now has a number for each item), fill those links in, and send again. I will walk you through it when the time comes.
+
+---
+
 ## 1. The column standard (the skill default — adaptable)
 
 The export has **seven columns**, named as OpenProject's Excel-sync template uses them:

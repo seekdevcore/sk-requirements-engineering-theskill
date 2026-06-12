@@ -13,6 +13,22 @@
 
 ---
 
+## ✅ Para você usar — passo a passo (sem jargão)
+
+Quer jogar todo o seu backlog dentro do OpenProject sem digitar item por item? É assim:
+
+1. **Pegue sua chave de acesso no OpenProject.** Entre na sua conta → clique no seu nome (canto) → **Minha conta** → **Tokens de acesso** → criar. Vai aparecer um código — copie e guarde bem (trate como senha; não compartilhe).
+2. **Baixe a planilha do OpenProject.** Na página de sincronização por Excel do OpenProject, baixe a planilha que eles oferecem e abra. Quando perguntar, **permita os macros** (é o que faz a planilha conversar com o OpenProject). Nela, cole o endereço do seu OpenProject, a sua chave de acesso (do passo 1) e o nome do seu projeto.
+3. **Gere a sua lista com a skill.** Peça pra mim (ou rode a skill) "gerar o backlog pro OpenProject". Eu crio um arquivo (uma planilha) com seus Epics, Features e User Stories já na ordem certa.
+4. **Cole na planilha do OpenProject.** Copie as colunas do arquivo que eu gerei e cole na planilha do OpenProject.
+5. **Envie.** Aperte o botão de enviar (Ctrl + B). Pronto — o OpenProject cria tudo e **encaixa um item dentro do outro sozinho** (Epic em cima, Feature embaixo, e assim por diante). Você **não precisa** ligar um no outro na mão.
+
+> **Preciso de chave/token?** Sim — só a da sua própria conta (passo 1). É de graça e leva 1 minuto.
+>
+> **As "ligações" entre tarefas que dependem uma da outra** (tipo "essa só depois daquela") só dá pra preencher **depois** que o OpenProject criou tudo: você baixa a lista de volta do OpenProject (que agora tem um número pra cada item), preenche essas ligações e envia de novo. Eu te explico na hora.
+
+---
+
 ## 1. O padrão de colunas (o default da skill — adaptável)
 
 A exportação tem **sete colunas**, nomeadas como o template de sincronização Excel do OpenProject as usa:
