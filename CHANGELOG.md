@@ -13,6 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.16.0] — 2026-06-11
+
+Adds the **OpenProject integration** — the third tool bridge, and the first targeting a project-management tool rather than an SDD spec loop. Projects the `docs/backlog/` spine into OpenProject work packages via the Excel synchronization.
+
+### Added
+
+- **`assets/integrations/project-to-openproject.py`** — reads `docs/backlog/` (Epics → Features → User Stories; Tasks with `--with-tasks`) and emits the OpenProject work-package table with exactly four columns: **`Type` · `ID` · `Subject` · `Priority`**. The `ID` column is left **blank** (OpenProject assigns its own numeric id on import); **our stable id lives at the start of the `Subject`** (`<EP/F/US-id> <business title>`, as the OpenProject UI renders it); priority maps the *"Interpop"* scale (🔴/🟠/🟡/🟢 → `Immediate`/`High`/`Normal`/`Low`). Writes `openproject/openproject-backlog.csv` (stdlib, always) **and** `.xlsx` (when `openpyxl` is present; graceful CSV-only fallback). Dry-run by default, `--apply`, never overwrites. Fixture-verified (CSV + XLSX; `TX-NN` id-normalization fixed).
+- **`references/integrations/openproject.md`** — the bridge doc: the column standard, the adapter recipe, the OpenProject Excel-synchronization steps, the round-trip rule, and the two mandatory root Epics (`Improvements` / `Complementary Activities`). Full pt-BR mirror.
+
+### Changed
+
+- **`references/integrations/README.md`** — OpenProject moved from "planned" to **available**. The MCP recursive scan exposes it (`requirements://reference/openproject`); reference count `14 → 15` (`SKILL.md` `content_status`, `mcp-server/README.md`, `smoke.py`). `SKILL.md` §5 + the README directory tree list the new integration. pt-BR mirror updated.
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.15.0 → 1.16.0`.
+
+### Notes
+
+- The two mandatory root Epics (`Improvements` / `Complementary Activities`) are **documented** here but **not yet seeded by the scaffolder** — that lands in a follow-up once their function is specified.
+
+---
+
 ## [1.15.0] — 2026-06-11
 
 Reorganizes tool **integrations** into a dedicated, discoverable home as the methodology grows toward several integrations (SDD now; **OpenProject** planned). Function-based taxonomy preserved — docs stay under `references/`, executables under `assets/`.

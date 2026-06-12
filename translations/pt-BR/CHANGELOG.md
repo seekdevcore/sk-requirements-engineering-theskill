@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## Status do pt-BR — espelho completo da v1.15.0 (2026-06-11)
+## Status do pt-BR — espelho completo da v1.16.0 (2026-06-11)
 
-> A partir da **v1.10.1** (e mantido até a **v1.15.0**), `translations/pt-BR/` deixou de ser um snapshot congelado da v1.0.x e passou a ser um
+> A partir da **v1.10.1** (e mantido até a **v1.16.0**), `translations/pt-BR/` deixou de ser um snapshot congelado da v1.0.x e passou a ser um
 > **espelho fiel** do conteúdo autoritativo en-CA. Tudo que evoluiu pós-1.0 está agora em pt-BR:
 >
 > - **SKILL.md** — retraduzida por inteiro: **§0** (checagem de estrutura obrigatória na primeira execução),
