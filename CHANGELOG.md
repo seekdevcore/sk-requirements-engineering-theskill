@@ -13,6 +13,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.20.0] — 2026-06-12
+
+**OpenProject integration overhaul** — the **REST API v3 round-trip is now the primary method**; the Excel-sync `.xlsm` is demoted to a Windows-only fallback. Distilled from the real *"SIRA"* project's API automation (`.py/` scripts) and its session log.
+
+### Added
+
+- **`assets/integrations/openproject-api.py`** — a generic, stdlib-only (`urllib` + `ssl`) OpenProject REST API v3 adapter with two commands:
+  - **`pull`** — paginated `GET …/work_packages` → `openproject/openproject_dump.json` (carries each work package's id + `lockVersion`, the round-trip anchor).
+  - **`push`** — projects `docs/backlog/` over the API: **CREATE** new work packages / **UPDATE** existing ones (matched by the `<our-id>` Subject prefix), hierarchy via real `_links.parent.href`, type/priority resolved by name via `/types` + `/priorities`.
+  - Robustness baked in from the real-project lessons: **DRY-RUN by default**, **idempotent**, **per-item error isolation**, **optimistic locking** (re-reads `lockVersion` before each PATCH, retries once on `409`), **retry/backoff** on `429`/`5xx`, and an up-front **type sanity-check** (avoids the mid-batch `KeyError: 'Task'` the *"SIRA"* export hit). Reuses the exact `docs/backlog/` parser of the Excel adapter (DRY).
+- **Config by environment** (never hard-code a token): `OPENPROJECT_URL`, `OPENPROJECT_TOKEN` (or `API_KEY=…` in a gitignored `.env`), `OPENPROJECT_PROJECT` (slug **or** numeric id), `OPENPROJECT_VERIFY_SSL` (`false` for a self-signed/private server). HTTP Basic `apikey:<token>` auth.
+
+### Changed
+
+- **`references/integrations/openproject.md`** (+ pt-BR mirror) — rewritten: the **API round-trip is the primary path** (§2 pull/push, §3 hierarchy via real links, §4 relations 2nd pass, §5 field map); the `.xlsm` is now **§6 "Windows-only fallback"**. The plain-language "for you to use" guide is now API-based (works on any OS). New **§7 Security** folds in the real-deployment lessons.
+- **Why the change**: the *"SIRA"* session proved the Excel-sync macro drives the API through **`winhttpcom.dll` — Windows-only** — so it does not run on Linux/macOS/LibreOffice. The API adapter needs nothing but Python 3.
+- Integrations index, `README.md` tree, and the `SKILL.md`/pt-BR entry-point + `content_status` listings updated to name both adapters (API primary · Excel fallback).
+- **Version**: `SKILL.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `1.19.0 → 1.20.0`.
+
+### Security
+
+- **`.gitignore`** now excludes `.env`, `*.xlsm`, and `openproject/` so an API token (in `.env`/an `.xlsm` cell) and the pulled dump are never committed.
+- Documented the real gotchas: a **trailing space in `.env` → silent `401`** (the adapter strips whitespace/quotes), self-signed-cert handling is opt-in and trust-on-purpose, and **a token ever seen in a terminal/log/screen-share must be rotated**.
+
+---
+
 ## [1.19.0] — 2026-06-12
 
 Adds the **Feature-atomicity rule** and the **two mandatory root Epics** (now seeded by the scaffolder) — distilled from the real *"SIRA"* project session and the author's guidance.

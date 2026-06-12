@@ -26,6 +26,13 @@ mcp-server/.pytest_cache/
 # Node / generated
 node_modules/
 
+# OpenProject integration — local secrets + generated output (NEVER commit a token)
+# .env holds API_KEY=<token>; the Excel-sync .xlsm stores the token in a cell;
+# openproject/ holds the pulled dump + generated work-package tables.
+.env
+*.xlsm
+openproject/
+
 # Anthropic Claude Code local state (per-skill)
 .claude-cache/
 

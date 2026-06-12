@@ -1,145 +1,232 @@
-# OpenProject — sincronização backlog → Excel (integração opcional)
+# OpenProject — backlog ↔ work packages (round-trip via API REST)
 
-> **Quando usar esta referência**: quando o time rastreia o backlog no **OpenProject** e quer que a espinha
-> `docs/backlog/` desta skill o *alimente* através da **[sincronização Excel do OpenProject](https://www.openproject.org/pt/docs/system-admin-guide/integrations/excel-synchronization/)**
-> (um template `.xlsm` fornecido pelo OpenProject que envia/recebe work packages via API). Esta skill é dona da
-> **qualidade do item de backlog** (títulos em linguagem de negócio, BDD, prioridade, rastreabilidade); o OpenProject é dono do
-> **rastreamento do work package** (boards, sprints, responsáveis). Este arquivo é a ponte. **Opcional** — pule se o
-> projeto não usar OpenProject.
+> **Quando usar esta referência**: quando o time controla o backlog no **OpenProject** e quer que a espinha
+> `docs/backlog/` desta skill o *alimente*. O método **primário** é a **API REST v3 do OpenProject** (um pequeno
+> adaptador Python que faz pull e push das work packages diretamente — roda em Linux/macOS/Windows). O template
+> legado de **[Excel synchronization](https://www.openproject.org/docs/system-admin-guide/integrations/excel-synchronization/)**
+> `.xlsm` fica só como **fallback Windows-only** (§6). Esta skill é dona da **qualidade do item de backlog**
+> (títulos em linguagem de negócio, BDD, prioridade, rastreabilidade); o OpenProject é dono do **acompanhamento da
+> work package** (boards, sprints, responsáveis). Este arquivo é a ponte. **Opcional** — pule se o projeto não usa
+> OpenProject.
 
-> **Apenas `docs/backlog/` é projetado.** O lado `docs/requirements/` (`RF`/`RNF`) é o *porquê* — **não** é
-> um work package e **não** é exportado. Os work packages são o backlog: **Epics → Features → User Stories**
-> (e, opcionalmente, Tasks). A fonte de verdade permanece em `docs/backlog/`; o projeto no OpenProject é uma *projeção*.
+> **Só `docs/backlog/` é projetado.** O lado `docs/requirements/` (`RF`/`RNF`) é o *porquê* — **não** é uma work
+> package e **não** é exportado. As work packages são o backlog: **Epics → Features → User Stories** (e,
+> opcionalmente, Tasks). A fonte de verdade fica em `docs/backlog/`; o projeto no OpenProject é uma *projeção*.
+
+> ⚠️ **Por que a API é primária (e o `.xlsm` não).** O template Excel-sync do OpenProject dirige a API por meio de
+> `winhttpcom.dll` — um componente COM **só do Windows**. No Linux/macOS (ou LibreOffice) a macro simplesmente não
+> roda. Um projeto real (*"SIRA"*) bateu exatamente nessa parede e migrou para a API REST, que não precisa de nada
+> além da stdlib do Python 3. Por isso esta skill usa a API por padrão e rebaixa a planilha a fallback.
 
 ---
 
-## ✅ Para você usar — passo a passo (sem jargão)
+## ✅ Para você usar — passo a passo simples (sem jargão)
 
-Quer jogar todo o seu backlog dentro do OpenProject sem digitar item por item? É assim:
+Quer jogar o backlog inteiro no OpenProject sem digitar item por item? Este é o caminho simples — funciona em
+**qualquer** computador (Windows, Mac ou Linux):
 
-1. **Pegue sua chave de acesso no OpenProject.** Entre na sua conta → clique no seu nome (canto) → **Minha conta** → **Tokens de acesso** → criar. Vai aparecer um código — copie e guarde bem (trate como senha; não compartilhe).
-2. **Baixe a planilha do OpenProject.** Na página de sincronização por Excel do OpenProject, baixe a planilha que eles oferecem e abra. Quando perguntar, **permita os macros** (é o que faz a planilha conversar com o OpenProject). Nela, cole o endereço do seu OpenProject, a sua chave de acesso (do passo 1) e o nome do seu projeto.
-3. **Gere a sua lista com a skill.** Peça pra mim (ou rode a skill) "gerar o backlog pro OpenProject". Eu crio um arquivo (uma planilha) com seus Epics, Features e User Stories já na ordem certa.
-4. **Cole na planilha do OpenProject.** Copie as colunas do arquivo que eu gerei e cole na planilha do OpenProject.
-5. **Envie.** Aperte o botão de enviar (Ctrl + B). Pronto — o OpenProject cria tudo e **encaixa um item dentro do outro sozinho** (Epic em cima, Feature embaixo, e assim por diante). Você **não precisa** ligar um no outro na mão.
+1. **Pegue seu código de acesso no OpenProject.** Entre → clique no seu nome (canto superior) → **My account**
+   → **Access tokens** → crie um token **API**. Aparece um código — copie e guarde bem (trate como senha; nunca
+   compartilhe nem comite no git).
+2. **Conte três coisas à skill** (você define uma vez, como variáveis de ambiente — ou ponha o token num
+   arquivinho `.env` que mantém privado):
+   - o **endereço** do seu OpenProject (ex.: `https://openproject.sua-empresa.com`),
+   - seu **código de acesso** (do passo 1),
+   - seu **projeto** (o nome curto/slug, ou o número dele).
+3. **Baixe o que já existe** (pra nada duplicar): peça pra mim (ou rode o adaptador) fazer **`pull`**. Ele salva
+   uma foto das work packages atuais.
+4. **Mande seu backlog.** Peça **`push`**. Primeiro ele mostra uma *prévia* (o que vai criar/atualizar, nada
+   enviado ainda). Quando estiver certo, rode **de verdade** (`--apply`). O OpenProject cria seus Epics, Features e
+   User Stories e **aninha um dentro do outro sozinho** (Epic no topo, Feature embaixo, e assim por diante) — você
+   **não** liga nada na mão.
+5. **Mudou o backlog depois?** É só `pull` e `push` de novo — ele **atualiza** o que já existe e só **cria** o que
+   é novo (casa os itens pelo código `EP-NN`/`F-NN`/`USNN.M` no começo de cada título).
 
-> **Preciso de chave/token?** Sim — só a da sua própria conta (passo 1). É de graça e leva 1 minuto.
+> **Servidor privado ou com certificado self-signed?** Se seu OpenProject roda num endereço interno com
+> certificado "não confiável", há **um ajuste a mais** pra permitir (`OPENPROJECT_VERIFY_SSL=false`). Só faça isso
+> num servidor que você controla e confia. Eu te guio.
 >
-> **As "ligações" entre tarefas que dependem uma da outra** (tipo "essa só depois daquela") só dá pra preencher **depois** que o OpenProject criou tudo: você baixa a lista de volta do OpenProject (que agora tem um número pra cada item), preenche essas ligações e envia de novo. Eu te explico na hora.
+> **Os "vínculos" entre tarefas que dependem umas das outras** (tipo "essa só depois daquela") são preenchidos num
+> **segundo passo**, depois que os itens existem e têm número (§4). Eu te oriento na hora.
 
 ---
 
-## 1. O padrão de colunas (o default da skill — adaptável)
+## 1. Autentique por ambiente (nunca chumbe um token)
 
-A exportação tem **sete colunas**, nomeadas como o template de sincronização Excel do OpenProject as usa:
+O adaptador lê a configuração de variáveis de ambiente (o token pode, em vez disso, viver num `.env` como
+`API_KEY=…`, mantido fora do git):
 
-| Column | O que carrega | Regra |
+| Variável | O que é | Exemplo |
 |---|---|---|
-| **Type** | o tipo do work package | `Epic` · `Feature` · `User story` · `Task` (combine com os nomes de tipo configurados no seu OpenProject) |
-| **ID** | o id numérico próprio do OpenProject | **deixado em branco** numa exportação nova — o OpenProject **atribui** na importação (o id dele ≠ o nosso) |
-| **Subject** | o título legível, **indentado** | `<nosso-id> <título em linguagem de negócio>` (`EP-10 Gestão de Salas`, `F-26 Aprovação de reserva`, `US25.2 …`), **prefixado com 4 espaços por nível de hierarquia** (ver §2) |
-| **Priority** | a prioridade do work package | escala *"Interpop"* → OpenProject: 🔴 `Immediate` · 🟠 `High` · 🟡 `Normal` · 🟢 `Low` |
-| **Description** | o campo Description do OpenProject | **a description de uma User Story É o seu BDD** (os cenários Gherkin); uma **Feature** carrega sua description em linguagem de negócio; um **Epic**, sua visão de produto |
-| **Parent** | o work package pai | **deixado em branco** — auto-preenchido pelo OpenProject a partir da indentação do Subject (§2) |
-| **Relations** | dependências (follows/blocks/…) | **deixado em branco** — uma segunda passada (§3); precisa dos ids do OpenProject |
-
-> **Por que nosso id mora no Subject, e não na coluna ID** — o `ID` do OpenProject é atribuído automaticamente e é *dele*
-> (um número diferente do nosso `EP-NN`/`F-NN`/`USNN.M`). Colocar nosso id estável no **início do Subject**
-> mantém a rastreabilidade visível dentro do OpenProject (e sobrevive à reimportação), exatamente como a UI do OpenProject
-> renderiza. A coluna `ID` fica em branco para que o OpenProject crie + numere o work package.
-
----
-
-## 2. A hierarquia é automática (sem parent/child manual)
-
-O template de sincronização Excel do OpenProject constrói a hierarquia parent/child a partir da **indentação**: **4 espaços
-vazios antes do Subject** marcam um work package como filho. O adaptador emite o Subject já indentado conforme a profundidade, então,
-no upload, o OpenProject **aninha a árvore e auto-preenche a coluna `Parent` para você** — você nunca conecta as
-relações na mão.
-
-| Type | Profundidade | Indentação do Subject |
-|---|---|---|
-| `Epic` | 0 | `EP-10 Gestão de Salas (Admin)` |
-| `Feature` | 1 | `····F-26 Aprovação de reserva` |
-| `User story` | 2 | `········US25.2 Recursos de Filtragem…` |
-| `Task` | 3 | `············T-26.1.1` |
-
-(`·` = um espaço. O marcador de 4 espaços é o default do OpenProject; as linhas são emitidas em ordem hierárquica para que a
-indentação aninhe corretamente.)
-
----
-
-## 3. As Relations são uma segunda passada (precisam dos ids do OpenProject)
-
-As **Relations** entre itens (`follows`, `blocks`, `precedes`, `relates`, `requires`, …) usam a coluna `Relations`
-com a sintaxe `"<type> <id>, <type> <id>"` (ex.: `follows 12345, precedes 45678`) — e o **id é
-do OpenProject**, que **não existe até a primeira importação**. Então as relations são um **round-trip**:
-
-1. Rode o adaptador → importe a tabela (hierarquia + descriptions + prioridade criadas; o OpenProject atribui ids).
-2. **Exporte os work packages de volta do OpenProject** (*download* da sincronização Excel) — agora cada linha tem seu id numérico.
-3. Preencha a coluna `Relations` com `"<type> <id-do-openproject>"` para as dependências que você quer.
-4. Reimporte (upload) → o OpenProject conecta as relations.
-
-> O adaptador emite `Relations` como uma coluna **vazia** (o backlog modela hierarquia + rastreabilidade, não
-> dependências arbitrárias entre itens). Os **tipos de relação devem ser os termos da API em inglês**: `relates, duplicates,
-> duplicated, blocks, blocked, precedes, follows, includes, partof, requires, required`.
-
----
-
-## 4. O adaptador
+| `OPENPROJECT_URL` | URL base do seu OpenProject | `https://openproject.example.com` (ou `https://host:porta`) |
+| `OPENPROJECT_TOKEN` | seu token de API (My account → Access tokens → **API**) | `a1b2c3…` *(ou `API_KEY=a1b2c3…` no `.env`)* |
+| `OPENPROJECT_PROJECT` | identificador do projeto — **slug ou id numérico** | `meu-projeto` **ou** `163` |
+| `OPENPROJECT_VERIFY_SSL` | `false` pra pular a checagem de TLS (self-signed/privado) — padrão `true` | `false` *(confiança proposital)* |
 
 ```bash
-# dry-run (imprime a tabela de work packages, não escreve nada)
-python3 assets/integrations/project-to-openproject.py
-
-# escreve (CSV sempre; XLSX também quando openpyxl está instalado)
-python3 assets/integrations/project-to-openproject.py --apply
-python3 assets/integrations/project-to-openproject.py --with-tasks --apply   # também emite T/TX como Tasks
+export OPENPROJECT_URL=https://openproject.example.com
+export OPENPROJECT_TOKEN=xxxxxxxxxxxxxxxx     # ou API_KEY=... num .env fora do git
+export OPENPROJECT_PROJECT=meu-projeto        # slug ou id numérico
+# export OPENPROJECT_VERIFY_SSL=false         # só pra um cert self-signed que você confia
 ```
 
-- Lê `docs/backlog/epics/*.md` (→ `Epic`, description = visão de produto) e `docs/backlog/features/*.md`
-  (→ `Feature`, description = parágrafo de negócio; os cabeçalhos `User story` internos, description = o BDD deles;
-  `Task` apenas com `--with-tasks`).
-- Escreve `openproject/openproject-backlog.csv` (stdlib, sempre) e `openproject/openproject-backlog.xlsx`
-  (apenas se `openpyxl` estiver disponível — `uv add openpyxl` / `pip install openpyxl`; somente CSV caso contrário; o XLSX
-  faz wrap da coluna Description).
-- **Dry-run por padrão**, `--apply` para escrever, **nunca sobrescreve** um arquivo existente.
-- O título vem do cabeçalho `# <id> — <título>`; a prioridade do emoji do item (🔴🟠🟡🟢) ou de uma
-  linha `Prioridade`/`Priority`; prioridade ausente assume `Normal` por padrão.
-
-### A receita de sincronização Excel
-
-1. No OpenProject, baixe o **template de sincronização Excel** (`.xlsm`) conforme a
-   [documentação do OpenProject](https://www.openproject.org/pt/docs/system-admin-guide/integrations/excel-synchronization/)
-   e configure-o (URL, token de API, projeto).
-2. Rode o adaptador (`--apply`) → abra `openproject/openproject-backlog.xlsx` (ou `.csv`).
-3. **Cole as colunas** no template de sincronização (deixe `ID`/`Parent`/`Relations` vazios para novos work packages).
-4. Faça o upload (`Ctrl + B`) → o OpenProject cria os Epics/Features/User Stories, **aninha-os a partir da indentação**,
-   atribui ids e preenche `Parent`. Para as relations, faça o round-trip da §3.
-
-> **Regra de round-trip** (mesmo espírito de `references/integrations/sdd-interop.md`): a fonte de verdade do backlog
-> permanece em `docs/backlog/`. Quando algo muda no OpenProject durante a execução, reconcilie-o de volta nos
-> arquivos do backlog primeiro, depois reexporte. O prefixo `<nosso-id>` no Subject é o que permite casar um work package
-> de volta com seu arquivo `docs/backlog/`.
+> **Esquema de auth**: HTTP Basic com o usuário literal `apikey` e o token como senha
+> (`Authorization: Basic base64("apikey:<token>")`). É o esquema padrão de API-key do OpenProject.
 
 ---
 
-## 5. Os dois Epics raiz obrigatórios (default da skill)
+## 2. O adaptador — pull / push (o caminho primário)
 
-A hierarquia de backlog padrão da skill (do curso *"IFPB"*) sempre termina com **dois Epics raiz obrigatórios**,
-irmãos dos Epics feature-front do projeto:
+```bash
+# 2.1 baixa as work packages atuais (a âncora do round-trip — carrega ids do OpenProject + lockVersion)
+python3 assets/integrations/openproject-api.py pull --apply
 
-- **`Improvements`** (pt-BR *"Melhorias"*)
-- **`Complementary Activities`** (pt-BR *"Atividades complementares"*)
+# 2.2 projeta docs/backlog/ → OpenProject (DRY-RUN primeiro: imprime o plano CREATE/UPDATE, não envia nada)
+python3 assets/integrations/openproject-api.py push
+python3 assets/integrations/openproject-api.py push --apply            # executa
+python3 assets/integrations/openproject-api.py push --with-tasks --apply  # também cria T/TX como Tasks
+```
 
-Eles são gerados pelo scaffolder com a mesma lógica idempotente *create-if-missing / never-overwrite* do
-resto da espinha, e o usuário sempre pode adaptar. *(A função detalhada deles é documentada junto ao scaffolder.)*
+O que ele faz:
+
+- **`pull`** — `GET /api/v3/projects/<projeto>/work_packages` paginado → grava
+  `openproject/openproject_dump.json` (`{total, elements}`, as work packages cruas com `id`, `lockVersion`,
+  `subject`, `description` e todos os `_links`). É isso que permite ao `push` **atualizar em vez de duplicar**.
+- **`push`** — lê `docs/backlog/` com o **mesmo parser** do adaptador Excel (Epics → visão de produto; Features →
+  descrição de negócio; os cabeçalhos `User story` dentro → seu **BDD** como descrição; Tasks só com
+  `--with-tasks`), e para cada item:
+  - **casa** uma work package existente pelo prefixo `<nosso-id>` do Subject (`EP-NN`/`F-NN`/`USNN.M`) →
+    **UPDATE** (PATCH subject + descrição); senão **CREATE** (POST).
+  - resolve o href do **tipo** via `GET /api/v3/types` (por nome — robusto mesmo quando nenhuma work package usa um
+    tipo ainda; é a armadilha `KeyError: 'Task'` que o export do *"SIRA"* pegou) e o href da **prioridade** via
+    `/api/v3/priorities`.
+  - liga o **pai** por um link real de API (`_links.parent.href`) — §3.
+
+Segurança embutida (lições do projeto real):
+
+- **DRY-RUN por padrão** — o `push` imprime o plano e não envia nada até `--apply`.
+- **Idempotente** — reexecutar `pull` e depois `push` atualiza o que existe e cria só o novo; seguro repetir.
+- **Isolamento de erro por item** — uma work package que falha não aborta o lote (reporta `FAIL <id>` e segue;
+  reexecute pra repetir só as que faltam).
+- **Lock otimista** — relê o `lockVersion` de cada work package logo antes do PATCH e tenta de novo uma vez num
+  conflito `409` (alguém editou no meio).
+- **Retry/backoff** — em `429`/`5xx`, respeita `Retry-After` com backoff exponencial.
+
+> **Regra do round-trip** (mesmo espírito de `references/integrations/sdd-interop.md`): a fonte de verdade do
+> backlog fica em `docs/backlog/`. Quando algo muda no OpenProject durante a execução, reconcilie de volta nos
+> arquivos do backlog primeiro, depois `push` de novo. O prefixo `<nosso-id>` no Subject é o que casa a work
+> package de volta ao seu arquivo `docs/backlog/`.
 
 ---
 
-*Externo: [sincronização Excel do OpenProject](https://www.openproject.org/pt/docs/system-admin-guide/integrations/excel-synchronization/)
-(URLs podem mudar de lugar — busque "OpenProject Excel synchronization"). Referências cruzadas:
-`05-convencoes-interpop.md` (ids, escala de prioridade, títulos em linguagem de negócio), `04-bdd-criterios-aceitacao.md`
-(BDD = o conteúdo da User Story), `10-estrutura-projeto.md` (a espinha `docs/backlog/`),
-`../integrations/README.md` (índice de integrações). Adotado aqui como uma ponte **opcional** de rastreamento de backlog — a
-fonte de verdade permanece em `docs/backlog/`.*
+## 3. A hierarquia é automática (links de pai reais)
+
+O adaptador emite os itens em ordem de árvore (Epic → Feature → User story → Task) e define o
+**`_links.parent.href`** de cada work package para o id OpenProject do seu pai (resolvido na hora: um pai criado
+antes na mesma execução, ou já presente do `pull`). Assim o OpenProject **aninha a árvore por você** — você nunca
+liga pai/filho na mão.
+
+| Tipo | Profundidade | Pai |
+|---|---|---|
+| `Epic` | 0 | nenhum (raiz) |
+| `Feature` | 1 | seu Epic |
+| `User story` | 2 | sua Feature |
+| `Task` | 3 | sua User Story (ou, para `TX` transversais, o Epic *Atividades Complementares* — §7) |
+
+> **Nosso id vive no Subject, não numa coluna de id.** O OpenProject atribui seu **próprio** id numérico
+> (diferente do nosso `EP-NN`/`F-NN`/`USNN.M`). Manter nosso id estável no **começo do Subject** mantém a
+> rastreabilidade visível dentro do OpenProject e é exatamente o que o próximo `pull`/`push` usa pra recasar a work
+> package.
+
+---
+
+## 4. Relations são um segundo passo (precisam dos ids do OpenProject)
+
+**Relations** entre itens (`follows`, `blocks`, `precedes`, `relates`, `requires`, …) referenciam os **ids
+numéricos** do OpenProject, que não existem até as work packages serem criadas. Então relations são um
+**round-trip**, depois do primeiro `push`:
+
+1. `push --apply` → hierarquia + descrições + prioridade criadas; o OpenProject atribui ids.
+2. `pull --apply` → o dump agora tem todos os ids numéricos.
+3. Crie as relations que quer com `POST /api/v3/work_packages/{id}/relations`
+   (`{"_links": {"to": {"href": "/api/v3/work_packages/<outro-id>"}}, "type": "follows"}`).
+4. Os **tipos de relation devem ser os termos em inglês da API**: `relates, duplicates, duplicated, blocks,
+   blocked, precedes, follows, includes, partof, requires, required`.
+
+> O backlog modela **hierarquia + rastreabilidade**, não dependências arbitrárias entre itens — então o adaptador
+> não inventa relations; você adiciona as poucas que importam neste segundo passo.
+
+---
+
+## 5. Mapeamento de campos (o que a API carrega)
+
+| Conceito | Campo da API | Origem em `docs/backlog/` |
+|---|---|---|
+| Tipo | `_links.type.href` (lookup por nome via `/types`) | o tipo do artefato (Epic/Feature/User story/Task) |
+| Projeto | `_links.project.href = /api/v3/projects/<id>` | `OPENPROJECT_PROJECT` |
+| Pai | `_links.parent.href = /api/v3/work_packages/<id>` | a hierarquia (§3) |
+| Prioridade | `_links.priority.href` (lookup por nome via `/priorities`) | o emoji do item 🔴🟠🟡🟢 → `Immediate`/`High`/`Normal`/`Low` |
+| Concorrência | `lockVersion` na raiz (obrigatório no PATCH) | do dump do `pull` (relido fresco antes de escrever) |
+| Título | `subject` | o cabeçalho `# <nosso-id> — <título de negócio>` |
+| Corpo | `description.raw` (markdown) | Epic = visão de produto · Feature = descrição de negócio · **User Story = seu BDD** |
+
+---
+
+## 6. Fallback Windows-only — o `.xlsm` da Excel-synchronization
+
+Se você está no **Windows** e prefere uma planilha, o caminho legado ainda funciona. Há um segundo adaptador que
+emite a tabela que o template Excel-sync do OpenProject espera:
+
+```bash
+python3 assets/integrations/project-to-openproject.py --apply           # CSV sempre; XLSX se openpyxl presente
+python3 assets/integrations/project-to-openproject.py --with-tasks --apply
+```
+
+- Grava `openproject/openproject-backlog.csv` (+ `.xlsx` se `openpyxl` estiver instalado; `uv add openpyxl`).
+- **Sete colunas**: `Type · ID · Subject · Priority · Description · Parent · Relations`. `ID`/`Parent`/`Relations`
+  ficam em branco; o **Subject vem indentado 4 espaços por nível**, e no upload a macro lê a indentação, aninha a
+  árvore e auto-preenche `Parent`.
+- Receita: no OpenProject baixe o **template Excel-synchronization** (`.xlsm`), configure-o (URL, token, projeto),
+  cole as colunas geradas, aperte **Ctrl + B** pra subir.
+
+> ⚠️ **A macro é Windows-only** (`winhttpcom.dll`). No Linux/macOS/LibreOffice ela não envia. Lá, use o
+> **adaptador da API REST** (§2). O `.xlsm` também é onde o token fica numa célula — mantenha esse arquivo
+> **fora do git** (veja §7).
+
+---
+
+## 7. Segurança (lições do deploy real)
+
+- **Token no ambiente ou num `.env` fora do git, nunca num arquivo comitado.** O `.xlsm` guarda o token numa
+  célula — adicione `*.xlsm` (e `.env`, e qualquer pasta privada de scripts de API) ao `.gitignore`.
+- **Espaço em branco no fim do `.env` → `401` silencioso.** Um espaço sobrando depois de `API_KEY=<token>` deixa o
+  header de auth errado e o servidor responde `401 Unauthorized` sem causa óbvia. O adaptador **remove** espaços e
+  aspas ao redor exatamente por isso; se levar um 401, cheque o espaço sobrando primeiro.
+- **Servidor self-signed / privado**: `OPENPROJECT_VERIFY_SSL=false` desabilita a verificação de TLS — aceitável
+  só num servidor que você controla. Prefira instalar a CA / usar um certificado de verdade quando puder.
+- **Um token que já apareceu num terminal, log ou compartilhamento de tela está comprometido — rotacione.**
+  Revogue em My account → Access tokens e emita um novo.
+
+---
+
+## 8. Os dois root-Epics obrigatórios (padrão da skill)
+
+A hierarquia de backlog padrão da skill (do curso do *"IFPB"*) sempre termina com **dois root-Epics
+obrigatórios**, irmãos dos Epics de frente de funcionalidade do projeto:
+
+- **`Melhorias`** (en *"Improvements"*) — aprimoramentos/refinamentos de coisas existentes do produto.
+- **`Atividades Complementares`** (en *"Complementary Activities"*) — o lar das **`TX`** transversais (trabalho
+  técnico/config/infra não ligado a uma Feature/US, pela Regra 4 de `05-convencoes-interpop.md`).
+
+São gerados pelo scaffolder com a mesma lógica idempotente *cria-se-faltar / nunca-sobrescreve* do resto da
+espinha, e o usuário sempre pode adaptar. *(A função detalhada está documentada com os templates do scaffolder.)*
+
+---
+
+*Externo: [OpenProject API v3](https://www.openproject.org/docs/api/) ·
+[Excel synchronization](https://www.openproject.org/docs/system-admin-guide/integrations/excel-synchronization/)
+(fallback Windows-only; URLs podem mudar — busque "OpenProject API v3" / "OpenProject Excel synchronization").
+Referências cruzadas: `05-convencoes-interpop.md` (ids, escala de prioridade, títulos em linguagem de negócio),
+`04-bdd-criterios-aceitacao.md` (BDD = o conteúdo da User Story), `10-estrutura-projeto.md` (a espinha
+`docs/backlog/`), `../integrations/README.md` (índice de integrações). Adotado aqui como ponte **opcional** de
+acompanhamento de backlog — a fonte de verdade fica em `docs/backlog/`.*
