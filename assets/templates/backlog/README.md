@@ -10,13 +10,21 @@
 
 ```
 backlog/
-├── README.md      este arquivo
-├── glossario.md   vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
-├── epics/         EP-NN-<slug>.md  — descrição + lista de Features filhas
-├── features/      F-NN-<slug>.md   — descrição + CAs + USs (com BDD) + Tasks
-├── sprints/       sprint-N-<slug>.md — execução temporal (mapping US/Task)
-└── done/          Epics/Features fechados (MOVIDOS via git mv, não copiados)
+├── README.md                  este arquivo
+├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
+├── epics/                     EP-NN-<slug>.md  — descrição + lista de Features filhas
+├── features/                  F-NN-<slug>.md   — descrição + CAs + USs (com BDD) + Tasks
+├── melhorias/                 ← bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
+│   ├── README.md              o que é + descrição do Epic
+│   └── <F/US>-<slug>.md        cada melhoria do produto (vira filho do Epic)
+├── atividades-complementares/ ← bucket OBRIGATÓRIO → Epic-raiz "Atividades Complementares" no export
+│   ├── README.md              o que é + descrição do Epic
+│   └── TX-NN-<slug>.md         cada Task transversal (config/infra; vira Task filha)
+├── sprints/                   sprint-N-<slug>.md — execução temporal (mapping US/Task)
+└── done/                      Epics/Features fechados (MOVIDOS via git mv, não copiados)
 ```
+
+> **`melhorias/` e `atividades-complementares/` são diretórios estruturais** (não arquivos `EP-NN`). Cada um é um **bucket obrigatório** filho de `backlog/`; **só no OpenProject** ele colapsa num **Epic na raiz** (depth 0), irmão dos Epics de frente (ex.: "Aplicação Web"). O `README.md` de cada bucket é a **descrição** do Epic; os arquivos ao lado são os **filhos**. **Melhorias** = aprimoramentos de coisas que já existem; **Atividades Complementares** = lar dos `TX` (técnico/config/infra não ligado a uma Feature/US — Regra 6).
 
 ## Naming (regra dura)
 

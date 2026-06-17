@@ -96,7 +96,7 @@ These are cross-cutting Tasks (`TX-NN`) — NOT Features:
 | Criar arquivo de configuração JSON | Cross-cutting Task |
 | Configurar índice GIN no Postgres | Task of the relevant US (not cross-cutting — supports a specific US) |
 
-> **Where cross-cutting `TX` live**: under a **mandatory root Epic `Atividades Complementares`** (*Complementary Activities*) — the home for technical work **not tied to a single Feature/US** (config, infra, setup, tooling). Product enhancements go under the **other mandatory root Epic, `Melhorias`** (*Improvements*). Both root Epics are seeded by the scaffolder — see [`10-estrutura-projeto.md`](10-estrutura-projeto.md).
+> **Where cross-cutting `TX` live**: in the **mandatory structural bucket `backlog/atividades-complementares/`** (a directory) — the home for technical work **not tied to a single Feature/US** (config, infra, setup, tooling). Product enhancements go in the **other mandatory bucket, `backlog/melhorias/`** (*Improvements*). Each is a directory under `backlog/` that **collapses into a root Epic on OpenProject export** (depth 0, sibling of the feature-front Epics); its `README.md` is the Epic description, the files inside are the children. Both are seeded by the scaffolder — see [`10-estrutura-projeto.md`](10-estrutura-projeto.md).
 
 **Rule 4b — One Feature = one thing (atomicity).** A Feature delivers **exactly one** client-facing capability. If a candidate bundles two — e.g. *user registration* **and** *user update* — **split it into two separate Features** (atomic CRUD: one Feature per operation). One thing per Feature → cleaner estimation, a single BDD focus, and one-to-one traceability. *(Confirmed in the *"SIRA"* project: the backlog was atomic — one Feature per CRUD operation.)*
 

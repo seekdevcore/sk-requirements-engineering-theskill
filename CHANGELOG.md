@@ -13,6 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.21.0] — 2026-06-17
+
+Two changes from the author's guidance: the **two mandatory root Epics become structural bucket directories**, and **progressive refinement (the backlog iceberg / DEEP)** is made an explicit, first-class concept.
+
+### Changed
+
+- **`Melhorias` (Improvements) and `Atividades Complementares` (Complementary Activities) are now structural bucket DIRECTORIES**, children of `backlog/` (siblings of `epics/`, `features/`), instead of `epics/EP-*.md` files. **Only on OpenProject export** does each collapse into a **root Epic** (depth 0), sibling of the feature-front Epics (e.g. "Aplicação Web"), with the files inside as its children (Feature/US under *Melhorias*; `TX-NN` Tasks under *Atividades Complementares*). Each bucket's `README.md` is the Epic's description. Updated: template tree (`assets/templates/backlog/`), `references/10-estrutura-projeto.md`, `05-convencoes-interpop.md`, `integrations/openproject.md` §8, `SKILL.md`; pt-BR mirrors.
+- **Scaffolder** (`assets/scaffold-structure.sh`): seeds the two bucket directories (idempotent, never-overwrite) and, before create, **migrates** any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` file into the matching bucket `README.md` (preserving the user's customized content). Fixture-verified (greenfield · idempotent · legacy migration).
+- **Version**: `1.20.0 → 1.21.0`.
+
+### Fixed
+
+- **OpenProject adapters now actually export the two mandatory root Epics.** Before, both adapters' id regex (`EP-?\d+`) silently **dropped** `EP-melhorias`/`EP-atividades-complementares` (no numeric id). Both `project-to-openproject.py` (Excel) and `openproject-api.py` (REST API) now scan the bucket directories, emit each as a **root Epic** (depth 0) with its children, and the API adapter **matches them by exact Subject** so a re-push UPDATEs instead of duplicating. `_row` gained an explicit-depth override.
+
+### Added
+
+- **Progressive refinement — the backlog iceberg (DEEP) — as an explicit concept.** A backlog is not uniformly verbose: detail only what is about to be built (Cohn's iceberg + Pichler's DEEP). New `references/03-especificacao.md §4.5` with the **two-axis** distinction (the `RF`/`RNF` document is on the *correctness* axis — an `RNF` is quantitative from birth, never "detailed later" — while only the backlog is on the *elaboration-depth* axis), a **verbosity-gradient table**, and the tie-in to the mechanisms the skill already has (3 Cs, Definition of Ready, INVEST, Planning Poker `100`). `SKILL.md` Phase B subsection + checklist item. Two **symmetric anti-patterns** (#15 over-refining the base = waste; #16 under-refining the tip = an un-ready US enters a sprint, the dangerous one). pt-BR mirror.
+
+---
+
 ## [1.20.0] — 2026-06-12
 
 **OpenProject integration overhaul** — the **REST API v3 round-trip is now the primary method**; the Excel-sync `.xlsm` is demoted to a Windows-only fallback. Distilled from the real *"SIRA"* project's API automation (`.py/` scripts) and its session log.

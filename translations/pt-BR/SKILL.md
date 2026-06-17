@@ -6,12 +6,12 @@ available_translations:
   - pt-BR
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.20.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  pt-BR: complete — espelho fiel da v1.21.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.20.0
+version: 1.21.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -350,7 +350,7 @@ Aplica-se a TODOS os títulos de Epic, Feature, User Story, CA, **RF**, RNF, reg
 
 9. **Uma Feature = uma coisa (atomicidade).** Uma Feature entrega **exatamente uma** capacidade voltada ao cliente. Se junta duas — ex.: *cadastro* **e** *atualização* de usuário — **quebre em duas Features** (CRUD atômico: uma por operação). Uma coisa por Feature → estimativa mais limpa, um foco de BDD, rastreabilidade um-para-um. Detalhe em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
 
-> **Dois root Epics obrigatórios** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — aprimoramentos do produto — e **`Atividades Complementares`** (*Complementary Activities*) — o lar dos `TX` transversais (trabalho técnico, config, infra **não ligado a uma Feature/US**, conforme a regra 6). São irmãos dos Epics de funcionalidade do projeto.
+> **Dois root Epics obrigatórios — como buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — aprimoramentos de coisas que já existem — e **`Atividades Complementares`** (*Complementary Activities*) — o lar dos `TX` transversais (trabalho técnico, config, infra **não ligado a uma Feature/US**, conforme a regra 6). No disco são **diretórios** `docs/backlog/melhorias/` e `docs/backlog/atividades-complementares/` (irmãos de `epics/`, `features/`); **só no export para o OpenProject** cada um colapsa num **Epic-raiz** (depth 0), irmão dos Epics de frente, com os arquivos de dentro como filhos. Os dois adaptadores OpenProject os emitem sozinhos.
 
 **Template completo do `BACKLOG.md`** + exemplos dos projetos *"SIRA"* e *"Interpop"* em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 
@@ -367,6 +367,18 @@ dos cinco templates EARS — `WHEN/QUANDO <gatilho> THE SYSTEM SHALL/O SISTEMA D
 `IF…THEN/SE…ENTÃO`, `WHERE/ONDE`, ubíquo). Um `SHALL`/`DEVE` por declaração → um grupo `CA` → um ou mais
 `Cenário`. **EARS é opt-in** e coexiste com o `RF` em linguagem de negócio + BDD; nunca os substitui. Padrões
 completos (EN + pt-BR), anti-padrões, e o pipeline `RF → EARS → CA → Gherkin` em [references/11-ears.md](references/11-ears.md).
+
+**Refinamento progressivo — o backlog é um iceberg (DEEP).** Um backlog **não é uniformemente verboso**: *detalhe só
+o que está prestes a ser construído*. A **ponta** (próximas uma ou duas sprints) é fatiada e detalhada por completo —
+**BDD** completo + **CAs** agrupados + edge cases + o `RNF` que a amarra; a **base** (itens a meses) é macro — um Epic
+é 1–2 frases, uma Feature distante um parágrafo. É o **iceberg** de Cohn + o **DEEP** de Pichler (Detailed
+appropriately · Emergent · Estimated · Prioritized). **Dois eixos, nunca confundidos**: o documento de requisitos
+(`RF`/`RNF`) está no eixo de *correção* (um `RNF` é quantitativo desde o nascimento — nunca "detalhado depois"); só o
+backlog (Epic→Feature→US→CA→BDD) está no eixo de *profundidade de elaboração*. O portão é a **Definition of Ready**
+([references/05-estimativa.md](references/05-estimativa.md)); o mecanismo já existe — os **3 Cs** (o Confirmation/BDD
+nasce no refinamento, não no nascimento do card). ⚠️ Duas falhas simétricas: **super-refinar a base** (desperdício) e
+🔴 **sub-refinar a ponta** (uma US não-pronta entra na sprint — a perigosa). Tabela de gradiente + os dois anti-padrões
+em [references/03-especificacao.md §4.5](references/03-especificacao.md).
 
 ### Fase C — ESTIMATIVA (dimensionar)
 
@@ -439,6 +451,8 @@ Detalhe e aplicação em [references/09-etica-sbc.md](references/09-etica-sbc.md
 12. **Backlog sem origem no documento de requisitos** — um Epic/Feature/CA que aparece no backlog sem `Origem (requisitos)` apontando para `RF-NN`/`RNF-NN` é scope creep silencioso ou refinamento técnico mal colocado. Toda mudança nasce no documento; o backlog apenas materializa (veja §2.1).
 13. **Termo técnico em um CA** — `CA: O endpoint POST /api/v1/bans/ retorna HTTP 400 se hierarquia violada` força o auditor/cliente a abrir um glossário. Reescreva em linguagem de negócio: `CA: Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".` Endpoint e status HTTP vão na Task.
 14. **Feature que junta várias capacidades** — uma Feature fazendo *cadastro* E *atualização* E *exclusão* são três Features. Uma Feature = uma coisa; quebre (regra 9 / `05-convencoes-interpop.md` Rule 4b). Uma Feature agregada é impossível de estimar, dá à US um BDD borrado, e quebra a rastreabilidade um-para-um.
+15. **Super-refinar a base do backlog** — escrever BDD/CAs especulativos para itens a meses de distância. O iceberg diz *detalhe só a ponta*; a prioridade e o próprio item vão mudar antes de serem construídos, então o esforço apodrece. Mantenha Epics/Features distantes em nível macro (1–2 frases / um parágrafo). Ver [03 §4.5](references/03-especificacao.md).
+16. **Sub-refinar a ponta do backlog** — puxar uma User Story para a sprint **sem** Definition of Ready (sem BDD completo, CAs agrupados ou edge cases). O oposto perigoso do #15: o gradiente de verbosidade *não* é licença para um item próximo vago. Refine até o detalhe completo no portão, antes da sprint. Ver [03 §4.5](references/03-especificacao.md).
 
 ---
 
@@ -469,6 +483,7 @@ Antes de aceitar Epic/Feature/US no backlog:
 - [ ] Toda User Story tem **CAs explicitamente associados** (relação rastreável)
 - [ ] Toda Task tem um **Task ID** (`TNN.M.K` ou `TX-NN`) para que apareça em commit/PR
 - [ ] **Feature entrega exatamente UMA capacidade** — se junta duas (ex.: cadastro + atualização), **quebre** (regra 9 / Rule 4b)
+- [ ] **Detalhado na medida da posição no backlog** (iceberg/DEEP) — um item próximo está refinado por completo (BDD + CAs agrupados + edge cases, Definition of Ready atendida); um item distante está intencionalmente macro (sem detalhe especulativo). Ver [03 §4.5](references/03-especificacao.md)
 
 Falhou ≥1 → não está pronto. Corrija antes de passar para a implementação.
 

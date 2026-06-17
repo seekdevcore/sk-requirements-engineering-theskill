@@ -6,12 +6,12 @@ available_translations:
   - pt-BR
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.19.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.21.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.20.0
+version: 1.21.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -352,7 +352,7 @@ Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business ru
 
 9. **One Feature = one thing (atomicity).** A Feature delivers **exactly one** client-facing capability. If a candidate bundles two — e.g. *user registration* **and** *user update* — **split it into two Features** (atomic CRUD: one Feature per operation). One thing per Feature → cleaner estimation, one BDD focus, one-to-one traceability. Detail in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
 
-> **Two mandatory root Epics** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — enhancements to the product — and **`Atividades Complementares`** (*Complementary Activities*) — the home for cross-cutting `TX` (technical work, config, infra **not tied to a single Feature/US**, per rule 6). They are siblings to the project's feature-front Epics.
+> **Two mandatory root Epics — as structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — enhancements to things that already exist — and **`Atividades Complementares`** (*Complementary Activities*) — the home for cross-cutting `TX` (technical work, config, infra **not tied to a single Feature/US**, per rule 6). On disk they are **directories** `docs/backlog/melhorias/` and `docs/backlog/atividades-complementares/` (siblings of `epics/`, `features/`); **only on OpenProject export** does each collapse into a **root Epic** (depth 0), sibling of the feature-front Epics, with the files inside as its children. Both OpenProject adapters emit them automatically.
 
 **Full `BACKLOG.md` template** + examples from *"SIRA"* and *"Interpop"* projects in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 
@@ -369,6 +369,18 @@ of the five EARS templates — `WHEN/QUANDO <trigger> THE SYSTEM SHALL/O SISTEMA
 `IF…THEN/SE…ENTÃO`, `WHERE/ONDE`, ubiquitous). One `SHALL`/`DEVE` per statement → one `CA` group → one or more
 `Cenário`. **EARS is opt-in** and coexists with the business-language `RF` + BDD; it never replaces them. Full
 patterns (EN + pt-BR), anti-patterns, and the `RF → EARS → CA → Gherkin` pipeline in [references/11-ears.md](references/11-ears.md).
+
+**Progressive refinement — the backlog is an iceberg (DEEP).** A backlog is **not uniformly verbose**: *detail only
+what is about to be built*. The **tip** (next one or two sprints) is sliced and fully detailed — complete **BDD** +
+grouped **CAs** + edge cases + the `RNF` that binds it; the **base** (items months away) is macro — an Epic is 1–2
+sentences, a far Feature a single paragraph. This is Cohn's backlog **iceberg** + Pichler's **DEEP** (Detailed
+appropriately · Emergent · Estimated · Prioritized). **Two axes, never confused**: the requirements document
+(`RF`/`RNF`) is on the *correctness* axis (an `RNF` is quantitative from birth — never "detailed later"); only the
+backlog (Epic→Feature→US→CA→BDD) is on the *elaboration-depth* axis. The gate is the **Definition of Ready**
+([references/05-estimativa.md](references/05-estimativa.md)); the mechanism already exists — the **3 Cs** (the
+Confirmation/BDD emerges at refinement, not at card birth). ⚠️ Two symmetric failures: **over-refining the base**
+(waste) and 🔴 **under-refining the tip** (an un-ready US enters a sprint — the dangerous one). Gradient table +
+both anti-patterns in [references/03-especificacao.md §4.5](references/03-especificacao.md).
 
 ### Phase C — ESTIMATION (sizing)
 
@@ -441,6 +453,8 @@ Detail and application in [references/09-etica-sbc.md](references/09-etica-sbc.m
 12. **Backlog without origin in the requirements document** — an Epic/Feature/CA that appears in the backlog without `Origin (requirements)` pointing to `RF-NN`/`RNF-NN` is silent scope creep or technical refinement misplaced. Every change is born in the document; the backlog only materializes (see §2.1).
 13. **Technical term in an AC** — `CA: The endpoint POST /api/v1/bans/ returns HTTP 400 if hierarchy violated` forces the auditor/client to open a glossary. Rewrite in business language: `CA: When an administrator tries to ban another administrator, the system rejects the operation with the message "Operação não permitida".` Endpoint and HTTP status go in the Task.
 14. **Feature that bundles many capabilities** — a Feature doing *registration* AND *update* AND *deletion* is three Features. One Feature = one thing; split it (rule 9 / `05-convencoes-interpop.md` Rule 4b). A bundled Feature is impossible to estimate, gives the US one blurred BDD, and breaks one-to-one traceability.
+15. **Over-refining the backlog base** — writing speculative BDD/CAs for items months away. The iceberg says *detail only the tip*; the priority and the item itself will change before it is built, so the effort rots. Keep far-down Epics/Features macro (1–2 sentences / one paragraph). See [03 §4.5](references/03-especificacao.md).
+16. **Under-refining the backlog tip** — pulling a User Story into a sprint **without** a Definition of Ready (no complete BDD, grouped CAs, or edge cases). The dangerous opposite of #15: the verbosity gradient is *not* a licence for a vague near-term item. Refine to full detail at the gate, before the sprint. See [03 §4.5](references/03-especificacao.md).
 
 ---
 
@@ -471,6 +485,7 @@ Before accepting Epic/Feature/US in the backlog:
 - [ ] Every User Story has **explicitly associated ACs** (traceable relation)
 - [ ] Every Task has a **Task ID** (`TNN.M.K` or `TX-NN`) so it appears in commit/PR
 - [ ] **Feature delivers exactly ONE capability** — if it bundles two (e.g. registration + update), **split** it (rule 9 / Rule 4b)
+- [ ] **Detailed appropriately for its backlog position** (iceberg/DEEP) — a near-term item is fully refined (BDD + grouped CAs + edge cases, Definition of Ready met); a far-down item is intentionally macro (no speculative detail). See [03 §4.5](references/03-especificacao.md)
 
 Failed ≥1 → not ready. Fix it before moving to implementation.
 

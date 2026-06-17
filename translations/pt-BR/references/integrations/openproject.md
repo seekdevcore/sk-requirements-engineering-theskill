@@ -209,17 +209,22 @@ python3 assets/integrations/project-to-openproject.py --with-tasks --apply
 
 ---
 
-## 8. Os dois root-Epics obrigatórios (padrão da skill)
+## 8. Os dois diretórios-bucket obrigatórios → Epics na raiz
 
-A hierarquia de backlog padrão da skill (do curso do *"IFPB"*) sempre termina com **dois root-Epics
-obrigatórios**, irmãos dos Epics de frente de funcionalidade do projeto:
+O `docs/backlog/` da skill sempre tem **dois diretórios-bucket estruturais obrigatórios**, irmãos de `epics/` e
+`features/`. O adaptador os reconhece e **colapsa cada um num Epic na RAIZ** (depth 0), irmão dos Epics de frente
+do projeto (ex.: "Aplicação Web") — nunca aninhado sob nada:
 
-- **`Melhorias`** (en *"Improvements"*) — aprimoramentos/refinamentos de coisas existentes do produto.
-- **`Atividades Complementares`** (en *"Complementary Activities"*) — o lar das **`TX`** transversais (trabalho
-  técnico/config/infra não ligado a uma Feature/US, pela Regra 4 de `05-convencoes-interpop.md`).
+| Diretório-bucket | Epic-raiz no export | Guarda (filhos) |
+|---|---|---|
+| `backlog/melhorias/` | **`Melhorias`** (*Improvements*) — aprimoramentos/refinamentos de coisas que já existem | cada `*.md` → filho Feature/User story |
+| `backlog/atividades-complementares/` | **`Atividades Complementares`** (*Complementary Activities*) — lar das **`TX`** transversais (técnico/config/infra não ligado a Feature/US, Regra 6 de `05-convencoes-interpop.md`) | cada `TX-NN-*.md` → filho Task |
 
-São gerados pelo scaffolder com a mesma lógica idempotente *cria-se-faltar / nunca-sobrescreve* do resto da
-espinha, e o usuário sempre pode adaptar. *(A função detalhada está documentada com os templates do scaffolder.)*
+O **`README.md` de cada bucket é a descrição do Epic** (não exportado como item); todo arquivo ao lado é um
+filho. O Subject do Epic não carrega `EP-NN` (o nome do bucket *é* a identidade — "Melhorias" / "Atividades
+Complementares"); o round-trip o recasa por esse Subject exato. O scaffolder semeia os dois buckets (idempotente,
+nunca sobrescreve) e migra qualquer arquivo pré-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md`
+para o bucket correspondente. O usuário sempre pode adaptar.
 
 ---
 
