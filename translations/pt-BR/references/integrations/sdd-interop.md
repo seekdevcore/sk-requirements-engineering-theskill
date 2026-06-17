@@ -143,7 +143,7 @@ spec.md  plan.md tasks.md   (+ .specify/memory/constitution.md, once)
 > cenários `Gherkin` reais copiados + as `US-NN.M` cobertas listadas; dry-run por padrão). Depois preencha a
 > prosa EARS e rode `check_projection_drift`.
 
-1. **`constitution.md` (uma vez por projeto)** ← suas convenções duras (as 10 regras de `05-convencoes-interpop.md`) +
+1. **`constitution.md` (uma vez por projeto)** ← suas convenções duras (as regras duras de `05-convencoes-interpop.md`) +
    os guard-rails de ética da SBC (§9). O lar natural para "regras que o agente deve sempre seguir".
 2. **`spec.md` (por feature)** ← `RF`/`RNF` como requisitos (fraseados em EARS), `CANN` como critérios de aceitação,
    `Cenário` como cenários, tags `[RF-NN]` mantidas.

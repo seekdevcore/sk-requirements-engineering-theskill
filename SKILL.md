@@ -8,12 +8,12 @@ metadata:
   triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.23.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.24.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.23.0
+version: 1.24.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -297,7 +297,7 @@ Whoever reads the backlog in list mode sees the `[...]` and knows they must clic
 
 #### 🔴 Naming conventions *"Interpop"* / *"IFPB"* (hard rule — applies to every pt-BR project of this author)
 
-Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Tasks may use technical terms.** The rows below are the quick-reference; the **canonical, fully-exampled source** (every ❌→✅ and the rationale) is the **10 hard rules** in [`references/05-convencoes-interpop.md §2`](references/05-convencoes-interpop.md) — read it before applying.
+Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Tasks may use technical terms.** The rows below are the quick-reference; the **canonical, fully-exampled source of the hard rules** (every ❌→✅ and the rationale) is [`references/05-convencoes-interpop.md §2`](references/05-convencoes-interpop.md) — read it before applying.
 
 | # | Naming rule | Canonical |
 |---|---|---|

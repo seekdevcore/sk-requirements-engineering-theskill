@@ -61,7 +61,7 @@ For **new content**, follow the structural patterns:
 
 ### 3.4 Follow the hard rules (non-negotiable)
 
-Every contribution must respect the **10 hard rules** documented in [`references/05-convencoes-interpop.md §2`](./references/05-convencoes-interpop.md):
+Every contribution must respect the **hard rules** documented in [`references/05-convencoes-interpop.md §2`](./references/05-convencoes-interpop.md):
 
 - 🔴 **Source-of-truth document principle** (Rule 0)
 - 🔴 **No infinitive verbs in Epic/Feature/US/RF/RNF/G titles** (Rule 1)

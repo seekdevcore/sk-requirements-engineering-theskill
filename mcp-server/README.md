@@ -23,7 +23,7 @@ MCP server that exposes the [`engenharia-de-requisitos`](../) skill content to *
 |---|---|
 | `list_references()` | Returns titles + 1-paragraph summaries of every reference |
 | `list_examples()` | Returns titles + 1-paragraph summaries of every example |
-| `list_hard_rules()` | Returns the 10 *"Interpop"* hard rules (non-negotiable backlog conventions) |
+| `list_hard_rules()` | Returns the *"Interpop"* hard rules (non-negotiable backlog conventions) |
 | `validate_user_story(title, bdd?)` | INVEST + naming-convention check; optional BDD structural check |
 | `validate_acceptance_criterion(text)` | AC convention check: `[...]` rule, imperative wording, no qualitative adjectives, no technical terms; hints EARS phrasing when relevant |
 | `validate_ears(text)` | EARS check (reference 11, optional layer): exactly one `SHALL`/`DEVE`, no weak modals, measurable response, EARS structural keyword present (EN + pt-BR) |

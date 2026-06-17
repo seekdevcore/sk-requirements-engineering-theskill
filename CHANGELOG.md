@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.24.0] — 2026-06-17
+
+Closes the two items the meta-audit had deliberately deferred: single-sources the **hard-rules count**, and adds a **behavioural (RED-GREEN) test layer**.
+
+### Added
+
+- **`tests/skill-behavior-scenarios.md`** — a RED-GREEN behavioural test spec for this discipline skill (writing-skills methodology). Seven pressure scenarios (skip elicitation/structure · BDD-in-Feature · config-as-Feature · bundled-CRUD · qualitative NFR · iceberg over/under-refinement · backlog-changed-without-document), each with the exact rationalisation it trains against, the expected RED (fail without skill) and GREEN (comply with skill), and the enforcing section. en-CA only (a test/methodology artifact, like the scaffolder + MCP).
+- **Load-bearing skill invariants in `mcp-server/tests/smoke.py`** (CI job `mcp-smoke`) — 9 automated checks asserting each guardrail still **exists** in `SKILL.md` (the mandatory §0, rule zero, Feature/US split, `TX` config rule, atomicity, quantitative NFR, the iceberg, the anti-patterns catalogue, the canonical hard-rules pointer). Deleting a guardrail now flips a check red in CI; the `Sn` ids tie each to a scenario.
+
+### Changed
+
+- **Single-sourced the "hard rules" count.** The literal **"10 hard rules"** was hard-coded across ~8 files; the number now lives **only** in the canonical heading of `references/05-convencoes-interpop.md §2` (where the numbered list 0–9 is right below it, self-verifying). Every *reference* to it — `SKILL.md`, `README.md`, `CONTRIBUTING.md`, `mcp-server/README.md` + `server.py`, the issue template, the pt-BR mirrors — now says **"the hard rules"** (number-free) + the pointer. Adding a future rule no longer requires an 8-file edit. **Not** a weakening: the rules stay exactly as hard. (`CHANGELOG` history is immutable and was left untouched.)
+- **Version**: `1.23.0 → 1.24.0`.
+
+---
+
 ## [1.23.0] — 2026-06-17
 
 **Meta-audit, deeper pass** — de-duplicates the two largest SKILL.md↔reference overlaps the audit flagged, so each lives in a single source. Content-preserving; no methodology changed. `SKILL.md` 525 → 482 lines (−43), 6644 → 6258 words (−386).

@@ -112,6 +112,35 @@ def main() -> int:
         check(f"check_projection_drift did not raise (got {type(exc).__name__}: {exc})", False)
     print()
 
+    print("=== Load-bearing skill invariants (behavioral guardrails — see tests/skill-behavior-scenarios.md) ===")
+    # These assert that the load-bearing discipline machinery still EXISTS in SKILL.md.
+    # Each maps to a RED-GREEN pressure scenario; deleting a guardrail (which would let an
+    # agent rationalize past it) flips the check red here, in CI, before it ships.
+    skill_text = SKILL_MD.read_text(encoding="utf-8").lower()
+    invariants = {
+        "S1 — §0 first-action structure check is MANDATORY":
+            "first action" in skill_text and "mandatory" in skill_text,
+        "S1/S7 — rule zero: requirements doc is the source of truth":
+            "source of truth" in skill_text,
+        "S2 — Feature=description vs User Story=BDD distinction":
+            "user story" in skill_text and "bdd" in skill_text,
+        "S3 — technical config is a cross-cutting Task (TX-NN), not a Feature":
+            "tx-" in skill_text,
+        "S4 — Feature atomicity (one Feature = one thing)":
+            "atomicity" in skill_text,
+        "S5 — NFR must be quantitative":
+            "quantitative" in skill_text,
+        "S6 — progressive refinement / the backlog iceberg":
+            "iceberg" in skill_text,
+        "anti-patterns catalogue is present":
+            "anti-pattern" in skill_text,
+        "points to the canonical hard rules in references/05":
+            "05-convencoes-interpop" in skill_text,
+    }
+    for name, ok in invariants.items():
+        check(name, ok)
+    print()
+
     if failed:
         print(f"=== ❌ {len(failed)} check(s) failed ===")
         for name in failed:

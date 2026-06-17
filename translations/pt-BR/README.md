@@ -104,7 +104,7 @@ engenharia-de-requisitos/
 │   ├── 03-especificacao.md        (Backlog, Epic→Feature→US→AC, INVEST, multiple root Epics)
 │   ├── 04-bdd-criterios-aceitacao.md  (BDD pt-BR, Three Amigos, AC vs Gherkin, [...] convention)
 │   ├── 05-estimativa.md           (Story Points, Planning Poker, velocity)
-│   ├── 05-convencoes-interpop.md  (10 hard rules: source-of-truth document, naming, [...], etc.)
+│   ├── 05-convencoes-interpop.md  (the hard rules: source-of-truth document, naming, [...], etc.)
 │   ├── 06-validacao.md            (5 checks + 7 dimensions + prototypes)
 │   ├── 07-mudanca-rastreabilidade.md  (change management, RTM, enduring vs volatile requirements)
 │   ├── 08-analista-negocios.md    (BABOK, AS-IS/TO-BE, MoSCoW, RICE, Kano)
@@ -207,7 +207,7 @@ Pull requests welcome — especially for:
 3. New `.feature` templates
 4. Tooling integration scaffolds (Linear, Jira, Notion, GitHub Issues)
 
-When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (10 hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
+When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (the hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
 
 ---
 
