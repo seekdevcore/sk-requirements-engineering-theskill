@@ -1,17 +1,19 @@
 ---
 name: engenharia-de-requisitos
-description: Use quando o usuário estiver fazendo engenharia de requisitos, análise de negócios, ou tarefas de engenharia de software que envolvam descobrir, especificar, validar ou gerenciar requisitos de software. Gatilhos incluem (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, writing EARS statements, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Gatilhos (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, escrever requisitos em EARS, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Aplica-se a projetos novos (sem requisitos ainda) e a evoluções (mudanças em requisitos existentes). Não é a skill certa para implementação pura de código — é para o ESTÁGIO ANTES (descobrir o que construir) e DEPOIS (validar que o que foi construído está correto).
+description: Use when doing requirements engineering, business analysis, or the software-engineering stage of discovering / specifying / validating / managing requirements — the stage BEFORE code (what to build) and AFTER (was the right thing built?), for new projects and for evolutions of existing ones. Triggers (EN): requirements elicitation, stakeholder interviews, user stories, acceptance criteria, BDD scenarios, EARS statements, Planning Poker estimation, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, AS-IS / TO-BE business analysis, professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, user stories, critérios de aceitação, cenários BDD, requisitos em EARS, Planning Poker, montar backlog (Epic → Feature → US → CA → Task), refinar RF/RNF, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética em computação. Not for pure code implementation.
 language: en-CA
 available_translations:
   - pt-BR
+metadata:
+  triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.21.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  pt-BR: complete — espelho fiel da v1.22.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.21.0
+version: 1.22.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -368,17 +370,13 @@ dos cinco templates EARS — `WHEN/QUANDO <gatilho> THE SYSTEM SHALL/O SISTEMA D
 `Cenário`. **EARS é opt-in** e coexiste com o `RF` em linguagem de negócio + BDD; nunca os substitui. Padrões
 completos (EN + pt-BR), anti-padrões, e o pipeline `RF → EARS → CA → Gherkin` em [references/11-ears.md](references/11-ears.md).
 
-**Refinamento progressivo — o backlog é um iceberg (DEEP).** Um backlog **não é uniformemente verboso**: *detalhe só
-o que está prestes a ser construído*. A **ponta** (próximas uma ou duas sprints) é fatiada e detalhada por completo —
-**BDD** completo + **CAs** agrupados + edge cases + o `RNF` que a amarra; a **base** (itens a meses) é macro — um Epic
-é 1–2 frases, uma Feature distante um parágrafo. É o **iceberg** de Cohn + o **DEEP** de Pichler (Detailed
-appropriately · Emergent · Estimated · Prioritized). **Dois eixos, nunca confundidos**: o documento de requisitos
-(`RF`/`RNF`) está no eixo de *correção* (um `RNF` é quantitativo desde o nascimento — nunca "detalhado depois"); só o
-backlog (Epic→Feature→US→CA→BDD) está no eixo de *profundidade de elaboração*. O portão é a **Definition of Ready**
-([references/05-estimativa.md](references/05-estimativa.md)); o mecanismo já existe — os **3 Cs** (o Confirmation/BDD
-nasce no refinamento, não no nascimento do card). ⚠️ Duas falhas simétricas: **super-refinar a base** (desperdício) e
-🔴 **sub-refinar a ponta** (uma US não-pronta entra na sprint — a perigosa). Tabela de gradiente + os dois anti-padrões
-em [references/03-especificacao.md §4.5](references/03-especificacao.md).
+**Refinamento progressivo — o backlog é um iceberg (DEEP).** *Detalhe só o que está prestes a ser construído*: a
+**ponta** (próximas uma ou duas sprints) é detalhada por completo (**BDD** completo + **CAs** agrupados + edge cases +
+o `RNF` que a amarra); a **base** (itens a meses) é macro (um Epic é 1–2 frases). **Dois eixos, nunca confundidos**: o
+documento `RF`/`RNF` é *correção* (um `RNF` é quantitativo desde o nascimento, nunca "detalhado depois"); só o backlog
+é *profundidade de elaboração*. Portão = **Definition of Ready**; mecanismo = os **3 Cs**. ⚠️ Duas falhas simétricas:
+super-refinar a base (desperdício) e 🔴 sub-refinar a ponta (uma US não-pronta entra na sprint — a perigosa). Tabela de
+gradiente + anti-padrões #15/#16 em [references/03-especificacao.md §4.5](references/03-especificacao.md) (iceberg de Cohn + DEEP de Pichler).
 
 ### Fase C — ESTIMATIVA (dimensionar)
 

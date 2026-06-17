@@ -1,17 +1,19 @@
 ---
 name: engenharia-de-requisitos
-description: Use when the user is doing requirements engineering, business analysis, or software engineering tasks that involve discovering, specifying, validating, or managing software requirements. Triggers include (EN): requirements elicitation, stakeholder interviews, writing user stories, defining acceptance criteria, writing BDD scenarios, writing EARS statements, Planning Poker estimation, prototype validation of requirements, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, business analysis (AS-IS / TO-BE), professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, escrever user stories, definir critérios de aceitação, escrever cenários BDD, escrever requisitos em EARS, estimar com Planning Poker, validar requisitos com protótipos, montar backlog (Epic → Feature → US → CA → Task), refinar RFs/RNFs, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética profissional em computação. Applies to new projects (no requirements yet) and to evolutions (changes in existing requirements). Not the right skill for pure code implementation — it is for the STAGE BEFORE (discovering what to build) and AFTER (validating that what was built is correct).
+description: Use when doing requirements engineering, business analysis, or the software-engineering stage of discovering / specifying / validating / managing requirements — the stage BEFORE code (what to build) and AFTER (was the right thing built?), for new projects and for evolutions of existing ones. Triggers (EN): requirements elicitation, stakeholder interviews, user stories, acceptance criteria, BDD scenarios, EARS statements, Planning Poker estimation, building a backlog (Epic → Feature → US → AC → Task), refining FRs/NFRs, requirement↔code↔test traceability, requirements change management, AS-IS / TO-BE business analysis, professional computing ethics. Triggers (PT-BR): levantar requisitos, entrevistar stakeholders, user stories, critérios de aceitação, cenários BDD, requisitos em EARS, Planning Poker, montar backlog (Epic → Feature → US → CA → Task), refinar RF/RNF, rastreabilidade requisito↔código↔teste, gestão de mudança de requisitos, análise de negócios (AS-IS / TO-BE), ética em computação. Not for pure code implementation.
 language: en-CA
 available_translations:
   - pt-BR
+metadata:
+  triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.21.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.22.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.21.0
+version: 1.22.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -370,17 +372,13 @@ of the five EARS templates — `WHEN/QUANDO <trigger> THE SYSTEM SHALL/O SISTEMA
 `Cenário`. **EARS is opt-in** and coexists with the business-language `RF` + BDD; it never replaces them. Full
 patterns (EN + pt-BR), anti-patterns, and the `RF → EARS → CA → Gherkin` pipeline in [references/11-ears.md](references/11-ears.md).
 
-**Progressive refinement — the backlog is an iceberg (DEEP).** A backlog is **not uniformly verbose**: *detail only
-what is about to be built*. The **tip** (next one or two sprints) is sliced and fully detailed — complete **BDD** +
-grouped **CAs** + edge cases + the `RNF` that binds it; the **base** (items months away) is macro — an Epic is 1–2
-sentences, a far Feature a single paragraph. This is Cohn's backlog **iceberg** + Pichler's **DEEP** (Detailed
-appropriately · Emergent · Estimated · Prioritized). **Two axes, never confused**: the requirements document
-(`RF`/`RNF`) is on the *correctness* axis (an `RNF` is quantitative from birth — never "detailed later"); only the
-backlog (Epic→Feature→US→CA→BDD) is on the *elaboration-depth* axis. The gate is the **Definition of Ready**
-([references/05-estimativa.md](references/05-estimativa.md)); the mechanism already exists — the **3 Cs** (the
-Confirmation/BDD emerges at refinement, not at card birth). ⚠️ Two symmetric failures: **over-refining the base**
-(waste) and 🔴 **under-refining the tip** (an un-ready US enters a sprint — the dangerous one). Gradient table +
-both anti-patterns in [references/03-especificacao.md §4.5](references/03-especificacao.md).
+**Progressive refinement — the backlog is an iceberg (DEEP).** *Detail only what is about to be built*: the **tip**
+(next one or two sprints) is fully detailed (complete **BDD** + grouped **CAs** + edge cases + the binding `RNF`);
+the **base** (months away) stays macro (an Epic is 1–2 sentences). **Two axes, never confused**: the `RF`/`RNF`
+document is *correctness* (an `RNF` is quantitative from birth, never "detailed later"); only the backlog is
+*elaboration-depth*. Gate = **Definition of Ready**; mechanism = the **3 Cs**. ⚠️ Two symmetric failures: over-refining
+the base (waste) and 🔴 under-refining the tip (an un-ready US enters a sprint — the dangerous one). Full gradient
+table + anti-patterns #15/#16 in [references/03-especificacao.md §4.5](references/03-especificacao.md) (Cohn's iceberg + Pichler's DEEP).
 
 ### Phase C — ESTIMATION (sizing)
 
