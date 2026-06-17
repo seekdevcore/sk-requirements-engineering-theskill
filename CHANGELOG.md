@@ -13,6 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.22.0] — 2026-06-17
+
+**Meta-audit hygiene pass** — a content-preserving sweep using the `writing-skills` + `skill-creator` meta-skills to apply skill-authoring standards (CSO/discovery, progressive disclosure) to this skill itself. No methodology content changed.
+
+### Changed
+
+- **Sharpened the `SKILL.md` `description`** (the trigger surface Claude Code actually matches on): dropped the redundant tail that duplicated §1, kept the bilingual EN/PT trigger lists, tightened wording (1352 → 1053 chars). pt-BR mirror.
+- **Compressed the Phase B "progressive refinement / iceberg (DEEP)" subsection** to a tight map + pointer (the full gradient table + anti-patterns #15/#16 already live in `references/03-especificacao.md §4.5`) — removes SKILL↔reference duplication. pt-BR mirror.
+- **Version**: `1.21.0 → 1.22.0`.
+
+### Added
+
+- **`metadata.triggers`** in the `SKILL.md` frontmatter (22 EN/PT keywords) — belt-and-suspenders discovery for tooling that reads it (Claude Code triggers off `description`; this helps the broader skill ecosystem). pt-BR mirror. (The CI `yaml-schema` job only lints `.github/`, so the extra frontmatter key is safe.)
+
+### Notes
+
+- **Deliberately deferred** (flagged by the audit, not done here because each needs its own decision): aggressively thinning `SKILL.md` by de-duplicating the nine naming rules that are fully restated from `05-convencoes-interpop.md` (load-bearing — must not be gutted unilaterally); softening the hard-coded "10 hard rules" string (an 8-file cascade); adding a behavioral RED-GREEN skill-navigation test. The bilingual pt-BR mirror, the long references (the detail layer, long by design), and the source attribution (§10) were intentionally left untouched.
+
+---
+
 ## [1.21.0] — 2026-06-17
 
 Two changes from the author's guidance: the **two mandatory root Epics become structural bucket directories**, and **progressive refinement (the backlog iceberg / DEEP)** is made an explicit, first-class concept.
