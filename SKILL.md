@@ -8,12 +8,12 @@ metadata:
   triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.22.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
+  pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.23.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.22.0
+version: 1.23.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -223,38 +223,16 @@ Any "no" → question whether the project should proceed.
 
 ### Phase B — SPECIFICATION (document)
 
-**Backlog hierarchy** (*"IFPB"* course, OpenProject — full version, reflecting multiple root Epics, nested Epics, and BDD in the Description field):
+**Backlog hierarchy** (*"IFPB"* / OpenProject — the shape below; the full tree diagram with 4-level Epic nesting and the per-scenario BDD breakdown is the single source in [`references/03-especificacao.md §5`](references/03-especificacao.md)):
 
 ```
-📄 Requirements Document (SOURCE OF TRUTH — always check before touching anything)
-    │
-    ▼
-PROJECT (= repository/context in OpenProject — NOT an EPIC)
-    │
-    ├─ 🟦 ROOT EPIC #1                               ← one front of the project
-    │   └─ 🟦 SUB EPIC                               ← sub-domain (module, area)
-    │       └─ 🟦 SUB-SUB EPIC                       ← sub-sub-domain
-    │           └─ 🟦 SUB-SUB-SUB EPIC               ← IFPB reaches 4 levels
-    │               └─ 🟩 FEATURE                    ← customer-deliverable
-    │                   ├─ 📋 CA group "CA - <Theme A>"   ← ACs always grouped
-    │                   │    ├─ ✅ CA01 - self-sufficient rule
-    │                   │    ├─ ✅ CA02 - self-sufficient rule
-    │                   │    └─ ✅ CA03 - rule with sub-rules [...]
-    │                   ├─ 📋 CA group "CA - <Theme B>"
-    │                   │    └─ ✅ CA04 - ...
-    │                   └─ 🟦 USER STORY                 ← slice of 1 sprint
-    │                       ├─ 🎬 BDD: Scenario 1 (happy)  ┐
-    │                       ├─ 🎬 BDD: Scenario 2 (error)  │ ← content of the
-    │                       └─ 🎬 BDD: Scenario 3 (alt.)   ┘   "Description" field
-    │                                                          of the US (not cards)
-    │                       └─ 🔧 TASK                       ← technical unit
-    │                                                          (technical terms OK)
-    │
-    ├─ 🟦 ROOT EPIC #2                               ← another front (sibling)
-    │   └─ ... (same internal structure)
-    │
-    └─ 🟦 ROOT EPIC #N                               ← other fronts (siblings)
-        └─ ...
+Requirements Document (source of truth)
+└─ PROJECT (OpenProject context — NOT an Epic)
+   └─ 🟦 ROOT EPIC (one front; may nest up to 4 levels) — Epics are SIBLINGS, no single "project-Epic"
+      └─ 🟩 FEATURE (customer-deliverable; business-language description + ACs)
+         ├─ 📋 CA group "CA - <Theme>" → ✅ CA01, CA02, CA03 [...]   (ACs ALWAYS grouped)
+         └─ 🟦 USER STORY (slice of 1 sprint) — its Description field IS the BDD (Given/When/Then)
+            └─ 🔧 TASK (technical unit; technical terms OK here)
 ```
 
 > **🔴 Rule: multiple root Epics, no single "Project-Epic"**. A project typically has **several Epics at the top level, siblings to each other**, without a common parent node. Each root Epic is an **independent front** (platform, operational area, cross-cutting module). The "product" as a whole is the **context/repository** of the project in OpenProject — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node and disrupts navigation. Real examples: *"Controle de Dopagem"* has `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO` (3 siblings); *"Interpop"* has `EP-10 Busca` · `EP-09 Filtros` · `EP-15 Newsletter` · `EP-20 Moderação` (several siblings). Detail in [`examples/template-backlog-openproject.md §3`](examples/template-backlog-openproject.md).
@@ -319,40 +297,19 @@ Whoever reads the backlog in list mode sees the `[...]` and knows they must clic
 
 #### 🔴 Naming conventions *"Interpop"* / *"IFPB"* (hard rule — applies to every pt-BR project of this author)
 
-Applies to ALL titles of Epic, Feature, User Story, CA, **RF**, RNF, business rule (G). **Tasks may violate** (technical terms are allowed there).
+Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Tasks may use technical terms.** The rows below are the quick-reference; the **canonical, fully-exampled source** (every ❌→✅ and the rationale) is the **10 hard rules** in [`references/05-convencoes-interpop.md §2`](references/05-convencoes-interpop.md) — read it before applying.
 
-1. **No infinitive verbs** in titles. Use a descriptive noun/gerund.
-   - ❌ `List user reservations` → ✅ `Listing of user reservations`
-   - ❌ `Search articles` → ✅ `Article search`
-   - ❌ `Register athlete` → ✅ `Athlete registration`
-
-2. **No technical terms** in titles nor descriptions of Epic/Feature/US/CA/**RF**/RNF/G. Technical terms only appear in Tasks. Applies both to the **backlog** (Epic/Feature/US/CA) and to the **requirements document** (RF/RNF/G) — both are read by stakeholders, not by developers.
-   - ❌ `REST endpoint for search` → ✅ `Article search by text`
-   - ❌ `useSearch hook with TanStack` → ✅ `Real-time presentation of results`
-   - ❌ `Migration of search_index table` → ✅ (not a Feature; becomes a technical Task)
-   - ❌ CA: `Endpoint POST /api/v1/bans/ returns 400 if hierarchy violated` → ✅ `When an administrator tries to ban another administrator, the system rejects the operation with the message "Operação não permitida".`
-
-3. **Plain language, simple, direct** — whoever reads must understand without technical context.
-
-4. **All artifacts have descriptions in business language.** Epic, Feature, US, CA, **RF**, RNF, business rule (G). Read by any stakeholder (PO, client, junior developer, auditor) without needing a glossary. No URLs, no method names, no stack. Endpoints and libraries only in Tasks. **RF ↔ Feature relationship**: RF is the requirement declared in the document; Feature is its incremental materialization in the backlog (with traceability via the `Origin (requirements)` field).
-
-5. **ACs always grouped** under a `CA - <Theme>` title, even for a Feature with a single AC. Grouping maintains visual consistency in OpenProject and facilitates future insertion (see template in [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md) §4).
-
-6. **Technical configurations are NOT Features** (ESLint, environment variables, folder creation, JSON files, Vite config, lint config, docker-compose). These go as **cross-cutting Tasks** (`TX-NN`), grouped for technical-team visibility, outside the Feature hierarchy. The master rule: **Feature = customer-deliverable**. If it is not deliverable to the end customer, it is not a Feature.
-
-7. ***"Interpop"* priority scale** (applied at ALL levels: Epic, Feature, US, CA, Task):
-   - 🔴 **Immediate** — blocks other items; must be done in the current sprint
-   - 🟠 **High** — current sprint or next
-   - 🟡 **Normal** — prioritized backlog
-   - 🟢 **Low** — nice to have, no deadline
-
-   > MoSCoW (Must/Should/Could/Won't) is a theoretical equivalent, but the *"Interpop"* team uses Immediate/High/Normal/Low. Use this scale in this author's Brazilian projects.
-
-8. **Stable IDs** (*"Interpop"* format — kept in pt-BR for retro-compatibility with existing projects):
-   - `EP-NN` (Epic, may be nested: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Acceptance Criterion) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (cross-cutting Task) · `G-NN` (business rule)
-   - IDs are eternal (they do not get renumbered when content changes); the artifact version changes.
-
-9. **One Feature = one thing (atomicity).** A Feature delivers **exactly one** client-facing capability. If a candidate bundles two — e.g. *user registration* **and** *user update* — **split it into two Features** (atomic CRUD: one Feature per operation). One thing per Feature → cleaner estimation, one BDD focus, one-to-one traceability. Detail in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
+| # | Naming rule | Canonical |
+|---|---|---|
+| 1 | **No infinitive verbs** in titles — use a noun/gerund (`Register athlete` → `Athlete registration`) | ref05 R1 |
+| 2 | **No technical terms** in Epic/Feature/US/CA/RF/RNF/G (title *or* description) — they live only in Tasks | ref05 R2 |
+| 3 | **Plain, simple, direct language** — understandable with no technical context | ref05 R3 |
+| 4 | **Every artifact has a business-language description** (Epic/Feature/US/CA/RF/RNF/G); RF ↔ Feature linked via `Origin (requirements)` | ref05 R8 |
+| 5 | **ACs always grouped** under a `CA - <Theme>` title (even a single AC) + the `[...]` sub-rule convention | ref05 R7 |
+| 6 | **Technical config is NOT a Feature** (ESLint, env vars, docker-compose…) → cross-cutting Task `TX-NN`. **Feature = customer-deliverable** | ref05 R4 |
+| 7 | **Priority at every node**: 🔴 Immediate · 🟠 High · 🟡 Normal · 🟢 Low (MoSCoW equivalent) | ref05 R5 |
+| 8 | **Stable, eternal IDs**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `G-NN` (never renumbered) | ref05 (IDs) |
+| 9 | **One Feature = one thing** (atomicity) — bundles two (e.g. registration + update)? split into two (atomic CRUD) | ref05 R4b |
 
 > **Two mandatory root Epics — as structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — enhancements to things that already exist — and **`Atividades Complementares`** (*Complementary Activities*) — the home for cross-cutting `TX` (technical work, config, infra **not tied to a single Feature/US**, per rule 6). On disk they are **directories** `docs/backlog/melhorias/` and `docs/backlog/atividades-complementares/` (siblings of `epics/`, `features/`); **only on OpenProject export** does each collapse into a **root Epic** (depth 0), sibling of the feature-front Epics, with the files inside as its children. Both OpenProject adapters emit them automatically.
 
