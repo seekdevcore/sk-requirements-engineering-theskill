@@ -23,11 +23,11 @@
 | Language | Status | Current content |
 |---|---|---|
 | **en-CA** (default declared in frontmatter) | 🟢 Complete | All content translated as of v1.2.0: entry point ([`SKILL.md`](./SKILL.md), [`README.md`](./README.md), [`CHANGELOG.md`](./CHANGELOG.md)), [`references/`](./references/) (15 files), [`examples/`](./examples/) (8 files — incl. SaaS multi-tenant / fintech / government worked case studies + `feature-step-defs/` — 6-stack BDD bindings), [`assets/`](./assets/) (scaffolder + generic template tree). Brazilian acronyms (`RF`, `RNF`, `G`, `CA`, `US`, `EP-NN`, `F-NN`, `USNN.M`, `TNN.M.K`, `TX-NN`, `G-NN`) and domain terms in *italic + quotes* preserved by design. |
-| **pt-BR** | 🟢 Complete | **Full pt-BR translation at [`translations/pt-BR/`](./translations/pt-BR/)** — a faithful mirror of the en-CA source kept current through v1.23.0 (`SKILL.md` incl. §0 first-run / §3.1 SDD / EARS, `references/` 01–13, `examples/` (8, incl. SaaS/fintech/government case studies) + `feature-step-defs/`). The original *"IFPB"* course language; authoritative for compliance/audit reference. |
+| **pt-BR** | 🟢 Complete | **Full pt-BR translation at [`translations/pt-BR/`](./translations/pt-BR/)** — a faithful mirror of the en-CA source kept current through v1.24.0 (`SKILL.md` incl. §0 first-run / §3.1 SDD / EARS, `references/` 01–13, `examples/` (8, incl. SaaS/fintech/government case studies) + `feature-step-defs/`). The original *"IFPB"* course language; authoritative for compliance/audit reference. |
 
 > **If you read English**: every file root-level is in en-CA. The skill is fully usable end-to-end; references and examples are translated. Some pt-BR content remains by design: domain terms in *italic+quotes*, real-project artifact identifiers (Feature/AC/US titles from *"Interpop"* / *"Controle de Dopagem"*), Gherkin scenarios from the *"IFPB"* course material, and the `template-user-story.feature` template (with documented en-CA dialect option in its header).
 >
-> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — espelho fiel da fonte en-CA, mantido até a v1.23.0 (SKILL.md com §0/§3.1/EARS, referências 01–13, exemplos (8, incl. casos SaaS/fintech/governo) + feature-step-defs/). Continua íntegro e atualizado.
+> **Se você lê português**: o conteúdo completo em pt-BR vive em [`translations/pt-BR/`](./translations/pt-BR/) — espelho fiel da fonte en-CA, mantido até a v1.24.0 (SKILL.md com §0/§3.1/EARS, referências 01–13, exemplos (8, incl. casos SaaS/fintech/governo) + feature-step-defs/). Continua íntegro e atualizado.
 
 ---
 
@@ -191,7 +191,7 @@ engenharia-de-requisitos/
 │   ├── 03-especificacao.md        (Backlog, Epic→Feature→US→AC, INVEST, multiple root Epics)
 │   ├── 04-bdd-criterios-aceitacao.md  (BDD, Three Amigos, AC vs Gherkin, [...] convention)
 │   ├── 05-estimativa.md           (Story Points, Planning Poker, velocity)
-│   ├── 05-convencoes-interpop.md  (10 hard rules: source-of-truth document, naming, [...], etc.)
+│   ├── 05-convencoes-interpop.md  (the hard rules: source-of-truth document, naming, [...], etc.)
 │   ├── 06-validacao.md            (5 checks + 7 dimensions + prototypes)
 │   ├── 07-mudanca-rastreabilidade.md  (change management, RTM, enduring vs volatile requirements)
 │   ├── 08-analista-negocios.md    (BABOK, AS-IS/TO-BE, MoSCoW, RICE, Kano)
@@ -342,7 +342,7 @@ Pull requests welcome — especially for:
 3. Tooling integration scaffolds (Linear, Jira, Notion, GitHub Issues, Plane)
 4. Additional language translations (es, fr, de, it, etc.) under `translations/<bcp-47-tag>/`
 
-When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (10 hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
+When contributing, follow the same conventions documented in `references/05-convencoes-interpop.md` (the hard rules: source-of-truth document, naming without infinitives, no technical terms in non-Task artifacts, grouped ACs with `[...]` convention, etc.).
 
 For en-CA translation contributions, preserve:
 

@@ -52,7 +52,7 @@ body:
     attributes:
       label: Alignment with the hard rules
       description: |
-        Confirm you understand the [10 hard rules](https://github.com/seekdevcore/sk-requirements-engineering-theskill/blob/main/references/05-convencoes-interpop.md) and explain any deviation you anticipate.
+        Confirm you understand the [the hard rules](https://github.com/seekdevcore/sk-requirements-engineering-theskill/blob/main/references/05-convencoes-interpop.md) and explain any deviation you anticipate.
       render: markdown
     validations:
       required: false

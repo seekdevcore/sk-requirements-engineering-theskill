@@ -17,7 +17,7 @@ Tools exposed
 -------------
 - list_references()                     → titles + 1-line summaries of every reference/
 - list_examples()                       → titles + 1-line summaries of every example/
-- list_hard_rules()                     → the 10 Interpop hard-rules titles
+- list_hard_rules()                     → the Interpop hard-rules titles
 - validate_user_story(title, bdd?)      → INVEST + naming-convention check
 - validate_acceptance_criterion(text)   → format check + `[...]` convention check
 
@@ -201,7 +201,7 @@ def list_examples() -> str:
 
 @mcp.tool()
 def list_hard_rules() -> str:
-    """Return the 10 hard rules from references/05-convencoes-interpop.md
+    """Return the hard rules from references/05-convencoes-interpop.md
     (the canonical Interpop convention layer). Each rule is non-negotiable
     when designing a backlog under this methodology.
     """
