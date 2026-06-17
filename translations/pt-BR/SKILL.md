@@ -8,12 +8,12 @@ metadata:
   triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.22.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  pt-BR: complete — espelho fiel da v1.23.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 6 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.22.0
+version: 1.23.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -223,38 +223,16 @@ Qualquer "não" → questione se o projeto deve prosseguir.
 
 ### Fase B — ESPECIFICAÇÃO (documentar)
 
-**Hierarquia do backlog** (curso *"IFPB"*, OpenProject — versão completa, refletindo múltiplos Epics raiz, Epics aninhados, e BDD no campo Description):
+**Hierarquia do backlog** (*"IFPB"* / OpenProject — o formato abaixo; o diagrama de árvore completo com aninhamento de Epic em 4 níveis e o detalhamento de BDD por cenário é a fonte única em [`references/03-especificacao.md §5`](references/03-especificacao.md)):
 
 ```
-📄 Requirements Document (SOURCE OF TRUTH — always check before touching anything)
-    │
-    ▼
-PROJECT (= repository/context in OpenProject — NOT an EPIC)
-    │
-    ├─ 🟦 ROOT EPIC #1                               ← one front of the project
-    │   └─ 🟦 SUB EPIC                               ← sub-domain (module, area)
-    │       └─ 🟦 SUB-SUB EPIC                       ← sub-sub-domain
-    │           └─ 🟦 SUB-SUB-SUB EPIC               ← IFPB reaches 4 levels
-    │               └─ 🟩 FEATURE                    ← customer-deliverable
-    │                   ├─ 📋 CA group "CA - <Theme A>"   ← ACs always grouped
-    │                   │    ├─ ✅ CA01 - self-sufficient rule
-    │                   │    ├─ ✅ CA02 - self-sufficient rule
-    │                   │    └─ ✅ CA03 - rule with sub-rules [...]
-    │                   ├─ 📋 CA group "CA - <Theme B>"
-    │                   │    └─ ✅ CA04 - ...
-    │                   └─ 🟦 USER STORY                 ← slice of 1 sprint
-    │                       ├─ 🎬 BDD: Scenario 1 (happy)  ┐
-    │                       ├─ 🎬 BDD: Scenario 2 (error)  │ ← content of the
-    │                       └─ 🎬 BDD: Scenario 3 (alt.)   ┘   "Description" field
-    │                                                          of the US (not cards)
-    │                       └─ 🔧 TASK                       ← technical unit
-    │                                                          (technical terms OK)
-    │
-    ├─ 🟦 ROOT EPIC #2                               ← another front (sibling)
-    │   └─ ... (same internal structure)
-    │
-    └─ 🟦 ROOT EPIC #N                               ← other fronts (siblings)
-        └─ ...
+Requirements Document (source of truth)
+└─ PROJECT (OpenProject context — NOT an Epic)
+   └─ 🟦 ROOT EPIC (one front; may nest up to 4 levels) — Epics are SIBLINGS, no single "project-Epic"
+      └─ 🟩 FEATURE (customer-deliverable; business-language description + ACs)
+         ├─ 📋 CA group "CA - <Theme>" → ✅ CA01, CA02, CA03 [...]   (ACs ALWAYS grouped)
+         └─ 🟦 USER STORY (slice of 1 sprint) — its Description field IS the BDD (Given/When/Then)
+            └─ 🔧 TASK (technical unit; technical terms OK here)
 ```
 
 > **🔴 Regra: múltiplos Epics raiz, sem um único "Epic-Projeto"**. Um projeto tipicamente tem **vários Epics no nível superior, irmãos entre si**, sem um nó pai comum. Cada Epic raiz é uma **frente independente** (plataforma, área operacional, módulo transversal). O "produto" como um todo é o **contexto/repositório** do projeto no OpenProject — não um item da hierarquia. Forçar tudo sob um único "Epic Produto" cria um nó pai vazio e atrapalha a navegação. Exemplos reais: *"Controle de Dopagem"* tem `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO` (3 irmãos); *"Interpop"* tem `EP-10 Busca` · `EP-09 Filtros` · `EP-15 Newsletter` · `EP-20 Moderação` (vários irmãos). Detalhe em [`examples/template-backlog-openproject.md §3`](examples/template-backlog-openproject.md).
@@ -317,40 +295,19 @@ Quem lê o backlog em modo lista vê o `[...]` e sabe que precisa clicar. Sem am
 
 #### 🔴 Convenções de nomenclatura *"Interpop"* / *"IFPB"* (regra dura — aplica-se a todo projeto pt-BR deste autor)
 
-Aplica-se a TODOS os títulos de Epic, Feature, User Story, CA, **RF**, RNF, regra de negócio (G). **Tasks podem violar** (termos técnicos são permitidos lá).
+Aplica-se a TODOS os títulos de Epic/Feature/US/CA/**RF**/RNF/regra de negócio (G). **Tasks podem usar termos técnicos.** As linhas abaixo são o quick-reference; a **fonte canônica, com todos os exemplos ❌→✅ e o racional**, são as **10 hard rules** em [`references/05-convencoes-interpop.md §2`](references/05-convencoes-interpop.md) — leia antes de aplicar.
 
-1. **Sem verbos no infinitivo** em títulos. Use um substantivo descritivo/gerúndio.
-   - ❌ `Listar reservas do usuário` → ✅ `Listagem de reservas do usuário`
-   - ❌ `Buscar artigos` → ✅ `Busca de artigos`
-   - ❌ `Cadastrar atleta` → ✅ `Cadastro de atleta`
-
-2. **Sem termos técnicos** em títulos nem descrições de Epic/Feature/US/CA/**RF**/RNF/G. Termos técnicos só aparecem em Tasks. Aplica-se tanto ao **backlog** (Epic/Feature/US/CA) quanto ao **documento de requisitos** (RF/RNF/G) — ambos são lidos por stakeholders, não por desenvolvedores.
-   - ❌ `Endpoint REST para busca` → ✅ `Busca de artigos por texto`
-   - ❌ `Hook useSearch com TanStack` → ✅ `Apresentação em tempo real dos resultados`
-   - ❌ `Migration da tabela search_index` → ✅ (não é uma Feature; vira uma Task técnica)
-   - ❌ CA: `Endpoint POST /api/v1/bans/ retorna 400 se hierarquia violada` → ✅ `Quando um administrador tenta banir outro administrador, o sistema rejeita a operação com a mensagem "Operação não permitida".`
-
-3. **Linguagem clara, simples, direta** — quem lê deve entender sem contexto técnico.
-
-4. **Todos os artefatos têm descrições em linguagem de negócio.** Epic, Feature, US, CA, **RF**, RNF, regra de negócio (G). Lidos por qualquer stakeholder (PO, cliente, desenvolvedor júnior, auditor) sem precisar de um glossário. Sem URLs, sem nomes de métodos, sem stack. Endpoints e bibliotecas só em Tasks. **Relação RF ↔ Feature**: RF é o requisito declarado no documento; Feature é sua materialização incremental no backlog (com rastreabilidade via o campo `Origem (requisitos)`).
-
-5. **CAs sempre agrupados** sob um título `CA - <Tema>`, mesmo para uma Feature com um único CA. O agrupamento mantém consistência visual no OpenProject e facilita inserção futura (veja template em [examples/template-backlog-openproject.md](examples/template-backlog-openproject.md) §4).
-
-6. **Configurações técnicas NÃO são Features** (ESLint, variáveis de ambiente, criação de pastas, arquivos JSON, config do Vite, config de lint, docker-compose). Estas vão como **Tasks transversais** (`TX-NN`), agrupadas para visibilidade da equipe técnica, fora da hierarquia de Feature. A regra mestra: **Feature = entregável-ao-cliente**. Se não é entregável ao cliente final, não é uma Feature.
-
-7. ***"Interpop"* escala de prioridade** (aplicada em TODOS os níveis: Epic, Feature, US, CA, Task):
-   - 🔴 **Imediata** — bloqueia outros itens; deve ser feita na sprint atual
-   - 🟠 **Alta** — sprint atual ou próxima
-   - 🟡 **Normal** — backlog priorizado
-   - 🟢 **Baixa** — nice to have, sem prazo
-
-   > MoSCoW (Must/Should/Could/Won't) é um equivalente teórico, mas a equipe *"Interpop"* usa Imediata/Alta/Normal/Baixa. Use esta escala nos projetos brasileiros deste autor.
-
-8. **IDs estáveis** (formato *"Interpop"* — mantidos em pt-BR para retro-compatibilidade com projetos existentes):
-   - `EP-NN` (Epic, pode ser aninhado: `EP-NN.M`, `EP-NN.M.K`) · `F-NN` (Feature) · `CANN` (Critério de Aceitação) · `USNN.M` (User Story) · `TNN.M.K` (Task) · `TX-NN` (Task transversal) · `G-NN` (regra de negócio)
-   - IDs são eternos (não são renumerados quando o conteúdo muda); a versão do artefato muda.
-
-9. **Uma Feature = uma coisa (atomicidade).** Uma Feature entrega **exatamente uma** capacidade voltada ao cliente. Se junta duas — ex.: *cadastro* **e** *atualização* de usuário — **quebre em duas Features** (CRUD atômico: uma por operação). Uma coisa por Feature → estimativa mais limpa, um foco de BDD, rastreabilidade um-para-um. Detalhe em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md) (Rule 4b).
+| # | Regra de nomenclatura | Canônico |
+|---|---|---|
+| 1 | **Sem verbo no infinitivo** no título — use substantivo/gerúndio (`Cadastrar atleta` → `Cadastro de atleta`) | ref05 R1 |
+| 2 | **Sem termo técnico** em Epic/Feature/US/CA/RF/RNF/G (título *ou* descrição) — só em Tasks | ref05 R2 |
+| 3 | **Linguagem simples e direta** — compreensível sem contexto técnico | ref05 R3 |
+| 4 | **Todo artefato tem descrição em linguagem de negócio** (Epic/Feature/US/CA/RF/RNF/G); RF ↔ Feature ligados via `Origem (requisitos)` | ref05 R8 |
+| 5 | **CAs sempre agrupados** sob um título `CA - <Tema>` (mesmo 1 só) + a convenção `[...]` de sub-regras | ref05 R7 |
+| 6 | **Config técnica NÃO é Feature** (ESLint, env vars, docker-compose…) → Task transversal `TX-NN`. **Feature = entregável-ao-cliente** | ref05 R4 |
+| 7 | **Prioridade em todo nó**: 🔴 Imediata · 🟠 Alta · 🟡 Normal · 🟢 Baixa (equivalente a MoSCoW) | ref05 R5 |
+| 8 | **IDs estáveis e eternos**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `G-NN` (nunca renumerados) | ref05 (IDs) |
+| 9 | **Uma Feature = uma coisa** (atomicidade) — junta duas (ex.: cadastro + atualização)? quebre em duas (CRUD atômico) | ref05 R4b |
 
 > **Dois root Epics obrigatórios — como buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — aprimoramentos de coisas que já existem — e **`Atividades Complementares`** (*Complementary Activities*) — o lar dos `TX` transversais (trabalho técnico, config, infra **não ligado a uma Feature/US**, conforme a regra 6). No disco são **diretórios** `docs/backlog/melhorias/` e `docs/backlog/atividades-complementares/` (irmãos de `epics/`, `features/`); **só no export para o OpenProject** cada um colapsa num **Epic-raiz** (depth 0), irmão dos Epics de frente, com os arquivos de dentro como filhos. Os dois adaptadores OpenProject os emitem sozinhos.
 

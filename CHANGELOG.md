@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.23.0] — 2026-06-17
+
+**Meta-audit, deeper pass** — de-duplicates the two largest SKILL.md↔reference overlaps the audit flagged, so each lives in a single source. Content-preserving; no methodology changed. `SKILL.md` 525 → 482 lines (−43), 6644 → 6258 words (−386).
+
+### Changed
+
+- **The nine naming rules in `SKILL.md` §5 are now a compact index table** (one line each) pointing to their canonical, fully-exampled source — the **10 hard rules** in `references/05-convencoes-interpop.md §2`. The ❌→✅ examples and rationale now live in exactly one place (kills the recurring drift that forced rules like atomicity to be written twice). The priority scale (🔴🟠🟡🟢) and the ID formats stay inline as quick-reference. pt-BR mirror.
+- **The backlog-hierarchy tree diagram in `SKILL.md` §5 is now the compact shape** + a pointer to the full version (4-level Epic nesting + per-scenario BDD breakdown) in `references/03-especificacao.md §5`. pt-BR mirror.
+- **Terminology fix**: those diagrams are **UTF-8 box-drawing trees** (`├ ─ └ │` + emoji), not "ASCII" (ASCII is `| + - \ /` only) — the wording was corrected from "the full ASCII" to "the full tree diagram". pt-BR mirror.
+- **Version**: `1.22.0 → 1.23.0`.
+
+### Notes
+
+- The `§9` per-feature checklist (which restates the rules as actionable checkboxes) and the multiple-root-Epics rule note were intentionally kept — they are distinct artifacts (a gate and a sibling note), not duplication. The long references (the detail layer) and the pt-BR mirror remain untouched.
+
+---
+
 ## [1.22.0] — 2026-06-17
 
 **Meta-audit hygiene pass** — a content-preserving sweep using the `writing-skills` + `skill-creator` meta-skills to apply skill-authoring standards (CSO/discovery, progressive disclosure) to this skill itself. No methodology content changed.
