@@ -52,6 +52,13 @@ _F_RE = re.compile(r"\bF-?\d+\b", re.I)
 _US_RE = re.compile(r"US-?\d+\.\d+", re.I)
 _T_RE = re.compile(r"\b(?:T-?\d+\.\d+\.\d+[a-z]?|TX-?\d+)\b", re.I)
 
+# Mandatory structural buckets: directories under backlog/ that COLLAPSE into a ROOT Epic
+# (depth 0) on export — siblings of the feature-front Epics. dir → (Epic subject, default child type).
+_BUCKETS = [
+    ("melhorias", "Melhorias", "Feature"),                              # product enhancements → Features/US
+    ("atividades-complementares", "Atividades Complementares", "Task"),  # cross-cutting TX → Tasks
+]
+
 
 def _norm(ident: str) -> str:
     ident = ident.upper()
@@ -79,8 +86,17 @@ def _title(heading: str, ident: str) -> str:
     return t
 
 
-def _subject(ident: str, title: str, kind: str) -> str:
-    return INDENT * DEPTH.get(kind, 0) + f"{ident} {title}".strip()
+def _bucket_child_kind(stem: str, heading: str, default_kind: str) -> tuple[str, str]:
+    """Classify a bucket child by the id it carries (TX/T → Task, US → User story,
+    F → Feature); fall back to the bucket's default kind + the file slug as ident."""
+    blob = f"{stem} {heading}"
+    if (m := _T_RE.search(blob)):
+        return "Task", _norm(m.group(0))
+    if (m := _US_RE.search(blob)):
+        return "User story", _norm(m.group(0))
+    if (m := _F_RE.search(blob)):
+        return "Feature", _norm(m.group(0))
+    return default_kind, stem
 
 
 def _heading_level(line: str) -> int:
@@ -132,8 +148,10 @@ def _first_paragraph(lines: list[str]) -> str:
     return " ".join(para).strip()
 
 
-def _row(kind, ident, title, priority="Normal", description=""):
-    return {"Type": kind, "ID": "", "Subject": _subject(ident, title, kind),
+def _row(kind, ident, title, priority="Normal", description="", depth=None):
+    d = DEPTH.get(kind, 0) if depth is None else depth
+    subject = INDENT * d + f"{ident} {title}".strip()
+    return {"Type": kind, "ID": "", "Subject": subject,
             "Priority": priority, "Description": description, "Parent": "", "Relations": ""}
 
 
@@ -190,6 +208,31 @@ def collect(root: Path, with_tasks: bool) -> list[dict]:
         if with_tasks:
             for tid in sorted({_norm(m.group(0)) for m in _T_RE.finditer(text)}):
                 rows.append(_row("Task", tid, "", "Normal", ""))
+
+    # --- Mandatory structural buckets → ROOT Epics (depth 0) + their children (depth 1) ---
+    # backlog/melhorias/ and backlog/atividades-complementares/ are DIRECTORIES, not EP-NN
+    # files. Each collapses here into a root Epic; its README is the Epic description; every
+    # other *.md beside it is a direct child (Feature/US for Melhorias, Task for the TX bucket).
+    for dirname, epic_subject, default_kind in _BUCKETS:
+        bdir = backlog / dirname
+        if not bdir.is_dir():
+            continue
+        readme = bdir / "README.md"
+        rtext = readme.read_text(encoding="utf-8") if readme.is_file() else ""
+        rlines = rtext.splitlines()
+        vision = (_first_paragraph(_section_after(rlines, lambda ln: re.search(r"vis[ãa]o|descri[çc]", ln, re.I)))
+                  or _first_paragraph(rlines))
+        rows.append(_row("Epic", epic_subject, "", _detect_priority(rtext[:800]), vision, depth=0))
+        for cf in sorted(bdir.glob("*.md")):
+            if cf.stem in ("README", "_TEMPLATE"):
+                continue
+            ctext = cf.read_text(encoding="utf-8")
+            clines = ctext.splitlines()
+            ch1 = next((ln for ln in clines if ln.startswith("# ")), cf.stem)
+            kind, ident = _bucket_child_kind(cf.stem, ch1, default_kind)
+            cdesc = (_first_paragraph(_section_after(clines, lambda ln: re.search(r"descri[çc]|vis[ãa]o", ln, re.I)))
+                     or _first_paragraph(clines))
+            rows.append(_row(kind, ident, _title(ch1, ident), _detect_priority(ctext[:800]), cdesc, depth=1))
     return rows
 
 

@@ -128,6 +128,16 @@ for f in "$ROOT"/ADR-*.md "$ROOT"/planning/ADR-*.md;  do case "$f" in "$ROOT"/sp
 # dedup (globstar ** can match a top-level file twice)
 [ "${#loose[@]}" -gt 0 ] && mapfile -t loose < <(printf '%s\n' "${loose[@]}" | sort -u)
 
+# legacy bucket files: a pre-v1.21 skill version seeded the two MANDATORY buckets
+# (Melhorias / Atividades Complementares) as epics/EP-*.md FILES. They are now
+# structural DIRECTORIES (backlog/melhorias/ + backlog/atividades-complementares/),
+# each collapsing to a ROOT Epic on OpenProject export. Migrate the old file -> bucket README.
+legacy_buckets=()
+for f in "$ROOT"/backlog/epics/EP-melhorias.md "$ROOT"/backlog/epics/EP-atividades-complementares.md \
+         "$ROOT"/backlog/EP-melhorias.md "$ROOT"/backlog/EP-atividades-complementares.md; do
+  [ -e "$f" ] && legacy_buckets+=("$f")
+done
+
 # collect LEGACY-MONOLITH candidates: a single requirements document produced by a
 # pre-`docs/` version of the skill, sitting loose at the repo root (CWD) or at the
 # docs root, never split into requirements/RF + requirements/RNF. We only REPORT
@@ -174,9 +184,25 @@ do_reorg=0
 case "$REORGANIZE" in
   force) do_reorg=1;;
   off)   do_reorg=0;;
-  auto)  [ "${#loose[@]}" -gt 0 ] && do_reorg=1 || do_reorg=0;;
+  auto)  { [ "${#loose[@]}" -gt 0 ] || [ "${#legacy_buckets[@]}" -gt 0 ]; } && do_reorg=1 || do_reorg=0;;
 esac
 say ""
+
+# ============================================================================
+# STEP 1.5 — MIGRATE legacy bucket files -> structural bucket directories
+#   Runs BEFORE create so the user's customized legacy content becomes the bucket
+#   README (the generic template is then skipped because the target now exists).
+# ============================================================================
+if [ "${#legacy_buckets[@]}" -gt 0 ]; then
+  info "[migrate] legacy bucket files -> structural bucket directories"
+  for f in "$ROOT"/backlog/epics/EP-melhorias.md "$ROOT"/backlog/EP-melhorias.md; do
+    [ -e "$f" ] && mv_file "$f" "$ROOT/backlog/melhorias/README.md"
+  done
+  for f in "$ROOT"/backlog/epics/EP-atividades-complementares.md "$ROOT"/backlog/EP-atividades-complementares.md; do
+    [ -e "$f" ] && mv_file "$f" "$ROOT/backlog/atividades-complementares/README.md"
+  done
+  say ""
+fi
 
 # ============================================================================
 # STEP 2 — CREATE (mirror assets/templates/ into ROOT; skip existing)

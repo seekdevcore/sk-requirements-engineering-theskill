@@ -107,6 +107,40 @@ Mecanismo principal de planejamento e organização em desenvolvimento ágil. **
 - **Requisitos não funcionais** — performance, segurança, disponibilidade, usabilidade
 - **Itens exploratórios (spikes)** — investigação para reduzir incerteza
 
+### 4.5 Refinamento progressivo — o iceberg do backlog (DEEP)
+
+Um backlog **não é uniformemente detalhado**. Ele é um **iceberg** (Cohn, *Agile Estimating and Planning*, 2005): a **ponta** — o que entra nas próximas uma ou duas sprints — é pequena, fatiada e **verbosa**; a **base submersa** — itens a meses de distância — é enorme e descrita **só em nível macro**. O **DEEP** de Roman Pichler nomeia a propriedade saudável: **D**etailed appropriately · **E**mergent · **E**stimated · **P**rioritized (detalhado na medida certa · emergente · estimado · priorizado).
+
+> **Regra de ouro do refinamento: detalhe só o que está prestes a ser construído.** A verbosidade é função da **posição do item no backlog**, não um padrão uniforme. Detalhar a base é desperdício; sub-detalhar a ponta é um defeito.
+
+**Dois eixos — não os confunda** (é aqui que esta skill é mais precisa que um "seja verboso no topo" ingênuo):
+
+- **Eixo de correção — o documento de requisitos (`RF`/`RNF`/`G`)**: **NÃO** sujeito ao iceberg. Um `RF` está correto ou não; um `RNF` é **quantitativo desde o nascimento** (a regra de ouro de RNF, [`01-fundamentos.md`](01-fundamentos.md)). O que é progressivo não é a precisão do `RNF`, mas **a qual User Story próxima você amarra aquele `RNF`**.
+- **Eixo de profundidade de elaboração — o backlog (Epic→Feature→US→CA→BDD)**: governado pelo iceberg/DEEP. É aqui que você decide *quando* escrever o BDD completo, os CAs agrupados e os edge cases.
+
+**Gradiente de verbosidade** (os mesmos artefatos que a skill já usa, mapeados no iceberg):
+
+| Posição | Artefato | Detalhe esperado |
+|---|---|---|
+| Submerso (lá no fundo) | **Epic** | 1–2 frases — um placeholder de intenção. Nunca quebrado em BDD. |
+| Submerso (lá no fundo) | **Feature** | parágrafo em linguagem de negócio; sem CAs/BDD detalhados ainda. |
+| Subindo (esta / próxima sprint) | **User Story** | Connextra completo + **BDD** completo + **CAs** agrupados + edge cases + o `RNF` que a amarra — a **ponta verbosa**. |
+| Ponta | **CA / BDD** | o **mais** verboso — exatamente o que a skill exige dos itens que estão entrando. |
+
+**O mecanismo já existe nesta skill — o iceberg só diz _quando_ acioná-lo:**
+
+- **3 Cs** (Card / Conversation / Confirmation, Jeffries): o *Confirmation* (CA/BDD) nasce da *Conversation* **no refinamento**, não é escrito por extenso quando o *Card* nasce.
+- **Definition of Ready** (DoR, [`05-estimativa.md`](05-estimativa.md)): o portão — "este item subiu o bastante; agora detalhe por completo **antes** de entrar na sprint".
+- **INVEST** "N" (Negotiable): um item lá no fundo fica deliberadamente negociável, não super-especificado.
+- **Planning Poker** `100` / `?`: um `100` é "um Epic disfarçado — fatie" (não detalhe um Epic como se fosse US).
+
+**Dois anti-padrões simétricos — ambos falham o iceberg:**
+
+- ⚠️ **Super-refinar a base** — escrever BDD/CAs especulativos para itens a meses de distância. Desperdício: a prioridade e o próprio item vão mudar antes de serem construídos.
+- 🔴 **Sub-refinar a ponta** — puxar uma User Story para a sprint **sem** Definition of Ready (sem BDD completo, CAs agrupados ou edge cases). A falha mais perigosa, e a que o padrão de qualidade da skill existe para impedir. O gradiente **não** é licença para um item de topo de backlog vago.
+
+> **Refinamento é uma atividade recorrente** (backlog refinement / "grooming" do Scrum), não algo único: a cada ciclo o time refina a próxima fatia de macro → verboso, *logo antes* de ser necessária. Fontes: Cohn (2005, o iceberg); Pichler (DEEP); Wiegers (elaboração progressiva).
+
 ---
 
 ## 5. Hierarquia do Backlog (modelo IFPB / OpenProject)

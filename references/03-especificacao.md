@@ -107,6 +107,40 @@ The primary mechanism for planning and organization in agile development. **Stra
 - **Non-functional requirements** — performance, security, availability, usability
 - **Exploratory items (spikes)** — investigation to reduce uncertainty
 
+### 4.5 Progressive refinement — the backlog iceberg (DEEP)
+
+A backlog is **not uniformly detailed**. It is an **iceberg** (Cohn, *Agile Estimating and Planning*, 2005): the **tip** — what enters the next one or two sprints — is small, sliced, and **verbose**; the **submerged base** — items months away — is massive and described **only at a macro level**. Roman Pichler's **DEEP** names the healthy property: **D**etailed appropriately · **E**mergent · **E**stimated · **P**rioritized.
+
+> **Golden rule of refinement: detail only what is about to be built.** Verbosity is a function of an item's **position in the backlog**, not a uniform standard. Detailing the base is waste; under-detailing the tip is a defect.
+
+**Two axes — do not confuse them** (this is where this skill is more precise than a naive "be verbose at the top"):
+
+- **Correctness axis — the requirements document (`RF`/`RNF`/`G`)**: **NOT** subject to the iceberg. An `RF` is correct or it is not; an `RNF` is **quantitative from birth** (the golden rule of NFR, [`01-fundamentos.md`](01-fundamentos.md)). What is progressive is not the precision of an `RNF` but **which `RNF` you wire to a near-term User Story**.
+- **Elaboration-depth axis — the backlog (Epic→Feature→US→CA→BDD)**: governed by the iceberg/DEEP. This is where you decide *when* to write the full BDD, the grouped CAs, and the edge cases.
+
+**Verbosity gradient** (the same artifacts the skill already uses, mapped onto the iceberg):
+
+| Position | Artifact | Expected detail |
+|---|---|---|
+| Submerged (far down) | **Epic** | 1–2 sentences — a placeholder of intent. Never broken into BDD. |
+| Submerged (far down) | **Feature** | business-language paragraph; no CAs/BDD detailed yet. |
+| Rising (this / next sprint) | **User Story** | full Connextra + complete **BDD** + grouped **CAs** + edge cases + the `RNF` that binds it — the **verbose tip**. |
+| Tip | **CA / BDD** | the **most** verbose — exactly what the skill mandates for items being pulled in. |
+
+**The mechanism already exists in this skill — the iceberg only says *when* to fire it:**
+
+- **3 Cs** (Card / Conversation / Confirmation, Jeffries): the *Confirmation* (CA/BDD) is produced through *Conversation* **at refinement**, not written exhaustively when the *Card* is born.
+- **Definition of Ready** (DoR, [`05-estimativa.md`](05-estimativa.md)): the gate — "this item rose far enough; now detail it fully **before** it enters the sprint".
+- **INVEST** "N" (Negotiable): a far-down item stays deliberately negotiable, not over-specified.
+- **Planning Poker** `100` / `?`: a `100` is "a disguised Epic — slice it" (don't detail an Epic as if it were a US).
+
+**Two symmetric anti-patterns — both fail the iceberg:**
+
+- ⚠️ **Over-refining the base** — writing speculative BDD/CAs for items months away. Waste: the priority and the item itself will change before it is built.
+- 🔴 **Under-refining the tip** — pulling a User Story into a sprint **without** DoR / complete BDD + CAs. The more dangerous failure, and the one the skill's quality bar exists to prevent. The gradient is **not** a licence for a vague top-of-backlog item.
+
+> **Refinement is a recurring activity** (Scrum backlog refinement / "grooming"), not a one-off: each cycle the team grooms the next slice from macro → verbose, *just before* it is needed. Sources: Cohn (2005, the iceberg); Pichler (DEEP); Wiegers (progressive elaboration).
+
 ---
 
 ## 5. Backlog hierarchy (*"IFPB"* / OpenProject model)

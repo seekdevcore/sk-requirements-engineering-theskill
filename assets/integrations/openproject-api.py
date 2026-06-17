@@ -224,9 +224,11 @@ def build_plan(rows: list[dict], existing: list[dict]) -> list[dict]:
     """
     op_by_ourid = {}  # our-id → existing OpenProject element (subject carries "<our-id> ...")
     for e in existing:
-        oid = _our_id(e.get("subject", ""))
-        if oid:
-            op_by_ourid[_norm_id(oid)] = e
+        subj = e.get("subject", "")
+        oid = _our_id(subj)
+        # bucket Epics ("Melhorias" / "Atividades Complementares") have no <our-id> → key by
+        # the full subject so the push UPDATEs them instead of creating a duplicate each run.
+        op_by_ourid[_norm_id(oid) if oid else _norm_id(subj.strip())] = e
 
     plan: list[dict] = []
     stack: dict[int, str] = {}  # depth → our-id of the last row at that depth (its parent anchor)
@@ -316,10 +318,10 @@ def cmd_push(client: Client, project: str, root: Path, out_dir: Path,
 
     print("\n>>> APPLYING...\n")
     opid_by_ourid: dict[str, int] = {}
-    for e in existing:  # seed with ids already in OpenProject
-        oid = _our_id(e.get("subject", ""))
-        if oid:
-            opid_by_ourid[_norm_id(oid)] = e["id"]
+    for e in existing:  # seed with ids already in OpenProject (bucket Epics keyed by full subject)
+        subj = e.get("subject", "")
+        oid = _our_id(subj)
+        opid_by_ourid[_norm_id(oid) if oid else _norm_id(subj.strip())] = e["id"]
 
     ok = fail = 0
     for p in plan:

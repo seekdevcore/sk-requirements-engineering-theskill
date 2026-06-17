@@ -105,16 +105,24 @@ requirements/
 
 ```
 backlog/
-├── README.md          purpose + naming table + IDs + priority + Definition of Done + close workflow
-├── glossario.md       domain vocabulary (every US/CA/ADR must use these terms)
-├── epics/             one file per Epic — description + child Features list
+├── README.md                  este arquivo — naming + IDs + prioridade + Definition of Done + fechamento
+├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
+├── epics/                     um arquivo por Epic — descrição + lista de Features filhas
 │   └── EP-NN-<slug>.md
-├── features/          one file per Feature — description + CAs + USs (with BDD) + Tasks
+├── features/                  um arquivo por Feature — descrição + CAs + USs (com BDD) + Tasks
 │   └── F-NN-<slug>.md
-├── sprints/           one file per Sprint — temporal execution (US/Task mapping)
+├── melhorias/                 bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
+│   ├── README.md              o que é + descrição do Epic (NÃO exportado como item)
+│   └── <F/US>-<slug>.md        cada melhoria do produto → filho do Epic Melhorias
+├── atividades-complementares/ bucket OBRIGATÓRIO → Epic-raiz "Atividades Complementares" no export
+│   ├── README.md              o que é + descrição do Epic (NÃO exportado como item)
+│   └── TX-NN-<slug>.md         cada Task transversal (config/infra) → Task filha do Epic
+├── sprints/                   um arquivo por Sprint — execução temporal (mapping US/Task)
 │   └── sprint-N-<slug>.md
-└── done/              closed Epics/Features — files are MOVED here (git mv), not copied
+└── done/                      Epics/Features fechados — arquivos MOVIDOS aqui (git mv), não copiados
 ```
+
+> **`melhorias/` e `atividades-complementares/` são DIRETÓRIOS estruturais (buckets), não arquivos `EP-NN`.** Cada um é filho obrigatório de `backlog/`; **só no export para o OpenProject** ele colapsa num **Epic na RAIZ** (depth 0), irmão dos Epics de frente (ex.: "Aplicação Web"). O `README.md` do bucket é a descrição do Epic; os arquivos ao lado são os filhos (Feature/US em **Melhorias**; Tasks `TX-NN` em **Atividades Complementares**). Os dois adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder os semeia e migra qualquer arquivo pré-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` para o bucket correspondente. Função — **Melhorias** = aprimoramentos de coisas que já existem; **Atividades Complementares** = lar dos `TX` transversais (técnico/config/infra não ligado a Feature/US, Regra 6) — detalhada no `README.md` de cada bucket.
 
 **Por que `done/` move em vez de copiar.** O `git mv` preserva o histórico e mantém `features/` mostrando apenas trabalho vivo. Copiar duplica a verdade e apodrece.
 

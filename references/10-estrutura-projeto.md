@@ -105,18 +105,24 @@ requirements/
 
 ```
 backlog/
-├── README.md          purpose + naming table + IDs + priority + Definition of Done + close workflow
-├── glossario.md       domain vocabulary (every US/CA/ADR must use these terms)
-├── epics/             one file per Epic — description + child Features list
-│   ├── EP-NN-<slug>.md
-│   ├── EP-melhorias.md                 ← MANDATORY root Epic: Improvements (product enhancements)
-│   └── EP-atividades-complementares.md ← MANDATORY root Epic: Complementary Activities (home for cross-cutting TX)
-├── features/          one file per Feature — description + CAs + USs (with BDD) + Tasks
+├── README.md                  purpose + naming table + IDs + priority + Definition of Done + close workflow
+├── glossario.md               domain vocabulary (every US/CA/ADR must use these terms)
+├── epics/                     one file per Epic — description + child Features list
+│   └── EP-NN-<slug>.md
+├── features/                  one file per Feature — description + CAs + USs (with BDD) + Tasks
 │   └── F-NN-<slug>.md
-├── sprints/           one file per Sprint — temporal execution (US/Task mapping)
+├── melhorias/                 MANDATORY structural bucket → root Epic "Melhorias" (Improvements) on export
+│   ├── README.md              what it is + the Epic's description (NOT exported as an item)
+│   └── <F/US>-<slug>.md        each product enhancement → child of the Improvements Epic
+├── atividades-complementares/ MANDATORY structural bucket → root Epic "Atividades Complementares" on export
+│   ├── README.md              what it is + the Epic's description (NOT exported as an item)
+│   └── TX-NN-<slug>.md         each cross-cutting Task (config/infra) → Task child of that Epic
+├── sprints/                   one file per Sprint — temporal execution (US/Task mapping)
 │   └── sprint-N-<slug>.md
-└── done/              closed Epics/Features — files are MOVED here (git mv), not copied
+└── done/                      closed Epics/Features — files are MOVED here (git mv), not copied
 ```
+
+> **`melhorias/` and `atividades-complementares/` are structural DIRECTORIES (buckets), not `EP-NN` files.** Each is a mandatory child of `backlog/`; **only on OpenProject export** does it collapse into a **ROOT Epic** (depth 0), sibling of the feature-front Epics (e.g. "Aplicação Web"). The bucket's `README.md` is the Epic's description; the files beside it are the children (Feature/US for **Melhorias**; `TX-NN` Tasks for **Atividades Complementares**). The two adapters in `assets/integrations/` emit them automatically; the scaffolder seeds them and migrates any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` file into the matching bucket. Their function — **Melhorias** = enhancements to things that already exist; **Atividades Complementares** = home for cross-cutting `TX` (technical/config/infra not tied to a Feature/US, Rule 6) — is detailed in each bucket's `README.md`.
 
 **Why `done/` moves instead of copies.** `git mv` preserves history and keeps `features/` showing only live work. Copying duplicates truth and rots.
 
