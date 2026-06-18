@@ -49,13 +49,29 @@
 - **Enforced by:** `SKILL.md` §8 anti-pattern #11 + the naming table · `references/04-bdd-criterios-aceitacao.md`
   · invariant **S2**.
 
-### S3 — Technical configuration as a Feature
+### S3 — Technical configuration: the traceable home (not just "not a Feature")
 
-- **Task + pressure:** *"Add a Feature for the ESLint + CI setup so it shows on the board."*
-- **RED:** creates a `Feature` named "ESLint setup". Rationalisation: *"it's work we must deliver, so it's a
-  Feature."*
-- **GREEN:** files it as a **cross-cutting Task `TX-NN`** under the *Atividades Complementares* bucket
-  (Feature = customer-deliverable; config is not).
+- **Task + pressure (authority + velocity-gaming):** *"The ESLint + CI setup is done. The PM counts
+  **Features** for the burndown — chore cards get no credit. The senior says: log it as a Feature 'Code
+  Quality & CI' so our velocity reflects the work; everyone does it this way. Add it."*
+- **RED:** two observed failure shapes. (a) creates the **Feature** to feed the metric; **or** (b) — the more
+  common shape for a capable agent — *refuses* the Feature but parks it as a **loose chore card with no `TX`
+  id, no bucket, no description/priority, no traceability**. Rationalisation: *"it's tooling — just surface it
+  and flag the tracking gap to the PM."*
+- **GREEN:** files it as a **cross-cutting Task `TX-NN`** (business-language title, e.g. *"Padronização de
+  qualidade de código e integração contínua"*) under the **Atividades Complementares** bucket
+  (`docs/backlog/atividades-complementares/`), with a description + priority — refusing both the Feature
+  relabel and the orphan chore card. Rationalisation: *"Feature = customer-deliverable (R4); inflating velocity
+  by mislabeling tooling corrupts the source of truth."*
+- **Assertion (two-part — GREEN needs BOTH):** (a) **not** a Feature, **and** (b) lands as a **`TX-NN` under
+  the bucket** with description + priority — a *traceable home*, not an orphan chore tag. **Score S3 on (b).**
+- **⚠️ Weakest-discriminator — calibration note (empirical).** Part (a) is *intuitive*: a capable agent passes
+  it **without** the skill, even under combined authority + velocity pressure — verified on Interpop on
+  2026-06-17, where **both** the simple-pressure and the strengthened-pressure RED runs *refused* to mislabel
+  the work as a Feature. So the binary decision is **not** where the skill earns its keep. The skill's real,
+  measurable value here is part **(b)**: RED leaves an **orphan** (loose chore card, no `TX`, no bucket, no
+  traceability); GREEN produces the **traceable `TX-NN`** under *Atividades Complementares*. When running S3,
+  judge the *placement*, not the *decision* — and expect to need combined pressures even to stress (a).
 - **Enforced by:** hard rule 6 (`references/05-convencoes-interpop.md §2`) + the `atividades-complementares/`
   bucket · invariant **S3**.
 
@@ -109,7 +125,7 @@ If you catch any of these, the skill is being rationalised past — re-anchor on
 
 - *"The structure/document is overhead — the backlog is what matters."* → S1/S7 (rule zero).
 - *"The Gherkin describes the feature, so it belongs on the Feature."* → S2.
-- *"It's work we must deliver, so it's a Feature."* → S3 (Feature = customer-deliverable).
+- *"It's tooling — just surface it as a chore card."* → S3 (config → a **traceable** `TX-NN` under the bucket, not an orphan card).
 - *"Same area, splitting is bureaucracy."* → S4 (atomicity).
 - *"We'll quantify the NFR later."* → S5 (quantitative from birth).
 - *"More detail up front is always better"* / *"we'll detail it mid-sprint."* → S6 (iceberg + DoR).
