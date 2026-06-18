@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-*No changes yet. New entries will accrue here under the appropriate Keep-a-Changelog headings (`### Added` / `### Changed` / `### Fixed` / `### Removed` / `### Deprecated` / `### Security`) before being rolled into the next tagged release.*
+### Added
+
+- **`examples/feature-step-defs/` — four more step-def bindings (six → ten stacks).** The one canonical pt-BR `.feature` now binds in four additional ecosystems: `cucumber_jvm_Steps.java` (**Cucumber-JVM**, using the pt-BR `@Dado/@Quando/@Então` annotations + JUnit `@Suite`), `godog_steps.go` (**godog**, the official Cucumber for Go — per-scenario `buscaWorld` reset in a `Before` hook), `cucumber_cpp.steps.cpp` (**cucumber-cpp**, `GIVEN/WHEN/THEN` macros + `ScenarioScope` + `REGEX_PARAM`), and `cucumber_wire_steps.c` (**pure C** via the Cucumber **wire protocol** — a TCP step server, since C has no native Gherkin runner). Each repeats the `@US/@F/@EP/@CAs/@Doc-Req` traceability header and binds the same six parametrized steps + the Scenario Outline, mirroring the existing skeletons. The `README.md` gains the four rows, a per-stack project-layout block, and an **honest caveat** that C++ has a first-class backend while pure-C Gherkin goes through the wire protocol (or a `cucumber-cpp` harness over `extern "C"`).
+
+### Changed
+
+- **Step-def binding count `6 → 10` propagated** across `SKILL.md` (entry-point line + `content_status`), `examples/feature-step-defs/README.md`, `examples/template-user-story.feature` (technical note), and the pt-BR mirror (`translations/pt-BR/SKILL.md` + `translations/pt-BR/examples/feature-step-defs/README.md`). Historical changelog entries describing the original six (v1.12) are left untouched.
 
 ---
 
