@@ -13,6 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.25.0] — 2026-06-17
+
+Refines the **S3 behavioural scenario** after running the v1.24.0 RED-GREEN suite for real against the *"Interpop"* project — the run exposed S3 as the weakest-discriminating test.
+
+### Changed
+
+- **`tests/skill-behavior-scenarios.md` — S3 reframed from a *decision* test to a *placement* test.** The empirical RED-GREEN run (Interpop, 2026-06-17) showed that "technical config is not a Feature" is **too intuitive to violate**: a capable agent refused to mislabel ESLint/CI as a Feature **without** the skill, even under strengthened authority + velocity-gaming pressure (two runs). The skill's real, measurable value there is the **traceable home** — RED leaves an *orphan* chore card (no `TX` id, no bucket, no traceability); GREEN produces a `TX-NN` under *Atividades Complementares* with description + priority. S3 now: carries the strengthened pressure, asserts a **two-part** rule (not-a-Feature **and** a traceable `TX-NN` home), scores on the home, records both verbatim rationalisations, and carries a **calibration note** flagging it as the weakest discriminator. The `S3` smoke invariant is unchanged.
+- **Version**: `1.24.0 → 1.25.0`.
+
+### Notes
+
+- This is the methodology working as intended: writing-skills meta-testing says *"if the agent passes without the skill, the test is weak."* Rather than crank pressure to fake a failure, S3 was re-aimed at the dimension where the skill actually changes behaviour. The other six scenarios kept a clean RED-fails / GREEN-complies gap in the same run.
+
+---
+
 ## [1.24.0] — 2026-06-17
 
 Closes the two items the meta-audit had deliberately deferred: single-sources the **hard-rules count**, and adds a **behavioural (RED-GREEN) test layer**.
