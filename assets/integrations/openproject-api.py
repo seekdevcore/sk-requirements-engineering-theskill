@@ -63,7 +63,7 @@ import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-_OUR_ID = re.compile(r"\b(EP-?\d+(?:\.\d+)*|F-?\d+|US-?\d+\.\d+|T-?\d+\.\d+\.\d+[a-z]?|TX-?\d+)\b", re.I)
+_OUR_ID = re.compile(r"\b(EP-?\d+(?:\.\d+)*|F-?\d+|US-?\d+\.\d+|T-?\d+\.\d+\.\d+[a-z]?|TX-?\d+|BUG-?\d+|QA-?\d+|ISS-?\d+|SPK-?\d+)\b", re.I)
 
 
 # ─────────────────────────── config / auth ───────────────────────────
@@ -239,7 +239,10 @@ def build_plan(rows: list[dict], existing: list[dict]) -> list[dict]:
                        subj_indented.strip()).strip()  # "<our-id> <title>" — NO indent, NO priority emoji
         oid = _norm_id(_our_id(clean) or clean)
         stack[depth] = oid
-        parent_oid = stack.get(depth - 1) if depth > 0 else None
+        # Parenting is by indentation depth, EXCEPT when a row carries an explicit Parent
+        # (a Bug parents to the US/Feature it violates, not to whatever precedes it by indent).
+        explicit_parent = (r.get("Parent") or "").strip()
+        parent_oid = _norm_id(explicit_parent) if explicit_parent else (stack.get(depth - 1) if depth > 0 else None)
         existing_el = op_by_ourid.get(oid)
         plan.append({
             "our_id": oid,
@@ -257,7 +260,7 @@ def _norm_id(ident: str) -> str:
     ident = ident.strip().upper()
     if ident.startswith("US"):
         return re.sub(r"^US-?", "US", ident)
-    return re.sub(r"^(EP|TX|F|T)-?", lambda m: m.group(1) + "-", ident)
+    return re.sub(r"^(EP|TX|BUG|QA|ISS|SPK|F|T)-?(?=\d)", lambda m: m.group(1) + "-", ident)
 
 
 # ─────────────────────────── commands ───────────────────────────

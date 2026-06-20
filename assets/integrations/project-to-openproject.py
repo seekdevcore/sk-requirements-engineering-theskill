@@ -51,12 +51,24 @@ _EP_RE = re.compile(r"EP-?\d+(?:\.\d+)*", re.I)
 _F_RE = re.compile(r"\bF-?\d+\b", re.I)
 _US_RE = re.compile(r"US-?\d+\.\d+", re.I)
 _T_RE = re.compile(r"\b(?:T-?\d+\.\d+\.\d+[a-z]?|TX-?\d+)\b", re.I)
+_BUG_RE = re.compile(r"BUG-?\d+", re.I)
+_QA_RE = re.compile(r"QA-?\d+", re.I)
+_ISS_RE = re.compile(r"ISS-?\d+", re.I)
+_SPK_RE = re.compile(r"SPK-?\d+", re.I)
 
-# Mandatory structural buckets: directories under backlog/ that COLLAPSE into a ROOT Epic
-# (depth 0) on export — siblings of the feature-front Epics. dir → (Epic subject, default child type).
+# Structural buckets: directories under backlog/ that COLLAPSE into a ROOT Epic (depth 0) on export
+# — siblings of the feature-front Epics. Entry: (dirname, Epic subject [pt-BR], default child kind,
+# [nested sub-buckets...]). en-CA folder names map to pt-BR Epic titles here (the round-trip contract).
+# `bugs/` is handled SEPARATELY (it is a TYPE parented to the violated feature, not an Epic bucket).
 _BUCKETS = [
-    ("melhorias", "Melhorias", "Feature"),                              # product enhancements → Features/US
-    ("atividades-complementares", "Atividades Complementares", "Task"),  # cross-cutting TX → Tasks
+    ("melhorias", "Melhorias", "Feature", []),                       # product enhancements → Features/US
+    ("support-quality-investigation", "Atividades de Apoio, Qualidade e Investigação", None, [
+        ("support", "Apoio", "Task", []),                            # cross-cutting TX → Tasks
+        ("qa", "Q&A", "Task", []),                                   # quality activities → Tasks
+        ("issues", "Issues", "Task", [                              # triage inbox → Tasks
+            ("spikes", "Spikes", "Task", []),                        # time-boxed investigations → Tasks
+        ]),
+    ]),
 ]
 
 
@@ -64,7 +76,7 @@ def _norm(ident: str) -> str:
     ident = ident.upper()
     if ident.startswith("US"):
         return ident  # USNN.M (no hyphen, per conventions)
-    return re.sub(r"^(EP|TX|F|T)-?", lambda m: m.group(1) + "-", ident)
+    return re.sub(r"^(EP|TX|BUG|QA|ISS|SPK|F|T)-?(?=\d)", lambda m: m.group(1) + "-", ident)
 
 
 def _detect_priority(block: str) -> str:
@@ -87,16 +99,24 @@ def _title(heading: str, ident: str) -> str:
 
 
 def _bucket_child_kind(stem: str, heading: str, default_kind: str) -> tuple[str, str]:
-    """Classify a bucket child by the id it carries (TX/T → Task, US → User story,
-    F → Feature); fall back to the bucket's default kind + the file slug as ident."""
+    """Classify a bucket child by the id it carries (BUG → Bug; QA/ISS/SPK/TX/T → Task;
+    US → User story; F → Feature); fall back to the bucket's default kind + the file slug."""
     blob = f"{stem} {heading}"
+    if (m := _BUG_RE.search(blob)):
+        return "Bug", _norm(m.group(0))
+    if (m := _SPK_RE.search(blob)):
+        return "Task", _norm(m.group(0))
+    if (m := _ISS_RE.search(blob)):
+        return "Task", _norm(m.group(0))
+    if (m := _QA_RE.search(blob)):
+        return "Task", _norm(m.group(0))
     if (m := _T_RE.search(blob)):
         return "Task", _norm(m.group(0))
     if (m := _US_RE.search(blob)):
         return "User story", _norm(m.group(0))
     if (m := _F_RE.search(blob)):
         return "Feature", _norm(m.group(0))
-    return default_kind, stem
+    return default_kind or "Task", stem
 
 
 def _heading_level(line: str) -> int:
@@ -155,6 +175,31 @@ def _row(kind, ident, title, priority="Normal", description="", depth=None):
             "Priority": priority, "Description": description, "Parent": "", "Relations": ""}
 
 
+def _emit_bucket(rows, bdir, epic_subject, default_kind, subbuckets, depth):
+    """Emit a bucket directory as an Epic (at `depth`) + its file children (depth+1),
+    then recurse into nested sub-buckets as child Epics. README → Epic description."""
+    if not bdir.is_dir():
+        return
+    readme = bdir / "README.md"
+    rtext = readme.read_text(encoding="utf-8") if readme.is_file() else ""
+    rlines = rtext.splitlines()
+    vision = (_first_paragraph(_section_after(rlines, lambda ln: re.search(r"vis[ãa]o|descri[çc]|vision", ln, re.I)))
+              or _first_paragraph(rlines))
+    rows.append(_row("Epic", epic_subject, "", _detect_priority(rtext[:800]), vision, depth=depth))
+    for cf in sorted(bdir.glob("*.md")):
+        if cf.stem in ("README", "_TEMPLATE"):
+            continue
+        ctext = cf.read_text(encoding="utf-8")
+        clines = ctext.splitlines()
+        ch1 = next((ln for ln in clines if ln.startswith("# ")), cf.stem)
+        kind, ident = _bucket_child_kind(cf.stem, ch1, default_kind)
+        cdesc = (_first_paragraph(_section_after(clines, lambda ln: re.search(r"descri[çc]|vis[ãa]o|vision", ln, re.I)))
+                 or _first_paragraph(clines))
+        rows.append(_row(kind, ident, _title(ch1, ident), _detect_priority(ctext[:800]), cdesc, depth=depth + 1))
+    for sub_dir, sub_subject, sub_kind, sub_nested in subbuckets:
+        _emit_bucket(rows, bdir / sub_dir, sub_subject, sub_kind, sub_nested, depth + 1)
+
+
 def collect(root: Path, with_tasks: bool) -> list[dict]:
     backlog = root / "backlog"
     if not backlog.is_dir():
@@ -209,30 +254,31 @@ def collect(root: Path, with_tasks: bool) -> list[dict]:
             for tid in sorted({_norm(m.group(0)) for m in _T_RE.finditer(text)}):
                 rows.append(_row("Task", tid, "", "Normal", ""))
 
-    # --- Mandatory structural buckets → ROOT Epics (depth 0) + their children (depth 1) ---
-    # backlog/melhorias/ and backlog/atividades-complementares/ are DIRECTORIES, not EP-NN
-    # files. Each collapses here into a root Epic; its README is the Epic description; every
-    # other *.md beside it is a direct child (Feature/US for Melhorias, Task for the TX bucket).
-    for dirname, epic_subject, default_kind in _BUCKETS:
-        bdir = backlog / dirname
-        if not bdir.is_dir():
+    # --- Structural buckets → ROOT Epics (depth 0) + nested child Epics + their children ---
+    # backlog/melhorias/ and backlog/support-quality-investigation/ are DIRECTORIES, not EP-NN
+    # files. The umbrella nests child Epics (support/qa/issues, and spikes under issues); the
+    # recursive emitter walks them. en-CA folder → pt-BR Epic title (see _BUCKETS).
+    for dirname, epic_subject, default_kind, subbuckets in _BUCKETS:
+        _emit_bucket(rows, backlog / dirname, epic_subject, default_kind, subbuckets, depth=0)
+
+    # --- bugs/ → type "Bug" parented to the violated US/Feature (NOT an Epic bucket) ---
+    # A bug inherits the violated Feature's Epic. depth 0 keeps it off the bucket indentation;
+    # the Parent column carries the real parent (the REST adapter wires it as a true link).
+    bugsdir = backlog / "bugs"
+    for cf in sorted(bugsdir.glob("*.md")) if bugsdir.is_dir() else []:
+        if cf.stem in ("README", "_TEMPLATE"):
             continue
-        readme = bdir / "README.md"
-        rtext = readme.read_text(encoding="utf-8") if readme.is_file() else ""
-        rlines = rtext.splitlines()
-        vision = (_first_paragraph(_section_after(rlines, lambda ln: re.search(r"vis[ãa]o|descri[çc]", ln, re.I)))
-                  or _first_paragraph(rlines))
-        rows.append(_row("Epic", epic_subject, "", _detect_priority(rtext[:800]), vision, depth=0))
-        for cf in sorted(bdir.glob("*.md")):
-            if cf.stem in ("README", "_TEMPLATE"):
-                continue
-            ctext = cf.read_text(encoding="utf-8")
-            clines = ctext.splitlines()
-            ch1 = next((ln for ln in clines if ln.startswith("# ")), cf.stem)
-            kind, ident = _bucket_child_kind(cf.stem, ch1, default_kind)
-            cdesc = (_first_paragraph(_section_after(clines, lambda ln: re.search(r"descri[çc]|vis[ãa]o", ln, re.I)))
-                     or _first_paragraph(clines))
-            rows.append(_row(kind, ident, _title(ch1, ident), _detect_priority(ctext[:800]), cdesc, depth=1))
+        ctext = cf.read_text(encoding="utf-8")
+        clines = ctext.splitlines()
+        ch1 = next((ln for ln in clines if ln.startswith("# ")), cf.stem)
+        mb = _BUG_RE.search(cf.stem) or _BUG_RE.search(ch1)
+        bid = _norm(mb.group(0)) if mb else cf.stem
+        pv = _US_RE.search(ctext) or _F_RE.search(ctext)   # parent = the violated US/Feature
+        bdesc = (_first_paragraph(_section_after(clines, lambda ln: re.search(r"defect|defeito|descri", ln, re.I)))
+                 or _first_paragraph(clines))
+        r = _row("Bug", bid, _title(ch1, bid), _detect_priority(ctext[:800]), bdesc, depth=0)
+        r["Parent"] = _norm(pv.group(0)) if pv else ""
+        rows.append(r)
     return rows
 
 
