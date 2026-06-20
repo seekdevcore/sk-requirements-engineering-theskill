@@ -96,7 +96,7 @@ These are cross-cutting Tasks (`TX-NN`) — NOT Features:
 | Criar arquivo de configuração JSON | Cross-cutting Task |
 | Configurar índice GIN no Postgres | Task of the relevant US (not cross-cutting — supports a specific US) |
 
-> **Where cross-cutting `TX` live**: in the **mandatory structural bucket `backlog/atividades-complementares/`** (a directory) — the home for technical work **not tied to a single Feature/US** (config, infra, setup, tooling). Product enhancements go in the **other mandatory bucket, `backlog/melhorias/`** (*Improvements*). Each is a directory under `backlog/` that **collapses into a root Epic on OpenProject export** (depth 0, sibling of the feature-front Epics); its `README.md` is the Epic description, the files inside are the children. Both are seeded by the scaffolder — see [`10-estrutura-projeto.md`](10-estrutura-projeto.md).
+> **Where cross-cutting `TX` live**: in **`backlog/support-quality-investigation/support/`** — the "Apoio" child Epic of the Support/Quality/Investigation umbrella — the home for technical work **not tied to a single Feature/US** (config, infra, setup, tooling). Product enhancements go in the **`backlog/melhorias/`** bucket (*Improvements*). Sibling child Epics under the same umbrella: **`qa/`** (Q&A — tests/reviews/gates), **`issues/`** (triage), **`issues/spikes/`** (time-boxed investigation); defects live in **`backlog/bugs/`** as a "Bug" **type** parented to the violated Feature. Each bucket README is the Epic description; the scaffolder seeds them and the adapter restores the pt-BR Epic titles on export — see [`10-estrutura-projeto.md §4`](10-estrutura-projeto.md).
 
 **Rule 4b — One Feature = one thing (atomicity).** A Feature delivers **exactly one** client-facing capability. If a candidate bundles two — e.g. *user registration* **and** *user update* — **split it into two separate Features** (atomic CRUD: one Feature per operation). One thing per Feature → cleaner estimation, a single BDD focus, and one-to-one traceability. *(Confirmed in the *"SIRA"* project: the backlog was atomic — one Feature per CRUD operation.)*
 
@@ -210,8 +210,12 @@ Detail and diagram in [`../examples/template-backlog-openproject.md §3`](../exa
 | Feature | `F-NN` | `F-30` | Continuous numbering; the first Feature of Epic 10 starts at F-30 (convention: F starts at decades, leaves slack) |
 | Acceptance Criterion | `CANN` | `CA01`, `CA12` | Count per **Feature** (reset on each Feature) OR continuous in the project — pick one and stick to it |
 | User Story | `USNN.M` | `US30.1`, `US30.4` | `NN` = parent Feature number; `M` = sequence inside the Feature |
-| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = parent US; `K` = sequence |
-| Cross-cutting Task | `TX-NN` | `TX-01`, `TX-12` | Continuous numbering in the project |
+| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = parent US; `K` = sequence; prefix `[front]`/`[back]` by layer |
+| Cross-cutting Task (Apoio) | `TX-NN` | `TX-01`, `TX-12` | Continuous; lives in `support/` → child Epic "Apoio" |
+| Bug (defect) | `BUG-NN` | `BUG-04` | OpenProject **type "Bug"**, parented to the US/Feature it violates; lives in `bugs/` |
+| Quality activity (Q&A) | `QA-NN` | `QA-07` | Cross-cutting tests/reviews/gates; `qa/` → child Epic "Q&A" |
+| Triage issue | `ISS-NN` | `ISS-12` | Transient inbox item; `issues/` → child Epic "Issues" |
+| Spike (investigation) | `SPK-NN` | `SPK-02` | Time-boxed; `issues/spikes/` → child Epic "Spikes" |
 
 **Golden rule**: IDs are **eternal**. They do not renumber when content changes; the version changes. This preserves traceability in commits, PRs, ADRs.
 

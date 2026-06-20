@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.25.0
+version: 1.26.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -308,10 +308,18 @@ Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Task
 | 5 | **ACs always grouped** under a `CA - <Theme>` title (even a single AC) + the `[...]` sub-rule convention | ref05 R7 |
 | 6 | **Technical config is NOT a Feature** (ESLint, env vars, docker-compose…) → cross-cutting Task `TX-NN`. **Feature = customer-deliverable** | ref05 R4 |
 | 7 | **Priority at every node**: 🔴 Immediate · 🟠 High · 🟡 Normal · 🟢 Low (MoSCoW equivalent) | ref05 R5 |
-| 8 | **Stable, eternal IDs**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `G-NN` (never renumbered) | ref05 (IDs) |
+| 8 | **Stable, eternal IDs**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `G-NN` (never renumbered) | ref05 (IDs) |
 | 9 | **One Feature = one thing** (atomicity) — bundles two (e.g. registration + update)? split into two (atomic CRUD) | ref05 R4b |
 
-> **Two mandatory root Epics — as structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — enhancements to things that already exist — and **`Atividades Complementares`** (*Complementary Activities*) — the home for cross-cutting `TX` (technical work, config, infra **not tied to a single Feature/US**, per rule 6). On disk they are **directories** `docs/backlog/melhorias/` and `docs/backlog/atividades-complementares/` (siblings of `epics/`, `features/`); **only on OpenProject export** does each collapse into a **root Epic** (depth 0), sibling of the feature-front Epics, with the files inside as its children. Both OpenProject adapters emit them automatically.
+> **Structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — en-CA folder names, pt-BR Epic titles restored by the adapter on export:
+>
+> - **`melhorias/`** → root Epic **"Melhorias"** — enhancements to things that already exist.
+> - **`bugs/`** → each `BUG-NN` is a **"Bug" type parented to the US/Feature it violates** (NOT an Epic) — keeps the defect one link from the `CA` it breaks.
+> - **`support-quality-investigation/`** → root Epic **"Atividades de Apoio, Qualidade e Investigação"** with three child Epics: **`support/`** ("Apoio" — cross-cutting `TX`, per rule 6) · **`qa/`** ("Q&A" — tests, reviews, quality gates) · **`issues/`** ("Issues" — triage inbox), with **`issues/spikes/`** ("Spikes" — time-boxed investigation) nested under it.
+>
+> Placement rule: **the *type* says what it is; the *parent* says whom it serves** — feature-bound work parents to its Feature; project-wide work is a child Epic under the umbrella. Both OpenProject adapters emit all of this automatically.
+>
+> **Epic depth — MAX 3 levels**: `Aplicação Web/Mobile` (root) → `Módulo` → `Componente` → `Feature`. After the module Epic, exactly **one** more Epic (the component) before the Feature — never a 4th Epic level.
 
 **Full `BACKLOG.md` template** + examples from *"SIRA"* and *"Interpop"* projects in [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 

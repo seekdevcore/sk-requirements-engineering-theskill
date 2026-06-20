@@ -40,19 +40,29 @@ Cross-cutting both: **ADRs** record the *decisions* taken along the way (two-tie
 ```
 Requirement (RF / RNF)              ← requirements/
   ↓ realized by
-Epic (EP-NN)                        ← backlog/epics/
+Epic (EP-NN)  Aplicação→Módulo→Componente (MAX 3 Epic levels)  ← backlog/epics/
   ↓ decomposed into
 Feature (F-NN)                      ← backlog/features/
   ↓ accepted when
-Acceptance Criterion (CA01..CANN)   ← inside the Feature file
+Acceptance Criterion (CA01..CANN)   ← inside the Feature file (own "Critério de Aceitação" type on export)
   ↓ illustrated by
-User Story (USNN.M) + BDD scenarios ← inside the Feature file
+User Story (USNN.M) + BDD scenarios ← inside the Feature file (links to the CAs it satisfies)
   ↓ implemented by
-Task (TNN.M.K / TX-NN)              ← inside the Feature file
+Task (TNN.M.K)  [front]/[back]      ← inside the Feature file (child of the US on export)
   ↓ delivered in
 Sprint                              ← backlog/sprints/
   ↓ materialized in
 Commit (SHA)                        ← cross-ref in the Task
+```
+
+**Side branches off the spine** (cross-cutting work, traced the same way):
+
+```
+Acceptance Criterion ──violated by──▶ Bug (BUG-NN)     ← backlog/bugs/ (type "Bug", parented to the US/Feature)
+US / Feature / decision ──triggers──▶ Spike (SPK-NN)   ← backlog/support-quality-investigation/issues/spikes/ → ADR
+RNF / Feature ──verified by──────────▶ Q&A (QA-NN)      ← backlog/support-quality-investigation/qa/ (tests/reviews/gates)
+raw report ──triaged into──▶ Bug/Spike/TX/Melhoria      ← backlog/support-quality-investigation/issues/ (ISS-NN)
+project (no single Feature) ──served by──▶ TX (TX-NN)    ← backlog/support-quality-investigation/support/
 ```
 
 **Hard rule — bidirectional links.** Every node names its **parent** and its **children** via a relative link. A requirement file carries a `## Realized by` section listing the Epics/Features that execute it; an Epic file carries both `## Requirements realized (↑)` and `## Features under this Epic (↓)`. Without bidirectional traceability, changing one requirement becomes "which modules do I touch?" guesswork — the exact failure `SKILL.md §8 anti-pattern 8` warns against.
@@ -107,22 +117,43 @@ requirements/
 backlog/
 ├── README.md                  purpose + naming table + IDs + priority + Definition of Done + close workflow
 ├── glossario.md               domain vocabulary (every US/CA/ADR must use these terms)
-├── epics/                     one file per Epic — description + child Features list
+├── epics/                     Epic files — Aplicação→Módulo→Componente (MAX 3 Epic levels via links) → Features
 │   └── EP-NN-<slug>.md
 ├── features/                  one file per Feature — description + CAs + USs (with BDD) + Tasks
 │   └── F-NN-<slug>.md
 ├── melhorias/                 MANDATORY structural bucket → root Epic "Melhorias" (Improvements) on export
 │   ├── README.md              what it is + the Epic's description (NOT exported as an item)
 │   └── <F/US>-<slug>.md        each product enhancement → child of the Improvements Epic
-├── atividades-complementares/ MANDATORY structural bucket → root Epic "Atividades Complementares" on export
-│   ├── README.md              what it is + the Epic's description (NOT exported as an item)
-│   └── TX-NN-<slug>.md         each cross-cutting Task (config/infra) → Task child of that Epic
+├── bugs/                      DEFECT bucket → each BUG-NN is a "Bug" TYPE parented to the violated US/Feature
+│   ├── README.md              why a bug is a type, not an Epic
+│   └── BUG-NN-<slug>.md        a defect (links ↑ to the CA/US/RF it violates)
+├── support-quality-investigation/   UMBRELLA bucket → root Epic "Atividades de Apoio, Qualidade e Investigação"
+│   ├── README.md              umbrella Epic description + its three child Epics
+│   ├── support/               → child Epic "Apoio"  — TX-NN (cross-cutting technical/config/infra)
+│   ├── qa/                    → child Epic "Q&A"    — QA-NN (tests · reviews · quality gates)
+│   └── issues/                → child Epic "Issues" — ISS-NN (triage inbox)
+│       └── spikes/            → child Epic "Spikes" — SPK-NN (time-boxed investigation)
 ├── sprints/                   one file per Sprint — temporal execution (US/Task mapping)
 │   └── sprint-N-<slug>.md
-└── done/                      closed Epics/Features — files are MOVED here (git mv), not copied
+└── done/                      closed items (Feature/Bug/QA/ISS/SPK) — MOVED here (git mv), not copied
 ```
 
-> **`melhorias/` and `atividades-complementares/` are structural DIRECTORIES (buckets), not `EP-NN` files.** Each is a mandatory child of `backlog/`; **only on OpenProject export** does it collapse into a **ROOT Epic** (depth 0), sibling of the feature-front Epics (e.g. "Aplicação Web"). The bucket's `README.md` is the Epic's description; the files beside it are the children (Feature/US for **Melhorias**; `TX-NN` Tasks for **Atividades Complementares**). The two adapters in `assets/integrations/` emit them automatically; the scaffolder seeds them and migrates any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` file into the matching bucket. Their function — **Melhorias** = enhancements to things that already exist; **Atividades Complementares** = home for cross-cutting `TX` (technical/config/infra not tied to a Feature/US, Rule 6) — is detailed in each bucket's `README.md`.
+> **en-CA folders, pt-BR Epics.** The bucket folders use en-CA names (`support/`, `qa/`, `issues/`, `spikes/`) like `epics/`/`features/`; the adapter's `_BUCKETS` restores the pt-BR Epic title on export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
+>
+> **Epic depth — MAX 3 levels.** The front (`Aplicação Web`/`Mobile`) is the root Epic (level 1); below it a **Module** Epic (level 2) and a **Component** Epic (level 3), then the **Feature**. After the module Epic there is exactly **one** more Epic (the component) before the Feature — never nest a 4th Epic level. Multi-level Epic nesting is expressed by the bidirectional parent/child links (§2), not by nested folders: `epics/` stays flat.
+
+> **Buckets are structural DIRECTORIES, not `EP-NN` files.** Each is a child of `backlog/`; **only on OpenProject export** does a bucket collapse into an Epic. The bucket's `README.md` is that Epic's description; the files beside it are the children. The adapters in `assets/integrations/` emit them automatically; the scaffolder seeds them, migrates any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` file into the matching bucket, **and migrates a v1.21 `atividades-complementares/` directory into `support-quality-investigation/support/`** (its `TX-NN` files preserved).
+>
+> The four buckets, by function:
+>
+> | Folder (en-CA) | On export | Houses | Type axis |
+> |---|---|---|---|
+> | `melhorias/` | **root Epic** "Melhorias" | enhancements to things that already exist | Feature/US (or `Melhoria` type) |
+> | `bugs/` | **"Bug" type**, parented to the violated US/Feature | defects against an existing CA | `BUG-NN` |
+> | `support-quality-investigation/` | **root Epic** umbrella | cross-cutting work serving the whole project | (3 child Epics ↓) |
+> | `└ support/` · `qa/` · `issues/` · `issues/spikes/` | child Epics "Apoio"·"Q&A"·"Issues"·"Spikes" | TX · tests/reviews/gates · triage · time-boxed investigation | `TX/QA/ISS/SPK-NN` |
+>
+> **The rule that places everything: the *type* says what it is; the *parent* says whom it serves.** A Bug/Melhoria/test that affects **one** Feature is parented to that Feature (inheriting its Epic). Work that serves the **whole project** (triage, quality discipline, technical support) is a child Epic under the umbrella. This is why `bugs/` is a *type parented to the feature*, not an Epic of its own — it keeps the defect one link from the `CA` it breaks.
 
 **Why `done/` moves instead of copies.** `git mv` preserves history and keeps `features/` showing only live work. Copying duplicates truth and rots.
 

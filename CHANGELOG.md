@@ -9,7 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+*No changes yet. New entries accrue here before the next tagged release.*
+
+---
+
+## [1.26.0] — 2026-06-20
+
+Adds first-class, **traceable** backlog homes for **defects, quality work, triage and time-boxed investigation**, and aligns the OpenProject mapping with the real *"Controle de Dopagem"* project structure (3-level Epic nesting; Bug/Melhoria/CA as work-package types).
+
+### Added — backlog buckets
+
+- **New buckets under `backlog/`** (en-CA folder names; pt-BR Epic titles restored by the adapter on export): **`bugs/`** — each `BUG-NN` is an OpenProject **type "Bug" parented to the US/Feature it violates** (linked ↑ to the `CA` it breaks, ↓ to the fix + regression test); and the **`support-quality-investigation/`** umbrella → root Epic *"Atividades de Apoio, Qualidade e Investigação"* with three child Epics — **`support/`** (*Apoio* — cross-cutting `TX`), **`qa/`** (*Q&A* — tests/reviews/quality gates), **`issues/`** (*Issues* — triage inbox), with **`issues/spikes/`** (*Spikes* — time-boxed investigation) nested under Issues. A `README.md` (Epic description) + `_TEMPLATE.md` for each, every template carrying the bidirectional ↑/↓ traceability spine and its OpenProject type/parent mapping.
+- **New IDs** `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` registered in `references/05-convencoes-interpop.md`, `SKILL.md` (hard-rule 8) and the pt-BR mirror.
+- **Behavioural scenario `S8`** (where a defect goes — Bug = type linked to the `CA`, not a Feature/orphan) in `tests/skill-behavior-scenarios.md`.
+
+### Changed — backlog buckets
+
+- **`atividades-complementares/` → `support-quality-investigation/support/`**: the lone TX bucket becomes the *Apoio* child of the umbrella (`melhorias/` unchanged). The scaffolder gains **STEP 1.6** — a history-preserving `git mv` migration (v1.21 → v1.26), verified in temp repos.
+- **OpenProject adapters** (`project-to-openproject.py` + `openproject-api.py`): nested-umbrella `_BUCKETS` walked by a recursive emitter; recognise BUG/QA/ISS/SPK; emit a **Bug as a *type* parented to the violated Feature**; `build_plan` honours an explicit `Parent`. Fixed a latent normalization bug — the prefix-hyphen regex now requires a following digit (`(?=\d)`), so a bucket Epic titled "Issues" no longer mangles to "ISS-UES".
+- **MAX-3-Epic-levels rule** (`Aplicação → Módulo → Componente → Feature`) documented in `SKILL.md`, `references/10-estrutura-projeto.md` (spine + §4) and the pt-BR mirror; the Feature template gains the `[front]/[back]` Task tag + a note that CA/US export as their own work-package types.
+- **Version**: `1.25.0 → 1.26.0`.
+
+### Added — feature step-defs (rolled in from the prior unreleased cycle)
 
 - **`examples/feature-step-defs/` — four more step-def bindings (six → ten stacks).** The one canonical pt-BR `.feature` now binds in four additional ecosystems: `cucumber_jvm_Steps.java` (**Cucumber-JVM**, using the pt-BR `@Dado/@Quando/@Então` annotations + JUnit `@Suite`), `godog_steps.go` (**godog**, the official Cucumber for Go — per-scenario `buscaWorld` reset in a `Before` hook), `cucumber_cpp.steps.cpp` (**cucumber-cpp**, `GIVEN/WHEN/THEN` macros + `ScenarioScope` + `REGEX_PARAM`), and `cucumber_wire_steps.c` (**pure C** via the Cucumber **wire protocol** — a TCP step server, since C has no native Gherkin runner). Each repeats the `@US/@F/@EP/@CAs/@Doc-Req` traceability header and binds the same six parametrized steps + the Scenario Outline, mirroring the existing skeletons. The `README.md` gains the four rows, a per-stack project-layout block, and an **honest caveat** that C++ has a first-class backend while pure-C Gherkin goes through the wire protocol (or a `cucumber-cpp` harness over `extern "C"`).
 

@@ -210,19 +210,26 @@ python3 assets/integrations/project-to-openproject.py --with-tasks --apply
 ## 8. The two mandatory bucket directories → root Epics
 
 The skill's `docs/backlog/` always has **two mandatory structural bucket directories**, siblings of `epics/` and
-`features/`. The adapter recognizes them and **collapses each into a ROOT Epic** (depth 0), sibling of the
-project's feature-front Epics (e.g. "Aplicação Web") — never nested under anything:
+`features/`. The adapter recognizes them via `_BUCKETS` and maps each **en-CA folder** to its **pt-BR Epic title**:
 
-| Bucket directory | Root Epic on export | Holds (children) |
+| Bucket directory (en-CA) | On export | Holds (children) |
 |---|---|---|
-| `backlog/melhorias/` | **`Melhorias`** (*Improvements*) — enhancements/refinements of things that already exist | each `*.md` → Feature/User story child |
-| `backlog/atividades-complementares/` | **`Atividades Complementares`** (*Complementary Activities*) — home for cross-cutting **`TX`** (technical/config/infra not tied to a Feature/US, Rule 6 of `05-convencoes-interpop.md`) | each `TX-NN-*.md` → Task child |
+| `backlog/melhorias/` | root Epic **`Melhorias`** (*Improvements*) | each `*.md` → Feature/User story child |
+| `backlog/bugs/` | **`Bug` TYPE**, parented to the violated US/Feature (NOT an Epic) | each `BUG-NN-*.md` → a Bug under its Feature |
+| `backlog/support-quality-investigation/` | root Epic **`Atividades de Apoio, Qualidade e Investigação`** (umbrella) | three child Epics ↓ |
+| &nbsp;&nbsp;`└ support/` | child Epic **`Apoio`** — cross-cutting **`TX`** (Rule 6) | each `TX-NN-*.md` → Task child |
+| &nbsp;&nbsp;`└ qa/` | child Epic **`Q&A`** — tests · reviews · quality gates | each `QA-NN-*.md` → Task child |
+| &nbsp;&nbsp;`└ issues/` | child Epic **`Issues`** — triage inbox | each `ISS-NN-*.md` → Task child |
+| &nbsp;&nbsp;&nbsp;&nbsp;`└ spikes/` | child Epic **`Spikes`** (under Issues) — time-boxed investigation | each `SPK-NN-*.md` → Task child |
 
 Each bucket's **`README.md` is the Epic's description** (not exported as an item); every other file beside it is a
-child. The Epic Subject carries no `EP-NN` (the bucket name *is* its identity — "Melhorias" / "Atividades
-Complementares"); the round-trip matches it back by that exact Subject. The scaffolder seeds both buckets
-(idempotent, never-overwrite) and migrates any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md`
-file into the matching bucket. The user can always adapt.
+child. The umbrella nests child Epics (the recursive emitter walks them); a **Bug** is the one exception — a *type*
+parented to the Feature it violates (via the `Parent` column / a real parent link), so the defect stays one link
+from the `CA` it breaks. Umbrella/child Epic Subjects carry no `EP-NN` (the title *is* their identity); the
+round-trip matches them back by that exact Subject. The scaffolder seeds every bucket (idempotent,
+never-overwrite), migrates any pre-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` file, **and
+migrates a v1.21 `atividades-complementares/` directory into `support-quality-investigation/support/`** (TX files
+preserved). The user can always adapt.
 
 ---
 

@@ -132,6 +132,8 @@ def main() -> int:
             "quantitative" in skill_text,
         "S6 — progressive refinement / the backlog iceberg":
             "iceberg" in skill_text,
+        "S8 — a defect is a Bug type traced to the CA it violates":
+            "bug-" in skill_text,
         "anti-patterns catalogue is present":
             "anti-pattern" in skill_text,
         "points to the canonical hard rules in references/05":
