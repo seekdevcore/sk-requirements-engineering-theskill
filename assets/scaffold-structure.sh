@@ -205,6 +205,32 @@ if [ "${#legacy_buckets[@]}" -gt 0 ]; then
 fi
 
 # ============================================================================
+# STEP 1.6 — MIGRATE v1.21 `atividades-complementares/` DIR -> support-quality-investigation/support/
+#   v1.26 reframes the lone TX bucket as the "Apoio" child of the Support/Quality/Investigation
+#   umbrella. The old directory (README + TX-NN-*.md) moves into the new support/ bucket; the
+#   generic new templates are then skipped because the moved files now occupy the targets.
+#   (`melhorias/` is unchanged — not migrated.)
+# ============================================================================
+OLD_AC="$ROOT/backlog/atividades-complementares"
+NEW_SUPPORT="$ROOT/backlog/support-quality-investigation/support"
+if [ -d "$OLD_AC" ]; then
+  info "[migrate] atividades-complementares/ -> support-quality-investigation/support/ (v1.21 -> v1.26)"
+  [ -e "$OLD_AC/README.md" ] && mv_file "$OLD_AC/README.md" "$NEW_SUPPORT/README.md"
+  for f in "$OLD_AC"/*.md; do
+    [ -e "$f" ] || continue
+    case "$(basename "$f")" in README.md) continue;; esac
+    mv_file "$f" "$NEW_SUPPORT/$(basename "$f")"
+  done
+  if [ "$APPLY" -eq 1 ]; then
+    rmdir "$OLD_AC" 2>/dev/null && ok "  rmdir   $OLD_AC (migrated, now empty)" \
+      || warn "  note: $OLD_AC kept (leftover non-TX files) — review and remove manually"
+  else
+    warn "  move PLAN    remove $OLD_AC/ once its files are migrated"
+  fi
+  say ""
+fi
+
+# ============================================================================
 # STEP 2 — CREATE (mirror assets/templates/ into ROOT; skip existing)
 # ============================================================================
 info "[2/3] create — seeding folders + generic templates (skips existing)"
