@@ -12,19 +12,29 @@
 backlog/
 ├── README.md                  este arquivo
 ├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
-├── epics/                     EP-NN-<slug>.md  — descrição + lista de Features filhas
+├── epics/                     EP-NN-<slug>.md  — Aplicação→Módulo→Componente (MÁX. 3 níveis de Epic) → Features
 ├── features/                  F-NN-<slug>.md   — descrição + CAs + USs (com BDD) + Tasks
 ├── melhorias/                 ← bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
 │   ├── README.md              o que é + descrição do Epic
 │   └── <F/US>-<slug>.md        cada melhoria do produto (vira filho do Epic)
-├── atividades-complementares/ ← bucket OBRIGATÓRIO → Epic-raiz "Atividades Complementares" no export
-│   ├── README.md              o que é + descrição do Epic
-│   └── TX-NN-<slug>.md         cada Task transversal (config/infra; vira Task filha)
+├── bugs/                      ← bucket de DEFEITOS → type "Bug" parented à US/Feature violada (NÃO é Epic)
+│   ├── README.md              por que bug é type, não Epic
+│   └── BUG-NN-<slug>.md        cada defeito (linka ao CA que viola)
+├── support-quality-investigation/  ← bucket UMBRELLA → Epic-raiz "Atividades de Apoio, Qualidade e Investigação"
+│   ├── README.md              descrição do Epic umbrella + 3 Epics filhos
+│   ├── support/               → Epic-filho "Apoio"  — TX-NN (técnico/config/infra; era atividades-complementares)
+│   ├── qa/                    → Epic-filho "Q&A"    — QA-NN (testes · reviews · gates)
+│   └── issues/                → Epic-filho "Issues" — ISS-NN (triagem)
+│       └── spikes/            → Epic-filho "Spikes" — SPK-NN (investigação time-boxed)
 ├── sprints/                   sprint-N-<slug>.md — execução temporal (mapping US/Task)
-└── done/                      Epics/Features fechados (MOVIDOS via git mv, não copiados)
+└── done/                      itens fechados (MOVIDOS via git mv: Feature/Bug/QA/ISS/SPK)
 ```
 
-> **`melhorias/` e `atividades-complementares/` são diretórios estruturais** (não arquivos `EP-NN`). Cada um é um **bucket obrigatório** filho de `backlog/`; **só no OpenProject** ele colapsa num **Epic na raiz** (depth 0), irmão dos Epics de frente (ex.: "Aplicação Web"). O `README.md` de cada bucket é a **descrição** do Epic; os arquivos ao lado são os **filhos**. **Melhorias** = aprimoramentos de coisas que já existem; **Atividades Complementares** = lar dos `TX` (técnico/config/infra não ligado a uma Feature/US — Regra 6).
+> **Regra de profundidade — MÁX. 3 níveis de Epic.** O front (`Aplicação Web`/`Mobile`) é o Epic raiz (nível 1); abaixo dele vem o **Módulo** (nível 2) e o **Componente** (nível 3) — e então a **Feature**. Depois do Epic-módulo há **só mais um** Epic (o componente) antes da Feature. Não aninhe um 4º nível de Epic (ex.: `Aplicação › Módulo › Gestão de X › Consulta de X › Feature` está fundo demais — colapse para `Aplicação › Módulo › Componente › Feature`).
+>
+> **Nomes en-CA, Epics pt-BR.** As pastas seguem o padrão en-CA (`support/`, `qa/`, `issues/`, `spikes/`) como `epics/`/`features/`; o adapter (`_BUCKETS`) restaura o nome pt-BR do Epic no export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
+>
+> **Buckets estruturais** (diretórios, não arquivos `EP-NN`): **`melhorias/`** = aprimoramentos do que já existe (→ Epic-raiz). **`support-quality-investigation/`** = umbrella transversal (→ Epic-raiz com 3 Epics filhos). **`bugs/`** é diferente: cada `BUG-NN` é um work-package **type "Bug" parented à US/Feature que viola** (herda o Epic dela), **não** um Epic próprio — assim o defeito fica a um link do `CA`. Regra-mãe: *o type diz o que é; o parent diz a quem serve.*
 
 ## Naming (regra dura)
 
@@ -45,7 +55,11 @@ backlog/
 | Critério de Aceitação | `CANN` (no Feature pai) | `CA01` |
 | User Story | `USNN.M` | `US30.1` |
 | Task US-bound | `TNN.M.K` | `T30.1.4b` |
-| Task transversal | `TX-NN` | `TX-18` |
+| Task transversal (Apoio) | `TX-NN` | `TX-18` |
+| Defeito (Bug) | `BUG-NN` | `BUG-04` |
+| Atividade de qualidade (Q&A) | `QA-NN` | `QA-07` |
+| Issue de triagem | `ISS-NN` | `ISS-12` |
+| Spike (investigação) | `SPK-NN` | `SPK-02` |
 | Sprint | `sprint-N-slug` | `sprint-4-<slug>` |
 
 ## Prioridade

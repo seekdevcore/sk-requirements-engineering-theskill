@@ -1,4 +1,10 @@
-<!-- GENERIC TEMPLATE — copy to F-NN-<slug>.md. Feature has a paragraph description; BDD lives in the User Story. -->
+<!-- GENERIC TEMPLATE — copy to F-NN-<slug>.md. Feature has a paragraph description; BDD lives in the User Story.
+     On OpenProject export, the sections below expand into their own typed work-packages, all under this Feature:
+       · each CA → a "Critério de Aceitação" (child of the Feature; a grouping CA may nest CA→CA)
+       · each US → a "User story" (child of the Feature; LINKS to the CAs it satisfies)
+       · each Task → a "Task" child of its US, tagged [front]/[back] by layer.
+     A defect against a CA is a separate BUG-NN (type "Bug") parented here — see ../bugs/. -->
+
 # F-NN — <nome de negócio>
 
 > **Tipo**: Feature
@@ -48,6 +54,14 @@ Funcionalidade: <nome>
 
 ## Tasks (único nível com termo técnico)
 
-| ID | Task | Commit | Status |
-| --- | --- | --- | --- |
-| T-NN.1.1 | <descrição técnica> | — | ⏳ |
+> Prefixe a Task por camada — `[front]` / `[back]` / `[infra]` — como no OpenProject (vira a tag de camada).
+
+| ID | Task | Camada | Commit | Status |
+| --- | --- | --- | --- | --- |
+| T-NN.1.1 | `[back]` <descrição técnica> | Backend | — | ⏳ |
+
+## Defeitos conhecidos (rastreabilidade ↓)
+
+| Bug | Viola | Status |
+| --- | --- | --- |
+| [BUG-NN](../bugs/BUG-NN-....md) | CANN | 🆕 Open |
