@@ -131,7 +131,7 @@ liga pai/filho na mão.
 | `Epic` | 0 | nenhum (raiz) |
 | `Feature` | 1 | seu Epic |
 | `User story` | 2 | sua Feature |
-| `Task` | 3 | sua User Story (ou, para `TX` transversais, o Epic *Atividades Complementares* — §7) |
+| `Task` | 3 | sua User Story (ou, para `TX` transversais, o Epic-filho *Apoio* sob a umbrella — §7) |
 
 > **Nosso id vive no Subject, não numa coluna de id.** O OpenProject atribui seu **próprio** id numérico
 > (diferente do nosso `EP-NN`/`F-NN`/`USNN.M`). Manter nosso id estável no **começo do Subject** mantém a
@@ -211,20 +211,27 @@ python3 assets/integrations/project-to-openproject.py --with-tasks --apply
 
 ## 8. Os dois diretórios-bucket obrigatórios → Epics na raiz
 
-O `docs/backlog/` da skill sempre tem **dois diretórios-bucket estruturais obrigatórios**, irmãos de `epics/` e
-`features/`. O adaptador os reconhece e **colapsa cada um num Epic na RAIZ** (depth 0), irmão dos Epics de frente
-do projeto (ex.: "Aplicação Web") — nunca aninhado sob nada:
+O `docs/backlog/` da skill tem **diretórios-bucket estruturais**, irmãos de `epics/` e `features/`. O adaptador
+os reconhece via `_BUCKETS` e mapeia cada **pasta en-CA** ao seu **título de Epic pt-BR**:
 
-| Diretório-bucket | Epic-raiz no export | Guarda (filhos) |
+| Diretório-bucket (en-CA) | No export | Guarda (filhos) |
 |---|---|---|
-| `backlog/melhorias/` | **`Melhorias`** (*Improvements*) — aprimoramentos/refinamentos de coisas que já existem | cada `*.md` → filho Feature/User story |
-| `backlog/atividades-complementares/` | **`Atividades Complementares`** (*Complementary Activities*) — lar das **`TX`** transversais (técnico/config/infra não ligado a Feature/US, Regra 6 de `05-convencoes-interpop.md`) | cada `TX-NN-*.md` → filho Task |
+| `backlog/melhorias/` | Epic-raiz **`Melhorias`** (*Improvements*) | cada `*.md` → filho Feature/User story |
+| `backlog/bugs/` | **TYPE `Bug`**, parented à US/Feature violada (NÃO um Epic) | cada `BUG-NN-*.md` → um Bug sob sua Feature |
+| `backlog/support-quality-investigation/` | Epic-raiz **`Atividades de Apoio, Qualidade e Investigação`** (umbrella) | três Epics filhos ↓ |
+| &nbsp;&nbsp;`└ support/` | Epic-filho **`Apoio`** — **`TX`** transversal (Regra 6) | cada `TX-NN-*.md` → filho Task |
+| &nbsp;&nbsp;`└ qa/` | Epic-filho **`Q&A`** — testes · reviews · quality gates | cada `QA-NN-*.md` → filho Task |
+| &nbsp;&nbsp;`└ issues/` | Epic-filho **`Issues`** — inbox de triagem | cada `ISS-NN-*.md` → filho Task |
+| &nbsp;&nbsp;&nbsp;&nbsp;`└ spikes/` | Epic-filho **`Spikes`** (sob Issues) — investigação time-boxed | cada `SPK-NN-*.md` → filho Task |
 
 O **`README.md` de cada bucket é a descrição do Epic** (não exportado como item); todo arquivo ao lado é um
-filho. O Subject do Epic não carrega `EP-NN` (o nome do bucket *é* a identidade — "Melhorias" / "Atividades
-Complementares"); o round-trip o recasa por esse Subject exato. O scaffolder semeia os dois buckets (idempotente,
-nunca sobrescreve) e migra qualquer arquivo pré-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md`
-para o bucket correspondente. O usuário sempre pode adaptar.
+filho. A umbrella aninha Epics filhos (o emitter recursivo os percorre); o **Bug** é a exceção — um *type*
+parented à Feature que viola (via a coluna `Parent` / um link de parent real), mantendo o defeito a um link do
+`CA`. Os Subjects dos Epics umbrella/filhos não carregam `EP-NN` (o título *é* a identidade); o round-trip os
+recasa por esse Subject exato. O scaffolder semeia cada bucket (idempotente, nunca sobrescreve), migra arquivos
+pré-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md`, **e migra um diretório v1.21
+`atividades-complementares/` para `support-quality-investigation/support/`** (TX preservados). O usuário sempre
+pode adaptar.
 
 ---
 

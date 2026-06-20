@@ -306,10 +306,18 @@ Aplica-se a TODOS os títulos de Epic/Feature/US/CA/**RF**/RNF/regra de negócio
 | 5 | **CAs sempre agrupados** sob um título `CA - <Tema>` (mesmo 1 só) + a convenção `[...]` de sub-regras | ref05 R7 |
 | 6 | **Config técnica NÃO é Feature** (ESLint, env vars, docker-compose…) → Task transversal `TX-NN`. **Feature = entregável-ao-cliente** | ref05 R4 |
 | 7 | **Prioridade em todo nó**: 🔴 Imediata · 🟠 Alta · 🟡 Normal · 🟢 Baixa (equivalente a MoSCoW) | ref05 R5 |
-| 8 | **IDs estáveis e eternos**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `G-NN` (nunca renumerados) | ref05 (IDs) |
+| 8 | **IDs estáveis e eternos**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `G-NN` (nunca renumerados) | ref05 (IDs) |
 | 9 | **Uma Feature = uma coisa** (atomicidade) — junta duas (ex.: cadastro + atualização)? quebre em duas (CRUD atômico) | ref05 R4b |
 
-> **Dois root Epics obrigatórios — como buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md`](references/10-estrutura-projeto.md)): **`Melhorias`** (*Improvements*) — aprimoramentos de coisas que já existem — e **`Atividades Complementares`** (*Complementary Activities*) — o lar dos `TX` transversais (trabalho técnico, config, infra **não ligado a uma Feature/US**, conforme a regra 6). No disco são **diretórios** `docs/backlog/melhorias/` e `docs/backlog/atividades-complementares/` (irmãos de `epics/`, `features/`); **só no export para o OpenProject** cada um colapsa num **Epic-raiz** (depth 0), irmão dos Epics de frente, com os arquivos de dentro como filhos. Os dois adaptadores OpenProject os emitem sozinhos.
+> **Buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — pastas en-CA, títulos de Epic pt-BR restaurados pelo adapter no export:
+>
+> - **`melhorias/`** → Epic-raiz **"Melhorias"** — aprimoramentos de coisas que já existem.
+> - **`bugs/`** → cada `BUG-NN` é um **type "Bug" parented à US/Feature que viola** (NÃO um Epic) — mantém o defeito a um link do `CA`.
+> - **`support-quality-investigation/`** → Epic-raiz **"Atividades de Apoio, Qualidade e Investigação"** com três Epics filhos: **`support/`** ("Apoio" — `TX` transversal, regra 6) · **`qa/`** ("Q&A" — testes, reviews, quality gates) · **`issues/`** ("Issues" — inbox de triagem), com **`issues/spikes/`** ("Spikes" — investigação time-boxed) aninhado.
+>
+> Regra de posicionamento: **o *type* diz o que é; o *parent* diz a quem serve** — trabalho ligado a uma feature parenteia na Feature; trabalho de projeto inteiro é Epic-filho da umbrella. Os dois adaptadores OpenProject emitem tudo isso sozinhos.
+>
+> **Profundidade de Epic — MÁX. 3 níveis**: `Aplicação Web/Mobile` (raiz) → `Módulo` → `Componente` → `Feature`. Depois do Epic-módulo, **só mais um** Epic (o componente) antes da Feature — nunca um 4º nível.
 
 **Template completo do `BACKLOG.md`** + exemplos dos projetos *"SIRA"* e *"Interpop"* em [references/05-convencoes-interpop.md](references/05-convencoes-interpop.md).
 

@@ -93,7 +93,7 @@ São Tasks transversais (`TX-NN`) — NÃO Features:
 | Criar arquivo de configuração JSON | Task transversal |
 | Configurar índice GIN no Postgres | Task da US relevante (não transversal — apoia US específica) |
 
-> **Onde os `TX` transversais vivem**: no **bucket estrutural obrigatório `backlog/atividades-complementares/`** (um diretório) — o lar do trabalho técnico **não ligado a uma Feature/US** (config, infra, setup, ferramental). As melhorias de produto vão no **outro bucket obrigatório, `backlog/melhorias/`** (*Improvements*). Cada um é um diretório sob `backlog/` que **colapsa num Epic-raiz no export para o OpenProject** (depth 0, irmão dos Epics de frente); seu `README.md` é a descrição do Epic, os arquivos de dentro são os filhos. Ambos são semeados pelo scaffolder — ver [`10-estrutura-projeto.md`](10-estrutura-projeto.md).
+> **Onde os `TX` transversais vivem**: em **`backlog/support-quality-investigation/support/`** — o Epic-filho "Apoio" da umbrella de Apoio/Qualidade/Investigação — lar do trabalho técnico **não ligado a uma Feature/US** (config, infra, setup, ferramental). Melhorias de produto vão em **`backlog/melhorias/`** (*Improvements*). Epics-filhos irmãos sob a mesma umbrella: **`qa/`** (Q&A — testes/reviews/gates), **`issues/`** (triagem), **`issues/spikes/`** (investigação time-boxed); defeitos vivem em **`backlog/bugs/`** como type "Bug" parented à Feature violada. Cada README de bucket é a descrição do Epic; o scaffolder semeia e o adapter restaura os títulos pt-BR no export — ver [`10-estrutura-projeto.md §4`](10-estrutura-projeto.md).
 
 **Rule 4b — Uma Feature = uma coisa (atomicidade).** Uma Feature entrega **exatamente uma** capacidade voltada ao cliente. Se um candidato junta duas — ex.: *cadastro de usuário* **e** *atualização de usuário* — **quebre em duas Features separadas** (CRUD atômico: uma Feature por operação). Uma coisa por Feature → estimativa mais limpa, um único foco de BDD, e rastreabilidade um-para-um. *(Confirmado no projeto *"SIRA"*: o backlog era atômico — uma Feature por operação de CRUD.)*
 
@@ -207,8 +207,12 @@ Detalhamento e diagrama em [`../examples/template-backlog-openproject.md §3`](.
 | Feature | `F-NN` | `F-30` | Numeração contínua; primeira Feature do Epic 10 começa em F-30 (convenção: F começa em décadas, deixa folga) |
 | Critério de Aceitação | `CANN` | `CA01`, `CA12` | Contagem por **Feature** (resetar a cada Feature) OU contínua no projeto — escolha uma e mantenha |
 | User Story | `USNN.M` | `US30.1`, `US30.4` | `NN` = nº da Feature pai; `M` = sequência dentro da Feature |
-| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = US pai; `K` = sequência |
-| Task transversal | `TX-NN` | `TX-01`, `TX-12` | Numeração contínua no projeto |
+| Task | `TNN.M.K` | `T30.1.7` | `NN.M` = US pai; `K` = sequência; prefixo `[front]`/`[back]` por camada |
+| Task transversal (Apoio) | `TX-NN` | `TX-01`, `TX-12` | Contínua; vive em `support/` → Epic-filho "Apoio" |
+| Defeito (Bug) | `BUG-NN` | `BUG-04` | **type "Bug"** parented à US/Feature que viola; vive em `bugs/` |
+| Atividade de qualidade (Q&A) | `QA-NN` | `QA-07` | Testes/reviews/gates transversais; `qa/` → Epic-filho "Q&A" |
+| Issue de triagem | `ISS-NN` | `ISS-12` | Item de inbox transitório; `issues/` → Epic-filho "Issues" |
+| Spike (investigação) | `SPK-NN` | `SPK-02` | Time-boxed; `issues/spikes/` → Epic-filho "Spikes" |
 
 **Regra ouro**: IDs são **eternos**. Não renumeram quando algo muda; a versão muda. Isso preserva rastreabilidade em commits, PRs, ADRs.
 
@@ -453,7 +457,7 @@ Antes de aceitar um `BACKLOG.md`, rode este grep mental:
 - [ ] **Backlog tem múltiplos Epics-raiz irmãos** (frentes independentes do projeto) em vez de um único "Epic-projeto" como avô de tudo? (Regra 9)
 - [ ] Algum nó **sem prioridade declarada**? Se sim → atribuir 🔴/🟠/🟡/🟢.
 - [ ] Cada US tem **CAs explicitamente associados** (rastreabilidade)?
-- [ ] IDs seguem padrão (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN` — Epic aninhado: `EP-NN.M`)?
+- [ ] IDs seguem padrão (`EP-NN`/`F-NN`/`CANN`/`USNN.M`/`TNN.M.K`/`TX-NN`/`BUG-NN`/`QA-NN`/`ISS-NN`/`SPK-NN` — Epic aninhado: `EP-NN.M`)?
 
 Falhou em qualquer um → ainda não está pronto para `code-implementer`.
 

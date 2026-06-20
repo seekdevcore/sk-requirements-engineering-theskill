@@ -107,22 +107,32 @@ requirements/
 backlog/
 ├── README.md                  este arquivo — naming + IDs + prioridade + Definition of Done + fechamento
 ├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
-├── epics/                     um arquivo por Epic — descrição + lista de Features filhas
+├── epics/                     Epics — Aplicação→Módulo→Componente (MÁX. 3 níveis de Epic via links) → Features
 │   └── EP-NN-<slug>.md
 ├── features/                  um arquivo por Feature — descrição + CAs + USs (com BDD) + Tasks
 │   └── F-NN-<slug>.md
 ├── melhorias/                 bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
 │   ├── README.md              o que é + descrição do Epic (NÃO exportado como item)
 │   └── <F/US>-<slug>.md        cada melhoria do produto → filho do Epic Melhorias
-├── atividades-complementares/ bucket OBRIGATÓRIO → Epic-raiz "Atividades Complementares" no export
-│   ├── README.md              o que é + descrição do Epic (NÃO exportado como item)
-│   └── TX-NN-<slug>.md         cada Task transversal (config/infra) → Task filha do Epic
+├── bugs/                      bucket de DEFEITOS → cada BUG-NN é um TYPE "Bug" parented à US/Feature violada
+│   ├── README.md              por que bug é type, não Epic
+│   └── BUG-NN-<slug>.md        um defeito (linka ↑ ao CA/US/RF que viola)
+├── support-quality-investigation/   bucket UMBRELLA → Epic-raiz "Atividades de Apoio, Qualidade e Investigação"
+│   ├── README.md              descrição do Epic umbrella + seus 3 Epics filhos
+│   ├── support/               → Epic-filho "Apoio"  — TX-NN (técnico/config/infra transversal)
+│   ├── qa/                    → Epic-filho "Q&A"    — QA-NN (testes · reviews · gates)
+│   └── issues/                → Epic-filho "Issues" — ISS-NN (inbox de triagem)
+│       └── spikes/            → Epic-filho "Spikes" — SPK-NN (investigação time-boxed)
 ├── sprints/                   um arquivo por Sprint — execução temporal (mapping US/Task)
 │   └── sprint-N-<slug>.md
-└── done/                      Epics/Features fechados — arquivos MOVIDOS aqui (git mv), não copiados
+└── done/                      itens fechados (Feature/Bug/QA/ISS/SPK) — MOVIDOS aqui (git mv), não copiados
 ```
 
-> **`melhorias/` e `atividades-complementares/` são DIRETÓRIOS estruturais (buckets), não arquivos `EP-NN`.** Cada um é filho obrigatório de `backlog/`; **só no export para o OpenProject** ele colapsa num **Epic na RAIZ** (depth 0), irmão dos Epics de frente (ex.: "Aplicação Web"). O `README.md` do bucket é a descrição do Epic; os arquivos ao lado são os filhos (Feature/US em **Melhorias**; Tasks `TX-NN` em **Atividades Complementares**). Os dois adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder os semeia e migra qualquer arquivo pré-v1.21 `epics/EP-melhorias.md` / `EP-atividades-complementares.md` para o bucket correspondente. Função — **Melhorias** = aprimoramentos de coisas que já existem; **Atividades Complementares** = lar dos `TX` transversais (técnico/config/infra não ligado a Feature/US, Regra 6) — detalhada no `README.md` de cada bucket.
+> **Pastas en-CA, Epics pt-BR.** As pastas usam nomes en-CA (`support/`, `qa/`, `issues/`, `spikes/`) como `epics/`/`features/`; o `_BUCKETS` do adapter restaura o título pt-BR do Epic no export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
+>
+> **Profundidade de Epic — MÁX. 3 níveis.** O front (`Aplicação Web`/`Mobile`) é o Epic-raiz (nível 1); abaixo, um Epic **Módulo** (nível 2) e um Epic **Componente** (nível 3), e então a **Feature**. Depois do Epic-módulo há **só mais um** Epic (o componente) antes da Feature — nunca aninhe um 4º nível. O aninhamento multinível é expresso pelos links pai/filho (§2), não por pastas: `epics/` fica plano.
+>
+> **Buckets são DIRETÓRIOS estruturais, não arquivos `EP-NN`.** Cada um é filho de `backlog/`; **só no export** um bucket colapsa num Epic. Função: **`melhorias/`** = aprimoramentos do que já existe (→ Epic-raiz); **`bugs/`** = cada `BUG-NN` é um **type "Bug" parented à US/Feature violada** (não Epic), mantendo o defeito a um link do `CA`; **`support-quality-investigation/`** = umbrella (→ Epic-raiz com 3 Epics filhos: Apoio/Q&A/Issues, e Spikes sob Issues). Regra-mãe: *o type diz o que é; o parent diz a quem serve*. Os adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder semeia, migra arquivos pré-v1.21 e **migra um diretório v1.21 `atividades-complementares/` para `support-quality-investigation/support/`** (TX preservados).
 
 **Por que `done/` move em vez de copiar.** O `git mv` preserva o histórico e mantém `features/` mostrando apenas trabalho vivo. Copiar duplica a verdade e apodrece.
 
