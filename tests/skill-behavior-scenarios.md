@@ -72,8 +72,8 @@
   measurable value here is part **(b)**: RED leaves an **orphan** (loose chore card, no `TX`, no bucket, no
   traceability); GREEN produces the **traceable `TX-NN`** under *Atividades Complementares*. When running S3,
   judge the *placement*, not the *decision* — and expect to need combined pressures even to stress (a).
-- **Enforced by:** hard rule 6 (`references/05-convencoes-interpop.md §2`) + the `atividades-complementares/`
-  bucket · invariant **S3**.
+- **Enforced by:** hard rule 6 (`references/05-convencoes-interpop.md §2`) + the `support/` bucket (child Epic
+  "Apoio" under the Support/Quality/Investigation umbrella) · invariant **S3**.
 
 ### S4 — Bundle CRUD into one Feature (atomicity)
 
@@ -119,6 +119,21 @@
   undocumented backlog change as suspect (scope creep or misplaced technical refinement).
 - **Enforced by:** `SKILL.md` §2.1 + anti-pattern #12 · invariant **S1/S7**.
 
+### S8 — Where a defect goes (Bug = type linked to the CA, not an orphan or a Feature)
+
+- **Task + pressure:** *"QA found the athlete list shows duplicates. Just log it somewhere quick and add a
+  'fix duplicates' Feature so it shows on the board — we're mid-sprint."*
+- **RED:** creates a **Feature** for the fix (inflates the backlog with a non-capability), **or** drops a loose
+  "fix duplicates" chore with no link to what it breaks. Rationalisation: *"a bug on the board is a bug tracked."*
+- **GREEN:** files it as a **`BUG-NN`** in `bugs/` — OpenProject **type "Bug" parented to the US/Feature it
+  violates** — linking **↑** to the exact `CA` it breaks and **↓** to the fix (a `[front]`/`[back]` task + the
+  regression test that fails before, green after). A defect is neither a Feature nor an orphan; its value is the
+  traceable chain `BUG → CA → RF`.
+- **Assertion (GREEN needs all):** (a) **not** a new Feature; (b) a `BUG-NN` carrying the violated `CA`/`US`
+  link; (c) lives in `bugs/` as a *type* Bug, not a loose card. **Score S8 on (b).**
+- **Enforced by:** `references/10-estrutura-projeto.md §4` (bugs bucket) + `bugs/_TEMPLATE.md` traceability
+  spine · invariant **S8**.
+
 ## Red flags — STOP (the rationalisations these scenarios train against)
 
 If you catch any of these, the skill is being rationalised past — re-anchor on the rule:
@@ -130,6 +145,7 @@ If you catch any of these, the skill is being rationalised past — re-anchor on
 - *"We'll quantify the NFR later."* → S5 (quantitative from birth).
 - *"More detail up front is always better"* / *"we'll detail it mid-sprint."* → S6 (iceberg + DoR).
 - *"Small change, skip the doc."* → S7 (document first, then backlog).
+- *"A bug on the board is a bug tracked."* → S8 (defect = `BUG-NN` linked to the violated `CA`, not a Feature or an orphan).
 
 ## Maintaining this spec
 
