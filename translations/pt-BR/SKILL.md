@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.26.0
+version: 1.27.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -430,6 +430,7 @@ Antes de aceitar uma feature no backlog, valide as 7 dimensões de Falbo:
 - [ ] **Necessário** — necessidade do cliente OU requisito externo/de padrão
 - [ ] **Priorizável** — tem uma ordem clara vs. outros itens
 - [ ] **Verificável** — possível escrever um teste que prove a implementação
+- [ ] **Enunciado responde 5W1H** — Quem · O quê · Onde · Quando · Por quê · Como (fluxo de **negócio**, não o como técnico) — uma pergunta genuinamente sem resposta = enunciado incompleto ([`references/03-especificacao.md §2.1.1`](references/03-especificacao.md))
 
 Falhou ≥1 → não está pronto. Volte ao stakeholder.
 

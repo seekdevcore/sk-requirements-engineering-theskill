@@ -34,6 +34,23 @@ Without a clear specification, the project becomes a "telephone game": client wa
 4. **Do not assume** the reader understands technical jargon (avoid "architecture", "module"; explain acronyms)
 5. **Associate rationale** with each requirement (why it exists, who proposed it) — useful when it changes
 
+### 2.1.1 The 5W1H completeness check (a requirement statement answers six questions)
+
+A requirement **statement** (the `RF` *enunciado* + its body) is complete when a reader can answer all six of Kipling's "honest serving men" from it. This is a *completeness* heuristic for the **business** statement — it never licenses technical detail (the technical *how* stays in Design/ADRs/Tasks, naming rule 2).
+
+| Question | Answers | Where it already lives in this skill |
+|---|---|---|
+| **Quem / Who** | the stakeholder / user / persona who uses or is affected by the system | a `persona` from `personas-e-cenarios.md` |
+| **O quê / What** | the functionality / service / task the system must perform | the `RF` enunciado (the verb-phrase) |
+| **Onde / Where** | the environment or screen where the requirement applies or is shown | the module / context (EARS `WHERE`) |
+| **Quando / When** | the moment, deadline or frequency the function is triggered / the requirement is due | the trigger / timing (EARS `WHEN`/`WHILE`) |
+| **Por quê / Why** | the motive / objective / business value that justifies it (the ROI) | the `## Justificativa` section of the `RF` |
+| **Como / How** | the **business** flow, rule or process — the step-by-step behaviour | the `CA` group + the BDD scenarios + business rules (`G`) |
+
+> **The "How" is business, not technical.** "How" = *the business flow / rule / process* the user follows (e.g. "informing the title, body and category, then confirming publication") — exactly what the **CA group** and the **BDD** scenarios spell out. It is **never** the endpoint, the table, or the component (that is the *design* how — ADRs/Tasks, rule 2). If the only way to answer "How" is to name a technology, design has leaked into the requirement — pull it back out.
+
+A one-sentence enunciado need not literally contain all six words; completeness is satisfied **across** the requirement's body (enunciado → Who/What · Justificativa → Why · the binding `RNF`/EARS → When/Where · the `CA`/BDD it spawns → How). When a statement leaves one of the six genuinely **unanswerable**, it is incomplete — return to elicitation (Phase A). This is the *Complete* dimension of Falbo's checklist (§9) made operational.
+
 ### 2.2 Structured natural language (VOLERE template — Robertson & Robertson)
 
 Each requirement on a **card** with fields:
