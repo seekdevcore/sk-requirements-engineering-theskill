@@ -34,6 +34,23 @@ Sem especificação clara, projeto vira "telefone sem fio": cliente quer X, dev 
 4. **Não pressupor** que leitor entende jargão técnico (evite "arquitetura", "módulo"; explique acrônimos)
 5. **Associar racional** a cada requisito (por que existe, quem propôs) — útil quando mudar
 
+### 2.1.1 A verificação de completude 5W1H (um enunciado responde seis perguntas)
+
+Um **enunciado** de requisito (o *enunciado de negócio* do `RF` + seu corpo) está completo quando o leitor consegue responder, a partir dele, às seis perguntas dos "honest serving men" de Kipling. É uma heurística de **completude** do enunciado **de negócio** — nunca autoriza detalhe técnico (o *como* técnico vive em Design/ADRs/Tasks, regra de nomenclatura 2).
+
+| Pergunta | Responde | Onde já vive nesta skill |
+|---|---|---|
+| **Quem** | o stakeholder / usuário / persona que usa o sistema ou é afetado por ele | uma `persona` de `personas-e-cenarios.md` |
+| **O quê** | a funcionalidade / serviço / tarefa que o sistema deve realizar | o enunciado do `RF` (a frase-verbo) |
+| **Onde** | o ambiente ou a tela onde o requisito se aplica ou é visualizado | o módulo / contexto (EARS `ONDE`) |
+| **Quando** | o momento, prazo ou frequência em que a função é acionada / o requisito é entregue | o gatilho / tempo (EARS `QUANDO`/`ENQUANTO`) |
+| **Por quê** | o motivo / objetivo / valor de negócio que o justifica (o ROI) | a seção `## Justificativa` do `RF` |
+| **Como** | o fluxo, regra ou processo de **negócio** — o comportamento passo a passo | o grupo `CA` + os cenários BDD + regras de negócio (`G`) |
+
+> **O "Como" é de negócio, não técnico.** "Como" = *o fluxo / regra / processo de negócio* que o usuário segue (ex.: "informando título, corpo e categoria e confirmando a publicação") — exatamente o que o **grupo de CA** e os cenários **BDD** detalham. **Nunca** é o endpoint, a tabela ou o componente (esse é o *como* de design — ADRs/Tasks, regra 2). Se a única forma de responder "Como" é citar uma tecnologia, o design vazou para o requisito — tire-o de volta.
+
+Um enunciado de uma frase não precisa conter literalmente as seis palavras; a completude se satisfaz **ao longo** do corpo do requisito (enunciado → Quem/O quê · Justificativa → Por quê · o `RNF`/EARS que o limita → Quando/Onde · os `CA`/BDD que ele gera → Como). Quando um enunciado deixa uma das seis genuinamente **sem resposta**, está incompleto — volte à elicitação (Fase A). É a dimensão *Completo* do checklist de Falbo (§9) tornada operacional.
+
 ### 2.2 Linguagem natural estruturada (template VOLERE — Robertson & Robertson)
 
 Cada requisito em **cartão** com campos:

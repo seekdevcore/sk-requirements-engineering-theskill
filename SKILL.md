@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.26.0
+version: 1.27.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -432,6 +432,7 @@ Before accepting a feature in the backlog, validate Falbo's 7 dimensions:
 - [ ] **Necessary** — client needs OR external/standard requirement
 - [ ] **Prioritizable** — has a clear order vs. other items
 - [ ] **Verifiable** — possible to write a test that proves the implementation
+- [ ] **Statement answers 5W1H** — Quem/Who · O quê/What · Onde/Where · Quando/When · Por quê/Why · Como/How (**business** flow, not the technical how) — a question left genuinely unanswerable means the statement is incomplete ([`references/03-especificacao.md §2.1.1`](references/03-especificacao.md))
 
 Failed ≥1 → not ready. Return to the stakeholder.
 

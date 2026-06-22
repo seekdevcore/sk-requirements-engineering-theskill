@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.27.0] — 2026-06-21
+
+Adds the **5W1H completeness check** for requirement statements — a requirement *enunciado* is complete when the reader can answer Who / What / Where / When / Why / How from it.
+
+### Added
+
+- **`references/03-especificacao.md §2.1.1` — the 5W1H completeness check.** A table mapping each of the six questions (Quem/Who · O quê/What · Onde/Where · Quando/When · Por quê/Why · Como/How) to where it already lives in the skill (persona · enunciado · module/EARS `WHERE` · trigger/EARS `WHEN` · `## Justificativa` · the `CA`/BDD it spawns). Definitions follow the canonical pt-BR RE pedagogy (Kendall & Kendall 5W + Kipling's "honest serving men").
+- **SKILL.md §9 + pt-BR mirror** — a new validation-checklist item: *Statement answers 5W1H* (a question left genuinely unanswerable ⇒ incomplete; the *Complete* dimension of Falbo made operational).
+- **RF template** (`assets/templates/requirements/RF/_TEMPLATE.md`) — a 5W1H completeness comment-guide under *Enunciado de negócio*.
+
+### Notes
+
+- **Reconciled with naming rule 2 (WHAT not HOW).** The **"How" is explicitly business** — the flow/rule/process the user follows (what the `CA` group + BDD scenarios detail) — **never** the technical means (endpoint/table/component), which stays in Design/ADRs/Tasks. A statement whose only way to answer "How" is to name a technology has leaked design into the requirement.
+- **Version**: `1.26.0 → 1.27.0`. pt-BR mirror synchronized (`references/03` + `SKILL.md §9`).
+
+---
+
 ## [1.26.0] — 2026-06-20
 
 Adds first-class, **traceable** backlog homes for **defects, quality work, triage and time-boxed investigation**, and aligns the OpenProject mapping with the real *"Controle de Dopagem"* project structure (3-level Epic nesting; Bug/Melhoria/CA as work-package types).

@@ -11,6 +11,12 @@
 
 > **<Uma frase: o sistema permite que [persona] [faça algo] [com qual valor/limite percebido]>.**
 
+<!-- Completude 5W1H (ref03 §2.1.1) — o enunciado + o corpo deste RF devem deixar responder as SEIS:
+     · Quem  → a persona               · O quê → a função/serviço (a frase acima)
+     · Onde  → o módulo/tela           · Quando → o gatilho/prazo/frequência
+     · Por quê → a ## Justificativa     · Como  → o fluxo/regra de NEGÓCIO (detalhado nos CA/BDD)
+     "Como" é de NEGÓCIO (passo a passo do usuário), NUNCA o como técnico (endpoint/tabela → ADR/Task, regra 2). -->
+
 ## Justificativa (por que este requisito existe)
 
 <dor real do usuário/negócio; impacto de produto; KPI alvo se houver>
