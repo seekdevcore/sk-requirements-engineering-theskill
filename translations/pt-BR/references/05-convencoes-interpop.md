@@ -213,6 +213,8 @@ Detalhamento e diagrama em [`../examples/template-backlog-openproject.md §3`](.
 | Atividade de qualidade (Q&A) | `QA-NN` | `QA-07` | Testes/reviews/gates transversais; `qa/` → Epic-filho "Q&A" |
 | Issue de triagem | `ISS-NN` | `ISS-12` | Item de inbox transitório; `issues/` → Epic-filho "Issues" |
 | Spike (investigação) | `SPK-NN` | `SPK-02` | Time-boxed; `issues/spikes/` → Epic-filho "Spikes" |
+| Postmortem (incidente) | `PM-NN` | `PM-03` | Documento (não item de backlog); `docs/postmortems/`; ↑ `RNF`/`CA` violado |
+| Runbook (operação) | `RB-NN` | `RB-05` | Documento (não item de backlog); `docs/runbooks/`; ↑ o `RNF` de resiliência/disponib. |
 
 **Regra ouro**: IDs são **eternos**. Não renumeram quando algo muda; a versão muda. Isso preserva rastreabilidade em commits, PRs, ADRs.
 

@@ -15,7 +15,7 @@
 
 ## Triage
 
-- **Verdict**: Bug | Spike | TX (support) | Melhoria | Duplicate | Won't-fix
+- **Verdict**: Bug | Spike | TX (support) | Melhoria | **Incident (→ PM in `docs/postmortems/`)** | Duplicate | Won't-fix
 - **Rationale**: <one line on why>
 
 ## Outcome ↓ (what it became — keep the chain)

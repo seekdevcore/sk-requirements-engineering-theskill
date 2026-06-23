@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.27.0
+version: 1.28.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -308,7 +308,7 @@ Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Task
 | 5 | **ACs always grouped** under a `CA - <Theme>` title (even a single AC) + the `[...]` sub-rule convention | ref05 R7 |
 | 6 | **Technical config is NOT a Feature** (ESLint, env vars, docker-compose…) → cross-cutting Task `TX-NN`. **Feature = customer-deliverable** | ref05 R4 |
 | 7 | **Priority at every node**: 🔴 Immediate · 🟠 High · 🟡 Normal · 🟢 Low (MoSCoW equivalent) | ref05 R5 |
-| 8 | **Stable, eternal IDs**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `G-NN` (never renumbered) | ref05 (IDs) |
+| 8 | **Stable, eternal IDs**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `PM-NN` · `RB-NN` · `G-NN` (never renumbered) | ref05 (IDs) |
 | 9 | **One Feature = one thing** (atomicity) — bundles two (e.g. registration + update)? split into two (atomic CRUD) | ref05 R4b |
 
 > **Structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — en-CA folder names, pt-BR Epic titles restored by the adapter on export:
@@ -373,6 +373,8 @@ Formal change process (Sommerville Fig 4.19):
 **Identified problem → analysis/specification → impact + cost analysis → implementation** (with rollback on the requirements document synchronized with the code).
 
 Traceability: every requirement ID → design → code → test. Without it, changing 1 requirement turns into "which modules do I touch?". Detail in [references/07-mudanca-rastreabilidade.md](references/07-mudanca-rastreabilidade.md).
+
+**The "after" loop — postmortems & runbooks close traceability in production.** RE is *before* **and** *after* (§1): a dependability `RNF` (availability/`RTO`/`RPO`) is a promise until an incident tests it. Two traceability-participating records live as top-level folders under `docs/` (siblings of `requirements/`/`backlog/`, seeded by the scaffolder) — **like ADRs: documents, not backlog items, not OpenProject work packages**: a **postmortem** (`PM-NN`, `docs/postmortems/`) records a production incident → links **↑** to the `RNF`/`CA` it violated, **←** to the `ISS-NN` it was triaged from (an *incident* is a 5th triage outcome of the issues inbox), **↓** to corrective `BUG`/`TX` + any RNF tightening (through the document first, §2.1); a **runbook** (`RB-NN`, `docs/runbooks/`) is the procedure that *delivers* a resilience/availability `RNF` → links **↑** to it. This skill owns the **home + the link contract**; the authoring craft (blameless write-up, 5-whys, runbook steps) is delegated to the `documentation-engineer` agent / `postmortem-writing` · `incident-runbook-templates` skills. Concept: [references/13-confiabilidade-seguranca.md §11](references/13-confiabilidade-seguranca.md) + on-disk home [references/10-estrutura-projeto.md §6.1](references/10-estrutura-projeto.md).
 
 ---
 

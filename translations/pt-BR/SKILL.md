@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.27.0
+version: 1.28.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -306,7 +306,7 @@ Aplica-se a TODOS os títulos de Epic/Feature/US/CA/**RF**/RNF/regra de negócio
 | 5 | **CAs sempre agrupados** sob um título `CA - <Tema>` (mesmo 1 só) + a convenção `[...]` de sub-regras | ref05 R7 |
 | 6 | **Config técnica NÃO é Feature** (ESLint, env vars, docker-compose…) → Task transversal `TX-NN`. **Feature = entregável-ao-cliente** | ref05 R4 |
 | 7 | **Prioridade em todo nó**: 🔴 Imediata · 🟠 Alta · 🟡 Normal · 🟢 Baixa (equivalente a MoSCoW) | ref05 R5 |
-| 8 | **IDs estáveis e eternos**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `G-NN` (nunca renumerados) | ref05 (IDs) |
+| 8 | **IDs estáveis e eternos**: `EP-NN`(`.M.K`) · `F-NN` · `CANN` · `USNN.M` · `TNN.M.K` · `TX-NN` · `BUG-NN` · `QA-NN` · `ISS-NN` · `SPK-NN` · `PM-NN` · `RB-NN` · `G-NN` (nunca renumerados) | ref05 (IDs) |
 | 9 | **Uma Feature = uma coisa** (atomicidade) — junta duas (ex.: cadastro + atualização)? quebre em duas (CRUD atômico) | ref05 R4b |
 
 > **Buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — pastas en-CA, títulos de Epic pt-BR restaurados pelo adapter no export:
@@ -371,6 +371,8 @@ Processo formal de mudança (Sommerville Fig 4.19):
 **Problema identificado → análise/especificação → análise de impacto + custo → implementação** (com rollback no documento de requisitos sincronizado com o código).
 
 Rastreabilidade: todo ID de requisito → design → código → teste. Sem ela, mudar 1 requisito vira "quais módulos eu toco?". Detalhe em [references/07-mudanca-rastreabilidade.md](references/07-mudanca-rastreabilidade.md).
+
+**O loop do "depois" — postmortems & runbooks fecham a rastreabilidade em produção.** ER é *antes* **e** *depois* (§1): um `RNF` de dependability (disponibilidade/`RTO`/`RPO`) é promessa até um incidente testá-lo. Dois registros que participam da rastreabilidade vivem como pastas top-level sob `docs/` (irmãs de `requirements/`/`backlog/`, semeadas pelo scaffolder) — **como ADRs: documentos, não itens de backlog, não work packages do OpenProject**: um **postmortem** (`PM-NN`, `docs/postmortems/`) registra um incidente → liga **↑** ao `RNF`/`CA` violado, **←** ao `ISS-NN` de que foi triado (um *incidente* é o 5º desfecho de triagem do inbox de issues), **↓** aos `BUG`/`TX` corretivos + aperto de RNF (pelo documento primeiro, §2.1); um **runbook** (`RB-NN`, `docs/runbooks/`) é o procedimento que *entrega* um `RNF` de resiliência/disponibilidade → liga **↑** a ele. A skill possui a **casa + o contrato de links**; o ofício de escrever (relato blameless, 5-porquês, passos do runbook) é delegado ao agent `documentation-engineer` / skills `postmortem-writing` · `incident-runbook-templates`. Conceito: [references/13-confiabilidade-seguranca.md §11](references/13-confiabilidade-seguranca.md) + casa em disco [references/10-estrutura-projeto.md §6.1](references/10-estrutura-projeto.md).
 
 ---
 
