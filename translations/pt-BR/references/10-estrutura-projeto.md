@@ -230,6 +230,25 @@ specs/
 
 ---
 
+## 6.1 Registros de operação — `postmortems/` & `runbooks/` (a evidência do "depois")
+
+```
+docs/
+├── postmortems/        registros de incidente em produção (NÃO são itens de backlog)
+│   ├── README.md
+│   └── PM-NN-<slug>.md   um por incidente — ↑ RNF/CA violado · ← origem ISS · ↓ BUG/TX corretivo + aperto de RNF
+└── runbooks/           procedimentos operacionais (NÃO são itens de backlog)
+    ├── README.md
+    └── RB-NN-<slug>.md   um por procedimento — ↑ o RNF de resiliência/disponibilidade que operacionaliza
+```
+
+São **pastas top-level sob `docs/`** (irmãs de `requirements/`/`backlog/`), semeadas vazias pelo scaffolder. São a **evidência do "depois"** da ER — fecham o loop que a skill promete (ER é *antes* E *depois*: o requisito se sustentou em produção?). Comportam-se como **ADRs**: documentos que **ligam-se à** espinha de rastreabilidade, **não** são nós dela e **não** são work packages do OpenProject.
+
+- **Postmortem (`PM-NN`)** — registra que um **`RNF` de dependability** (disponibilidade/confiabilidade/resiliência, [`13-confiabilidade-seguranca.md`](13-confiabilidade-seguranca.md)) ou um `CA` **falhou em produção**. Liga **↑** ao que falhou, **←** ao `ISS-NN` de que foi triado (um *incidente* é o 5º desfecho de triagem do inbox de issues), **↓** aos `BUG-NN`/`TX-NN` corretivos, a um novo `RB-NN`, e a qualquer **aperto de RNF** (pelo documento de requisitos primeiro — §2.1).
+- **Runbook (`RB-NN`)** — o procedimento operacional que **entrega** um `RNF` de resiliência/disponibilidade (`RTO`/`RPO`/`AVAIL`). Liga **↑** a esse `RNF` e à `F-NN`/spec que serve.
+
+> **Fronteira de escopo.** Esta skill possui a **casa + o contrato de rastreabilidade** (os links `↑/←/↓` e os ids `PM-NN`/`RB-NN`). O **ofício de escrever** — relato blameless, timeline, 5-porquês, passos/verificação/rollback do runbook — é delegado ao agent `documentation-engineer` e às skills `postmortem-writing` / `incident-runbook-templates`. Detalhe do conceito: [`13-confiabilidade-seguranca.md §11`](13-confiabilidade-seguranca.md).
+
 ## 7. Executando o scaffolder (detect → create → reorganize)
 
 O scaffolder roda os mesmos três passos toda vez, em ordem: **(1) detect** o alvo e o classifica (GREENFIELD / HAS-STRUCTURE / LOOSE-FILES / **LEGACY-MONOLITH**), **(2) create** qualquer pasta/template faltante (nunca sobrescrevendo), **(3) reorganize** os arquivos soltos para o lugar (auto-habilitado quando a detecção encontra algum). A raiz default é `docs/`; dry-run é o default.

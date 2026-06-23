@@ -262,6 +262,21 @@ Falhou em ≥1 num serviço crítico → a especificação de dependabilidade es
 
 ---
 
+## 11. Operações rastreáveis — postmortems & runbooks fecham o loop do "depois"
+
+Dependability é a única família de `RNF` que só se **confirma em produção**: uma meta `AVAIL`/`RTO`/`POFOD` é promessa até um incidente testá-la. O loop não termina em "o `RNF` está escrito" — termina quando o comportamento em execução volta **para** o requisito. Dois artefatos carregam isso e **participam da rastreabilidade** (escopo da skill; o *ofício de escrever* é delegado — ver a nota de fronteira):
+
+| Artefato | Id · casa | O que é | Rastreabilidade |
+|---|---|---|---|
+| **Postmortem** | `PM-NN` · `docs/postmortems/` | registro de um **incidente** em produção — um `RNF` de dependability (ou `CA`) que **falhou** | **↑** o `RNF`/`CA` violado · **←** o `ISS-NN` de que foi triado (incidente = desfecho de triagem do inbox de issues) ou alerta de monitoração · **↓** `BUG-NN`/`TX-NN` corretivos, um novo `RB-NN`, e qualquer **aperto de RNF** (pelo documento primeiro — `SKILL.md §2.1`) |
+| **Runbook** | `RB-NN` · `docs/runbooks/` | **procedimento** que *entrega* um `RNF` de resiliência/disponibilidade (a metade sociotécnica do §6) | **↑** o `RNF` que operacionaliza (`RTO`/`RPO`/`AVAIL`) + a `F-NN`/spec que serve · **↔** os `PM-NN` que o exercitaram |
+
+> **Por que aqui.** O §6 já diz que resiliência é *sociotécnica* — incident runbooks e on-call fazem parte de cumprir o `RNF`. Um postmortem é a evidência de que o `RNF` se sustentou ou quebrou; um runbook torna o `RTO`/`RPO` real. Ambos são a evidência do "depois" desta família.
+
+> **Fronteira de escopo.** A skill possui só a **casa** (`docs/postmortems/`, `docs/runbooks/` — semeadas pelo scaffolder, [`10-estrutura-projeto.md §6.1`](10-estrutura-projeto.md)) e o **contrato de rastreabilidade** (`↑/←/↓` + ids `PM-NN`/`RB-NN`). O ofício de escrever (relato blameless, 5-porquês, passos do runbook) é do agent **`documentation-engineer`** e das skills **`postmortem-writing`** / **`incident-runbook-templates`**. São **documentos** que se ligam à espinha (como ADRs) — nunca itens de backlog nem work packages; só as *ações corretivas* viram `BUG`/`TX`.
+
+---
+
 *Sources: Sommerville 10e, Part 2 — Ch. 10 (Dependable systems), §11.2 (Reliability requirements & metrics:
 POFOD/ROCOF/MTTF/AVAIL), §12.2 (Safety requirements; hazard-driven derivation, SIL, safety cases §12.4), §13.3
 (Security requirements; risk-driven process, Fig. 13.5/13.7 — asset/exposure/threat/control), Ch. 14

@@ -15,22 +15,25 @@
 The **triage inbox** — where anything raw enters before it is classified. An `ISS-NN` is **transient by design**: on triage it is reclassified into the right artifact and **moved** (`git mv`) to its real home. **To triage is to investigate** — analysing an incoming report *is* the investigation step; deeper, time-boxed investigations become a **Spike** ([`spikes/`](spikes/), the child Epic).
 
 ```
-raw report  →  ISS-NN (inbox)  →  triage  →  BUG-NN (bugs/)        ← defect
+raw report  →  ISS-NN (inbox)  →  triage  →  BUG-NN (bugs/)        ← defect (against a CA)
                                           →  SPK-NN (issues/spikes/) ← needs investigation
                                           →  TX-NN  (../support/)    ← technical/config
                                           →  Melhoria (../../melhorias/) ← enhancement
+                                          →  PM-NN  (../../../postmortems/) ← PRODUCTION INCIDENT
                                           →  duplicate / won't-fix   ← closed with rationale
 ```
+
+> **Incident vs. bug.** A pointed **defect against a `CA`** → `BUG-NN`. A **production incident** (outage, data loss, a dependability `RNF` breach — with a timeline, root cause and *several* actions) → a **postmortem `PM-NN`** in [`docs/postmortems/`](../../../postmortems/) (its corrective actions re-enter here as `BUG`/`TX`). Postmortem ≠ backlog item — see [`../../../../../references/13-confiabilidade-seguranca.md §11`](../../../../../references/13-confiabilidade-seguranca.md).
 
 ## Items in this bucket (each `ISS-NN-*.md` → a child of the "Issues" Epic)
 
 | ID | Raw report | Triage verdict | Became | Status |
 | --- | --- | --- | --- | --- |
-| `ISS-01` | `<what was observed/requested>` | Bug/Spike/TX/Melhoria/dup | `<target id>` | 🆕 New |
+| `ISS-01` | `<what was observed/requested>` | Bug/Spike/TX/Melhoria/Incident/dup | `<target id>` | 🆕 New |
 
 ## Traceability
 
-An `ISS-NN` is the **origin** node: it links **↓** to whatever it became (`BUG-NN` / `SPK-NN` / `TX-NN` / Melhoria), so the chain *report → triage → work* is never lost. The reclassified item links back **↑** to its `ISS-NN`. This `README.md` is **not** exported as an item.
+An `ISS-NN` is the **origin** node: it links **↓** to whatever it became (`BUG-NN` / `SPK-NN` / `TX-NN` / Melhoria / `PM-NN`), so the chain *report → triage → work* is never lost. The reclassified item links back **↑** to its `ISS-NN`. This `README.md` is **not** exported as an item.
 
 ## Related ADRs
 

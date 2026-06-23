@@ -216,6 +216,8 @@ Detail and diagram in [`../examples/template-backlog-openproject.md §3`](../exa
 | Quality activity (Q&A) | `QA-NN` | `QA-07` | Cross-cutting tests/reviews/gates; `qa/` → child Epic "Q&A" |
 | Triage issue | `ISS-NN` | `ISS-12` | Transient inbox item; `issues/` → child Epic "Issues" |
 | Spike (investigation) | `SPK-NN` | `SPK-02` | Time-boxed; `issues/spikes/` → child Epic "Spikes" |
+| Postmortem (incident) | `PM-NN` | `PM-03` | Document (not a backlog item); `docs/postmortems/`; ↑ violated `RNF`/`CA` |
+| Runbook (operations) | `RB-NN` | `RB-05` | Document (not a backlog item); `docs/runbooks/`; ↑ the resilience/avail `RNF` |
 
 **Golden rule**: IDs are **eternal**. They do not renumber when content changes; the version changes. This preserves traceability in commits, PRs, ADRs.
 

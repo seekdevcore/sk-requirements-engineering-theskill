@@ -31,7 +31,7 @@ So the document is **plain Markdown in the repo**, and the tracker (if any) mirr
 | `backlog/` | **WHO does WHAT, WHEN** — what work is planned / in progress / done? | team, PO | business rationale that belongs in `requirements/` |
 | `specs/` | **HOW** — the technical design that realizes a feature (SDD only) | engineers | product justification (that lives upstream) |
 
-Cross-cutting both: **ADRs** record the *decisions* taken along the way (two-tier scheme — §5).
+Cross-cutting all: **ADRs** record the *decisions* taken along the way (two-tier scheme — §5); **postmortems** (`docs/postmortems/`) record incidents where a dependability `RNF`/`CA` failed in production; **runbooks** (`docs/runbooks/`) record the operational procedures that deliver a resilience/availability `RNF`. All three are documents that *link into* the spine, not nodes of it — see §6.1 and [`13-confiabilidade-seguranca.md §11`](13-confiabilidade-seguranca.md).
 
 ---
 
@@ -61,9 +61,13 @@ Commit (SHA)                        ← cross-ref in the Task
 Acceptance Criterion ──violated by──▶ Bug (BUG-NN)     ← backlog/bugs/ (type "Bug", parented to the US/Feature)
 US / Feature / decision ──triggers──▶ Spike (SPK-NN)   ← backlog/support-quality-investigation/issues/spikes/ → ADR
 RNF / Feature ──verified by──────────▶ Q&A (QA-NN)      ← backlog/support-quality-investigation/qa/ (tests/reviews/gates)
-raw report ──triaged into──▶ Bug/Spike/TX/Melhoria      ← backlog/support-quality-investigation/issues/ (ISS-NN)
+raw report ──triaged into──▶ Bug/Spike/TX/Melhoria/Incident   ← backlog/support-quality-investigation/issues/ (ISS-NN)
 project (no single Feature) ──served by──▶ TX (TX-NN)    ← backlog/support-quality-investigation/support/
+RNF / CA ──failed in production──▶ Postmortem (PM-NN)  ← docs/postmortems/  → corrective BUG/TX + RNF tightening (§2.1)
+RNF (resilience RTO/RPO, avail) ──operationalized by──▶ Runbook (RB-NN)  ← docs/runbooks/
 ```
+
+> **The "after" loop closes here.** A postmortem (`PM-NN`) is the evidence that a dependability `RNF`/`CA` *failed in production*; a runbook (`RB-NN`) is the procedure that *delivers* a resilience/availability `RNF`. Both are **traceability-participating records** (like ADRs — documents, not backlog items, not OpenProject work packages); only a postmortem's **corrective actions** re-enter the backlog as `BUG`/`TX` (and a requirement change goes through the document first, §2.1). An incident often **enters via the issues inbox** (a 5th triage outcome → `PM-NN`). Concept + how to phrase the links: [`references/13-confiabilidade-seguranca.md §11`](13-confiabilidade-seguranca.md). The authoring craft is delegated to the `documentation-engineer` agent / `postmortem-writing` · `incident-runbook-templates` skills.
 
 **Hard rule — bidirectional links.** Every node names its **parent** and its **children** via a relative link. A requirement file carries a `## Realized by` section listing the Epics/Features that execute it; an Epic file carries both `## Requirements realized (↑)` and `## Features under this Epic (↓)`. Without bidirectional traceability, changing one requirement becomes "which modules do I touch?" guesswork — the exact failure `SKILL.md §8 anti-pattern 8` warns against.
 
@@ -250,6 +254,25 @@ specs/
 **Do not** put product justification in `specs/` — that is upstream in `requirements/`. `specs/` starts from "we are building F-NN; here is how".
 
 ---
+
+## 6.1 Operations records — `postmortems/` & `runbooks/` (the "after" evidence)
+
+```
+docs/
+├── postmortems/        production-incident records (NOT backlog items)
+│   ├── README.md
+│   └── PM-NN-<slug>.md   one per incident — ↑ violated RNF/CA · ← origin ISS · ↓ corrective BUG/TX + RNF tightening
+└── runbooks/           operational procedures (NOT backlog items)
+    ├── README.md
+    └── RB-NN-<slug>.md   one per procedure — ↑ the resilience/availability RNF it operationalizes
+```
+
+These are **top-level folders under `docs/`** (siblings of `requirements/`/`backlog/`), seeded empty by the scaffolder. They are the RE **"after" evidence** — closing the loop the skill claims (RE is *before* AND *after*: did the requirement hold in production?). They behave like **ADRs**: documents that **link into** the traceability spine, **not** nodes of it and **not** OpenProject work packages.
+
+- **Postmortem (`PM-NN`)** — records that a **dependability `RNF`** (availability/reliability/resilience, [`13-confiabilidade-seguranca.md`](13-confiabilidade-seguranca.md)) or a `CA` **failed in production**. Links **↑** to what failed, **←** to the `ISS-NN` it was triaged from (an *incident* is a 5th triage outcome of the issues inbox), **↓** to corrective `BUG-NN`/`TX-NN`, a new `RB-NN`, and any **RNF tightening** (through the requirements document first — §2.1).
+- **Runbook (`RB-NN`)** — the operational procedure that **delivers** a resilience/availability `RNF` (`RTO`/`RPO`/`AVAIL`). Links **↑** to that `RNF` and the `F-NN`/spec it serves.
+
+> **Scope boundary.** This skill owns the **home + the traceability contract** (the `↑/←/↓` links above and the `PM-NN`/`RB-NN` ids). The **authoring craft** — blameless write-up, timeline, 5-whys, runbook steps/verification/rollback — is delegated to the `documentation-engineer` agent and the `postmortem-writing` / `incident-runbook-templates` skills. Concept detail: [`13-confiabilidade-seguranca.md §11`](13-confiabilidade-seguranca.md).
 
 ## 7. Running the scaffolder (detect → create → reorganize)
 

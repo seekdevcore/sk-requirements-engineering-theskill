@@ -263,6 +263,21 @@ Failed ≥1 on a critical service → the dependability spec is incomplete. Retu
 
 ---
 
+## 11. Traceable operations — postmortems & runbooks close the "after" loop
+
+Dependability is the one `RNF` family you can only **confirm in production**: an `AVAIL`/`RTO`/`POFOD` target is a promise until an incident tests it. So the loop is not complete at "the `RNF` is written" — it completes when the running system's behaviour is fed **back** to the requirement. Two artifacts carry that, and they **participate in traceability** (this is the skill's scope; the *authoring craft* is delegated — see the boundary note):
+
+| Artifact | Id · home | What it is | Traceability |
+|---|---|---|---|
+| **Postmortem** | `PM-NN` · `docs/postmortems/` | record of a production **incident** — a dependability `RNF` (or a `CA`) that **failed** | **↑** the `RNF`/`CA` it violated · **←** the `ISS-NN` it was triaged from (incident = a triage outcome of the issues inbox) or a monitoring alert · **↓** corrective `BUG-NN`/`TX-NN`, a new `RB-NN`, and any **RNF tightening** (through the requirements document first — `SKILL.md §2.1`) |
+| **Runbook** | `RB-NN` · `docs/runbooks/` | operational **procedure** that *delivers* a resilience/availability `RNF` (the sociotechnical half of §6) | **↑** the `RNF` it operationalizes (`RTO`/`RPO`/`AVAIL`) + the `F-NN`/spec it serves · **↔** the `PM-NN`s that exercised/updated it |
+
+> **Why here.** §6 already says resilience is *sociotechnical* — incident runbooks and on-call are part of meeting the `RNF`. A **postmortem** is the evidence that the dependability `RNF` held or broke; a **runbook** is the procedure that makes the `RTO`/`RPO` real. Both are the dependability family's "after" evidence, so they are anchored to it.
+
+> **Scope boundary (what this skill does NOT do).** The skill owns only the **home** (`docs/postmortems/`, `docs/runbooks/` — seeded by the scaffolder, [`10-estrutura-projeto.md §6.1`](10-estrutura-projeto.md)) and the **traceability contract** (the `↑/←/↓` links + the `PM-NN`/`RB-NN` ids). It does **not** teach the blameless write-up, the 5-whys, the timeline, or the runbook steps/verification/rollback — that craft belongs to the **`documentation-engineer`** agent and the **`postmortem-writing`** / **`incident-runbook-templates`** skills. Postmortems/runbooks are **documents** that link into the spine (like ADRs) — never backlog items, never OpenProject work packages; only a postmortem's *corrective actions* become `BUG`/`TX`.
+
+---
+
 *Sources: Sommerville 10e, Part 2 — Ch. 10 (Dependable systems), §11.2 (Reliability requirements & metrics:
 POFOD/ROCOF/MTTF/AVAIL), §12.2 (Safety requirements; hazard-driven derivation, SIL, safety cases §12.4), §13.3
 (Security requirements; risk-driven process, Fig. 13.5/13.7 — asset/exposure/threat/control), Ch. 14

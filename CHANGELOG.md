@@ -13,6 +13,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.28.0] — 2026-06-23
+
+Adds **postmortems** and **runbooks** as traceability-participating records — closing the RE "after" loop (did the requirement hold in production?), anchored to the dependability `RNF` family.
+
+### Added
+
+- **`docs/postmortems/` + `docs/runbooks/`** — two top-level folders under `docs/` (siblings of `requirements/`/`backlog/`), seeded by the scaffolder (it mirrors `assets/templates/`, so no scaffolder code change). Each carries a `README.md` (the folder's purpose + traceability contract) and a **minimal** `_TEMPLATE.md` focused on the `↑/←/↓` links — the *authoring craft* (blameless write-up, 5-whys, runbook steps) is **delegated** to the `documentation-engineer` agent and the `postmortem-writing` / `incident-runbook-templates` skills.
+- **Traceability contract.** A **postmortem (`PM-NN`)** records a production incident: ↑ the dependability `RNF`/`CA` it violated · ← the `ISS-NN` it was triaged from (an *incident* is a new **5th triage outcome** of the issues inbox, beside Bug/Spike/TX/Melhoria) · ↓ corrective `BUG-NN`/`TX-NN`, a new `RB-NN`, and any **RNF tightening** (through the requirements document first, §2.1). A **runbook (`RB-NN`)** is the procedure that *delivers* a resilience/availability `RNF` (`RTO`/`RPO`/`AVAIL`): ↑ that `RNF` + the `F-NN`/spec it serves. Both are **documents that link into the spine — like ADRs**: not backlog items, not OpenProject work packages (only a postmortem's corrective actions are).
+- **New IDs** `PM-NN` · `RB-NN` (ref05 ID table + `SKILL.md` hard-rule 8 + pt-BR mirror).
+- **Concept** documented in `references/13-confiabilidade-seguranca.md §11` (the dependability anchor — §6 already noted resilience is sociotechnical: runbooks/on-call), the on-disk home in `references/10-estrutura-projeto.md §6.1` + the spine side-branches (§2) + the cross-cutting note (§1), and a short Phase-E note in `SKILL.md`.
+
+### Changed
+
+- **Issues triage** now lists **Incident → `PM-NN`** as a fifth outcome (issues `README.md` + `_TEMPLATE.md`): a pointed defect against a `CA` → `BUG`; a production incident (outage / data loss / dependability `RNF` breach) → a postmortem.
+- **Scope boundary stated explicitly**: this skill owns the *home + the traceability contract* only; postmortem/runbook *authoring* is delegated (avoids duplicating the `documentation-engineer` agent and SRE skills).
+- **Version**: `1.27.0 → 1.28.0`. pt-BR mirror synchronized (references 05/10/13 + `SKILL.md`).
+
+> Verified: scaffolder seeds `docs/postmortems/` + `docs/runbooks/` on greenfield; all 100 real relative links in the touched files resolve.
+
+---
+
 ## [1.27.0] — 2026-06-21
 
 Adds the **5W1H completeness check** for requirement statements — a requirement *enunciado* is complete when the reader can answer Who / What / Where / When / Why / How from it.
