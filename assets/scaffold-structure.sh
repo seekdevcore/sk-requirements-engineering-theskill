@@ -130,7 +130,7 @@ for f in "$ROOT"/ADR-*.md "$ROOT"/planning/ADR-*.md;  do case "$f" in "$ROOT"/sp
 
 # legacy bucket files: a pre-v1.21 skill version seeded the two MANDATORY buckets
 # (Melhorias / Atividades Complementares) as epics/EP-*.md FILES. They are now
-# structural DIRECTORIES (backlog/melhorias/ + backlog/atividades-complementares/),
+# structural DIRECTORIES (backlog/improvements/ + backlog/atividades-complementares/),
 # each collapsing to a ROOT Epic on OpenProject export. Migrate the old file -> bucket README.
 legacy_buckets=()
 for f in "$ROOT"/backlog/epics/EP-melhorias.md "$ROOT"/backlog/epics/EP-atividades-complementares.md \
@@ -176,7 +176,7 @@ if [ "${#monoliths[@]}" -gt 0 ]; then
   warn "  LEGACY-MONOLITH candidate(s) — NOT auto-moved (prose split needs judgment):"
   for f in "${monoliths[@]}"; do say "    - $f"; done
   warn "  → After scaffolding, MIGRATE: split each into requirements/RF/RF-*.md + requirements/RNF/RNF-*.md,"
-  warn "    seed personas-e-cenarios.md + glossario.md from it, and keep the original as a consolidated"
+  warn "    seed personas-and-scenarios.md + glossary.md from it, and keep the original as a consolidated"
   warn "    overview that links INTO the split. See references/10-estrutura-projeto.md §8 (reorganizing)."
 fi
 # resolve auto reorganize
@@ -196,7 +196,7 @@ say ""
 if [ "${#legacy_buckets[@]}" -gt 0 ]; then
   info "[migrate] legacy bucket files -> structural bucket directories"
   for f in "$ROOT"/backlog/epics/EP-melhorias.md "$ROOT"/backlog/EP-melhorias.md; do
-    [ -e "$f" ] && mv_file "$f" "$ROOT/backlog/melhorias/README.md"
+    [ -e "$f" ] && mv_file "$f" "$ROOT/backlog/improvements/README.md"
   done
   for f in "$ROOT"/backlog/epics/EP-atividades-complementares.md "$ROOT"/backlog/EP-atividades-complementares.md; do
     [ -e "$f" ] && mv_file "$f" "$ROOT/backlog/atividades-complementares/README.md"
@@ -209,7 +209,7 @@ fi
 #   v1.26 reframes the lone TX bucket as the "Apoio" child of the Support/Quality/Investigation
 #   umbrella. The old directory (README + TX-NN-*.md) moves into the new support/ bucket; the
 #   generic new templates are then skipped because the moved files now occupy the targets.
-#   (`melhorias/` is unchanged — not migrated.)
+#   (The improvements/ bucket — formerly `melhorias/` — is migrated separately in STEP 1.7.)
 # ============================================================================
 OLD_AC="$ROOT/backlog/atividades-complementares"
 NEW_SUPPORT="$ROOT/backlog/support-quality-investigation/support"
@@ -226,6 +226,30 @@ if [ -d "$OLD_AC" ]; then
       || warn "  note: $OLD_AC kept (leftover non-TX files) — review and remove manually"
   else
     warn "  move PLAN    remove $OLD_AC/ once its files are migrated"
+  fi
+  say ""
+fi
+
+# ============================================================================
+# STEP 1.7 — MIGRATE the pt-BR-named DIRECTORY -> en-CA (v1.30)
+#   Project-structure convention: DIRECTORIES are English. Rename the one remaining pt-BR
+#   directory in an existing project — content language unchanged, only the on-disk NAME moves:
+#     backlog/melhorias/  ->  backlog/improvements/
+#   File NAMES are NOT forced — they may follow the user's language (e.g. glossario.md,
+#   personas-e-cenarios.md). Only the directory is renamed here. The Epic title "Melhorias"
+#   (pt-BR) is restored by the adapter on export, independent of the folder name. Runs before
+#   CREATE so the moved files occupy the new target (then skipped).
+# ============================================================================
+OLD_IMP="$ROOT/backlog/melhorias"; NEW_IMP="$ROOT/backlog/improvements"
+if [ -d "$OLD_IMP" ]; then
+  info "[migrate] melhorias/ -> improvements/ (v1.30 en-CA directory name)"
+  for f in "$OLD_IMP"/*.md; do
+    [ -e "$f" ] || continue
+    mv_file "$f" "$NEW_IMP/$(basename "$f")"
+  done
+  if [ "$APPLY" -eq 1 ]; then
+    rmdir "$OLD_IMP" 2>/dev/null && ok "  rmdir   $OLD_IMP (migrated, now empty)" \
+      || warn "  note: $OLD_IMP kept (leftover files) — review and remove manually"
   fi
   say ""
 fi

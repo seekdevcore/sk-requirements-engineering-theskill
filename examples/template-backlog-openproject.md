@@ -1,8 +1,6 @@
 # Template — Backlog in OpenProject style (complete worked example)
 
 > Template **filled with a real example**, not an empty skeleton. Use it as a concrete starting point for any project backlog. Reflects the OpenProject hierarchy per the *"IFPB"* ERS course (LECTURES 07–09) and the *"Interpop"* convention. Replace the example with your domain while keeping all the conventions.
->
-> **Note on language preservation**: explanations, table headers, and analysis are in **en-CA**. **Concrete artifact content** (Feature descriptions, ACs, BDD scenarios, Tasks) is preserved in **pt-BR** because these reproduce the actual *"Interpop"* and *"Controle de Dopagem"* backlog cards — translating would defeat the worked-example purpose.
 
 ---
 
@@ -26,11 +24,11 @@ So:
 Detail in [05-convencoes-interpop.md](../references/05-convencoes-interpop.md) and [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md).
 
 1. **The requirements document is the source of truth.** Always check changes there before touching the backlog (see §0 above).
-2. **Pt-BR without infinitive** in Epic/Feature/US titles: `"Listagem de reservas"`, not `"Listar reservas"`.
+2. **No infinitive** in Epic/Feature/US titles: `"Booking list"`, not `"List bookings"`.
 3. **No technical terms** in Epic/Feature/US/CA/NFR: REST endpoints, libs, frameworks, table names, shell commands — all of these go into **Tasks**.
 4. **ALL artifacts have business-language descriptions**: Epic, Feature, US, CA, NFR. Readable by any stakeholder (PO, client, junior dev just arriving). No URLs, no method names, no stack.
 5. **Feature has a description (paragraph) + ACs**. NEVER has BDD.
-6. **User Story has BDD in pt-BR** (`Dado/Quando/Então`) **inside the "Description" field itself** (not as separate child items in OpenProject) + ACs inherited via traceability. Never has its own ACs.
+6. **User Story has BDD** (`Given/When/Then`) **inside the "Description" field itself** (not as separate child items in OpenProject) + ACs inherited via traceability. Never has its own ACs.
 7. **AC is declarative, atomic, and testable**. If the rule requires sub-rules, end the title with **`[...]`** and detail in the body (see §2 below).
 8. **ACs are always grouped** under a `CA - <Theme>` grouper, even when the Feature has only 1 AC. The grouping keeps visual consistency and eases future insertion.
 9. **Nested Epic** is used when the domain has sub-classifications (module → group → operation). This is the faithful way to organize large systems in OpenProject.
@@ -39,7 +37,7 @@ Detail in [05-convencoes-interpop.md](../references/05-convencoes-interpop.md) a
 
 ## 2. `[...]` convention for ACs with detail (hard rule)
 
-When an AC needs sub-rules to be fully testable, **end the title with `[...]`**. In the item body (the "description" field in OpenProject), open with `Regras a serem aplicadas:` followed by bullets.
+When an AC needs sub-rules to be fully testable, **end the title with `[...]`**. In the item body (the "description" field in OpenProject), open with `Rules to be applied:` followed by bullets.
 
 **Why it exists**: whoever reads the backlog in **list mode** (OpenProject default view, with 50+ items on screen) must decide in 1 second whether that AC is self-sufficient or requires a click. The `[...]` signals this unambiguously.
 
@@ -48,24 +46,24 @@ When an AC needs sub-rules to be fully testable, **end the title with `[...]`**.
 **Title on the card** (visible in list mode):
 
 ```
-CA09 - O combobox FEDERAÇÃO deve aplicar as regras de preenchimento e validação conforme detalhamento [...]
+CA09 - The FEDERATION combobox must apply the fill-in and validation rules as detailed [...]
 ```
 
 **Description (item body, read on opening)**:
 
 ```
-Regras a serem aplicadas:
-- O combobox FEDERAÇÃO só deverá ser habilitado se tiver uma CONFEDERAÇÃO selecionada.
-- Só deve exibir as Federações ATIVAS.
-- Em ordem ALFABÉTICA.
-- Deve exibir apenas as federações que o usuário logado está associado no seu cadastro de acesso.
-- Deve permitir busca parcial ao digitar.
+Rules to be applied:
+- The FEDERATION combobox is only enabled if a CONFEDERATION is selected.
+- It must show only ACTIVE federations.
+- In ALPHABETICAL order.
+- It must show only the federations the logged-in user is associated with in their access record.
+- It must allow partial search as the user types.
 ```
 
 **Contrast — self-sufficient AC (without `[...]`)**:
 
 ```
-CA05 - O campo CPF não é obrigatório. Mas se preenchido, deverá ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro.
+CA05 - The CPF field is not mandatory. But if filled in, it must be in the format XXX.XXX.XXX-XX. If the CPF is invalid, emit an error message.
 ```
 
 It does not need `[...]` because the title already contains everything required to test.
@@ -109,25 +107,25 @@ PROJECT (not a node in OpenProject — it is the project repository/context)
 
 > **🔴 Important rule about multiple root Epics**: a project **may (and almost always does) have multiple root Epics at the top level**, siblings to each other, **without a single "project-Epic" parent**. Each root Epic represents an **independent front** of the project: a platform (Web Application, Mobile Application), an operational family (Support, Quality and Investigation Activities), or a cross-cutting module.
 >
-> **Why not creating a single "Product Epic" as the grandparent of everything**: the "product" as a whole is the **OpenProject repository / project context** — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node (no useful description), hurts navigation, and creates ambiguity ("is this root Epic the whole product, or is it a front?").
+> **Why not create a single "Product Epic" as the grandparent of everything**: the "product" as a whole is the **OpenProject repository / project context** — not an item of the hierarchy. Forcing everything under a single "Product Epic" creates an empty parent node (no useful description), hurts navigation, and creates ambiguity ("is this root Epic the whole product, or is it a front?").
 >
 > **Real examples**:
 >
-> - ***"Controle de Dopagem"*** (*"IFPB"* course): `EPIC APLICAÇÃO WEB` · `EPIC APLICAÇÃO MOBILE` · `EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO` — three root Epics, siblings at the top level.
-> - ***"Interpop"***: `EP-10 Busca Editorial` · `EP-09 Filtros Temáticos` · `EP-15 Newsletter` · `EP-20 Moderação Editorial` — several root Epics, siblings. There is no "*"Interpop"*" Epic as parent.
+> - ***"Controle de Dopagem"*** (*"IFPB"* course): `EPIC WEB APPLICATION` · `EPIC MOBILE APPLICATION` · `EPIC SUPPORT, QUALITY AND INVESTIGATION ACTIVITIES` — three root Epics, siblings at the top level.
+> - ***"Interpop"***: `EP-10 Editorial Search` · `EP-09 Thematic Filters` · `EP-15 Newsletter` · `EP-20 Editorial Moderation` — several root Epics, siblings. There is no "*"Interpop"*" Epic as parent.
 
 > **Note on BDD in OpenProject**: BDD scenarios are **content of the User Story "Description" field**, not child items of the hierarchy (they do not become their own cards). The schema above shows the **conceptual** relation (BDD belongs to the US). Whoever works with Cucumber/Behave externally may mirror each scenario in a corresponding `.feature` file.
 
 ---
 
-## 4. WORKED EXAMPLE A — *"Interpop"* *"Busca Editorial"* (1 Epic level)
+## 4. WORKED EXAMPLE A — *"Interpop"* Editorial Search (1 Epic level)
 
 Lean example for medium-scale systems. Reflects what is in production at *"Interpop"*.
 
 > **Requirements document:** [`../docs/specs/busca-editorial/REQUISITOS.md`](../../../../Documentos/Projetos/interpop/docs/specs/busca-editorial/REQUISITOS.md) (rev. of 28/05/2026)
 > **Last requirements-document change check:** 03/06/2026 — no changes since the last sprint.
 
-### 🟦 EP-10 — Busca Editorial
+### 🟦 EP-10 — Editorial Search
 
 | Field | Value |
 |---|---|
@@ -135,17 +133,17 @@ Lean example for medium-scale systems. Reflects what is in production at *"Inter
 | **Priority** | 🟠 High |
 | **Status** | In Progress |
 | **Target sprint** | Sprint 3, Sprint 4 |
-| **Belongs to** | Aplicação Web |
+| **Belongs to** | Web Application |
 | **Direct Features** | `F-30`, `F-31`, `F-32` |
 | **Origin (requirements)** | RF-08, RF-09, RF-10, RNF-04 |
 
 **Description:**
 
-Conjunto de funcionalidades que permite ao leitor encontrar artigos do *"Interpop"* através de palavras-chave e filtros, com resultados ordenados por relevância. Inclui o compartilhamento da busca por link (a URL preserva o termo digitado e os filtros, permitindo que o leitor envie a busca pronta para outra pessoa). O Epic cobre desde a busca simples por texto (Feature `F-30`) até a busca por filtros temáticos (`F-31`) e o compartilhamento (`F-32`).
+A set of features that lets the reader find *"Interpop"* articles through keywords and filters, with results ordered by relevance. Includes sharing the search by link (the URL preserves the typed term and the filters, letting the reader send the ready-made search to another person). The Epic covers everything from simple text search (Feature `F-30`) through thematic-filter search (`F-31`) and sharing (`F-32`).
 
 ---
 
-### 🟩 F-30 — Busca de artigos por texto
+### 🟩 F-30 — Text search of articles
 
 | Field | Value |
 |---|---|
@@ -160,41 +158,41 @@ Conjunto de funcionalidades que permite ao leitor encontrar artigos do *"Interpo
 
 **Description:**
 
-Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os artigos do *"Interpop"* que contenham aquele termo no título, no resumo ou no corpo. Os resultados aparecem ordenados por relevância (artigos com o termo no título aparecem primeiro), com o termo buscado destacado em amarelo dentro de cada resultado. A lista é paginada (carrega 20 artigos por vez, com botão "Carregar mais" no fim) e respeita o tempo de resposta percebido pelo leitor como instantâneo.
+A "Search" screen that lets the reader type a word or phrase and view the *"Interpop"* articles that contain that term in the title, the summary, or the body. The results appear ordered by relevance (articles with the term in the title appear first), with the searched term highlighted in yellow within each result. The list is paginated (loads 20 articles at a time, with a "Load more" button at the bottom) and respects a response time the reader perceives as instantaneous.
 
 #### F-30 Acceptance Criteria
 
-##### 📋 CA - Acesso e visibilidade
+##### 📋 CA - Access and visibility
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA01` | A busca é acessível a qualquer visitante do site, sem necessidade de login. | — |
-| `CA02` | A busca exibe apenas artigos com status **publicado**. Artigos em rascunho ou em moderação nunca aparecem nos resultados. | — |
-| `CA03` | Se o leitor digitar um termo e não houver artigos correspondentes, o sistema exibe a mensagem "Nenhum artigo encontrado para <termo>" e mantém o campo de busca preenchido. | — |
+| `CA01` | The search is accessible to any site visitor, with no need to log in. | — |
+| `CA02` | The search shows only articles with **published** status. Articles in draft or under moderation never appear in the results. | — |
+| `CA03` | If the reader types a term and there are no matching articles, the system displays the message "No articles found for <term>" and keeps the search field filled in. | — |
 
-##### 📋 CA - Comportamento da consulta
-
-| ID | Description | Detail? |
-|---|---|---|
-| `CA04` | A busca aceita termos com **mínimo de 2 caracteres** e **máximo de 100 caracteres**. Termos fora dessa faixa não disparam consulta — o campo exibe a mensagem "Digite entre 2 e 100 caracteres". | — |
-| `CA05` | A busca é **case-insensitive e diacritic-insensitive**: digitar "POP", "pop", "Pop" ou "póp" retorna os mesmos artigos. | — |
-| `CA06` | A busca encontra ocorrências do termo no **título**, **resumo** e **corpo** do artigo, nesta ordem de prioridade de relevância **[...]** | ✅ |
-| `CA07` | A consulta deve ser realizada levando-se em conta as **opções de filtro temático** aplicadas pelo leitor **[...]** | ✅ |
-
-##### 📋 CA - Apresentação dos resultados
+##### 📋 CA - Query behaviour
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA08` | Os resultados são apresentados em **cards verticais empilhados**, contendo título, resumo (primeiras 200 caracteres), data de publicação e autor. O termo buscado aparece destacado em amarelo. | — |
-| `CA09` | A lista carrega **20 artigos por página**. No fim da página, há o botão **"Carregar mais"** que adiciona os próximos 20. | — |
-| `CA10` | A URL da página de busca deve preservar o termo e os filtros aplicados, no formato `/buscar?q=<termo>&tema=<id>`, permitindo compartilhamento. | — |
+| `CA04` | The search accepts terms with a **minimum of 2 characters** and a **maximum of 100 characters**. Terms outside that range do not trigger a query — the field displays the message "Type between 2 and 100 characters". | — |
+| `CA05` | The search is **case-insensitive and diacritic-insensitive**: typing "POP", "pop", "Pop", or "póp" returns the same articles. | — |
+| `CA06` | The search finds occurrences of the term in the article's **title**, **summary**, and **body**, in this order of relevance priority **[...]** | ✅ |
+| `CA07` | The query must be performed taking into account the **thematic filter options** applied by the reader **[...]** | ✅ |
 
-##### 📋 CA - Tempo de resposta
+##### 📋 CA - Presentation of results
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA11` | A primeira tela de resultados deve aparecer em até **800ms (p95)** para acervo de até 5.000 artigos publicados. | — |
-| `CA12` | Quando a consulta passar de 800ms, o sistema exibe um **indicador visual de carregamento** (skeleton dos cards) para não dar impressão de tela travada. | — |
+| `CA08` | The results are presented as **stacked vertical cards**, containing title, summary (first 200 characters), publication date, and author. The searched term appears highlighted in yellow. | — |
+| `CA09` | The list loads **20 articles per page**. At the bottom of the page there is a **"Load more"** button that adds the next 20. | — |
+| `CA10` | The URL of the search page must preserve the term and the applied filters, in the format `/buscar?q=<term>&tema=<id>`, allowing sharing. | — |
+
+##### 📋 CA - Response time
+
+| ID | Description | Detail? |
+|---|---|---|
+| `CA11` | The first results screen must appear within **800ms (p95)** for an archive of up to 5,000 published articles. | — |
+| `CA12` | When the query takes longer than 800ms, the system displays a **visual loading indicator** (card skeleton) so it does not give the impression of a frozen screen. | — |
 
 #### Detail of ACs with `[...]`
 
@@ -203,13 +201,13 @@ Tela "Buscar" que permite ao leitor digitar uma palavra ou frase e visualizar os
 > **Appears in the CA06 item body in OpenProject:**
 
 ```
-Regras a serem aplicadas:
-- A relevância é calculada de forma que artigos com o termo no TÍTULO recebam o maior peso.
-- Em seguida, artigos com o termo no RESUMO recebem peso intermediário.
-- Por fim, artigos com o termo apenas no CORPO recebem o menor peso.
-- Quando dois artigos têm a mesma relevância, o mais recente aparece primeiro.
-- Termos com acento e sem acento são tratados como equivalentes ("acao" encontra "ação").
-- Termos com letra maiúscula e minúscula são tratados como equivalentes ("KPOP" encontra "kpop").
+Rules to be applied:
+- Relevance is calculated so that articles with the term in the TITLE receive the highest weight.
+- Next, articles with the term in the SUMMARY receive intermediate weight.
+- Finally, articles with the term only in the BODY receive the lowest weight.
+- When two articles have the same relevance, the most recent appears first.
+- Accented and unaccented terms are treated as equivalent ("acao" finds "ação").
+- Uppercase and lowercase terms are treated as equivalent ("KPOP" finds "kpop").
 ```
 
 ##### CA07 — Detail
@@ -217,17 +215,17 @@ Regras a serem aplicadas:
 > **Appears in the CA07 item body in OpenProject:**
 
 ```
-Regras a serem aplicadas:
-- O leitor pode selecionar UM OU MAIS filtros temáticos antes ou durante a busca.
-- Os filtros são exibidos como chips clicáveis acima da lista de resultados.
-- Ao selecionar um filtro, a lista é refeita SEM perder o termo de busca atual.
-- Ao remover todos os filtros, a busca volta a considerar todos os temas.
-- Se o leitor combinar termo + filtro e não houver resultados, a mensagem do CA03 deve mencionar tanto o termo quanto o filtro ativo.
+Rules to be applied:
+- The reader can select ONE OR MORE thematic filters before or during the search.
+- The filters are shown as clickable chips above the results list.
+- When a filter is selected, the list is rebuilt WITHOUT losing the current search term.
+- When all filters are removed, the search goes back to considering all themes.
+- If the reader combines term + filter and there are no results, the CA03 message must mention both the term and the active filter.
 ```
 
 #### F-30 User Stories
 
-##### 🟦 US30.1 — Apresentação básica e ordenação dos resultados da busca
+##### 🟦 US30.1 — Basic presentation and ordering of search results
 
 | Field | Value |
 |---|---|
@@ -239,51 +237,50 @@ Regras a serem aplicadas:
 | **Covered ACs** | `CA01`, `CA02`, `CA05`, `CA06`, `CA08`, `CA09`, `CA11` |
 | **Story Points** | 8 |
 
-**US Description (the "Description" field in OpenProject — pt-BR BDD, all scenarios live here):**
+**US Description (the "Description" field in OpenProject — BDD, all scenarios live here):**
 
 ```gherkin
-# language: pt
-Cenário: Leitor realiza busca simples e visualiza resultados ordenados
-  Dado que o leitor está na página principal do Interpop
-  E existem 142 artigos publicados que contêm a palavra "kpop"
-  Quando o leitor acessa a busca pelo menu superior
-  E digita "kpop" no campo de busca
-  E pressiona Enter
-  Então o sistema apresenta uma lista de cards de artigos
-  E os artigos aparecem ordenados do mais relevante para o menos relevante
-  E os primeiros 20 artigos aparecem na primeira tela
-  E o termo "kpop" aparece destacado em amarelo em cada card
-  E a primeira tela completa carrega em menos de 800ms
+Scenario: Reader performs a simple search and views ordered results
+  Given the reader is on the Interpop home page
+  And there are 142 published articles containing the word "kpop"
+  When the reader accesses the search from the top menu
+  And types "kpop" in the search field
+  And presses Enter
+  Then the system presents a list of article cards
+  And the articles appear ordered from most relevant to least relevant
+  And the first 20 articles appear on the first screen
+  And the term "kpop" appears highlighted in yellow on each card
+  And the full first screen loads in under 800ms
 
-Cenário: Leitor não encontra resultados
-  Dado que o leitor está na página de busca
-  E NÃO existe nenhum artigo publicado com a palavra "xkcdunicornio"
-  Quando o leitor digita "xkcdunicornio" e pressiona Enter
-  Então o sistema exibe a mensagem "Nenhum artigo encontrado para xkcdunicornio"
-  E o campo de busca permanece preenchido com o termo digitado
+Scenario: Reader finds no results
+  Given the reader is on the search page
+  And there is NO published article with the word "xkcdunicornio"
+  When the reader types "xkcdunicornio" and presses Enter
+  Then the system displays the message "No articles found for xkcdunicornio"
+  And the search field stays filled with the typed term
 
-Cenário: Leitor compartilha a busca por link
-  Dado que o leitor está vendo os resultados da busca por "kpop"
-  Quando o leitor copia a URL da barra de endereços
-  E envia para outra pessoa
-  E essa outra pessoa abre o link em outro navegador
-  Então a outra pessoa vê os mesmos resultados, na mesma ordem
-  E o termo "kpop" aparece preenchido no campo de busca
+Scenario: Reader shares the search by link
+  Given the reader is viewing the search results for "kpop"
+  When the reader copies the URL from the address bar
+  And sends it to another person
+  And that other person opens the link in another browser
+  Then the other person sees the same results, in the same order
+  And the term "kpop" appears filled in the search field
 ```
 
 **US30.1 Tasks** (technical terms ALLOWED):
 
 | ID | Task description | Priority |
 |---|---|---|
-| `T30.1.1` | Implementar endpoint `GET /api/v1/search/articles?q=&tema=&cursor=` com paginação keyset assinada HMAC. | 🟠 |
-| `T30.1.2` | Indexar coluna `tsvector` (Postgres `to_tsvector('portuguese', title \|\| ' ' \|\| body)`) com weights A/B/C. | 🟠 |
-| `T30.1.3` | Criar componente React `<SearchPage>` com hook `useSearch` e debounce de 250ms. | 🟠 |
-| `T30.1.4` | Implementar destaque do termo nos cards com `<mark>` + CSS amarelo `#FFE9A0`. | 🟡 |
-| `T30.1.5` | Adicionar `loading` skeleton dos cards após 300ms de espera. | 🟡 |
-| `T30.1.6` | Escrever testes pytest cobrindo CA01, CA02, CA05, CA06 (matriz com 12 termos). | 🟠 |
-| `T30.1.7` | Escrever testes Playwright cobrindo os 3 cenários BDD acima. | 🟠 |
+| `T30.1.1` | Implement endpoint `GET /api/v1/search/articles?q=&tema=&cursor=` with HMAC-signed keyset pagination. | 🟠 |
+| `T30.1.2` | Index `tsvector` column (Postgres `to_tsvector('portuguese', title \|\| ' ' \|\| body)`) with weights A/B/C. | 🟠 |
+| `T30.1.3` | Create React `<SearchPage>` component with a `useSearch` hook and 250ms debounce. | 🟠 |
+| `T30.1.4` | Implement term highlighting in cards with `<mark>` + yellow CSS `#FFE9A0`. | 🟡 |
+| `T30.1.5` | Add a card `loading` skeleton after 300ms of waiting. | 🟡 |
+| `T30.1.6` | Write pytest tests covering CA01, CA02, CA05, CA06 (matrix with 12 terms). | 🟠 |
+| `T30.1.7` | Write Playwright tests covering the 3 BDD scenarios above. | 🟠 |
 
-##### 🟦 US30.2 — Filtragem temática dos resultados da busca
+##### 🟦 US30.2 — Thematic filtering of search results
 
 | Field | Value |
 |---|---|
@@ -295,33 +292,32 @@ Cenário: Leitor compartilha a busca por link
 | **Covered ACs** | `CA07`, `CA10` |
 | **Story Points** | 5 |
 
-**US Description (the "Description" field in OpenProject — pt-BR BDD):**
+**US Description (the "Description" field in OpenProject — BDD):**
 
 ```gherkin
-# language: pt
-Cenário: Leitor combina termo de busca com filtro de tema
-  Dado que o leitor está na página de busca com o termo "kpop" digitado
-  E existem 3 temas disponíveis: "Música", "Moda", "Cinema"
-  Quando o leitor seleciona o filtro "Música" entre os chips acima da lista
-  Então a lista é refeita exibindo apenas artigos do tema "Música" que contêm "kpop"
-  E a URL passa a incluir o parâmetro tema=musica
-  E o chip "Música" aparece em destaque (cor primária do Interpop)
+Scenario: Reader combines a search term with a theme filter
+  Given the reader is on the search page with the term "kpop" typed in
+  And there are 3 themes available: "Música", "Moda", "Cinema"
+  When the reader selects the "Música" filter among the chips above the list
+  Then the list is rebuilt showing only articles in the "Música" theme that contain "kpop"
+  And the URL starts including the parameter tema=musica
+  And the "Música" chip appears highlighted (Interpop primary colour)
 
-Cenário: Leitor remove todos os filtros e mantém o termo
-  Dado que o leitor está vendo resultados filtrados por "kpop" + tema "Música"
-  Quando o leitor clica no "X" do chip "Música"
-  Então a lista volta a exibir artigos de todos os temas com a palavra "kpop"
-  E o parâmetro tema é removido da URL
-  E o termo "kpop" continua preenchido no campo de busca
+Scenario: Reader removes all filters and keeps the term
+  Given the reader is viewing results filtered by "kpop" + theme "Música"
+  When the reader clicks the "X" of the "Música" chip
+  Then the list goes back to showing articles of all themes with the word "kpop"
+  And the tema parameter is removed from the URL
+  And the term "kpop" stays filled in the search field
 ```
 
 **US30.2 Tasks:**
 
 | ID | Task description | Priority |
 |---|---|---|
-| `T30.2.1` | Adicionar parâmetro `tema` ao endpoint de busca; aplicar `WHERE article.tema_id = ANY(:temas)`. | 🟠 |
-| `T30.2.2` | Implementar componente `<ChipFilter>` que sincroniza com query string via React Router. | 🟠 |
-| `T30.2.3` | Cobrir os 2 cenários BDD acima com Playwright. | 🟠 |
+| `T30.2.1` | Add a `tema` parameter to the search endpoint; apply `WHERE article.tema_id = ANY(:temas)`. | 🟠 |
+| `T30.2.2` | Implement a `<ChipFilter>` component that syncs with the query string via React Router. | 🟠 |
+| `T30.2.3` | Cover the 2 BDD scenarios above with Playwright. | 🟠 |
 
 ---
 
@@ -329,9 +325,9 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 
 | ID | Description | Priority | For which US |
 |---|---|---|---|
-| `TX-12` | Adicionar índice `idx_article_search_vector` na migration `0008_search_index.sql`. | 🟠 | `T30.1.2` |
-| `TX-13` | Configurar variável `SEARCH_DEBOUNCE_MS=250` no `.env.example` e em `config/settings/base.py`. | 🟡 | `T30.1.3` |
-| `TX-14` | Adicionar lib `react-highlight-words` ao `package.json` (~5KB gz). | 🟡 | `T30.1.4` |
+| `TX-12` | Add the `idx_article_search_vector` index in the migration `0008_search_index.sql`. | 🟠 | `T30.1.2` |
+| `TX-13` | Configure the variable `SEARCH_DEBOUNCE_MS=250` in `.env.example` and in `config/settings/base.py`. | 🟡 | `T30.1.3` |
+| `TX-14` | Add the `react-highlight-words` lib to `package.json` (~5KB gz). | 🟡 | `T30.1.4` |
 
 ---
 
@@ -341,7 +337,7 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 |---|---|
 | Epics (including sub-Epics) | 1 |
 | Features | 1 (`F-30`) |
-| ACs | 12 (in 4 groups: Acesso, Comportamento, Apresentação, Tempo de resposta — **2 with `[...]` detail**: `CA06`, `CA07`) |
+| ACs | 12 (in 4 groups: Access, Behaviour, Presentation, Response time — **2 with `[...]` detail**: `CA06`, `CA07`) |
 | User Stories | 2 (`US30.1`, `US30.2`) |
 | BDD scenarios | 5 |
 | Tasks (US-bound) | 10 |
@@ -361,9 +357,9 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 
 | Requirement (RF/RNF) | Origin (requirements doc) | Feature | US | AC | BDD | Task | Test |
 |---|---|---|---|---|---|---|---|
-| RF-08: O leitor pode buscar artigos por texto livre | `REQUISITOS.md` §4.2 | `F-30` | `US30.1` | `CA01`, `CA05`, `CA06` | "Leitor realiza busca simples e visualiza resultados ordenados" | `T30.1.1`, `T30.1.2` | `backend/tests/test_search.py::test_busca_basica`, `e2e/search.spec.ts::busca-simples` |
-| RNF-04: A primeira tela de busca deve aparecer em ≤800ms (p95) | `REQUISITOS.md` §5.3 | `F-30` | `US30.1` | `CA11` | (same scenario above) | `T30.1.2` | `backend/tests/test_search_perf.py::test_p95_under_800ms` |
-| RF-09: O leitor pode filtrar busca por tema editorial | `REQUISITOS.md` §4.3 | `F-30` | `US30.2` | `CA07`, `CA10` | "Leitor combina termo de busca com filtro de tema" | `T30.2.1`, `T30.2.2` | `e2e/search.spec.ts::filtro-tema` |
+| RF-08: The reader can search articles by free text | `REQUISITOS.md` §4.2 | `F-30` | `US30.1` | `CA01`, `CA05`, `CA06` | "Reader performs a simple search and views ordered results" | `T30.1.1`, `T30.1.2` | `backend/tests/test_search.py::test_busca_basica`, `e2e/search.spec.ts::busca-simples` |
+| RNF-04: The first search screen must appear in ≤800ms (p95) | `REQUISITOS.md` §5.3 | `F-30` | `US30.1` | `CA11` | (same scenario above) | `T30.1.2` | `backend/tests/test_search_perf.py::test_p95_under_800ms` |
+| RF-09: The reader can filter the search by editorial theme | `REQUISITOS.md` §4.3 | `F-30` | `US30.2` | `CA07`, `CA10` | "Reader combines a search term with a theme filter" | `T30.2.1`, `T30.2.2` | `e2e/search.spec.ts::filtro-tema` |
 
 ---
 
@@ -375,13 +371,13 @@ Cenário: Leitor remove todos os filtros e mantém o termo
 
 ---
 
-## 5. WORKED EXAMPLE B — Deeply nested Epic (*"Cadastro de Atletas"*, Doping Control system)
+## 5. WORKED EXAMPLE B — Deeply nested Epic (*"Athlete Registration"*, Doping Control system)
 
 Example for large systems. Reflects the OpenProject screenshot from the *"IFPB"* ERS course.
 
 > **Requirements document:** `docs/specs/controle-dopagem/REQUISITOS.md` (rev. of 12/11/2025)
 
-### 🟦 EP-100 — Aplicação Web
+### 🟦 EP-100 — Web Application
 
 | Field | Value |
 |---|---|
@@ -389,60 +385,60 @@ Example for large systems. Reflects the OpenProject screenshot from the *"IFPB"*
 | **Priority** | 🟠 High |
 | **Belongs to** | *"Sistema de Controle de Dopagem"* (*"CNPq"* 487777/2013-1) |
 | **Origin (requirements)** | RF-001 to RF-133 (total scope) |
-| **Sub-Epics** | `EP-100.1` (Módulo Administrativo) and 9 other modules |
+| **Sub-Epics** | `EP-100.1` (Administrative Module) and 9 other modules |
 
 **Description:**
 
-Toda a interface web do sistema nacional de controle antidopagem. Reúne dez módulos operacionais (Administrativo, Dopagem, *"STJD"*, *"OCD"*/*"Escoltas"*, Uso Geral, Financeiro, Estatístico, Técnico, Controle de Acesso) que atendem *"ABCD"*, *"COB"*, confederações esportivas, atletas e laboratórios credenciados.
+The entire web interface of the national anti-doping control system. It brings together ten operational modules (Administrative, Doping, *"STJD"*, *"OCD"*/*"Escortes"*, General Use, Financial, Statistical, Technical, Access Control) that serve *"ABCD"*, *"COB"*, sports confederations, athletes, and accredited laboratories.
 
 ---
 
-### 🟦 EP-100.1 — Módulo Administrativo
+### 🟦 EP-100.1 — Administrative Module
 
 | Field | Value |
 |---|---|
 | **ID** | `EP-100.1` |
 | **Parent Epic** | `EP-100` |
 | **Origin (requirements)** | RF-001 to RF-040 |
-| **Sub-Epics** | `EP-100.1.1` (Gestão de Atletas), `EP-100.1.2` (Gestão de Médicos), … |
+| **Sub-Epics** | `EP-100.1.1` (Athlete Management), `EP-100.1.2` (Physician Management), … |
 
 **Description:**
 
-Módulo que reúne todas as operações de cadastro, consulta e relatório dos atores que participam de competições reguladas: atletas, médicos, confederações, federações, modalidades, competições, treinadores. É o módulo de **dados-mestres** do sistema — a partir dele os demais módulos (Dopagem, *"STJD"*, Financeiro) consomem dados.
+A module that brings together all the registration, lookup, and reporting operations for the actors that take part in regulated competitions: athletes, physicians, confederations, federations, sports, competitions, coaches. It is the system's **master-data** module — the other modules (Doping, *"STJD"*, Financial) consume data from it.
 
 ---
 
-### 🟦 EP-100.1.1 — Gestão de Atletas
+### 🟦 EP-100.1.1 — Athlete Management
 
 | Field | Value |
 |---|---|
 | **ID** | `EP-100.1.1` |
 | **Parent Epic** | `EP-100.1` |
 | **Origin (requirements)** | RF-001 to RF-020 |
-| **Sub-Epics** | `EP-100.1.1.1` (Cadastro), `EP-100.1.1.2` (Consulta), `EP-100.1.1.3` (Relatório) |
+| **Sub-Epics** | `EP-100.1.1.1` (Registration), `EP-100.1.1.2` (Lookup), `EP-100.1.1.3` (Report) |
 
 **Description:**
 
-Conjunto de operações que dão ao operador da *"ABCD"*/confederação a visão completa de cada atleta: desde o cadastro inicial (dados pessoais, categorias, patrocinadores) até a consulta com filtros avançados e a geração de relatórios para fiscalização e prestação de contas.
+A set of operations that give the *"ABCD"*/confederation operator the complete view of each athlete: from the initial registration (personal data, categories, sponsors) through lookup with advanced filters and the generation of reports for oversight and accountability.
 
 ---
 
-### 🟦 EP-100.1.1.1 — Cadastro de Atletas
+### 🟦 EP-100.1.1.1 — Athlete Registration
 
 | Field | Value |
 |---|---|
 | **ID** | `EP-100.1.1.1` |
 | **Parent Epic** | `EP-100.1.1` |
 | **Origin (requirements)** | RF-001 to RF-010 |
-| **Direct Features** | `F-200` Cadastro Básico, `F-201` Categorias Esportivas, `F-202` Patrocinadores, `F-203` Técnico, `F-204` Bolsa Atleta, `F-205` Equipe Médica, `F-206` Convocações, `F-207` Programas Especiais, `F-208` Clubes/Associações, `F-209` Resultados em Competições |
+| **Direct Features** | `F-200` Basic Registration, `F-201` Sports Categories, `F-202` Sponsors, `F-203` Coach, `F-204` Athlete Grant, `F-205` Medical Team, `F-206` Call-ups, `F-207` Special Programs, `F-208` Clubs/Associations, `F-209` Competition Results |
 
 **Description:**
 
-Conjunto de telas que permitem ao operador da confederação registrar e manter atualizado o cadastro completo de cada atleta nacional. O cadastro é segmentado em dez Features independentes, cada uma cobrindo um aspecto distinto da vida do atleta (dados pessoais, vínculos esportivos, suporte técnico, financeiro, médico e histórico competitivo). Cada Feature é entregue separadamente porque pode ser preenchida em momentos diferentes (não há ordem obrigatória além do cadastro básico vir antes dos demais).
+A set of screens that let the confederation operator register and keep up to date the complete record of each national athlete. The registration is segmented into ten independent Features, each covering a distinct aspect of the athlete's life (personal data, sports affiliations, technical support, financial, medical, and competition history). Each Feature is delivered separately because it may be filled in at different times (there is no mandatory order other than the basic registration coming before the others).
 
 ---
 
-### 🟩 F-200 — Cadastro Básico do Atleta
+### 🟩 F-200 — Athlete Basic Registration
 
 | Field | Value |
 |---|---|
@@ -455,28 +451,28 @@ Conjunto de telas que permitem ao operador da confederação registrar e manter 
 
 **Description:**
 
-Tela de cadastro com os dados pessoais essenciais do atleta: nome completo, data de nascimento, *"CPF"*, gênero, nacionalidade, *"RG"* e endereço residencial. É o ponto de entrada do sistema para um novo atleta — sem este cadastro, nenhuma das outras Features de Gestão de Atletas pode ser usada. O operador da confederação preenche, valida e salva; o atleta passa a constar no sistema nacional.
+A registration screen with the athlete's essential personal data: full name, date of birth, *"CPF"*, gender, nationality, *"RG"*, and home address. It is the system's entry point for a new athlete — without this registration, none of the other Athlete Management Features can be used. The confederation operator fills in, validates, and saves; the athlete then appears in the national system.
 
 #### F-200 Acceptance Criteria
 
-##### 📋 CA - Cadastro dados pessoais
+##### 📋 CA - Personal-data registration
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA01` | Apenas usuários autorizados (operador da confederação ou administrador *"ABCD"*) podem cadastrar atletas. | — |
-| `CA02` | O sistema deve impedir o cadastro de dois atletas com o mesmo CPF. Caso já exista, exibir a mensagem "CPF já cadastrado para <nome do atleta>". | — |
-| `CA03` | A data de nascimento deve resultar em uma idade entre 5 e 80 anos no momento do cadastro. Fora dessa faixa, o sistema exibe alerta de revisão. | — |
-| `CA04` | O CPF deve ser validado quanto a formato e dígito verificador **[...]** | ✅ |
+| `CA01` | Only authorized users (confederation operator or *"ABCD"* administrator) can register athletes. | — |
+| `CA02` | The system must prevent registering two athletes with the same CPF. If one already exists, display the message "CPF already registered for <athlete name>". | — |
+| `CA03` | The date of birth must result in an age between 5 and 80 years at the moment of registration. Outside that range, the system displays a review alert. | — |
+| `CA04` | The CPF must be validated for format and check digit **[...]** | ✅ |
 
 ##### CA04 — Detail (in the item body)
 
 ```
-Regras a serem aplicadas:
-- O campo CPF é obrigatório.
-- Deve estar no formato XXX.XXX.XXX-XX (com pontos e traço).
-- O dígito verificador deve ser válido conforme regra da Receita Federal.
-- Se inválido, exibir mensagem "CPF inválido" próximo ao campo, em vermelho.
-- Não permitir o salvamento enquanto o CPF estiver inválido.
+Rules to be applied:
+- The CPF field is mandatory.
+- It must be in the format XXX.XXX.XXX-XX (with dots and a dash).
+- The check digit must be valid according to the Receita Federal rule.
+- If invalid, display the message "Invalid CPF" next to the field, in red.
+- Do not allow saving while the CPF is invalid.
 ```
 
 > *The remaining Features (F-201 to F-209) follow the same pattern. In a real backlog, each Feature has its own section with description, ACs, US, and Tasks.*
@@ -487,10 +483,10 @@ Regras a serem aplicadas:
 
 - [ ] **Did you check the requirements document before touching the backlog?** (date of the last check recorded at the top of BACKLOG.md)
 - [ ] Does every Feature/US/CA have an **origin link** (`Origin (requirements)`) pointing to the corresponding item in the requirements document?
-- [ ] Does every Epic/Feature/US/CA/RNF have a **description** in pt-BR without technical terms?
+- [ ] Does every Epic/Feature/US/CA/RNF have a **description** in business language without technical terms?
 - [ ] Is every Feature **client-deliverable** (unambiguously)?
-- [ ] Does every US have **BDD** in pt-BR with named scenarios (≥2 scenarios: happy + error/edge) in the US "Description" field?
-- [ ] Is every AC **declarative, atomic, and testable**? Do ACs with sub-rules end with **`[...]`** and have "Regras a serem aplicadas:" in the body?
+- [ ] Does every US have **BDD** with named scenarios (≥2 scenarios: happy + error/edge) in the US "Description" field?
+- [ ] Is every AC **declarative, atomic, and testable**? Do ACs with sub-rules end with **`[...]`** and have "Rules to be applied:" in the body?
 - [ ] Is every AC **inside a `CA - <Theme>` group** (even Features with only 1 AC)?
 - [ ] Is the Epic **nested** when the domain has sub-classifications?
 - [ ] Is every cross-cutting Task in **`TX-NN`**, outside the Epic/Feature/US hierarchy?

@@ -40,7 +40,7 @@ Um **enunciado** de requisito (o *enunciado de negócio* do `RF` + seu corpo) es
 
 | Pergunta | Responde | Onde já vive nesta skill |
 |---|---|---|
-| **Quem** | o stakeholder / usuário / persona que usa o sistema ou é afetado por ele | uma `persona` de `personas-e-cenarios.md` |
+| **Quem** | o stakeholder / usuário / persona que usa o sistema ou é afetado por ele | uma `persona` de `personas-and-scenarios.md` |
 | **O quê** | a funcionalidade / serviço / tarefa que o sistema deve realizar | o enunciado do `RF` (a frase-verbo) |
 | **Onde** | o ambiente ou a tela onde o requisito se aplica ou é visualizado | o módulo / contexto (EARS `ONDE`) |
 | **Quando** | o momento, prazo ou frequência em que a função é acionada / o requisito é entregue | o gatilho / tempo (EARS `QUANDO`/`ENQUANTO`) |

@@ -13,12 +13,12 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.29.0
+version: 1.30.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
 
-> Skill built from the 11 lectures of the ERS course (*Engenharia de Requisitos de Software* / Software Requirements Engineering) of *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Ch. 4), Pressman, Wiegers, Falbo, BABOK, and the SBC 002/2024 Code of Ethics. **Note on terminology**: the original source course is in Brazilian Portuguese; this default English content keeps Brazilian domain-specific terms in *"pt-BR with italics + quotes"* (e.g., *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). Gherkin keywords are translated to Given/When/Then; the pt-BR equivalents (Dado/Quando/Então) are available in `translations/pt-BR/`.
+> Skill built from the 11 lectures of the ERS course (*Engenharia de Requisitos de Software* / Software Requirements Engineering) of *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Ch. 4), Pressman, Wiegers, Falbo, BABOK, and the SBC 002/2024 Code of Ethics. **Note on terminology**: the original source course is in Brazilian Portuguese; this default English content keeps Brazilian domain-specific terms in *"pt-BR with italics + quotes"* (e.g., *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). Gherkin keywords are translated to Given/When/Then; the pt-BR equivalents (Dado/Quando/Então) are available in `translations/pt-BR/`. **Language fallback**: en-CA is the default and the **universal fallback** — anything not present under `translations/<lang>/` resolves to the en-CA root, in *everything* (references, templates, examples, integrations, validators). See [`translations/README.md`](translations/README.md).
 
 ---
 
@@ -313,7 +313,7 @@ Applies to ALL titles of Epic/Feature/US/CA/**RF**/RNF/business rule (G). **Task
 
 > **Structural backlog buckets** (skill default, seeded by the scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — en-CA folder names, pt-BR Epic titles restored by the adapter on export:
 >
-> - **`melhorias/`** → root Epic **"Melhorias"** — enhancements to things that already exist.
+> - **`improvements/`** → root Epic **"Melhorias"** — enhancements to things that already exist.
 > - **`bugs/`** → each `BUG-NN` is a **"Bug" type parented to the US/Feature it violates** (NOT an Epic) — keeps the defect one link from the `CA` it breaks.
 > - **`support-quality-investigation/`** → root Epic **"Atividades de Apoio, Qualidade e Investigação"** with three child Epics: **`support/`** ("Apoio" — cross-cutting `TX`, per rule 6) · **`qa/`** ("Q&A" — tests, reviews, quality gates) · **`issues/`** ("Issues" — triage inbox), with **`issues/spikes/`** ("Spikes" — time-boxed investigation) nested under it.
 >

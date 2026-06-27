@@ -1,29 +1,29 @@
 <!-- GENERIC TEMPLATE — copy to EP-NN-<slug>.md. -->
-# EP-NN — <nome de negócio>
+# EP-NN — <business name>
 
-> **Tipo**: Epic
-> **Status**: 📝 Proposto | 🚧 Em andamento | ✅ Done
-> **Prioridade global**: 🟠 Alta
-> **Owner**: <nome> · **Criado em**: Sprint N
+> **Type**: Epic
+> **Status**: 📝 Proposed | 🚧 In progress | ✅ Done
+> **Global priority**: 🟠 High
+> **Owner**: <name> · **Created in**: Sprint N
 
 ---
 
-## Visão de produto
+## Product vision
 
-<por que este front existe; KPI alvo>
+<why this front exists; target KPI>
 
-## Requisitos realizados (rastreabilidade ↑)
+## Requirements realized (traceability ↑)
 
-| ID | Requisito | Tipo |
+| ID | Requirement | Type |
 | --- | --- | --- |
-| [RF-NNN](../../requirements/RF/RF-NNN-....md) | <enunciado curto> | Funcional |
+| [RF-NNN](../../requirements/RF/RF-NNN-....md) | <short statement> | Functional |
 
-## Features sob este Epic (rastreabilidade ↓)
+## Features under this Epic (traceability ↓)
 
-| ID | Nome | Sprint | Status | Arquivo |
+| ID | Name | Sprint | Status | File |
 | --- | --- | --- | --- | --- |
-| F-NN | <nome> | N | ⏳ Pending | [F-NN](../features/F-NN-....md) |
+| F-NN | <name> | N | ⏳ Pending | [F-NN](../features/F-NN-....md) |
 
-## ADRs relacionadas
+## Related ADRs
 
-<se SDD: link para ../../specs/<feature>/adrs/ ; senão: ../../planning/adrs/>
+<if SDD: link to ../../specs/<feature>/adrs/ ; otherwise: ../../planning/adrs/>

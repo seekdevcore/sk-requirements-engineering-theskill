@@ -4,7 +4,7 @@
      README is documentation only — it is NOT exported as an Epic description. -->
 # Bugs (*Defeitos*) — defect bucket (type, not Epic)
 
-> **What it is**: a directory-bucket, **child of `backlog/`** (sibling of `epics/`, `features/`, `melhorias/`).
+> **What it is**: a directory-bucket, **child of `backlog/`** (sibling of `epics/`, `features/`, `improvements/`).
 > **On OpenProject**: each item is a work-package of **type "Bug"** — **parented to the US/Feature it violates**, NOT grouped under a "Bugs" Epic. This keeps the defect one link away from the `CA` it breaks.
 > **Priority is per-bug** (severity), not a single bucket priority.
 

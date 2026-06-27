@@ -5,63 +5,63 @@
        · each Task → a "Task" child of its US, tagged [front]/[back] by layer.
      A defect against a CA is a separate BUG-NN (type "Bug") parented here — see ../bugs/. -->
 
-# F-NN — <nome de negócio>
+# F-NN — <business name>
 
-> **Tipo**: Feature
-> **Epic pai**: [EP-NN ...](../epics/EP-NN-....md)
-> **Sprint de execução**: [Sprint N](../sprints/sprint-N-....md)
-> **Status**: 📝 Proposto | 🚧 Em andamento | ✅ Done
-> **Prioridade**: 🔴 Imediato
+> **Type**: Feature
+> **Parent Epic**: [EP-NN ...](../epics/EP-NN-....md)
+> **Execution sprint**: [Sprint N](../sprints/sprint-N-....md)
+> **Status**: 📝 Proposed | 🚧 In progress | ✅ Done
+> **Priority**: 🔴 Immediate
 
 ---
 
-## Descrição (visão de produto)
+## Description (product vision)
 
-<parágrafo em linguagem de negócio. Feature NUNCA tem BDD — BDD vive na User Story.>
+<paragraph in business language. A Feature NEVER has BDD — BDD lives in the User Story.>
 
-## Requisitos atendidos (rastreabilidade ↑)
+## Requirements met (traceability ↑)
 
-| ID | Requisito | Relação |
+| ID | Requirement | Relation |
 | --- | --- | --- |
-| [RF-NNN](../../requirements/RF/RF-NNN-....md) | <enunciado> | Realiza diretamente |
+| [RF-NNN](../../requirements/RF/RF-NNN-....md) | <statement> | Directly realizes |
 
-## Critérios de Aceitação (CAs)
+## Acceptance Criteria (CAs)
 
-| ID | Critério | Como verificar | Status |
+| ID | Criterion | How to verify | Status |
 | --- | --- | --- | --- |
-| **CA01** | <estado verificável em booleano> | <teste> | ⏳ |
+| **CA01** | <verifiable boolean state> | <test> | ⏳ |
 
 ## User Stories
 
-### US-NN.1 — <título curto>
+### US-NN.1 — <short title>
 
-> **Como** <persona>
-> **Quero** <ação>
-> **Para** <valor>.
+> **As a** <persona>
+> **I want** <action>
+> **So that** <value>.
 
-- **Prioridade**: 🔴 · **Estimativa**: <SP> · **Sprint**: N · **Status**: ⏳
-- **CAs cobertos**: CA01..CANN · **Persona**: [<persona>](../../requirements/personas-e-cenarios.md)
+- **Priority**: 🔴 · **Estimate**: <SP> · **Sprint**: N · **Status**: ⏳
+- **CAs covered**: CA01..CANN · **Persona**: [<persona>](../../requirements/personas-and-scenarios.md)
 
-#### Cenários BDD (Gherkin)
+#### BDD scenarios (Gherkin)
 
 ```gherkin
-Funcionalidade: <nome>
-  Cenário: <caminho feliz>
-    Dado que <contexto>
-    Quando <ação>
-    Então <resultado observável>
+Feature: <name>
+  Scenario: <happy path>
+    Given <context>
+    When <action>
+    Then <observable result>
 ```
 
-## Tasks (único nível com termo técnico)
+## Tasks (the only level with technical terms)
 
-> Prefixe a Task por camada — `[front]` / `[back]` / `[infra]` — como no OpenProject (vira a tag de camada).
+> Prefix the Task by layer — `[front]` / `[back]` / `[infra]` — as in OpenProject (becomes the layer tag).
 
-| ID | Task | Camada | Commit | Status |
+| ID | Task | Layer | Commit | Status |
 | --- | --- | --- | --- | --- |
-| T-NN.1.1 | `[back]` <descrição técnica> | Backend | — | ⏳ |
+| T-NN.1.1 | `[back]` <technical description> | Backend | — | ⏳ |
 
-## Defeitos conhecidos (rastreabilidade ↓)
+## Known defects (traceability ↓)
 
-| Bug | Viola | Status |
+| Bug | Violates | Status |
 | --- | --- | --- |
 | [BUG-NN](../bugs/BUG-NN-....md) | CANN | 🆕 Open |

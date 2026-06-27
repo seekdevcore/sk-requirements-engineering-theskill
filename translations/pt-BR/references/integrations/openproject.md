@@ -216,7 +216,7 @@ os reconhece via `_BUCKETS` e mapeia cada **pasta en-CA** ao seu **título de Ep
 
 | Diretório-bucket (en-CA) | No export | Guarda (filhos) |
 |---|---|---|
-| `backlog/melhorias/` | Epic-raiz **`Melhorias`** (*Improvements*) | cada `*.md` → filho Feature/User story |
+| `backlog/improvements/` | Epic-raiz **`Melhorias`** (*Improvements*) | cada `*.md` → filho Feature/User story |
 | `backlog/bugs/` | **TYPE `Bug`**, parented à US/Feature violada (NÃO um Epic) | cada `BUG-NN-*.md` → um Bug sob sua Feature |
 | `backlog/support-quality-investigation/` | Epic-raiz **`Atividades de Apoio, Qualidade e Investigação`** (umbrella) | três Epics filhos ↓ |
 | &nbsp;&nbsp;`└ support/` | Epic-filho **`Apoio`** — **`TX`** transversal (Regra 6) | cada `TX-NN-*.md` → filho Task |

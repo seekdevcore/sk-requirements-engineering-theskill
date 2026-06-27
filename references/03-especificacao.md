@@ -40,7 +40,7 @@ A requirement **statement** (the `RF` *enunciado* + its body) is complete when a
 
 | Question | Answers | Where it already lives in this skill |
 |---|---|---|
-| **Quem / Who** | the stakeholder / user / persona who uses or is affected by the system | a `persona` from `personas-e-cenarios.md` |
+| **Quem / Who** | the stakeholder / user / persona who uses or is affected by the system | a `persona` from `personas-and-scenarios.md` |
 | **O quê / What** | the functionality / service / task the system must perform | the `RF` enunciado (the verb-phrase) |
 | **Onde / Where** | the environment or screen where the requirement applies or is shown | the module / context (EARS `WHERE`) |
 | **Quando / When** | the moment, deadline or frequency the function is triggered / the requirement is due | the trigger / timing (EARS `WHEN`/`WHILE`) |

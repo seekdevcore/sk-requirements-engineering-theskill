@@ -78,7 +78,7 @@ RNF (resilience RTO/RPO, avail) ──operationalized by──▶ Runbook (RB-NN
 ```
 requirements/
 ├── README.md                  purpose + traceability spine + conventions + how-to-add
-├── personas-e-cenarios.md     canonical personas; every US references one
+├── personas-and-scenarios.md     canonical personas; every US references one
 ├── RF/                        Functional Requirements (one file per module)
 │   ├── RF-001-<module>.md
 │   └── RF-NNN-<module>.md
@@ -120,12 +120,12 @@ requirements/
 ```
 backlog/
 ├── README.md                  purpose + naming table + IDs + priority + Definition of Done + close workflow
-├── glossario.md               domain vocabulary (every US/CA/ADR must use these terms)
+├── glossary.md               domain vocabulary (every US/CA/ADR must use these terms)
 ├── epics/                     Epic files — Aplicação→Módulo→Componente (MAX 3 Epic levels via links) → Features
 │   └── EP-NN-<slug>.md
 ├── features/                  one file per Feature — description + CAs + USs (with BDD) + Tasks
 │   └── F-NN-<slug>.md
-├── melhorias/                 MANDATORY structural bucket → root Epic "Melhorias" (Improvements) on export
+├── improvements/                 MANDATORY structural bucket → root Epic "Melhorias" (Improvements) on export
 │   ├── README.md              what it is + the Epic's description (NOT exported as an item)
 │   └── <F/US>-<slug>.md        each product enhancement → child of the Improvements Epic
 ├── bugs/                      DEFECT bucket → each BUG-NN is a "Bug" TYPE parented to the violated US/Feature
@@ -152,7 +152,7 @@ backlog/
 >
 > | Folder (en-CA) | On export | Houses | Type axis |
 > |---|---|---|---|
-> | `melhorias/` | **root Epic** "Melhorias" | enhancements to things that already exist | Feature/US (or `Melhoria` type) |
+> | `improvements/` | **root Epic** "Melhorias" | enhancements to things that already exist | Feature/US (or `Melhoria` type) |
 > | `bugs/` | **"Bug" type**, parented to the violated US/Feature | defects against an existing CA | `BUG-NN` |
 > | `support-quality-investigation/` | **root Epic** umbrella | cross-cutting work serving the whole project | (3 child Epics ↓) |
 > | `└ support/` · `qa/` · `issues/` · `issues/spikes/` | child Epics "Apoio"·"Q&A"·"Issues"·"Spikes" | TX · tests/reviews/gates · triage · time-boxed investigation | `TX/QA/ISS/SPK-NN` |
@@ -332,8 +332,8 @@ The most common reorganization in practice: a project where an **older version o
 2. **Read the monolith and decompose it** along its natural module boundaries:
    - one `requirements/RF/RF-NNN-<module>.md` per functional area / Epic block (preserve the original `RF-NN` IDs *inside* the files so existing cross-references survive);
    - one `requirements/RNF/RNF-<slug>.md` (or one per Sommerville class) for the non-functional requirements, each with its **quantitative** metric table;
-   - seed `requirements/personas-e-cenarios.md` from the stakeholders/roles the monolith names;
-   - seed `backlog/glossario.md` from the monolith's glossary/domain terms.
+   - seed `requirements/personas-and-scenarios.md` from the stakeholders/roles the monolith names;
+   - seed `backlog/glossary.md` from the monolith's glossary/domain terms.
 3. **Keep the original monolith as a consolidated overview** — do **not** delete it. Move it under `docs/requirements/` and add a banner linking *into* the split (it now carries the analysis/feasibility/phasing narrative that does not fit the per-file split, while the split carries the granular source of truth). This avoids duplicate-truth: prose narrative lives in the overview, atomic requirements live in the split.
 4. **Backfill traceability** (§9 Step 2.7): if Epics/Features already exist, write them under `backlog/` and link `RF ↔ EP ↔ F` both ways.
 5. Run the checklist below.
@@ -360,8 +360,8 @@ The scaffolder drops **generic, placeholder-filled** templates. They are a skele
 |---|---|---|
 | **Language** | README / code comments / commit messages → pt-BR or English? | language of all seeded prose |
 | **Modules / apps** | `apps/*`, `src/*`, packages, bounded contexts, top-level domains | one `RF-NNN-<module>.md` per module |
-| **Roles / auth tiers** | auth code, permission enums, role tables (`admin`/`editor`/`user`…) | personas in `personas-e-cenarios.md` |
-| **Domain entities** | models / schema / ER diagram (the recurring nouns) | the `glossario.md` terms |
+| **Roles / auth tiers** | auth code, permission enums, role tables (`admin`/`editor`/`user`…) | personas in `personas-and-scenarios.md` |
+| **Domain entities** | models / schema / ER diagram (the recurring nouns) | the `glossary.md` terms |
 | **Stack** | manifest files (`package.json`, `pyproject.toml`, `go.mod`…) | technical context for `specs/` + ADRs |
 | **Existing docs** | any `RF-*`, `ADR-*`, `backlog.md`, design docs already present | what to **reorganize** vs create |
 | **NFR signals** | CI gates, perf budgets, `LGPD`/GDPR/compliance mentions, a11y targets | which `RNF-<slug>.md` to instantiate |
@@ -371,7 +371,7 @@ The scaffolder drops **generic, placeholder-filled** templates. They are a skele
 1. **Localize** the seeded prose to the project's language.
 2. **One RF per real module**: rename `RF/_TEMPLATE.md` into `RF-001-<module>.md … RF-NNN-<module>.md`, one per detected module — each with a business-language enunciado (no jargon).
 3. **Personas from roles**: turn each auth tier / user type into a `P-NN` persona.
-4. **Glossary from entities**: seed `glossario.md` with the recurring domain nouns (alphabetical), each defined in business language.
+4. **Glossary from entities**: seed `glossary.md` with the recurring domain nouns (alphabetical), each defined in business language.
 5. **RNFs that actually apply**: instantiate only the `RNF-<slug>.md` the project needs (perf, security, a11y, privacy, availability…), each with **quantitative** targets pulled from real budgets/gates.
 6. **Reorganize** loose pre-existing artifacts into the tree (the scaffolder moves files; you fix the cross-links — §8 checklist).
 7. **Backfill traceability** where history allows: if Epics/Features already shipped, write them retroactively and link `RF ↔ EP ↔ F` both ways. On an **existing** project, this backfill is **offered to the user as an explicit first-run question** ([`SKILL.md §0 step 3b`](../SKILL.md)) — full backfill now / seed only what the current task touches / structure-only-now — because it can be a large effort and is the user's call (greenfield has nothing to backfill).
@@ -383,7 +383,7 @@ When the project is empty or pre-code (no modules, no roles, no domain yet):
 1. Keep the generic placeholders **as a checklist**, not as final content.
 2. Seed a **minimal personas file** from the intended audience (even if just "anonymous user" + "admin").
 3. Create `RF-001` for the single most important capability the product must have — the rest follow from elicitation (`02-elicitacao.md`).
-4. Leave `glossario.md` with the few domain terms you already know; grow it as the domain emerges.
+4. Leave `glossary.md` with the few domain terms you already know; grow it as the domain emerges.
 5. Choose `--with-specs` vs `--no-specs` per §10.
 
 ### Hard rule — never ship placeholders

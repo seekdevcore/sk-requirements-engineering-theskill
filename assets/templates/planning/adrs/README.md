@@ -1,23 +1,23 @@
 <!-- GENERIC TEMPLATE — adapt to your project. See references/10-estrutura-projeto.md §5 (two-tier ADRs). -->
-# ADRs — Architecture Decision Records (nível de PROJETO)
+# ADRs — Architecture Decision Records (PROJECT level)
 
-> Decisões arquiteturais **transversais** ao sistema, formato MADR (Markdown ADR).
-> Decisões locais a uma feature vivem em `../../specs/<feature>/adrs/` (TIER 2), compartilhando a MESMA numeração global.
+> System-wide **cross-cutting** architectural decisions, MADR format (Markdown ADR).
+> Decisions local to a single feature live in `../../specs/<feature>/adrs/` (TIER 2), sharing the SAME global numbering.
 
-## Convenção
+## Convention
 
-- Numeração **global sequencial** (`ADR-NNN-slug.md`) — contínua entre tier 1 (aqui) e tier 2 (specs).
+- **Sequential global numbering** (`ADR-NNN-slug.md`) — continuous across tier 1 (here) and tier 2 (specs).
 - Status: `Accepted` | `Superseded by ADR-NNN` | `Deprecated` | `Proposed`.
-- Mudança de decisão → cria-se **nova** ADR que supersede a antiga (NUNCA edita a anterior).
-- Renumerar é **proibido** (ADR-005 sempre será ADR-005, mesmo se deprecada).
-- Tag de variante (`-DB`, `-FE`, `-UI`) quando o mesmo número resolve decisões paralelas em camadas distintas.
+- Changing a decision → write a **new** ADR that supersedes the old one (NEVER edit the previous one).
+- Renumbering is **forbidden** (ADR-005 is always ADR-005, even once deprecated).
+- Variant tag (`-DB`, `-FE`, `-UI`) when the same number resolves parallel decisions across distinct layers.
 
-## Catálogo
+## Catalogue
 
-| ID | Título | Status |
+| ID | Title | Status |
 | --- | --- | --- |
-| [001](./ADR-001-....md) | <decisão> | Accepted |
+| [001](./ADR-001-....md) | <decision> | Accepted |
 
 ## Cross-ref
 
-- `../../specs/<feature>/adrs/INDEX.md` — ADRs locais por feature (tier 2).
+- `../../specs/<feature>/adrs/INDEX.md` — feature-local ADRs (tier 2).

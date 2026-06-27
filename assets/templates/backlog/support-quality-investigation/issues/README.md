@@ -18,7 +18,7 @@ The **triage inbox** — where anything raw enters before it is classified. An `
 raw report  →  ISS-NN (inbox)  →  triage  →  BUG-NN (bugs/)        ← defect (against a CA)
                                           →  SPK-NN (issues/spikes/) ← needs investigation
                                           →  TX-NN  (../support/)    ← technical/config
-                                          →  Melhoria (../../melhorias/) ← enhancement
+                                          →  Melhoria (../../improvements/) ← enhancement
                                           →  PM-NN  (../../../postmortems/) ← PRODUCTION INCIDENT
                                           →  duplicate / won't-fix   ← closed with rationale
 ```
