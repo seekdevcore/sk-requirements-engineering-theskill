@@ -1,33 +1,33 @@
 <!-- GENERIC TEMPLATE — copy to ADR-NNN-<slug>.md. Use the NEXT free number in the GLOBAL sequence. -->
-# ADR-NNN: <título imperativo da decisão>
+# ADR-NNN: <imperative decision title>
 
 ## Status
 
 Accepted | Proposed | Superseded by ADR-MMM | Deprecated
-<uma linha: o que supersede/refina, com link>
+<one line: what supersedes/refines it, with a link>
 
 ## Context
 
-As forças em jogo. Opções consideradas:
+The forces at play. Options considered:
 
-1. **<opção A>** — <trade-off>.
-2. **<opção B>** — <trade-off>.
+1. **<option A>** — <trade-off>.
+2. **<option B>** — <trade-off>.
 
 ## Decision
 
-**<opção escolhida>**, em uma frase, com os parâmetros-chave.
+**<chosen option>**, in one sentence, with the key parameters.
 
 ## Consequences
 
-**Positivas:**
+**Positive:**
 
 - <…>
 
-**Negativas / trade-offs aceitos:**
+**Negative / accepted trade-offs:**
 
 - <…>
 
 ## Cross-ref
 
-- Implementação: `<caminhos de arquivo>`.
-- Refina/supersede: [ADR-MMM](./ADR-MMM-....md).
+- Implementation: `<file paths>`.
+- Refines/supersedes: [ADR-MMM](./ADR-MMM-....md).

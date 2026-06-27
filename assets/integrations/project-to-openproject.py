@@ -61,7 +61,7 @@ _SPK_RE = re.compile(r"SPK-?\d+", re.I)
 # [nested sub-buckets...]). en-CA folder names map to pt-BR Epic titles here (the round-trip contract).
 # `bugs/` is handled SEPARATELY (it is a TYPE parented to the violated feature, not an Epic bucket).
 _BUCKETS = [
-    ("melhorias", "Melhorias", "Feature", []),                       # product enhancements → Features/US
+    ("improvements", "Melhorias", "Feature", []),                       # product enhancements → Features/US
     ("support-quality-investigation", "Atividades de Apoio, Qualidade e Investigação", None, [
         ("support", "Apoio", "Task", []),                            # cross-cutting TX → Tasks
         ("qa", "Q&A", "Task", []),                                   # quality activities → Tasks
@@ -255,7 +255,7 @@ def collect(root: Path, with_tasks: bool) -> list[dict]:
                 rows.append(_row("Task", tid, "", "Normal", ""))
 
     # --- Structural buckets → ROOT Epics (depth 0) + nested child Epics + their children ---
-    # backlog/melhorias/ and backlog/support-quality-investigation/ are DIRECTORIES, not EP-NN
+    # backlog/improvements/ and backlog/support-quality-investigation/ are DIRECTORIES, not EP-NN
     # files. The umbrella nests child Epics (support/qa/issues, and spikes under issues); the
     # recursive emitter walks them. en-CA folder → pt-BR Epic title (see _BUCKETS).
     for dirname, epic_subject, default_kind, subbuckets in _BUCKETS:

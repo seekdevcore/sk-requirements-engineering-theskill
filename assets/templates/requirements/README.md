@@ -1,71 +1,71 @@
 <!-- GENERIC TEMPLATE — adapt to your project. See references/10-estrutura-projeto.md §"Adaptation protocol". -->
-# Requisitos — <NOME DO PROJETO>
+# Requirements — <PROJECT NAME>
 
-> **Pasta-fonte do "o QUÊ".** Responde "que necessidade o sistema atende?", sem entrar no "como"
-> (isso é `../specs/` + ADRs). O backlog só materializa o que está aqui — esta pasta é a source of truth.
+> **Source folder for the "WHAT".** Answers "what need does the system address?", without going into the "how"
+> (that is `../specs/` + ADRs). The backlog only materializes what lives here — this folder is the source of truth.
 
-## Hierarquia de rastreabilidade
+## Traceability hierarchy
 
 ```
-Requisito (RF/RNF)        ← ESTA pasta
-  ↓ realizado por
+Requirement (RF/RNF)      ← THIS folder
+  ↓ realized by
 Epic (EP-NN)              ← ../backlog/epics/
-  ↓ decomposto em
+  ↓ decomposed into
 Feature (F-NN)            ← ../backlog/features/
-  ↓ aceito quando
-Critério de Aceitação     ← dentro do arquivo de Feature
-  ↓ ilustrado por
-User Story + BDD          ← dentro do arquivo de Feature
-  ↓ implementado por
-Task (T / TX)             ← dentro do arquivo de Feature
-  ↓ entregue em / materializada em
+  ↓ accepted when
+Acceptance Criterion      ← inside the Feature file
+  ↓ illustrated by
+User Story + BDD          ← inside the Feature file
+  ↓ implemented by
+Task (T / TX)             ← inside the Feature file
+  ↓ delivered in / materialized in
 Sprint → Commit (SHA)
 ```
 
-**Regra dura**: rastreabilidade bidirecional — cada arquivo cita pai e filhos via link relativo.
+**Hard rule**: bidirectional traceability — each file cites its parent and children via a relative link.
 
-## Estrutura
+## Structure
 
 ```
 requirements/
-├── README.md                 este arquivo
-├── personas-e-cenarios.md    personas do projeto; toda US referencia uma
-├── RF/   RF-NNN-<modulo>.md   Requisitos Funcionais (1 arquivo por módulo do sistema)
-└── RNF/  RNF-<slug>.md        Requisitos Não-Funcionais (transversais; SEMPRE quantitativos)
+├── README.md                 this file
+├── personas-and-scenarios.md    project personas; every US references one
+├── RF/   RF-NNN-<module>.md   Functional Requirements (1 file per system module)
+└── RNF/  RNF-<slug>.md        Non-Functional Requirements (cross-cutting; ALWAYS quantitative)
 ```
 
-> **Adapte ao projeto**: crie um `RF-NNN-<modulo>.md` por módulo/app real do sistema
-> (ex.: um por bounded context, app Django, pacote, ou área de domínio).
+> **Adapt to the project**: create one `RF-NNN-<module>.md` per real module/app of the system
+> (e.g. one per bounded context, Django app, package, or domain area).
 
-> ⚠️ **1 arquivo por MÓDULO, não 1 por requisito** (confusão comum — leia antes de achar que falta algo).
-> Cada arquivo em `RF/` documenta um **módulo inteiro** (um Epic), nomeado pelo seu **primeiro** requisito:
-> `RF-01-<modulo>.md` contém RF-01..RF-04; `RF-05-<modulo>.md` contém RF-05..RF-08; e assim por diante.
-> Os requisitos individuais ficam como seções `### RF-NN` **dentro** do arquivo. Por isso, uma pasta que
-> mostra `RF-01, RF-05, RF-09…` **não** está sem o RF-02/03/04 — eles são seções do primeiro arquivo.
-> Os "saltos" nos **nomes dos arquivos** são fronteiras de módulo (faixas contíguas), nunca requisitos
-> faltando. *(Se preferir 1 arquivo por requisito, é uma variante válida — mas o padrão e o scaffolder
-> assumem 1-arquivo-por-módulo.)*
+> ⚠️ **1 file per MODULE, not 1 per requirement** (a common confusion — read before assuming something is missing).
+> Each file in `RF/` documents an **entire module** (one Epic), named after its **first** requirement:
+> `RF-01-<module>.md` contains RF-01..RF-04; `RF-05-<module>.md` contains RF-05..RF-08; and so on.
+> The individual requirements live as `### RF-NN` sections **inside** the file. So a folder that
+> shows `RF-01, RF-05, RF-09…` is **not** missing RF-02/03/04 — those are sections of the first file.
+> The "jumps" in the **file names** are module boundaries (contiguous ranges), never missing
+> requirements. *(If you prefer 1 file per requirement, that is a valid variant — but the convention and the
+> scaffolder assume 1-file-per-module.)*
 
-## Convenções
+## Conventions
 
-- **Linguagem de negócio**. Sem verbo no infinitivo no título; sem termo técnico (jargão fica em ADRs/specs).
-- **IDs imutáveis**: `RF-NNN`, `RNF-<slug>`. Descontinuado → `RF-NNN-deprecated.md` (não some).
-- **Prioridade**: 🔴 Imediato · 🟠 Alta · 🟡 Normal · 🟢 Baixa.
-- **RNF é sempre quantitativo** — "rápido" é desejo; "p95 ≤ 300ms" é requisito.
-- Cada arquivo tem `## Realizado por` (Epics/Features que o executam).
+- **Business language**. No infinitive verb in the title; no technical term (jargon belongs in ADRs/specs).
+- **Immutable IDs**: `RF-NNN`, `RNF-<slug>`. Deprecated → `RF-NNN-deprecated.md` (never vanishes).
+- **Priority**: 🔴 Immediate · 🟠 High · 🟡 Normal · 🟢 Low.
+- **RNF is always quantitative** — "fast" is a wish; "p95 ≤ 300ms" is a requirement.
+- Each file has a `## Realized by` (Epics/Features that execute it).
 
-## Como adicionar um requisito
+## How to add a requirement
 
-1. Existe `RF-NNN` do módulo? Sim → nova seção. Não → `RF-NNN-novo-modulo.md` (próximo número livre).
-2. Enunciado em linguagem de negócio.
-3. Prioridade explícita.
-4. `## Realizado por` (vazio se ainda não há Epic).
-5. Quando um Epic novo citar este requisito, edite aqui — bidirecional é obrigatório.
+1. Does the module's `RF-NNN` exist? Yes → new section. No → `RF-NNN-new-module.md` (next free number).
+2. Statement in business language.
+3. Explicit priority.
+4. `## Realized by` (empty if there is no Epic yet).
+5. When a new Epic cites this requirement, edit it here — bidirectional is mandatory.
 
-## Skill canônica
+## Canonical skill
 
-[`engenharia-de-requisitos`](https://github.com/seekdevcore/sk-requirements-engineering-theskill) — IFPB ERS + Sommerville/Pressman/Wiegers/Cohn/BABOK v3 + Ética SBC 002/2024.
+[`engenharia-de-requisitos`](https://github.com/seekdevcore/sk-requirements-engineering-theskill) — *"IFPB"* ERS + Sommerville/Pressman/Wiegers/Cohn/BABOK v3 + SBC 002/2024 Ethics.
 
 ## Cross-references
 
-- [Backlog](../backlog/README.md) · [Specs](../specs/) · [ADRs do projeto](../planning/adrs/)
+- [Backlog](../backlog/README.md) · [Specs](../specs/) · [Project ADRs](../planning/adrs/)

@@ -1,91 +1,91 @@
 <!-- GENERIC TEMPLATE — adapt to your project. See references/10-estrutura-projeto.md §"Adaptation protocol". -->
-# Backlog — <NOME DO PROJETO>
+# Backlog — <PROJECT NAME>
 
-> **Pasta-fonte do "QUEM faz O QUÊ, QUANDO".** O **porquê** vive em `../requirements/`. O **como** em `../specs/` + ADRs.
+> **Source folder for "WHO does WHAT, WHEN".** The **why** lives in `../requirements/`. The **how** in `../specs/` + ADRs.
 >
-> Last requirements-document check: DD/MM/AAAA — no changes
-> (atualize toda vez que conferir os requisitos antes de mexer no backlog — SKILL §2.1)
+> Last requirements-document check: DD/MM/YYYY — no changes
+> (update every time you check the requirements before touching the backlog — SKILL §2.1)
 
-## Estrutura
+## Structure
 
 ```
 backlog/
-├── README.md                  este arquivo
-├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
-├── epics/                     EP-NN-<slug>.md  — Aplicação→Módulo→Componente (MÁX. 3 níveis de Epic) → Features
-├── features/                  F-NN-<slug>.md   — descrição + CAs + USs (com BDD) + Tasks
-├── melhorias/                 ← bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
-│   ├── README.md              o que é + descrição do Epic
-│   └── <F/US>-<slug>.md        cada melhoria do produto (vira filho do Epic)
-├── bugs/                      ← bucket de DEFEITOS → type "Bug" parented à US/Feature violada (NÃO é Epic)
-│   ├── README.md              por que bug é type, não Epic
-│   └── BUG-NN-<slug>.md        cada defeito (linka ao CA que viola)
-├── support-quality-investigation/  ← bucket UMBRELLA → Epic-raiz "Atividades de Apoio, Qualidade e Investigação"
-│   ├── README.md              descrição do Epic umbrella + 3 Epics filhos
-│   ├── support/               → Epic-filho "Apoio"  — TX-NN (técnico/config/infra; era atividades-complementares)
-│   ├── qa/                    → Epic-filho "Q&A"    — QA-NN (testes · reviews · gates)
-│   └── issues/                → Epic-filho "Issues" — ISS-NN (triagem)
-│       └── spikes/            → Epic-filho "Spikes" — SPK-NN (investigação time-boxed)
-├── sprints/                   sprint-N-<slug>.md — execução temporal (mapping US/Task)
-└── done/                      itens fechados (MOVIDOS via git mv: Feature/Bug/QA/ISS/SPK)
+├── README.md                  this file
+├── glossary.md               domain vocabulary (every US/CA/ADR must use these terms)
+├── epics/                     EP-NN-<slug>.md  — Application→Module→Component (MAX. 3 Epic levels) → Features
+├── features/                  F-NN-<slug>.md   — description + CAs + USs (with BDD) + Tasks
+├── improvements/                 ← MANDATORY bucket → root Epic "Melhorias" (Improvements) on export
+│   ├── README.md              what it is + Epic description
+│   └── <F/US>-<slug>.md        each product improvement (becomes a child of the Epic)
+├── bugs/                      ← DEFECTS bucket → type "Bug" parented to the violated US/Feature (NOT an Epic)
+│   ├── README.md              why a bug is a type, not an Epic
+│   └── BUG-NN-<slug>.md        each defect (links to the CA it violates)
+├── support-quality-investigation/  ← UMBRELLA bucket → root Epic "Atividades de Apoio, Qualidade e Investigação"
+│   ├── README.md              umbrella Epic description + 3 child Epics
+│   ├── support/               → child Epic "Apoio"  — TX-NN (technical/config/infra; was atividades-complementares)
+│   ├── qa/                    → child Epic "Q&A"    — QA-NN (tests · reviews · gates)
+│   └── issues/                → child Epic "Issues" — ISS-NN (triage)
+│       └── spikes/            → child Epic "Spikes" — SPK-NN (time-boxed investigation)
+├── sprints/                   sprint-N-<slug>.md — temporal execution (US/Task mapping)
+└── done/                      closed items (MOVED via git mv: Feature/Bug/QA/ISS/SPK)
 ```
 
-> **Regra de profundidade — MÁX. 3 níveis de Epic.** O front (`Aplicação Web`/`Mobile`) é o Epic raiz (nível 1); abaixo dele vem o **Módulo** (nível 2) e o **Componente** (nível 3) — e então a **Feature**. Depois do Epic-módulo há **só mais um** Epic (o componente) antes da Feature. Não aninhe um 4º nível de Epic (ex.: `Aplicação › Módulo › Gestão de X › Consulta de X › Feature` está fundo demais — colapse para `Aplicação › Módulo › Componente › Feature`).
+> **Depth rule — MAX. 3 Epic levels.** The front (`Web Application`/`Mobile`) is the root Epic (level 1); below it comes the **Module** (level 2) and the **Component** (level 3) — and then the **Feature**. After the module Epic there is **only one more** Epic (the component) before the Feature. Do not nest a 4th Epic level (e.g. `Application › Module › X Management › X Lookup › Feature` is too deep — collapse to `Application › Module › Component › Feature`).
 >
-> **Nomes en-CA, Epics pt-BR.** As pastas seguem o padrão en-CA (`support/`, `qa/`, `issues/`, `spikes/`) como `epics/`/`features/`; o adapter (`_BUCKETS`) restaura o nome pt-BR do Epic no export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
+> **en-CA names, pt-BR Epics.** The folders follow the en-CA pattern (`support/`, `qa/`, `issues/`, `spikes/`) like `epics/`/`features/`; the adapter (`_BUCKETS`) restores the Epic's pt-BR name on export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
 >
-> **Buckets estruturais** (diretórios, não arquivos `EP-NN`): **`melhorias/`** = aprimoramentos do que já existe (→ Epic-raiz). **`support-quality-investigation/`** = umbrella transversal (→ Epic-raiz com 3 Epics filhos). **`bugs/`** é diferente: cada `BUG-NN` é um work-package **type "Bug" parented à US/Feature que viola** (herda o Epic dela), **não** um Epic próprio — assim o defeito fica a um link do `CA`. Regra-mãe: *o type diz o que é; o parent diz a quem serve.*
+> **Structural buckets** (directories, not `EP-NN` files): **`improvements/`** = improvements to what already exists (→ root Epic). **`support-quality-investigation/`** = cross-cutting umbrella (→ root Epic with 3 child Epics). **`bugs/`** is different: each `BUG-NN` is a work-package **type "Bug" parented to the US/Feature it violates** (inherits its Epic), **not** an Epic of its own — so the defect stays one link away from the `CA`. Mother rule: *the type says what it is; the parent says whom it serves.*
 
-## Naming (regra dura)
+## Naming (hard rule)
 
-| Nível | Pode no título | NÃO pode no título |
+| Level | Allowed in the title | NOT allowed in the title |
 | --- | --- | --- |
-| Epic | Substantivo + adjetivo | Infinitivo, termo técnico |
-| Feature | Substantivo + adjetivo | Infinitivo, sigla técnica |
-| CA | Estado verificável | Vago ("Performance OK") |
-| US | "Como [persona], quero [ação], para [valor]" | Mistura técnico-negócio |
-| Task | **PODE** termo técnico | (único nível onde técnico é OK) |
+| Epic | Noun + adjective | Infinitive, technical term |
+| Feature | Noun + adjective | Infinitive, technical acronym |
+| CA | Verifiable state | Vague ("Performance OK") |
+| US | "As a [persona], I want [action], so that [value]" | Mixing technical and business |
+| Task | **MAY** use technical terms | (the only level where technical is OK) |
 
-## IDs canônicos (imutáveis após criação)
+## Canonical IDs (immutable after creation)
 
-| Tipo | Formato | Exemplo |
+| Type | Format | Example |
 | --- | --- | --- |
 | Epic | `EP-NN` | `EP-10` |
 | Feature | `F-NN` | `F-30` |
-| Critério de Aceitação | `CANN` (no Feature pai) | `CA01` |
+| Acceptance Criterion | `CANN` (in the parent Feature) | `CA01` |
 | User Story | `USNN.M` | `US30.1` |
-| Task US-bound | `TNN.M.K` | `T30.1.4b` |
-| Task transversal (Apoio) | `TX-NN` | `TX-18` |
-| Defeito (Bug) | `BUG-NN` | `BUG-04` |
-| Atividade de qualidade (Q&A) | `QA-NN` | `QA-07` |
-| Issue de triagem | `ISS-NN` | `ISS-12` |
-| Spike (investigação) | `SPK-NN` | `SPK-02` |
+| US-bound Task | `TNN.M.K` | `T30.1.4b` |
+| Cross-cutting Task (Support) | `TX-NN` | `TX-18` |
+| Defect (Bug) | `BUG-NN` | `BUG-04` |
+| Quality activity (Q&A) | `QA-NN` | `QA-07` |
+| Triage issue | `ISS-NN` | `ISS-12` |
+| Spike (investigation) | `SPK-NN` | `SPK-02` |
 | Sprint | `sprint-N-slug` | `sprint-4-<slug>` |
 
-## Prioridade
+## Priority
 
-🔴 Imediato (bloqueia MVP/security) · 🟠 Alta (release atual) · 🟡 Normal (próxima sprint) · 🟢 Baixa.
+🔴 Immediate (blocks MVP/security) · 🟠 High (current release) · 🟡 Normal (next sprint) · 🟢 Low.
 
-## Definition of Done de Feature
+## Feature Definition of Done
 
-1. Todos os CAs verificados por teste (ou checklist manual se UX puro).
-2. Toda US tem BDD que roda verde.
-3. Toda Task `done` com commit hash.
-4. Code-review aprovado.
-5. Cobertura ≥ gate do Sprint.
-6. Documentação cruzada atualizada (RF/RNF citados; Sprint cita Feature; Feature em `done/`).
-7. Mergeada via PR (sem `--force-push`, sem `--no-verify`).
+1. All CAs verified by test (or manual checklist if pure UX).
+2. Every US has BDD that runs green.
+3. Every Task `done` with commit hash.
+4. Code-review approved.
+5. Coverage ≥ Sprint gate.
+6. Cross-referenced documentation updated (RF/RNF cited; Sprint cites Feature; Feature in `done/`).
+7. Merged via PR (no `--force-push`, no `--no-verify`).
 
-## Como fechar uma Feature
+## How to close a Feature
 
-1. Confirmar CAs/USs/Tasks `✅ Done`.
-2. Atualizar commit hashes no `features/F-NN-*.md`.
-3. Atualizar Epic pai.
-4. Atualizar Sprint.
-5. Atualizar `requirements/RF-*` (`## Realizado por`).
+1. Confirm CAs/USs/Tasks `✅ Done`.
+2. Update commit hashes in `features/F-NN-*.md`.
+3. Update the parent Epic.
+4. Update the Sprint.
+5. Update `requirements/RF-*` (`## Realized by`).
 6. `git mv features/F-NN-*.md done/`.
 7. Commit `chore(backlog): F-NN done — close + archive`.
 
 ## Cross-references
 
-- [Requisitos](../requirements/README.md) · [Specs](../specs/) · [ADRs do projeto](../planning/adrs/)
+- [Requirements](../requirements/README.md) · [Specs](../specs/) · [Project ADRs](../planning/adrs/)

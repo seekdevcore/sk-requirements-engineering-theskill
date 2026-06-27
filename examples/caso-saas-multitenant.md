@@ -1,14 +1,14 @@
 # Worked Example — Data Isolation Between Organizations in the *"GestorPro"* Project
 
-> Fictional but realistic case from the *"GestorPro"* project (a multi-tenant SaaS for clinic and school management; Django 5 + DRF + PostgreSQL 16 + React 19). Each client organization is a **tenant** that shares the same physical database with the others while staying isolated from them. Shows how a **shared-base multi-tenant** feature maps to the skill's RE framework — useful for auditing tenancy specifications or as a template for new tenant-scoped features. Reference commit (illustrative): `b7c3f02` (feat(tenancy): isolamento por organização com RLS + provisionamento atômico).
+> Fictional but realistic case from the *"GestorPro"* project (a multi-tenant SaaS for clinic and school management; Django 5 + DRF + PostgreSQL 16 + React 19). Each client organization is a **tenant** that shares the same physical database with the others while staying isolated from them. Shows how a **shared-base multi-tenant** feature maps to the skill's RE framework — useful for auditing tenancy specifications or as a template for new tenant-scoped features. Reference commit (illustrative): `b7c3f02` (feat(tenancy): per-organization isolation with RLS + atomic provisioning).
 >
-> **Note on language preservation**: Feature, User Story, AC, FR, NFR, goal, and business-rule titles, as well as the BDD content, are kept in **pt-BR** because they mirror the identifiers used in the *"GestorPro"* repository, commits, and backlog cards. **Explanations, tables, and analysis are in en-CA**; **artifact content is in pt-BR**.
+> **Note on language**: this worked example is written in **en-CA** (the skill's default language). Code symbols, file paths, identifiers, and commit-message conventions are kept verbatim; Brazilian domain terms (*"GestorPro"*, *"LGPD"*) are kept in their original form.
 
 ---
 
 ## 1. Context and problem
 
-**Business problem**: *"GestorPro"* sells management software to clinics and schools. Each client (a clinic, a school) is an **organization** — a tenant — and all tenants live in one shared PostgreSQL base to keep operational cost low. The first version scoped queries by `organization_id` only at the application layer (a `.filter(organization=request.user.organization)` scattered across viewsets). This is fragile: a single forgotten filter, a raw query, a careless admin action, or an ORM mistake leaks one clinic's patient records into another clinic's screen — a catastrophic LGPD incident and the end of the product's reputation.
+**Business problem**: *"GestorPro"* sells management software to clinics and schools. Each client (a clinic, a school) is an **organization** — a tenant — and all tenants live in one shared PostgreSQL base to keep operational cost low. The first version scoped queries by `organization_id` only at the application layer (a `.filter(organization=request.user.organization)` scattered across viewsets). This is fragile: a single forgotten filter, a raw query, a careless admin action, or an ORM mistake leaks one clinic's patient records into another clinic's screen — a catastrophic *"LGPD"* incident and the end of the product's reputation.
 
 **Diagnosis**: tenant isolation was an **implicit, application-only requirement** with no safety net at the database. There was also no formal contract for "how a new organization is born" (provisioning could leave orphan rows) and no path for an organization to **export** or **erase** its data (LGPD portability and right to be forgotten). These are the kinds of requirements that surface only when you ask "what happens when this single filter is forgotten?" — see [02-elicitacao.md §7](../references/02-elicitacao.md). Once raised, they became explicit.
 
@@ -78,145 +78,145 @@ Admin A → DELETE /api/v1/organizacoes/A/             → erases Org A only
 |---|---|
 | Isolation lives only in application filters; one omission leaks data | NFR: Row-Level Security policy in PostgreSQL as a database-level safety net (ADR-021) |
 | Cross-tenant access attempts are not explicitly denied or logged | FR: deny + audit-log on any out-of-tenant access attempt |
-| Tenant boundary is not expressed as a domain invariant | G: "Toda informação pertence a exatamente uma organização" |
+| Tenant boundary is not expressed as a domain invariant | G: "Every piece of information belongs to exactly one organization" |
 | Signup ran multiple inserts unguarded → orphans on failure | NFR: atomic provisioning in one transaction (no orphan rows) |
 | No LGPD export/erasure per organization | FR: per-tenant export and erasure endpoints |
 | A noisy tenant can starve shared resources | NFR: per-organization quota and rate limit |
 
 ---
 
-## 4. Feature: Isolamento de dados entre organizações
+## 4. Feature: Data isolation between organizations
 
-**Feature description (client-deliverable, in pt-BR):**
+**Feature description (client-deliverable):**
 
-Garante que cada organização-cliente do *"GestorPro"* enxergue e manipule exclusivamente os seus próprios dados, mesmo compartilhando a mesma base física com as demais. A regra de pertencimento — toda informação pertence a exatamente uma organização — é aplicada de forma consistente em todas as operações de leitura e escrita, com uma rede de segurança no banco de dados (Row-Level Security) que continua valendo mesmo que um filtro de aplicação seja esquecido. O entregável ao cliente é a garantia de que nenhuma clínica ou escola consegue, sob nenhuma circunstância — inclusive consulta direta, relatório novo ou ação administrativa —, acessar dados de outra organização. A feature também cobre o nascimento de uma nova organização (cadastro que cria o tenant e seus dados-semente numa única transação, sem deixar registros órfãos), a portabilidade dos dados de uma organização (exportação completa) e o direito ao esquecimento (exclusão completa por organização), em conformidade com a LGPD.
+Ensures that each client organization of *"GestorPro"* sees and manipulates exclusively its own data, even while sharing the same physical base with the others. The belonging rule — every piece of information belongs to exactly one organization — is applied consistently across all read and write operations, with a safety net in the database (Row-Level Security) that stays in force even if an application filter is forgotten. The deliverable to the client is the guarantee that no clinic or school can, under any circumstance — including a direct query, a new report, or an administrative action — access another organization's data. The feature also covers the birth of a new organization (a signup that creates the tenant and its seed data in a single transaction, leaving no orphan rows), the portability of an organization's data (full export), and the right to be forgotten (full per-organization erasure), in compliance with *"LGPD"* (Brazil's General Data Protection Law).
 
 > This description is what goes on the backlog Feature card. It is **written in business language**, readable by any stakeholder. The ACs below formalize the testable rules; BDD appears only in the User Stories (§5).
 
 ### 4.1 Goals and business rules (G)
 
-| ID | Business rule (regra de negócio) |
+| ID | Business rule |
 |---|---|
-| `G-01` | Toda informação pertence a exatamente uma organização. |
-| `G-02` | Administrador de uma organização não acessa nem modifica dados de outra organização. |
-| `G-03` | O nascimento de uma organização ou acontece por completo ou não acontece — nunca deixa registros órfãos. |
-| `G-04` | Os dados de uma organização podem ser exportados e excluídos isoladamente, sem afetar as demais. |
+| `G-01` | Every piece of information belongs to exactly one organization. |
+| `G-02` | An organization's administrator neither accesses nor modifies another organization's data. |
+| `G-03` | The birth of an organization either happens completely or does not happen at all — it never leaves orphan rows. |
+| `G-04` | An organization's data can be exported and erased in isolation, without affecting the others. |
 
 ### 4.2 Non-functional requirements (quantitative, EARS body)
 
 | ID | NFR | Measurement method | Priority |
 |---|---|---|---|
-| `RNF-01` | **Isolamento de dados entre organizações.** ENQUANTO uma sessão estiver vinculada à organização X, O SISTEMA DEVE retornar 0 (zero) registros pertencentes a qualquer organização Y ≠ X, em 100% das consultas de leitura e escrita, garantido por política de RLS no banco. | Suíte de testes de isolamento cruzado (1 cenário por tabela tenant-scoped) executando com o filtro de aplicação desligado; meta: 0 vazamentos em 100% dos casos. | 🔴 Imediata |
-| `RNF-02` | **Negação de acesso cruzado.** SE uma requisição tentar ler ou escrever um registro de organização diferente da sessão, ENTÃO O SISTEMA DEVE negar a operação e registrar a tentativa no log de auditoria em ≤ 200 ms. | Teste BDD de tentativa de acesso cruzado verifica resposta negada e presença de 1 entrada no log de auditoria. | 🔴 Imediata |
-| `RNF-03` | **Cota e limite de uso por organização.** ENQUANTO uma organização consumir recursos, O SISTEMA DEVE limitar a 600 requisições/min e 5 GB de armazenamento por organização, sem que o consumo de uma organização eleve a latência p95 das demais acima de 400 ms. | Teste de carga com 1 tenant "barulhento" (10× tráfego) e medição da latência p95 dos demais tenants via APM. | 🟠 Alta |
-| `RNF-04` | **Provisionamento atômico de nova organização.** QUANDO um cadastro de nova organização for submetido, O SISTEMA DEVE criar o tenant e seus dados-semente numa única transação; SE qualquer passo falhar, ENTÃO DEVE reverter integralmente, deixando 0 registros órfãos. | Teste que injeta falha no passo final do provisionamento e verifica contagem 0 em todas as tabelas para o tenant. | 🔴 Imediata |
-| `RNF-05` | **Exportação de dados por organização.** QUANDO um administrador solicitar a exportação, O SISTEMA DEVE produzir um pacote contendo somente os dados da sua organização, em ≤ 5 min para até 1 M de registros. | Teste de exportação valida que o pacote contém apenas IDs do tenant solicitante e mede o tempo de geração. | 🟡 Normal |
-| `RNF-06` | **Exclusão de dados por organização (esquecimento).** QUANDO um administrador confirmar a exclusão da organização, O SISTEMA DEVE remover 100% dos dados daquele tenant em ≤ 24 h, sem afetar nenhum registro de outra organização. | Teste de exclusão verifica contagem 0 para o tenant alvo e contagem inalterada para um tenant vizinho. | 🟡 Normal |
+| `RNF-01` | **Data isolation between organizations.** WHILE a session is bound to organization X, THE SYSTEM SHALL return 0 (zero) records belonging to any organization Y ≠ X, across 100% of read and write queries, guaranteed by an RLS policy in the database. | Cross-isolation test suite (1 scenario per tenant-scoped table) running with the application filter turned off; target: 0 leaks in 100% of cases. | 🔴 Immediate |
+| `RNF-02` | **Cross-access denial.** IF a request attempts to read or write a record of an organization different from the session, THEN THE SYSTEM SHALL deny the operation and record the attempt in the audit log within ≤ 200 ms. | BDD test of a cross-access attempt verifies the denied response and the presence of 1 entry in the audit log. | 🔴 Immediate |
+| `RNF-03` | **Per-organization quota and usage limit.** WHILE an organization consumes resources, THE SYSTEM SHALL limit it to 600 requests/min and 5 GB of storage per organization, without one organization's consumption raising the p95 latency of the others above 400 ms. | Load test with 1 "noisy" tenant (10× traffic) and measurement of the p95 latency of the other tenants via APM. | 🟠 High |
+| `RNF-04` | **Atomic provisioning of a new organization.** WHEN a new-organization signup is submitted, THE SYSTEM SHALL create the tenant and its seed data in a single transaction; IF any step fails, THEN it SHALL roll back fully, leaving 0 orphan rows. | A test that injects a failure in the final provisioning step and verifies a count of 0 in all tables for the tenant. | 🔴 Immediate |
+| `RNF-05` | **Per-organization data export.** WHEN an administrator requests the export, THE SYSTEM SHALL produce a package containing only its organization's data, within ≤ 5 min for up to 1 M records. | An export test validates that the package contains only the requesting tenant's IDs and measures the generation time. | 🟡 Normal |
+| `RNF-06` | **Per-organization data erasure (forgetting).** WHEN an administrator confirms the organization's erasure, THE SYSTEM SHALL remove 100% of that tenant's data within ≤ 24 h, without affecting any record of another organization. | An erasure test verifies a count of 0 for the target tenant and an unchanged count for a neighbouring tenant. | 🟡 Normal |
 
 ### 4.3 Acceptance Criteria (declarative style)
 
 11 ACs, **grouped by theme**. ACs with **`[...]`** at the end of the title must be read together with the detail in §4.4.
 
-#### 📋 CA - Pertencimento e isolamento
+#### 📋 CA - Belonging and isolation
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA01` | Toda leitura retorna apenas registros da organização da sessão atual; nenhum registro de outra organização aparece. | — |
-| `CA02` | Toda escrita grava o registro vinculado à organização da sessão atual; não é possível gravar em nome de outra organização. | — |
-| `CA03` | A rede de segurança no banco (RLS) continua isolando mesmo quando o filtro de aplicação é omitido **[...]** | ✅ |
-| `CA04` | Tentativa de acessar registro de outra organização é negada e registrada no log de auditoria **[...]** | ✅ |
+| `CA01` | Every read returns only records of the current session's organization; no record of another organization appears. | — |
+| `CA02` | Every write stores the record bound to the current session's organization; it is not possible to write on behalf of another organization. | — |
+| `CA03` | The database safety net (RLS) keeps isolating even when the application filter is omitted **[...]** | ✅ |
+| `CA04` | An attempt to access another organization's record is denied and recorded in the audit log **[...]** | ✅ |
 
-#### 📋 CA - Cota e limite por organização
-
-| ID | Description | Detail? |
-|---|---|---|
-| `CA05` | Uma organização que ultrapassa o limite de requisições recebe resposta de limite excedido, sem afetar as demais **[...]** | ✅ |
-| `CA06` | Uma organização que atinge o limite de armazenamento é impedida de gravar novos dados até liberar espaço, sem afetar as demais. | — |
-
-#### 📋 CA - Nascimento de organização
+#### 📋 CA - Per-organization quota and limit
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA07` | O cadastro de uma nova organização cria o tenant e seus dados-semente como uma única unidade **[...]** | ✅ |
-| `CA08` | Se qualquer passo do cadastro falhar, nada é persistido — não restam registros órfãos da organização incompleta. | — |
+| `CA05` | An organization that exceeds the request limit receives a limit-exceeded response, without affecting the others **[...]** | ✅ |
+| `CA06` | An organization that reaches the storage limit is prevented from writing new data until it frees space, without affecting the others. | — |
 
-#### 📋 CA - Portabilidade e esquecimento
+#### 📋 CA - Birth of an organization
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA09` | A exportação de uma organização contém somente os dados daquela organização **[...]** | ✅ |
-| `CA10` | A exclusão de uma organização remove todos os dados daquele tenant e nenhum de outro tenant **[...]** | ✅ |
-| `CA11` | Após a exclusão, o identificador da organização não pode ser reutilizado para acessar dados antigos; qualquer acesso retorna como inexistente. | — |
+| `CA07` | The signup of a new organization creates the tenant and its seed data as a single unit **[...]** | ✅ |
+| `CA08` | If any step of the signup fails, nothing is persisted — no orphan rows of the incomplete organization remain. | — |
+
+#### 📋 CA - Portability and forgetting
+
+| ID | Description | Detail? |
+|---|---|---|
+| `CA09` | An organization's export contains only that organization's data **[...]** | ✅ |
+| `CA10` | An organization's erasure removes all of that tenant's data and none of another tenant's **[...]** | ✅ |
+| `CA11` | After erasure, the organization's identifier cannot be reused to access old data; any access returns as non-existent. | — |
 
 ### 4.4 Detail of ACs with `[...]`
 
-Each block below is what appears in the **item body** in the backlog (AC Description field), following the `Regras a serem aplicadas:` + bullets convention.
+Each block below is what appears in the **item body** in the backlog (AC Description field), following the `Rules to be applied:` + bullets convention.
 
 #### CA03 — Detail
 
 ```
-Regras a serem aplicadas:
-- A política de isolamento no banco (RLS) vale independentemente da camada de aplicação.
-- Mesmo que um endpoint novo esqueça o filtro por organização, o banco devolve apenas linhas da organização da sessão.
-- Consultas diretas (relatórios, exportações internas, ações administrativas) também respeitam a política do banco.
-- A aplicação continua filtrando por organização — a RLS é a segunda linha de defesa, não a substituição da primeira.
+Rules to be applied:
+- The isolation policy in the database (RLS) holds independently of the application layer.
+- Even if a new endpoint forgets the per-organization filter, the database returns only rows of the session's organization.
+- Direct queries (reports, internal exports, administrative actions) also respect the database policy.
+- The application keeps filtering by organization — RLS is the second line of defence, not a replacement for the first.
 ```
 
 #### CA04 — Detail
 
 ```
-Regras a serem aplicadas:
-- Toda tentativa de ler ou escrever um registro de organização diferente da sessão é negada.
-- A tentativa negada gera uma entrada no log de auditoria (quem, qual organização alvo, quando, qual recurso).
-- O recurso de outra organização responde como inexistente, sem revelar que ele existe (não diferencia "não encontrado" de "proibido").
-- Nenhum dado da organização alvo é exposto na resposta de negação.
+Rules to be applied:
+- Every attempt to read or write a record of an organization different from the session is denied.
+- The denied attempt generates an entry in the audit log (who, which target organization, when, which resource).
+- Another organization's resource responds as non-existent, without revealing that it exists (it does not distinguish "not found" from "forbidden").
+- No data of the target organization is exposed in the denial response.
 ```
 
 #### CA05 — Detail
 
 ```
-Regras a serem aplicadas:
-- Cada organização tem um limite próprio de requisições por minuto.
-- Ao exceder o limite, a organização recebe resposta de "limite excedido" (retry depois de um intervalo).
-- O consumo de uma organização não pode elevar a latência das outras acima do alvo do RNF-03.
-- O limite é medido e aplicado por organização, nunca de forma global que penalize tenants comportados.
+Rules to be applied:
+- Each organization has its own request-per-minute limit.
+- On exceeding the limit, the organization receives a "limit exceeded" response (retry after an interval).
+- One organization's consumption cannot raise the others' latency above the RNF-03 target.
+- The limit is measured and applied per organization, never globally in a way that penalizes well-behaved tenants.
 ```
 
 #### CA07 — Detail
 
 ```
-Regras a serem aplicadas:
-- O cadastro cria a organização, seus papéis-semente (administrador, operador) e o primeiro usuário administrador.
-- Todos esses passos ocorrem numa única transação: ou todos persistem, ou nenhum persiste.
-- Não existe estado intermediário visível: nunca há uma organização "meio criada" acessível.
-- O administrador inicial só consegue entrar depois que a transação inteira foi confirmada.
+Rules to be applied:
+- The signup creates the organization, its seed roles (administrator, operator), and the first administrator user.
+- All these steps occur in a single transaction: either all persist, or none persists.
+- There is no visible intermediate state: there is never a "half-created" organization accessible.
+- The initial administrator can only sign in after the entire transaction has been confirmed.
 ```
 
 #### CA09 — Detail
 
 ```
-Regras a serem aplicadas:
-- A exportação inclui somente registros cuja organização é a do solicitante.
-- Nenhum identificador, referência ou metadado de outra organização aparece no pacote.
-- O pacote é entregue em formato aberto e legível (portabilidade LGPD), com as entidades principais da organização.
-- A geração da exportação respeita o tempo-limite definido no RNF-05.
+Rules to be applied:
+- The export includes only records whose organization is the requester's.
+- No identifier, reference, or metadata of another organization appears in the package.
+- The package is delivered in an open, readable format (LGPD portability), with the organization's main entities.
+- The export generation respects the time limit defined in RNF-05.
 ```
 
 #### CA10 — Detail
 
 ```
-Regras a serem aplicadas:
-- A exclusão remove todos os registros pertencentes ao tenant alvo, em todas as tabelas tenant-scoped.
-- Nenhum registro de qualquer outra organização é tocado durante a exclusão.
-- A exclusão é confirmada explicitamente pelo administrador da própria organização (ação irreversível).
-- A contagem de registros de um tenant vizinho permanece inalterada antes e depois da exclusão.
+Rules to be applied:
+- The erasure removes all records belonging to the target tenant, across all tenant-scoped tables.
+- No record of any other organization is touched during the erasure.
+- The erasure is explicitly confirmed by the organization's own administrator (irreversible action).
+- A neighbouring tenant's record count stays unchanged before and after the erasure.
 ```
 
 > **Technical note (does not go on the cards)**: the isolation safety net is implemented as a PostgreSQL Row-Level Security policy keyed on the session variable `app.current_org`, set per request from the authenticated user's organization. Deny-and-audit (CA04) maps to HTTP 404 (not 403) to avoid resource enumeration. This technical mapping is the responsibility of the Tasks (see §7 Traceability), not the AC.
 
 ### 4.5 Technical annex — Cross-tenant access matrix
 
-> **Note**: this annex is a **technical derivation** of G-01/G-02 + CA01/CA02/CA04 for whoever implements the isolation layer. It is not AC detail in the "Regras a serem aplicadas:" style — it is an exhaustive truth table. In a real project, this becomes a `pytest.mark.parametrize` table.
+> **Note**: this annex is a **technical derivation** of G-01/G-02 + CA01/CA02/CA04 for whoever implements the isolation layer. It is not AC detail in the "Rules to be applied:" style — it is an exhaustive truth table. In a real project, this becomes a `pytest.mark.parametrize` table.
 
 ```
 Exhaustive matrix: session_org(S) accessing record_org(R)
@@ -237,103 +237,103 @@ Exhaustive matrix: session_org(S) accessing record_org(R)
 ### US 1 — Apply isolation at the database layer
 
 ```
-US Aplicar política de isolamento por organização no banco (RLS)
+US Apply the per-organization isolation policy in the database (RLS)
 
-Descrição (BDD):
-  DADO que a sessão está vinculada à organização A
-  E existem registros das organizações A e B na mesma tabela
-  QUANDO uma consulta de leitura é executada SEM o filtro de aplicação
-  ENTÃO o banco retorna apenas registros da organização A
-  E nenhum registro da organização B aparece
+Description (BDD):
+  GIVEN that the session is bound to organization A
+  AND there are records of organizations A and B in the same table
+  WHEN a read query is executed WITHOUT the application filter
+  THEN the database returns only records of organization A
+  AND no record of organization B appears
 
-Relacionado a: CA01, CA03, G-01, RNF-01
+Related to: CA01, CA03, G-01, RNF-01
 Story Points: 5
 ```
 
 ### US 2 — Deny and audit cross-tenant access
 
 ```
-US Negar e registrar tentativa de acesso a outra organização
+US Deny and record an attempt to access another organization
 
-Descrição (BDD):
-  DADO que o usuário autenticado pertence à organização A
-  E um registro pertence à organização B
-  QUANDO faço GET /api/v1/pacientes/{id_de_B}/
-  ENTÃO o sistema responde como recurso inexistente (404)
-  E nenhum dado da organização B é exposto
-  E uma entrada é gravada no log de auditoria com a organização alvo
+Description (BDD):
+  GIVEN that the authenticated user belongs to organization A
+  AND a record belongs to organization B
+  WHEN I GET /api/v1/pacientes/{id_of_B}/
+  THEN the system responds as a non-existent resource (404)
+  AND no data of organization B is exposed
+  AND an entry is written to the audit log with the target organization
 
-Relacionado a: CA04, G-02, RNF-02
+Related to: CA04, G-02, RNF-02
 Story Points: 3
 ```
 
 ### US 3 — Atomic provisioning of a new organization
 
 ```
-US Provisionar nova organização de forma atômica
+US Provision a new organization atomically
 
-Descrição (BDD):
-  DADO que o provisionamento cria organização + papéis-semente + administrador
-  QUANDO um dos passos falha (simulado via mock no passo final)
-  ENTÃO toda a transação é revertida
-  E não resta nenhum registro da organização incompleta
-  E o identificador da organização não fica reservado
+Description (BDD):
+  GIVEN that provisioning creates organization + seed roles + administrator
+  WHEN one of the steps fails (simulated via mock on the final step)
+  THEN the entire transaction is rolled back
+  AND no record of the incomplete organization remains
+  AND the organization's identifier is not reserved
 
-  Cenário 2: Provisionamento bem-sucedido
-  DADO um cadastro válido de nova organização
-  QUANDO o provisionamento conclui
-  ENTÃO a organização, os papéis-semente e o administrador existem
-  E o administrador consegue entrar somente após a confirmação da transação
+  Scenario 2: Successful provisioning
+  GIVEN a valid new-organization signup
+  WHEN provisioning completes
+  THEN the organization, the seed roles, and the administrator exist
+  AND the administrator can only sign in after the transaction is confirmed
 
-Relacionado a: CA07, CA08, G-03, RNF-04
+Related to: CA07, CA08, G-03, RNF-04
 Story Points: 5
 ```
 
 ### US 4 — Per-organization quota and limit
 
 ```
-US Aplicar cota e limite de uso por organização
+US Apply per-organization quota and usage limit
 
-Descrição (BDD):
-  DADO que a organização A excede o limite de requisições por minuto
-  QUANDO A envia mais requisições no mesmo minuto
-  ENTÃO A recebe resposta de limite excedido
-  E a organização B, comportada, continua respondendo dentro do alvo de latência
+Description (BDD):
+  GIVEN that organization A exceeds the request-per-minute limit
+  WHEN A sends more requests in the same minute
+  THEN A receives a limit-exceeded response
+  AND organization B, well-behaved, keeps responding within the latency target
 
-Relacionado a: CA05, CA06, RNF-03
+Related to: CA05, CA06, RNF-03
 Story Points: 3
 ```
 
 ### US 5 — Export an organization's data (portability)
 
 ```
-US Exportar os dados de uma organização
+US Export an organization's data
 
-Descrição (BDD):
-  DADO que sou administrador da organização A
-  QUANDO solicito a exportação dos dados da minha organização
-  ENTÃO recebo um pacote contendo apenas registros da organização A
-  E nenhum identificador de outra organização aparece no pacote
-  E o pacote é gerado dentro do tempo-limite definido
+Description (BDD):
+  GIVEN that I am the administrator of organization A
+  WHEN I request the export of my organization's data
+  THEN I receive a package containing only records of organization A
+  AND no identifier of another organization appears in the package
+  AND the package is generated within the defined time limit
 
-Relacionado a: CA09, G-04, RNF-05
+Related to: CA09, G-04, RNF-05
 Story Points: 3
 ```
 
 ### US 6 — Erase an organization's data (right to be forgotten)
 
 ```
-US Excluir os dados de uma organização
+US Erase an organization's data
 
-Descrição (BDD):
-  DADO que sou administrador da organização A
-  E existe uma organização vizinha B com N registros
-  QUANDO confirmo a exclusão da minha organização
-  ENTÃO todos os registros da organização A são removidos
-  E a contagem de registros da organização B permanece N
-  E acessos posteriores à organização A retornam como inexistente
+Description (BDD):
+  GIVEN that I am the administrator of organization A
+  AND there is a neighbouring organization B with N records
+  WHEN I confirm the erasure of my organization
+  THEN all records of organization A are removed
+  AND organization B's record count stays N
+  AND later accesses to organization A return as non-existent
 
-Relacionado a: CA10, CA11, G-04, RNF-06
+Related to: CA10, CA11, G-04, RNF-06
 Story Points: 5
 ```
 
@@ -353,7 +353,7 @@ Applying [06-validacao.md](../references/06-validacao.md):
 | **Complete (Falbo)** | ACs describe input (request + session org), rule (RLS + matrix), output (rows / 404 / audit log) |
 | **Correct (Falbo)** | Validated with the product owner and the DPO (LGPD scope) |
 | **Necessary (Falbo)** | Yes — a cross-tenant leak is an existential risk for the product |
-| **Prioritizable (Falbo)** | Isolation 🔴 Imediata; export/erasure 🟡 Normal (regulatory but not launch-blocking) |
+| **Prioritizable (Falbo)** | Isolation 🔴 Immediate; export/erasure 🟡 Normal (regulatory but not launch-blocking) |
 | **Verifiable (Falbo)** | Cross-tenant leak suite runs with the application filter disabled — 0 leaks required to pass |
 
 ---
@@ -363,19 +363,19 @@ Applying [06-validacao.md](../references/06-validacao.md):
 Applying [07-mudanca-rastreabilidade.md](../references/07-mudanca-rastreabilidade.md):
 
 ```
-Commit b7c3f02: feat(tenancy): isolamento por organização com RLS + provisionamento atômico
+Commit b7c3f02: feat(tenancy): per-organization isolation with RLS + atomic provisioning
 ├─ apps/tenancy/models.py
-│    ├─ Organization (tenant raiz)
-│    └─ TenantScopedModel (abstract: organization FK + manager filtrado)
+│    ├─ Organization (root tenant)
+│    └─ TenantScopedModel (abstract: organization FK + filtered manager)
 ├─ apps/tenancy/db/policies.sql
 │    └─ RLS policy USING (organization_id = current_setting('app.current_org')::uuid)
 ├─ apps/tenancy/middleware.py
 │    └─ set_current_org(request) → SET app.current_org = user.organization_id
 ├─ apps/tenancy/services.py
 │    ├─ provision_organization(payload) → Organization   [transaction.atomic]
-│    │    └─ rollback total se qualquer passo falhar (CA08)
-│    ├─ export_organization(org) → ZIP   (somente registros do tenant)
-│    └─ delete_organization(org) → None  (cascade tenant-scoped + invalida id)
+│    │    └─ full rollback if any step fails (CA08)
+│    ├─ export_organization(org) → ZIP   (only the tenant's records)
+│    └─ delete_organization(org) → None  (tenant-scoped cascade + invalidates id)
 ├─ apps/tenancy/throttling.py
 │    └─ PerOrganizationRateThrottle (600/min) + StorageQuotaGuard (5 GB)
 ├─ apps/tenancy/tests/test_tenant_isolation.py

@@ -2,7 +2,7 @@
 
 > Real case presented in LECTURE 03 of the ERS course at *"IFPB"*. Project funded by *"CNPq"*; integrated system for Brazilian sports entities (*"ABCD"* — *"Autoridade Brasileira de Controle de Dopagem"*, *"COB"* — *"Comitê Olímpico Brasileiro"*, sports confederations). Walks through elicitation → specification → backlog → US with BDD in a real critical system.
 >
-> **Note on language preservation**: Feature, Epic, User Story, AC, FR, NFR, and business-rule (G/E) titles are kept in **pt-BR** because they are the actual identifiers used in the original *"IFPB"* / *"CNPq"* project — Redmine cards, *"SVN"* commits, academic papers reference them verbatim. Translating these would break traceability with the source material. **Explanations, tables and analysis are in en-CA**; **artifact content is in pt-BR**.
+> **Note on language preservation**: the original Feature, Epic, User Story, AC, FR, NFR, and business-rule (G/E) titles were authored in pt-BR in the source *"IFPB"* / *"CNPq"* project — Redmine cards, *"SVN"* commits, and academic papers reference them verbatim. This en-CA edition translates the artifact content for an English-reading audience; where a pt-BR identifier is load-bearing for traceability with the source material, it is glossed in *italics+quotes*. **Explanations, tables, analysis, and artifact content are all in en-CA.**
 
 ---
 
@@ -51,22 +51,22 @@ Per [02-elicitacao.md](../references/02-elicitacao.md), no isolated technique wo
 Elicitation produced **10 modules**:
 
 ```
-ADMINISTRATIVO   — Atleta, Médico, Confederação, Provas, Modalidades,
-                   Federações, Competições, Treinador
-DOPAGEM          — Solicitação/Autorização KIT, Teste/Amostra, Laboratório,
-                   Custódia, Histórico Teste, Substâncias Detectadas, Resultados
-STJD             — Processo, Parecer, Despacho, Infrações, Tramitação,
-                   Histórico, Penalidades, Defesas
-GESTÃO OCD/      — OCD, Escolta, OCS, Competências, Disponibilidade,
-ESCOLTAS         — Alocação Eventos, Custos
-USO GERAL        — Pessoas, Notificações, Portarias, Solicitações
-FINANCEIRO       — Taxas, Boletos, Inadimplência, Baixa Bancária
-ESTATÍSTICO      — Inteligência de Negócios (BI)
-DOPAGEM
-TÉCNICO          — Organização Competições, Inscrição Competições,
-                 — Julgamento Competições
-CONTROLE         — Acesso (RBAC)
-DE ACESSO
+ADMINISTRATIVE   — Athlete, Physician, Confederation, Events, Modalities,
+                   Federations, Competitions, Coach
+DOPING           — KIT Request/Authorization, Test/Sample, Laboratory,
+                   Custody, Test History, Detected Substances, Results
+STJD             — Proceeding, Opinion, Ruling, Infractions, Processing,
+                   History, Penalties, Defences
+OCD/ESCORT       — OCD, Escort, OCS, Competencies, Availability,
+MANAGEMENT       — Event Allocation, Costs
+GENERAL USE      — People, Notifications, Ordinances, Requests
+FINANCIAL        — Fees, Payment Slips, Default, Bank Reconciliation
+DOPING           — Business Intelligence (BI)
+STATISTICS
+TECHNICAL        — Competition Organization, Competition Registration,
+                 — Competition Judging
+ACCESS           — Access (RBAC)
+CONTROL
 ```
 
 Total: 133 features identified in the initial scope.
@@ -81,36 +81,36 @@ The project adopted **two distinct notations** for rules (LECTURE 03 *"IFPB"*):
 #### General rules (Gxx) — sample from the rules document (v0.23, 175 total rules)
 
 ```
-G09 — Não pode haver duas pessoas com o mesmo CPF.
-G10 — Apenas usuários com permissão de acesso à tela do tipo 5 poderão
-      ATIVAR um registro com situação INATIVO.
-G11 — A máscara para informar telefone deve ser: CÓDIGO DO PAÍS
-      (CÓDIGO DE ÁREA) NÚMERO DO TELEFONE.
-G12 — Nos campos de telefone, o código do país já deve ser sugerido
-      como sendo 55 (Brasil).
-G13 — Enquanto um registro estiver com situação INATIVO, seus dados
-      não poderão ser alterados (única exceção: usuário com perfil
-      tipo 5 pode editar o campo ATIVO).
-G14 — A idade da pessoa é um campo calculado a partir da data de
-      nascimento.
-G15 — Após informar o CEP, o sistema deve exibir País, Estado,
-      Cidade, Bairro e Rua relacionados.
-G16 — Listagem de Federações: a relação depende da Confederação
-      selecionada.
-G17 — Listagem de Modalidades: a relação depende da Confederação
-      selecionada.
+G09 — There cannot be two people with the same CPF.
+G10 — Only users with access permission to a type-5 screen may
+      ACTIVATE a record whose status is INACTIVE.
+G11 — The phone-number mask must be: COUNTRY CODE
+      (AREA CODE) PHONE NUMBER.
+G12 — In phone fields, the country code must already be suggested
+      as 55 (Brazil).
+G13 — While a record's status is INACTIVE, its data
+      cannot be changed (sole exception: a user with a type-5
+      profile may edit the ACTIVE field).
+G14 — A person's age is a field computed from the date
+      of birth.
+G15 — After the CEP (postal code) is entered, the system must display the related
+      Country, State, City, District and Street.
+G16 — Federation listing: the set depends on the selected
+      Confederation.
+G17 — Modality listing: the set depends on the selected
+      Confederation.
 ...
 ```
 
 #### Specific exceptions (Exx)
 
 ```
-E1 — O nome do pai tem que ser diferente do nome da mãe.
-E2 — O sistema deve extrair as iniciais do atleta a partir do nome,
-     mas pode ser editado.
-E3 — Se o atleta for portador de deficiência, é obrigatório o
-     preenchimento do campo Classe de Deficiência. Caso contrário,
-     o campo Classe não deve ser preenchido.
+E1 — The father's name must be different from the mother's name.
+E2 — The system must derive the athlete's initials from the name,
+     but they may be edited.
+E3 — If the athlete has a disability, the Disability Class field is
+     mandatory. Otherwise, the Class field must not be
+     filled in.
 ...
 ```
 
@@ -149,51 +149,51 @@ Applying the *"IFPB"* model from [03-especificacao.md](../references/03-especifi
 >
 > **Why this matters**: visually marking who-asked-for-what and what-fits-in-budget avoids silent scope creep. In any real backlog, an item entering the scope must have documented origin and a status flag. **No origin ≡ scope creep**. See `Origin (requirements)` in [template-backlog-openproject.md §4](template-backlog-openproject.md).
 
-> **⚠️ Important — multiple root Epics, no single "project-Epic" parent**: the *"Controle de Dopagem"* project has **three Epics at the top level, siblings to each other** (`APLICAÇÃO WEB`, `APLICAÇÃO MOBILE`, `ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO`). There is no "Epic Controle de Dopagem" node as a common grandparent — the "product" as a whole is the **OpenProject context/repository** of the project, not an item of the hierarchy. Convention detail in [`../examples/template-backlog-openproject.md §3`](template-backlog-openproject.md).
+> **⚠️ Important — multiple root Epics, no single "project-Epic" parent**: the *"Controle de Dopagem"* project has **three Epics at the top level, siblings to each other** (`WEB APPLICATION`, `MOBILE APPLICATION`, `SUPPORT, QUALITY AND INVESTIGATION ACTIVITIES`). There is no "Epic Doping Control" node as a common grandparent — the "product" as a whole is the **OpenProject context/repository** of the project, not an item of the hierarchy. Convention detail in [`../examples/template-backlog-openproject.md §3`](template-backlog-openproject.md).
 
 ```
-PROJECT Controle Dopagem (= OpenProject context/repository; NOT an EPIC)
+PROJECT Doping Control (= OpenProject context/repository; NOT an EPIC)
 │
-├─ EPIC APLICAÇÃO WEB                                  ← Root Epic #1 (front: web platform)
-│   ├─ EPIC Módulo ADMINISTRATIVO
-│   │    └─ EPIC Gestão de ATLETAS
-│   │         ├─ EPIC CADASTRO de Atletas
-│   │         │    ├─ FEATURE Cadastro Básico com dados pessoais
-│   │         │    ├─ FEATURE Categorias Esportivas do Atleta
-│   │         │    ├─ FEATURE Patrocinadores do Atleta
-│   │         │    ├─ FEATURE Técnico do Atleta
-│   │         │    ├─ FEATURE Bolsa Atleta recebidas
-│   │         │    ├─ FEATURE Equipe Médica associada ao Atleta
-│   │         │    ├─ FEATURE Convocações para Seleção Nacional
-│   │         │    ├─ FEATURE Participação em Programas Especiais
-│   │         │    ├─ FEATURE Clubes/Associações do Atleta
-│   │         │    └─ FEATURE Resultados em Competições
-│   │         ├─ EPIC CONSULTA de Atletas
-│   │         │    ├─ FEATURE Consulta GERAL de Atletas
-│   │         │    └─ FEATURE Extrato INDIVIDUAL (Prontuário Esportivo)
-│   │         └─ EPIC RELATÓRIO de Atletas
-│   │              ├─ FEATURE Relação GERAL de ATLETAS
-│   │              └─ FEATURE Relação de Atletas por Confederação
-│   ├─ EPIC Módulo DOPAGEM
+├─ EPIC WEB APPLICATION                                ← Root Epic #1 (front: web platform)
+│   ├─ EPIC ADMINISTRATIVE Module
+│   │    └─ EPIC ATHLETE Management
+│   │         ├─ EPIC Athlete REGISTRATION
+│   │         │    ├─ FEATURE Basic Registration with personal data
+│   │         │    ├─ FEATURE Athlete Sport Categories
+│   │         │    ├─ FEATURE Athlete Sponsors
+│   │         │    ├─ FEATURE Athlete Coach
+│   │         │    ├─ FEATURE Bolsa Atleta grants received
+│   │         │    ├─ FEATURE Medical Team associated with the Athlete
+│   │         │    ├─ FEATURE Call-ups to the National Team
+│   │         │    ├─ FEATURE Participation in Special Programs
+│   │         │    ├─ FEATURE Athlete Clubs/Associations
+│   │         │    └─ FEATURE Competition Results
+│   │         ├─ EPIC Athlete LOOKUP
+│   │         │    ├─ FEATURE GENERAL Athlete Lookup
+│   │         │    └─ FEATURE INDIVIDUAL Extract (Sport Record)
+│   │         └─ EPIC Athlete REPORTING
+│   │              ├─ FEATURE GENERAL ATHLETE Listing
+│   │              └─ FEATURE Athlete Listing by Confederation
+│   ├─ EPIC DOPING Module
 │   │    └─ ...
 │   └─ ... (other modules)
 │
-├─ EPIC APLICAÇÃO MOBILE                               ← Root Epic #2 (front: mobile platform)
+├─ EPIC MOBILE APPLICATION                             ← Root Epic #2 (front: mobile platform)
 │   └─ ... (own sub-hierarchy)
 │
-└─ EPIC ATIVIDADES DE APOIO, QUALIDADE E INVESTIGAÇÃO  ← Root Epic #3 (front: cross-cutting activities)
+└─ EPIC SUPPORT, QUALITY AND INVESTIGATION ACTIVITIES  ← Root Epic #3 (front: cross-cutting activities)
     └─ ... (own sub-hierarchy)
 ```
 
-> **Note on the Features listed above:** in the real backlog, **each `FEATURE Xxxxx` item has its own pt-BR description** (client-deliverable, no technical terms), per the skill rule (Feature has a description; User Story has BDD). This case study elaborates in depth only the `Consulta GERAL de Atletas` Feature (§5–§8) to illustrate the full AC → US → BDD → Estimation flow; the others are represented only by their title in the diagram. **In a real project, a Feature missing its description is specification debt** — it surfaces as friction in Sprint Planning (PO has to re-explain the deliverable) and in US review (devs question the "why" of the story).
+> **Note on the Features listed above:** in the real backlog, **each `FEATURE Xxxxx` item has its own description** (client-deliverable, no technical terms), per the skill rule (Feature has a description; User Story has BDD). This case study elaborates in depth only the `GENERAL Athlete Lookup` Feature (§5–§8) to illustrate the full AC → US → BDD → Estimation flow; the others are represented only by their title in the diagram. **In a real project, a Feature missing its description is specification debt** — it surfaces as friction in Sprint Planning (PO has to re-explain the deliverable) and in US review (devs question the "why" of the story).
 
 ---
 
-## 5. Feature: Consulta GERAL de Atletas
+## 5. Feature: GENERAL Athlete Lookup
 
-**Feature description (client-deliverable, in pt-BR):**
+**Feature description (client-deliverable):**
 
-Permite que operadores autorizados (*"ABCD"*, *"COB"* e confederações) consultem a base nacional de atletas em uma única tela paginada, aplicando filtros opcionais por *"CPF"*, nome, técnico, patrocinador, médico, modalidade, categoria, tipo de bolsa, programa especial, competição e datas de competição. A consulta é restrita automaticamente às federações associadas ao usuário logado no servidor — não há "consulta global" cega, mesmo para administradores. O entregável ao cliente é o ponto de entrada operacional para todos os fluxos de dopagem subsequentes: convocação para teste (regra G09), análise de histórico de testes do atleta, e cruzamento com processos do *"STJD"*. Em volume real (*"ABCD"* agrega ~50 mil atletas nacionais), a feature precisa responder com paginação preguiçosa e ordenação no servidor.
+Lets authorized operators (*"ABCD"*, *"COB"* and confederations) query the national athlete base on a single paginated screen, applying optional filters by *"CPF"*, name, coach, sponsor, physician, modality, category, grant type, special program, competition and competition dates. The lookup is automatically restricted to the federations associated with the logged-in user on the server — there is no blind "global lookup", even for administrators. The client deliverable is the operational entry point for all subsequent doping flows: call-up for testing (rule G09), analysis of the athlete's test history, and cross-referencing with *"STJD"* proceedings. At real volume (*"ABCD"* aggregates ~50,000 national athletes), the feature must respond with lazy pagination and server-side sorting.
 
 > This description is what goes on the OpenProject/Redmine Feature card. Business language, no technical terms (JSF/Hibernate/Primefaces stay in the Tasks). The acceptance criteria below formalize the testable rules; BDD appears only in the User Stories (§7).
 
@@ -201,83 +201,83 @@ Permite que operadores autorizados (*"ABCD"*, *"COB"* e confederações) consult
 
 Applying [04-bdd-criterios-aceitacao.md](../references/04-bdd-criterios-aceitacao.md). 15 declarative ACs, **grouped by theme** (`CA - <Theme>` convention from Rule 7 of [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). ACs with **`[...]`** at the end of the title must be read together with the detail in §5.2.
 
-#### 📋 CA - Acesso e visibilidade
+#### 📋 CA - Access and visibility
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA01` | Apenas usuários autorizados podem ter acesso à funcionalidade de Consulta GERAL de ATLETAS. | — |
-| `CA02` | A consulta deve exibir apenas os atletas das FEDERAÇÕES esportivas que o usuário tem acesso no seu cadastro. | — |
-| `CA03` | A tela de consulta deve conter os campos e layout conforme definido no protótipo. | — |
+| `CA01` | Only authorized users may access the GENERAL ATHLETE Lookup feature. | — |
+| `CA02` | The lookup must display only the athletes of the sport FEDERATIONS the user has access to in their account. | — |
+| `CA03` | The lookup screen must contain the fields and layout as defined in the prototype. | — |
 
-#### 📋 CA - Filtros e busca
-
-| ID | Description | Detail? |
-|---|---|---|
-| `CA04` | A consulta deverá ser realizada levando-se em conta as opções de filtro informadas pelo usuário. | — |
-| `CA05` | O campo CPF não é obrigatório. Mas se preenchido, deverá ser no formato XXX.XXX.XXX-XX. Se o CPF for inválido, emitir mensagem de erro. | — |
-| `CA06` | Os campos de DATA no filtro de Competições NÃO são obrigatórios. A consulta deve ser realizada de acordo com o preenchimento informado pelo usuário. | — |
-| `CA07` | Os campos NOME, TÉCNICO, PATROCINADOR e MÉDICO NÃO são obrigatórios. Mas se preenchido, deve ter no mínimo 5 letras. A aplicação deve realizar uma busca PARCIAL pelo conteúdo digitado. | — |
-
-#### 📋 CA - Comboboxes (regras de habilitação, listagem e busca)
+#### 📋 CA - Filters and search
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA08` | O combobox CONFEDERAÇÃO deve aplicar as regras de listagem e busca **[...]** | ✅ |
-| `CA09` | O combobox FEDERAÇÃO deve aplicar as regras de preenchimento e validação **[...]** | ✅ |
-| `CA10` | Os comboboxes MODALIDADES e CATEGORIAS devem aplicar as regras de listagem por confederação **[...]** | ✅ |
-| `CA11` | Os comboboxes TIPO DE BOLSA, PROGRAMA ESPECIAL e TIPO COMPETIÇÃO devem aplicar as regras de listagem e busca **[...]** | ✅ |
-| `CA12` | O combobox COMPETIÇÃO deve exibir apenas competições multiesportes e competições específicas da confederação selecionada pelo usuário. | — |
+| `CA04` | The lookup must be performed taking into account the filter options entered by the user. | — |
+| `CA05` | The CPF field is not mandatory. But if filled in, it must be in the format XXX.XXX.XXX-XX. If the CPF is invalid, issue an error message. | — |
+| `CA06` | The DATE fields in the Competitions filter are NOT mandatory. The lookup must be performed according to what the user filled in. | — |
+| `CA07` | The NAME, COACH, SPONSOR and PHYSICIAN fields are NOT mandatory. But if filled in, they must have at least 5 letters. The application must perform a PARTIAL search on the typed content. | — |
 
-#### 📋 CA - Apresentação dos resultados
+#### 📋 CA - Comboboxes (enablement, listing and search rules)
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA13` | A listagem geral de atletas deverá ser exibida em ordem alfabética, por default. | — |
-| `CA14a` | A listagem geral de atletas poderá ser reordenada ao clicar no título das colunas. | — |
-| `CA14b` | A listagem geral de atletas deverá ser paginada com as opções de visualizar 10, 50, 100 ou todos. | — |
-| `CA15` | A listagem geral de atletas deverá exibir todos os atletas por default. | — |
+| `CA08` | The CONFEDERATION combobox must apply the listing and search rules **[...]** | ✅ |
+| `CA09` | The FEDERATION combobox must apply the filling and validation rules **[...]** | ✅ |
+| `CA10` | The MODALITIES and CATEGORIES comboboxes must apply the listing-by-confederation rules **[...]** | ✅ |
+| `CA11` | The GRANT TYPE, SPECIAL PROGRAM and COMPETITION TYPE comboboxes must apply the listing and search rules **[...]** | ✅ |
+| `CA12` | The COMPETITION combobox must display only multi-sport competitions and competitions specific to the confederation selected by the user. | — |
+
+#### 📋 CA - Presentation of results
+
+| ID | Description | Detail? |
+|---|---|---|
+| `CA13` | The general athlete listing must be displayed in alphabetical order by default. | — |
+| `CA14a` | The general athlete listing may be re-sorted by clicking on the column titles. | — |
+| `CA14b` | The general athlete listing must be paginated with options to view 10, 50, 100 or all. | — |
+| `CA15` | The general athlete listing must display all athletes by default. | — |
 
 ### 5.2 Detail of ACs with `[...]`
 
-Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Regras a serem aplicadas:` + bullets convention.
+Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Rules to be applied:` + bullets convention.
 
 #### CA08 — Detail
 
 ```
-Regras a serem aplicadas:
-- Só deve exibir as CONFEDERAÇÕES ATIVAS.
-- Em ordem ALFABÉTICA.
-- Deve exibir apenas as confederações que o usuário logado está associado no seu cadastro de acesso.
-- Deve permitir busca parcial ao digitar.
+Rules to be applied:
+- Must display only ACTIVE CONFEDERATIONS.
+- In ALPHABETICAL order.
+- Must display only the confederations the logged-in user is associated with in their access account.
+- Must allow partial search while typing.
 ```
 
 #### CA09 — Detail
 
 ```
-Regras a serem aplicadas:
-- O combobox FEDERAÇÃO só deverá ser habilitado se tiver uma CONFEDERAÇÃO selecionada.
-- Só deve exibir as Federações ATIVAS.
-- Em ordem ALFABÉTICA.
-- Deve exibir apenas as federações que o usuário logado está associado no seu cadastro de acesso.
-- Deve permitir busca parcial ao digitar.
+Rules to be applied:
+- The FEDERATION combobox must only be enabled if a CONFEDERATION is selected.
+- Must display only ACTIVE Federations.
+- In ALPHABETICAL order.
+- Must display only the federations the logged-in user is associated with in their access account.
+- Must allow partial search while typing.
 ```
 
 #### CA10 — Detail
 
 ```
-Regras a serem aplicadas:
-- Só deve exibir dados das confederações que o usuário está associado no seu cadastro de acesso.
-- Exibir apenas os registros ATIVOS.
-- Em ordem ALFABÉTICA.
+Rules to be applied:
+- Must display only data from the confederations the user is associated with in their access account.
+- Display only ACTIVE records.
+- In ALPHABETICAL order.
 ```
 
 #### CA11 — Detail
 
 ```
-Regras a serem aplicadas:
-- Só deve exibir os registros ATIVOS.
-- Em ordem ALFABÉTICA.
-- Deve permitir a busca parcial ao digitar.
+Rules to be applied:
+- Must display only ACTIVE records.
+- In ALPHABETICAL order.
+- Must allow partial search while typing.
 ```
 
 ---
@@ -289,7 +289,7 @@ Applying the LECTURE 09 flow (see [03-especificacao.md §6.5](../references/03-e
 ### 6.1 Group ACs by sprint (incremental prioritization)
 
 ```
-Sprint 1 — Consulta BÁSICA (simplest possible deliverable)
+Sprint 1 — BASIC lookup (simplest possible deliverable)
   CA01 — Authorized access
   CA02 — Implicit filter by user's federation
   CA03 — Prototype layout
@@ -311,42 +311,42 @@ Sprint 3 — Advanced search
 ### 6.2 Resulting User Stories
 
 ```
-US Listagem BÁSICA de Atletas                                  (Sprint 1)
-US Listagem de Atletas com ordenação e paginação (sem busca)   (Sprint 2)
-US Listagem Avançada de Atletas com opções de busca (filtro)   (Sprint 3)
+US BASIC Athlete Listing                                       (Sprint 1)
+US Athlete Listing with sorting and pagination (no search)     (Sprint 2)
+US Advanced Athlete Listing with search options (filter)       (Sprint 3)
 ```
 
 ---
 
-## 7. BDD of US "Listagem BÁSICA de Atletas"
+## 7. BDD of US "BASIC Athlete Listing"
 
 ```gherkin
-# language: pt
-Funcionalidade: Listagem básica de atletas
+# language: en
+Feature: Basic athlete listing
 
-  Contexto:
-    DADO que o usuário esteja logado na aplicação
-    E tenha permissão de acesso ao módulo administrativo
+  Background:
+    Given the user is logged in to the application
+    And has access permission to the administrative module
 
-  Cenário: Usuário autorizado acessa a listagem básica
-    QUANDO acessar o menu administrativo > ATLETAS
-    ENTÃO o sistema deve exibir a relação básica de atletas
-    E os atletas devem ser apenas das federações associadas ao usuário (CA02)
-    E a listagem deve estar em ordem alfabética por nome (CA13)
-    E todos os atletas devem ser exibidos por padrão (CA15)
-    E o layout deve corresponder ao protótipo aprovado (CA03)
+  Scenario: Authorized user accesses the basic listing
+    When accessing the administrative menu > ATHLETES
+    Then the system must display the basic athlete list
+    And the athletes must be only from the federations associated with the user (CA02)
+    And the listing must be in alphabetical order by name (CA13)
+    And all athletes must be displayed by default (CA15)
+    And the layout must match the approved prototype (CA03)
 
-  Cenário: Usuário sem permissão é bloqueado
-    DADO que o usuário NÃO tem permissão de acesso ao módulo administrativo
-    QUANDO tentar acessar a URL /admin/atletas diretamente
-    ENTÃO o sistema deve retornar erro 403
-    E não deve exibir nenhum dado de atleta
+  Scenario: User without permission is blocked
+    Given the user does NOT have access permission to the administrative module
+    When trying to access the URL /admin/atletas directly
+    Then the system must return error 403
+    And must not display any athlete data
 ```
 
 **OpenProject relations** (traceability):
 
 ```
-US Listagem BÁSICA de Atletas
+US BASIC Athlete Listing
 ├─ related-to: CA01 (authorized access)
 ├─ related-to: CA02 (federation filter)
 ├─ related-to: CA03 (layout)
@@ -358,17 +358,17 @@ US Listagem BÁSICA de Atletas
 
 ## 8. Estimation (Planning Poker)
 
-Chosen guide story: **"Adicionar campo apelido ao cadastro de atleta"** (delivered in the previous sprint — 1 point).
+Chosen guide story: **"Add a nickname field to the athlete registration"** (delivered in the previous sprint — 1 point).
 
 Estimates:
 
 | User Story | Points | Justification |
 |---|---|---|
-| US Listagem BÁSICA | **5** | Query + RBAC + standardized view + prototype integration |
-| US Listagem com ordenação/paginação | **3** | Small extensions over the basic + *"Primefaces"* components |
-| US Listagem Avançada com filtros | **13** | Multiple cascading comboboxes, partial search across several fields, *"CPF"* validation, conditional display rules |
+| US BASIC Listing | **5** | Query + RBAC + standardized view + prototype integration |
+| US Listing with sorting/pagination | **3** | Small extensions over the basic + *"Primefaces"* components |
+| US Advanced Listing with filters | **13** | Multiple cascading comboboxes, partial search across several fields, *"CPF"* validation, conditional display rules |
 
-Total for the CONSULTA GERAL feature: **21 points**.
+Total for the GENERAL LOOKUP feature: **21 points**.
 
 With an average velocity of 25pts/sprint, the feature essentially fills 1 whole sprint (or spreads across 2 alongside smaller US).
 

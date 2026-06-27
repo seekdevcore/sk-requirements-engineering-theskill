@@ -1,38 +1,38 @@
-<!-- GENERIC TEMPLATE — copy to RF-NNN-<modulo>.md and fill for one real module of the system. -->
-# RF-NNN — <título de negócio, sem infinitivo, sem termo técnico>
+<!-- GENERIC TEMPLATE — copy to RF-NNN-<module>.md and fill for one real module of the system. -->
+# RF-NNN — <business title, no infinitive verb, no technical term>
 
-> **Tipo**: Requisito Funcional
-> **Prioridade**: 🔴 Imediato | 🟠 Alta | 🟡 Normal | 🟢 Baixa
-> **Status**: 📝 Proposto | 🚧 Parcial | ✅ Realizado | 🗄️ Deprecated
+> **Type**: Functional Requirement
+> **Priority**: 🔴 Immediate | 🟠 High | 🟡 Normal | 🟢 Low
+> **Status**: 📝 Proposed | 🚧 Partial | ✅ Done | 🗄️ Deprecated
 
 ---
 
-## Enunciado de negócio (sem termo técnico)
+## Business statement (no technical term)
 
-> **<Uma frase: o sistema permite que [persona] [faça algo] [com qual valor/limite percebido]>.**
+> **<One sentence: the system lets [persona] [do something] [with what perceived value/limit]>.**
 
-<!-- Completude 5W1H (ref03 §2.1.1) — o enunciado + o corpo deste RF devem deixar responder as SEIS:
-     · Quem  → a persona               · O quê → a função/serviço (a frase acima)
-     · Onde  → o módulo/tela           · Quando → o gatilho/prazo/frequência
-     · Por quê → a ## Justificativa     · Como  → o fluxo/regra de NEGÓCIO (detalhado nos CA/BDD)
-     "Como" é de NEGÓCIO (passo a passo do usuário), NUNCA o como técnico (endpoint/tabela → ADR/Task, regra 2). -->
+<!-- 5W1H completeness (ref03 §2.1.1) — the statement + the body of this RF must let you answer all SIX:
+     · Who  → the persona              · What → the function/service (the sentence above)
+     · Where → the module/screen       · When → the trigger/deadline/frequency
+     · Why  → the ## Rationale          · How  → the BUSINESS flow/rule (detailed in the AC/BDD)
+     "How" is BUSINESS (the user's step-by-step), NEVER the technical how (endpoint/table → ADR/Task, rule 2). -->
 
-## Justificativa (por que este requisito existe)
+## Rationale (why this requirement exists)
 
-<dor real do usuário/negócio; impacto de produto; KPI alvo se houver>
+<real user/business pain; product impact; target KPI if any>
 
-## Realizado por (rastreabilidade ↓)
+## Realized by (traceability ↓)
 
 | Epic | Feature(s) | Status |
 | --- | --- | --- |
 | [EP-NN ...](../../backlog/epics/EP-NN-....md) | [F-NN ...](../../backlog/features/F-NN-....md) | ⏳ |
 
-## Requisitos Não-Funcionais que limitam este RF
+## Non-Functional Requirements that constrain this RF
 
-| RNF | Limite imposto |
+| RNF | Imposed limit |
 | --- | --- |
-| [RNF-perf](../RNF/RNF-perf.md) | <ex.: p95 ≤ 300ms> |
+| [RNF-perf](../RNF/RNF-perf.md) | <e.g. p95 ≤ 300ms> |
 
-## Restrições e fora-de-escopo
+## Constraints and out-of-scope
 
-- <o que NÃO está incluído>
+- <what is NOT included>

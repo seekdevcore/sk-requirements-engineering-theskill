@@ -64,7 +64,7 @@ Commit (SHA)                        ← cross-ref in the Task
 ```
 requirements/
 ├── README.md                  purpose + traceability spine + conventions + how-to-add
-├── personas-e-cenarios.md     canonical personas; every US references one
+├── personas-and-scenarios.md     canonical personas; every US references one
 ├── RF/                        Functional Requirements (one file per module)
 │   ├── RF-001-<module>.md
 │   └── RF-NNN-<module>.md
@@ -106,12 +106,12 @@ requirements/
 ```
 backlog/
 ├── README.md                  este arquivo — naming + IDs + prioridade + Definition of Done + fechamento
-├── glossario.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
+├── glossary.md               vocabulário de domínio (toda US/CA/ADR deve usar estes termos)
 ├── epics/                     Epics — Aplicação→Módulo→Componente (MÁX. 3 níveis de Epic via links) → Features
 │   └── EP-NN-<slug>.md
 ├── features/                  um arquivo por Feature — descrição + CAs + USs (com BDD) + Tasks
 │   └── F-NN-<slug>.md
-├── melhorias/                 bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
+├── improvements/                 bucket OBRIGATÓRIO → Epic-raiz "Melhorias" (Improvements) no export
 │   ├── README.md              o que é + descrição do Epic (NÃO exportado como item)
 │   └── <F/US>-<slug>.md        cada melhoria do produto → filho do Epic Melhorias
 ├── bugs/                      bucket de DEFEITOS → cada BUG-NN é um TYPE "Bug" parented à US/Feature violada
@@ -132,7 +132,7 @@ backlog/
 >
 > **Profundidade de Epic — MÁX. 3 níveis.** O front (`Aplicação Web`/`Mobile`) é o Epic-raiz (nível 1); abaixo, um Epic **Módulo** (nível 2) e um Epic **Componente** (nível 3), e então a **Feature**. Depois do Epic-módulo há **só mais um** Epic (o componente) antes da Feature — nunca aninhe um 4º nível. O aninhamento multinível é expresso pelos links pai/filho (§2), não por pastas: `epics/` fica plano.
 >
-> **Buckets são DIRETÓRIOS estruturais, não arquivos `EP-NN`.** Cada um é filho de `backlog/`; **só no export** um bucket colapsa num Epic. Função: **`melhorias/`** = aprimoramentos do que já existe (→ Epic-raiz); **`bugs/`** = cada `BUG-NN` é um **type "Bug" parented à US/Feature violada** (não Epic), mantendo o defeito a um link do `CA`; **`support-quality-investigation/`** = umbrella (→ Epic-raiz com 3 Epics filhos: Apoio/Q&A/Issues, e Spikes sob Issues). Regra-mãe: *o type diz o que é; o parent diz a quem serve*. Os adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder semeia, migra arquivos pré-v1.21 e **migra um diretório v1.21 `atividades-complementares/` para `support-quality-investigation/support/`** (TX preservados).
+> **Buckets são DIRETÓRIOS estruturais, não arquivos `EP-NN`.** Cada um é filho de `backlog/`; **só no export** um bucket colapsa num Epic. Função: **`improvements/`** = aprimoramentos do que já existe (→ Epic-raiz); **`bugs/`** = cada `BUG-NN` é um **type "Bug" parented à US/Feature violada** (não Epic), mantendo o defeito a um link do `CA`; **`support-quality-investigation/`** = umbrella (→ Epic-raiz com 3 Epics filhos: Apoio/Q&A/Issues, e Spikes sob Issues). Regra-mãe: *o type diz o que é; o parent diz a quem serve*. Os adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder semeia, migra arquivos pré-v1.21 e **migra um diretório v1.21 `atividades-complementares/` para `support-quality-investigation/support/`** (TX preservados).
 
 **Por que `done/` move em vez de copiar.** O `git mv` preserva o histórico e mantém `features/` mostrando apenas trabalho vivo. Copiar duplica a verdade e apodrece.
 
@@ -307,8 +307,8 @@ A reorganização mais comum na prática: um projeto onde uma **versão mais ant
 2. **Leia o monólito e o decomponha** ao longo de suas fronteiras de módulo naturais:
    - um `requirements/RF/RF-NNN-<module>.md` por área funcional / bloco de Epic (preserve os IDs originais `RF-NN` *dentro* dos arquivos para que as referências cruzadas existentes sobrevivam);
    - um `requirements/RNF/RNF-<slug>.md` (ou um por classe de *"Sommerville"*) para os requisitos não-funcionais, cada um com sua tabela de métricas **quantitativa**;
-   - semeie `requirements/personas-e-cenarios.md` a partir dos stakeholders/papéis que o monólito nomeia;
-   - semeie `backlog/glossario.md` a partir do glossário/termos de domínio do monólito.
+   - semeie `requirements/personas-and-scenarios.md` a partir dos stakeholders/papéis que o monólito nomeia;
+   - semeie `backlog/glossary.md` a partir do glossário/termos de domínio do monólito.
 3. **Mantenha o monólito original como uma visão geral consolidada** — **não** o delete. Mova-o para sob `docs/requirements/` e adicione um banner com link *para dentro* da divisão (ele agora carrega a narrativa de análise/viabilidade/faseamento que não cabe na divisão por arquivo, enquanto a divisão carrega a fonte da verdade granular). Isso evita verdade-duplicada: a narrativa em prosa vive na visão geral, os requisitos atômicos vivem na divisão.
 4. **Preencha a rastreabilidade retroativamente** (§9 Passo 2.7): se Epics/Features já existem, escreva-os sob `backlog/` e ligue `RF ↔ EP ↔ F` nos dois sentidos.
 5. Rode o checklist abaixo.
@@ -335,8 +335,8 @@ O scaffolder solta templates **genéricos, preenchidos com placeholders**. Eles 
 |---|---|---|
 | **Idioma** | README / comentários de código / mensagens de commit → pt-BR ou inglês? | idioma de toda a prosa semeada |
 | **Módulos / apps** | `apps/*`, `src/*`, pacotes, bounded contexts, domínios de topo | um `RF-NNN-<module>.md` por módulo |
-| **Papéis / níveis de auth** | código de auth, enums de permissão, tabelas de papéis (`admin`/`editor`/`user`…) | personas em `personas-e-cenarios.md` |
-| **Entidades de domínio** | models / schema / diagrama ER (os substantivos recorrentes) | os termos do `glossario.md` |
+| **Papéis / níveis de auth** | código de auth, enums de permissão, tabelas de papéis (`admin`/`editor`/`user`…) | personas em `personas-and-scenarios.md` |
+| **Entidades de domínio** | models / schema / diagrama ER (os substantivos recorrentes) | os termos do `glossary.md` |
 | **Stack** | arquivos de manifesto (`package.json`, `pyproject.toml`, `go.mod`…) | contexto técnico para `specs/` + ADRs |
 | **Docs existentes** | qualquer `RF-*`, `ADR-*`, `backlog.md`, design docs já presentes | o que **reorganizar** vs criar |
 | **Sinais de RNF** | gates de CI, perf budgets, menções a `LGPD`/GDPR/compliance, metas de a11y | qual `RNF-<slug>.md` instanciar |
@@ -346,7 +346,7 @@ O scaffolder solta templates **genéricos, preenchidos com placeholders**. Eles 
 1. **Localize** a prosa semeada para o idioma do projeto.
 2. **Um RF por módulo real**: renomeie `RF/_TEMPLATE.md` para `RF-001-<module>.md … RF-NNN-<module>.md`, um por módulo detectado — cada um com um enunciado em linguagem de negócio (sem jargão).
 3. **Personas a partir dos papéis**: transforme cada nível de auth / tipo de usuário numa persona `P-NN`.
-4. **Glossário a partir das entidades**: semeie o `glossario.md` com os substantivos de domínio recorrentes (em ordem alfabética), cada um definido em linguagem de negócio.
+4. **Glossário a partir das entidades**: semeie o `glossary.md` com os substantivos de domínio recorrentes (em ordem alfabética), cada um definido em linguagem de negócio.
 5. **RNFs que de fato se aplicam**: instancie apenas os `RNF-<slug>.md` que o projeto precisa (perf, segurança, a11y, privacidade, disponibilidade…), cada um com metas **quantitativas** extraídas de budgets/gates reais.
 6. **Reorganize** os artefatos soltos pré-existentes para dentro da árvore (o scaffolder move arquivos; você conserta os links cruzados — checklist §8).
 7. **Preencha a rastreabilidade retroativamente** onde o histórico permitir: se Epics/Features já foram entregues, escreva-os retroativamente e ligue `RF ↔ EP ↔ F` nos dois sentidos. Num projeto **existente**, esse backfill é **oferecido ao usuário como uma pergunta explícita na primeira execução** ([`SKILL.md §0 passo 3b`](../SKILL.md)) — backfill completo agora / semear apenas o que a tarefa atual toca / só-estrutura-por-ora — porque pode ser um esforço grande e é decisão do usuário (greenfield não tem nada a preencher retroativamente).
@@ -358,7 +358,7 @@ Quando o projeto está vazio ou pré-código (sem módulos, sem papéis, sem dom
 1. Mantenha os placeholders genéricos **como um checklist**, não como conteúdo final.
 2. Semeie um **arquivo mínimo de personas** a partir do público pretendido (mesmo que seja só "usuário anônimo" + "admin").
 3. Crie o `RF-001` para a única capacidade mais importante que o produto deve ter — o resto decorre da elicitação (`02-elicitacao.md`).
-4. Deixe o `glossario.md` com os poucos termos de domínio que você já conhece; faça-o crescer conforme o domínio emerge.
+4. Deixe o `glossary.md` com os poucos termos de domínio que você já conhece; faça-o crescer conforme o domínio emerge.
 5. Escolha `--with-specs` vs `--no-specs` conforme a §10.
 
 ### Regra dura — nunca entregue placeholders

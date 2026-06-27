@@ -2,7 +2,7 @@
 
 > Template **filled with a real example**, not an empty skeleton. Use it as a concrete starting point for any project requirements document. Structure combines IEEE 830 (classical), Sommerville 10e Ch. 4, Wiegers 3e (Ch. 10), and the *"Interpop"* convention. Replace the example with your domain while keeping all conventions.
 >
-> **Note on language preservation**: section headers, hard rules, explanations, and the smell test are in **en-CA**. The **worked example body** (RF/RNF/G descriptions, business rules, glossary) is preserved in **pt-BR** because it reproduces the real *"Interpop"* *"Busca Editorial"* requirements document — translating would defeat the worked-example purpose.
+> **Note on language**: the whole document — section headers, hard rules, explanations, the smell test, and the worked example body (RF/RNF/G descriptions, business rules, glossary) — is in **en-CA**. It reproduces the real *"Interpop"* *"Busca Editorial"* requirements document, with Brazilian domain terms kept in *"italics + quotes"*.
 
 ---
 
@@ -19,7 +19,7 @@
 
 ## 1. Hard rules (non-negotiable)
 
-1. **Business language in pt-BR** across the whole document. REST endpoints, libs, frameworks, table names, shell commands, methods — none of this **goes here**. They go to the backlog (Tasks) or to technical ADRs. Whoever reads this document is the client, the PO, the analyst, the junior dev, the auditor — all must understand without a technical glossary.
+1. **Plain business language** across the whole document. REST endpoints, libs, frameworks, table names, shell commands, methods — none of this **goes here**. They go to the backlog (Tasks) or to technical ADRs. Whoever reads this document is the client, the PO, the analyst, the junior dev, the auditor — all must understand without a technical glossary.
 2. **ALL artifacts have descriptions**: RF, RNF, business rules (G), user classes, constraints. Title alone is not enough; the description explains the "why" and "how the client will perceive this".
 3. **Every rule is testable**. If the sentence contains vague adjectives ("fast", "friendly", "intuitive", "robust"), it is not a requirement — it is a wish. Rewrite with a metric or observable behaviour.
 4. **Stable IDs** (`RF-NN`, `RNF-NN`, `G-NN`). IDs do not change when content evolves — only the version does.
@@ -118,7 +118,7 @@ Identification per Wiegers 3e (Ch. 6) — 5 criteria: who uses, who decides, who
 
 ## 5. Functional Requirements
 
-### RF-08 — Busca por texto livre
+### RF-08 — Free-text search
 
 | Field | Value |
 |---|---|
@@ -129,13 +129,13 @@ Identification per Wiegers 3e (Ch. 6) — 5 criteria: who uses, who decides, who
 
 **Description:**
 
-O sistema deve permitir que qualquer leitor (anônimo ou cadastrado) digite um termo (palavra ou frase curta) e receba a lista de artigos publicados que contêm aquele termo no título, no resumo ou no corpo. Os resultados são ordenados por relevância (artigos com o termo no título aparecem primeiro). A busca deve funcionar em qualquer página do site através de campo no menu superior, e em destaque na página principal.
+The system shall let any reader (anonymous or registered) type a term (word or short phrase) and receive the list of published articles that contain that term in the title, the summary, or the body. Results are ordered by relevance (articles with the term in the title appear first). Search shall work on any page of the site through a field in the top menu, and as a highlighted field on the home page.
 
 **Acceptance criterion (summary — full detail in backlog F-30)**:
 
-A primeira tela de resultados deve aparecer em ≤800ms para acervo de até 5.000 artigos. A busca deve ser case-insensitive e diacritic-insensitive (digitar "POP" ou "pop" ou "póp" deve retornar os mesmos artigos). A busca não deve depender de login.
+The first screen of results shall appear in ≤800ms for an archive of up to 5,000 articles. Search shall be case-insensitive and diacritic-insensitive (typing "POP" or "pop" or "póp" shall return the same articles). Search shall not depend on login.
 
-### RF-09 — Filtragem da busca por tema editorial
+### RF-09 — Filtering the search by editorial theme
 
 | Field | Value |
 |---|---|
@@ -146,9 +146,9 @@ A primeira tela de resultados deve aparecer em ≤800ms para acervo de até 5.00
 
 **Description:**
 
-O sistema deve permitir que o leitor refine a busca por texto livre selecionando um ou mais temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital). Os filtros aparecem como chips clicáveis acima da lista de resultados; selecionar um filtro reduz a lista; remover todos os filtros volta a considerar todos os temas. A combinação de termo de busca + filtro de tema é a forma mais comum esperada de uso (≥60% das buscas, segundo pesquisa).
+The system shall let the reader refine the free-text search by selecting one or more editorial themes (*"Música"*, *"Moda"*, *"Cinema"*, *"Literatura"*, *"Cultura Digital"*). The filters appear as clickable chips above the results list; selecting a filter narrows the list; removing all filters goes back to considering all themes. The combination of search term + theme filter is the most common expected form of use (≥60% of searches, per research).
 
-### RF-10 — Compartilhamento da busca por link
+### RF-10 — Sharing the search by link
 
 | Field | Value |
 |---|---|
@@ -159,7 +159,7 @@ O sistema deve permitir que o leitor refine a busca por texto livre selecionando
 
 **Description:**
 
-A URL da página de busca deve preservar o termo digitado e os filtros aplicados, de forma que ao copiar e enviar o link, o destinatário visualize os mesmos resultados (mesma ordem, mesmos filtros). Isso transforma cada busca em um link compartilhável — útil para a equipe editorial divulgar "tudo o que a gente já cobriu sobre kpop" sem mandar lista manual.
+The search page URL shall preserve the typed term and the applied filters, so that when the link is copied and sent, the recipient sees the same results (same order, same filters). This turns every search into a shareable link — useful for the editorial team to share "everything we've already covered about kpop" without sending a manual list.
 
 ---
 
@@ -169,7 +169,7 @@ Classical Sommerville organization: product · organizational · external.
 
 ### 6.1 Product requirements
 
-#### RNF-04 — Tempo de resposta da primeira tela de busca
+#### RNF-04 — Response time of the first search screen
 
 | Field | Value |
 |---|---|
@@ -180,13 +180,13 @@ Classical Sommerville organization: product · organizational · external.
 
 **Description:**
 
-A primeira tela de resultados da busca deve aparecer em ≤800ms (p95) para acervo de até 5.000 artigos publicados, medido na rede 4G simulada do Lighthouse. Quando o tempo exceder 800ms, o sistema deve mostrar um indicador visual de carregamento (skeleton dos cards) em até 300ms após o início da consulta — para que o leitor não tenha impressão de tela travada.
+The first screen of search results shall appear in ≤800ms (p95) for an archive of up to 5,000 published articles, measured on Lighthouse's simulated 4G network. When the time exceeds 800ms, the system shall show a visual loading indicator (skeleton of the cards) within 300ms of the start of the query — so that the reader does not get the impression of a frozen screen.
 
 **How to verify:**
 
 Automated performance test in CI: `backend/tests/test_search_perf.py::test_p95_under_800ms` measures 100 searches with varied terms across a simulated 5k-article archive and computes p95.
 
-#### RNF-05 — Acessibilidade WCAG 2.2 AA
+#### RNF-05 — WCAG 2.2 AA accessibility
 
 | Field | Value |
 |---|---|
@@ -197,7 +197,7 @@ Automated performance test in CI: `backend/tests/test_search_perf.py::test_p95_u
 
 **Description:**
 
-A tela de busca e todos os seus elementos interativos (campo de texto, botão de submit, chips de filtro, cards de resultado, botão "Carregar mais") devem ser navegáveis por teclado. Mensagens dinâmicas (resultado de busca, ausência de resultado, indicador de carregamento) devem ser anunciadas por screen reader via ARIA live regions. Contraste mínimo 4.5:1 em todos os textos.
+The search screen and all of its interactive elements (text field, submit button, filter chips, result cards, "Load more" button) shall be navigable by keyboard. Dynamic messages (search result, no result, loading indicator) shall be announced by screen reader via ARIA live regions. Minimum contrast 4.5:1 on all text.
 
 **How to verify:**
 
@@ -205,7 +205,7 @@ Automated audit `axe-core` in CI (≥95 score) + manual review with NVDA before 
 
 ### 6.2 Organizational requirements
 
-#### RNF-06 — Stack obrigatória
+#### RNF-06 — Mandatory stack
 
 | Field | Value |
 |---|---|
@@ -216,11 +216,11 @@ Automated audit `axe-core` in CI (≥95 score) + manual review with NVDA before 
 
 **Description:**
 
-A busca deve ser implementada usando apenas as tecnologias já presentes no stack do Interpop: backend Django 5 + DRF + Postgres 16 (com `tsvector` e índice GIN); frontend React 19 + Vite. Sem serviço externo de busca (Algolia, Elasticsearch hosted, Meilisearch SaaS) na v1.2. Sem nova lib paga.
+Search shall be implemented using only the technologies already present in the *"Interpop"* stack: backend Django 5 + DRF + Postgres 16 (with `tsvector` and GIN index); frontend React 19 + Vite. No external search service (Algolia, Elasticsearch hosted, Meilisearch SaaS) in v1.2. No new paid lib.
 
 ### 6.3 External requirements
 
-#### RNF-07 — Conformidade com LGPD
+#### RNF-07 — *"LGPD"* compliance
 
 | Field | Value |
 |---|---|
@@ -231,7 +231,7 @@ A busca deve ser implementada usando apenas as tecnologias já presentes no stac
 
 **Description:**
 
-Os termos buscados por leitores anônimos não devem ser associados a identificador persistente (cookie, fingerprint) sem consentimento explícito do leitor. O sistema pode coletar termos de busca de forma agregada (estatística geral, sem ligação ao leitor individual) — mas não pode montar perfil de busca individual sem opt-in. Logs de busca devem ser retidos por no máximo 90 dias e ser anonimizados (sem IP completo) antes de qualquer análise.
+Terms searched by anonymous readers shall not be associated with a persistent identifier (cookie, fingerprint) without the reader's explicit consent. The system may collect search terms in an aggregated way (general statistics, with no link to the individual reader) — but it shall not build an individual search profile without opt-in. Search logs shall be retained for at most 90 days and be anonymized (without the full IP) before any analysis.
 
 ---
 
@@ -239,7 +239,7 @@ Os termos buscados por leitores anônimos não devem ser associados a identifica
 
 Editorial-domain rules that are neither RF nor RNF — they are *"Interpop"* business constraints.
 
-### G-01 — Artigos em moderação não aparecem
+### G-01 — Articles under moderation do not appear
 
 | Field | Value |
 |---|---|
@@ -249,9 +249,9 @@ Editorial-domain rules that are neither RF nor RNF — they are *"Interpop"* bus
 
 **Description:**
 
-Artigos com status `em moderação` (pendentes de revisão editorial após denúncia) NUNCA devem aparecer em resultados de busca, mesmo para o autor original. Só artigos com status `publicado` são buscáveis. Esta regra protege a equipe editorial e os leitores de exposição precoce a conteúdo sob revisão.
+Articles with status `em moderação` (pending editorial review after a report) shall NEVER appear in search results, even for the original author. Only articles with status `publicado` are searchable. This rule protects the editorial team and the readers from early exposure to content under review.
 
-### G-02 — Temas editoriais são fixos
+### G-02 — Editorial themes are fixed
 
 | Field | Value |
 |---|---|
@@ -261,7 +261,7 @@ Artigos com status `em moderação` (pendentes de revisão editorial após denú
 
 **Description:**
 
-Os temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital) são definidos pela equipe editorial e fixos na v1.2. Mudança no conjunto de temas exige decisão editorial (não é decisão técnica), revisão da especificação e migração dos artigos existentes. A v1.2 não permite cadastro dinâmico de temas via interface.
+The editorial themes (*"Música"*, *"Moda"*, *"Cinema"*, *"Literatura"*, *"Cultura Digital"*) are defined by the editorial team and fixed in v1.2. A change to the set of themes requires an editorial decision (not a technical decision), a revision of the specification, and migration of the existing articles. v1.2 does not allow dynamic registration of themes via the interface.
 
 ---
 
@@ -342,7 +342,7 @@ Os temas editoriais (Música, Moda, Cinema, Literatura, Cultura Digital) são de
 
 ## ✅ Requirements-document smell test
 
-- [ ] Does every RF/RNF/G have a **description** in pt-BR without technical terms (no URL, no method name, no table name)?
+- [ ] Does every RF/RNF/G have a **description** in plain business language without technical terms (no URL, no method name, no table name)?
 - [ ] Does every RF/RNF/G have a **declared source** (who asked, when)?
 - [ ] Does every RF/RNF/G have a **priority** (🔴/🟠/🟡/🟢)?
 - [ ] Have vague adjectives ("fast", "friendly", "intuitive", "robust") been replaced by **a metric or observable behaviour**?

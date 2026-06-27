@@ -13,6 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.30.0] — 2026-06-27
+
+Makes **en-CA the true default language across the whole repository** and codifies a **universal language-fallback** policy — the long-overdue cleanup the root was only partially honouring.
+
+### Added
+
+- **`translations/README.md` — the language-fallback policy.** en-CA (root) is the authoritative source *and* the universal fallback: to resolve any file for a language, use `translations/<lang>/<path>` if it exists, otherwise fall back to the en-CA root — **for everything** (SKILL, references, templates, examples, integrations, validators). A translation may be **partial**; a missing file is a deliberate fallback, not a gap. A short pointer was added to the `SKILL.md` terminology note (en-CA + pt-BR).
+- **`translations/pt-BR/assets/templates/` — pt-BR template mirror (15 files).** The previously-pt-BR root templates kept their pt-BR wording here, so pt-BR users still get them; all other templates fall back to en-CA per the policy.
+
+### Changed
+
+- **All root `assets/templates/` translated to en-CA** (RF/RNF/personas/glossary, epics/features/sprints, backlog & improvements READMEs, the planning + specs ADR/DESIGN templates) — so the *default* templates are now actually English. Brazilian domain proper nouns kept in *italics+quotes*; the skill's IDs/acronyms and the sprint template's intentionally-bilingual status legend left as-is; the Feature template's example Gherkin now uses `Feature/Scenario/Given/When/Then`.
+- **Project-structure DIRECTORY renamed to en-CA** — `backlog/melhorias/` → `backlog/improvements/`. **Directories follow the English project-structure convention**; only the on-disk folder name changes (the Epic title *"Melhorias"* (pt-BR) is still restored by the adapter on export — `improvements/` → Epic *"Melhorias"* joins the existing en-CA-folder ↔ pt-BR-Epic contract). The scaffolder gains **STEP 1.7** to migrate the directory in an existing project via history-preserving `git mv`; it does **not** force-rename files (a generated project's *file* names may follow the user's language). The skill's own template **file** names are English (`glossary.md`, `personas-and-scenarios.md`).
+- **All root `examples/` translated to en-CA** — the 5 worked case studies (*"Controle de Dopagem"*, *"Interpop"* moderation, *"GestorPro"*, *"PagLeve"*, *"Portal do Cidadão"*) + `template-backlog-openproject.md` + `template-documento-requisitos.md`. Gherkin keywords rendered `Given/When/Then`; Brazilian proper nouns and `RF/RNF/CA/US/EP/G` IDs preserved. The pt-BR versions remain in `translations/pt-BR/examples/`. (`template-user-story.feature` stays pt-BR Gherkin **by design** — it is the subject matter of the step-def bindings.)
+- **Version**: `1.29.0 → 1.30.0`.
+
+### Notes
+
+- Verified: no residual pt-BR prose in root templates/examples; **markdownlint 0 errors across 58 root files** (emphasis kept asterisk-only per MD049); no new broken links. The bulk translation ran via parallel subagents and was reviewed.
+
+---
+
 ## [1.29.0] — 2026-06-27
 
 Reshapes the **sprint document** into a thin, link-first execution view — modelled on the *"SIRA"* root-README roadmap.

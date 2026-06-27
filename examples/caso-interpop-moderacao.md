@@ -1,8 +1,8 @@
 # Worked Example — Ban Hierarchy in the *"Interpop"* Project
 
-> Real case from the *"Interpop"* project (Brazilian editorial of *"Soft Power"*; Django 5 + DRF + React 19). Shows how an **already implemented** feature maps to the skill's RE framework — useful for auditing pre-existing specifications or as a template for new features in the same project. Reference commit: `1e0241e` (feat(moderation): dev é superadmin — único que bane/desbane admins).
+> Real case from the *"Interpop"* project (Brazilian editorial of *"Soft Power"*; Django 5 + DRF + React 19). Shows how an **already implemented** feature maps to the skill's RE framework — useful for auditing pre-existing specifications or as a template for new features in the same project. Reference commit: `1e0241e` — its pt-BR subject `feat(moderation): dev é superadmin — único que bane/desbane admins` translates as "dev is superadmin — the only one who bans/unbans admins" (the subject is kept verbatim as it is the real identifier in git history).
 >
-> **Note on language preservation**: Feature, User Story, AC, FR, NFR, and business-rule titles, as well as the BDD content, are kept in **pt-BR** because they are the actual identifiers used in the *"Interpop"* repository, commits, OpenProject cards, and `CLAUDE.md` instructions. **Explanations, tables, and analysis are in en-CA**; **artifact content is in pt-BR**.
+> **Note on language preservation**: the Feature, User Story, AC, FR, NFR, and business-rule titles, as well as the BDD content, were authored in pt-BR in the *"Interpop"* repository, commits, OpenProject cards, and `CLAUDE.md` instructions. This en-CA edition translates the artifact content for an English-reading audience; the original commit hash and any pt-BR identifier load-bearing for traceability are glossed in place. **Explanations, tables, analysis, and artifact content are all in en-CA.**
 
 ---
 
@@ -71,11 +71,11 @@ Admin1 → POST /moderation/bans/ { user: Editor1 }
 
 ---
 
-## 4. Feature: Hierarquia de Banimento
+## 4. Feature: Ban Hierarchy
 
-**Feature description (client-deliverable, in pt-BR):**
+**Feature description (client-deliverable):**
 
-Define quem pode banir e desbanir quem dentro da equipe editorial do *"Interpop"*. Implementa a hierarquia `dev > admin > editor > user` como uma matriz de permissões aplicada de forma consistente em todas as operações de banimento e desbanimento — sejam elas executadas pela interface pública (moderação direta), pela aprovação de uma solicitação de banimento aberta por um editor, ou pelas ações equivalentes na interface administrativa. O entregável ao cliente (*"Gabriel"*, dev/dono do projeto) é a garantia de que nenhum administrador pode "decapitar" outro administrador nem o próprio dev — mesmo sob coação externa ou em caso de credenciais comprometidas. A regra vale simetricamente para banimento e desbanimento, com idempotência preservada quando um usuário é re-banido após desbanimento (reativa o registro existente em vez de criar duplicata).
+Defines who can ban and unban whom within the *"Interpop"* editorial team. Implements the `dev > admin > editor > user` hierarchy as a permission matrix applied consistently across all ban and unban operations — whether they are carried out through the public interface (direct moderation), through the approval of a ban request opened by an editor, or through the equivalent actions in the administrative interface. The client deliverable (*"Gabriel"*, dev/owner of the project) is the guarantee that no administrator can "decapitate" another administrator or the dev themselves — even under external coercion or in the event of compromised credentials. The rule holds symmetrically for banning and unbanning, with idempotency preserved when a user is re-banned after being unbanned (it reactivates the existing record instead of creating a duplicate).
 
 > This description is what goes on the OpenProject Feature card (or equivalent). It is **written in business language**, readable by any stakeholder. The ACs below formalize the testable rules; BDD appears only in the User Stories (§5).
 
@@ -83,72 +83,72 @@ Define quem pode banir e desbanir quem dentro da equipe editorial do *"Interpop"
 
 9 ACs, **grouped by theme** (Rule 7 of [05-convencoes-interpop.md](../references/05-convencoes-interpop.md)). ACs with **`[...]`** at the end of the title must be read together with the detail in §4.2.
 
-#### 📋 CA - Hierarquia de banimento
+#### 📋 CA - Ban hierarchy
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA01` | Dev é imune a banimento por qualquer outro usuário, incluindo outro dev. | — |
-| `CA02` | Administrador só pode ser banido por um dev **[...]** | ✅ |
-| `CA03` | Editor e usuário comum podem ser banidos por administrador ou por dev **[...]** | ✅ |
-| `CA04` | Nenhum usuário pode banir a si mesmo, em qualquer papel. | — |
+| `CA01` | Dev is immune to banning by any other user, including another dev. | — |
+| `CA02` | An administrator can only be banned by a dev **[...]** | ✅ |
+| `CA03` | Editor and regular user can be banned by an administrator or by a dev **[...]** | ✅ |
+| `CA04` | No user can ban themselves, in any role. | — |
 
-#### 📋 CA - Comportamento da operação de banimento
-
-| ID | Description | Detail? |
-|---|---|---|
-| `CA05` | A regra de hierarquia de banimento se aplica também ao desbanimento **[...]** | ✅ |
-| `CA06` | Ao receber a operação de banimento, o sistema responde com um dentre três resultados de negócio **[...]** | ✅ |
-| `CA07` | O banimento é idempotente quanto ao histórico do usuário **[...]** | ✅ |
-| `CA08` | O banimento é transacional. Se ocorrer falha entre registrar o banimento e atualizar a marcação de "banido" no perfil do usuário, ambas as operações devem ser revertidas — o usuário não pode ficar num estado inconsistente. | — |
-
-#### 📋 CA - Fluxo de aprovação via solicitação (BanRequest)
+#### 📋 CA - Behaviour of the ban operation
 
 | ID | Description | Detail? |
 |---|---|---|
-| `CA09` | O fluxo de solicitação de banimento (BanRequest) continua intacto: editores podem abrir solicitações que admin/dev aprovam ou rejeitam, com idempotência preservada **[...]** | ✅ |
+| `CA05` | The ban-hierarchy rule also applies to unbanning **[...]** | ✅ |
+| `CA06` | On receiving the ban operation, the system responds with one of three business results **[...]** | ✅ |
+| `CA07` | Banning is idempotent with respect to the user's history **[...]** | ✅ |
+| `CA08` | Banning is transactional. If a failure occurs between recording the ban and updating the "banned" flag on the user's profile, both operations must be rolled back — the user cannot end up in an inconsistent state. | — |
+
+#### 📋 CA - Approval flow via request (BanRequest)
+
+| ID | Description | Detail? |
+|---|---|---|
+| `CA09` | The ban-request flow (BanRequest) remains intact: editors can open requests that an admin/dev approves or rejects, with idempotency preserved **[...]** | ✅ |
 
 ### 4.2 Detail of ACs with `[...]`
 
-Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Regras a serem aplicadas:` + bullets convention.
+Each block below is what appears in the **item body** in OpenProject (AC Description field), following the `Rules to be applied:` + bullets convention.
 
 #### CA02 — Detail
 
 ```
-Regras a serem aplicadas:
-- Outro administrador não pode banir administrador (mesmo papel, hierarquia horizontal não permite).
-- Administrador não pode banir a si mesmo (regra geral CA04 prevalece).
-- Editor não tem permissão de operar a moderação de administradores; a tentativa é rejeitada.
-- Apenas dev (papel mais alto da hierarquia) pode aplicar banimento a administrador.
+Rules to be applied:
+- Another administrator cannot ban an administrator (same role; the horizontal hierarchy does not allow it).
+- An administrator cannot ban themselves (general rule CA04 prevails).
+- An editor does not have permission to moderate administrators; the attempt is rejected.
+- Only a dev (highest role in the hierarchy) may apply a ban to an administrator.
 ```
 
 #### CA03 — Detail
 
 ```
-Regras a serem aplicadas:
-- Editor pode ser banido por administrador ou por dev.
-- Usuário comum pode ser banido por administrador ou por dev.
-- Editor NÃO bane outro editor (hierarquia horizontal não permite).
-- Usuário comum NÃO bane ninguém (papel mais baixo da hierarquia).
+Rules to be applied:
+- An editor can be banned by an administrator or by a dev.
+- A regular user can be banned by an administrator or by a dev.
+- An editor does NOT ban another editor (the horizontal hierarchy does not allow it).
+- A regular user does NOT ban anyone (lowest role in the hierarchy).
 ```
 
 #### CA05 — Detail
 
 ```
-Regras a serem aplicadas:
-- A regra de quem-pode-banir-quem (CA01..CA04) vale igualmente para o desbanimento.
-- Se um dev aplicou banimento a um administrador, apenas outro dev (ou o mesmo) pode desbanir.
-- Administrador comum NÃO pode desfazer banimento que foi aplicado por dev a outro administrador.
-- A política existe para evitar que o subordinado reverta a decisão do superior.
+Rules to be applied:
+- The who-can-ban-whom rule (CA01..CA04) applies equally to unbanning.
+- If a dev applied a ban to an administrator, only another dev (or the same one) may unban.
+- A regular administrator CANNOT undo a ban that was applied by a dev to another administrator.
+- The policy exists to prevent a subordinate from reversing the superior's decision.
 ```
 
 #### CA06 — Detail
 
 ```
-Regras a serem aplicadas:
-- Quando o usuário tem permissão e a hierarquia é respeitada, o sistema confirma o banimento (operação aceita).
-- Quando a hierarquia é violada (por exemplo, administrador tentando banir outro administrador), o sistema rejeita com a mensagem "Operação não permitida pela hierarquia editorial".
-- Quando o usuário não tem permissão de moderação (não é administrador nem dev), o sistema rejeita com a mensagem "Você não tem permissão para moderar".
-- Em todos os casos de rejeição, nenhum registro de banimento é criado e nenhum perfil de usuário é alterado.
+Rules to be applied:
+- When the user has permission and the hierarchy is respected, the system confirms the ban (operation accepted).
+- When the hierarchy is violated (for example, an administrator trying to ban another administrator), the system rejects it with the message "Operation not permitted by the editorial hierarchy".
+- When the user does not have moderation permission (is neither administrator nor dev), the system rejects it with the message "You do not have permission to moderate".
+- In all rejection cases, no ban record is created and no user profile is changed.
 ```
 
 > **Technical note (does not go on the CA06 card)**: the 3 business results above are implemented respectively as HTTP 201, 400, and 403 on the `POST /api/v1/moderation/bans/` endpoint. This technical mapping is the responsibility of the Tasks (see §7 Traceability), not the AC.
@@ -156,25 +156,25 @@ Regras a serem aplicadas:
 #### CA07 — Detail
 
 ```
-Regras a serem aplicadas:
-- Re-banir um usuário previamente banido e depois desbanido NÃO cria um banimento duplicado: o registro existente é reativado.
-- Ao reativar, o registro herda o novo motivo informado e o novo administrador que aplicou.
-- O histórico do usuário fica coerente: 1 registro de banimento por relação usuário↔administrador, com sequência ativo/inativo no tempo.
+Rules to be applied:
+- Re-banning a user who was previously banned and then unbanned does NOT create a duplicate ban: the existing record is reactivated.
+- On reactivation, the record inherits the new reason given and the new administrator who applied it.
+- The user's history stays consistent: 1 ban record per user↔administrator relation, with an active/inactive sequence over time.
 ```
 
 #### CA09 — Detail
 
 ```
-Regras a serem aplicadas:
-- Editor pode abrir uma solicitação de banimento (BanRequest fica em estado pendente).
-- Administrador ou dev podem APROVAR a solicitação. A aprovação cria o banimento real seguindo a mesma hierarquia (CA01..CA04). Se a hierarquia for violada na aprovação, a aprovação falha.
-- Administrador ou dev podem REJEITAR a solicitação. Nesse caso, a solicitação fica marcada como rejeitada e nenhum banimento é criado.
-- Aprovar uma solicitação que já foi aprovada anteriormente retorna o banimento existente, sem criar duplicata (idempotência).
+Rules to be applied:
+- An editor can open a ban request (the BanRequest stays in a pending state).
+- An administrator or dev can APPROVE the request. Approval creates the real ban following the same hierarchy (CA01..CA04). If the hierarchy is violated at approval, the approval fails.
+- An administrator or dev can REJECT the request. In that case, the request is marked as rejected and no ban is created.
+- Approving a request that was already approved previously returns the existing ban, without creating a duplicate (idempotency).
 ```
 
 ### 4.3 Technical annex — Exhaustive matrix of the `can_be_banned_by` method
 
-> **Note**: this annex is a **technical derivation** of CA02 + CA04 for whoever implements the `User.can_be_banned_by(actor)` method. It is not AC detail in the "Regras a serem aplicadas:" style — it is an exhaustive truth table. In a real project, this becomes a comment in the code or a test table (`pytest.mark.parametrize`).
+> **Note**: this annex is a **technical derivation** of CA02 + CA04 for whoever implements the `User.can_be_banned_by(actor)` method. It is not AC detail in the "Rules to be applied:" style — it is an exhaustive truth table. In a real project, this becomes a comment in the code or a test table (`pytest.mark.parametrize`).
 
 ```
 Exhaustive matrix can_be_banned_by(actor) → bool
@@ -199,99 +199,99 @@ Exhaustive matrix can_be_banned_by(actor) → bool
 ### US 1 — Apply the hierarchy in the model
 
 ```
-US Implementar can_be_banned_by no User como autoridade única de hierarquia
+US Implement can_be_banned_by on User as the single authority for hierarchy
 
-Descrição (BDD):
-  DADO que o sistema tem usuários com diferentes roles
-  QUANDO o método user.can_be_banned_by(actor) é chamado
-  ENTÃO o resultado segue a matriz da hierarquia (CA01..CA04)
+Description (BDD):
+  Given the system has users with different roles
+  When the method user.can_be_banned_by(actor) is called
+  Then the result follows the hierarchy matrix (CA01..CA04)
 
-Relacionado a: CA01, CA02, CA03, CA04
+Related to: CA01, CA02, CA03, CA04
 Story Points: 3
 ```
 
 ### US 2 — Apply the hierarchy in the endpoint
 
 ```
-US Endpoint POST /bans/ valida hierarquia antes de criar Ban
+US Endpoint POST /bans/ validates hierarchy before creating Ban
 
-Descrição (BDD):
-  DADO que o usuário autenticado é admin
-  E o usuário alvo também é admin
-  QUANDO faço POST /api/v1/moderation/bans/ com {user_id: alvo, reason: "x"}
-  ENTÃO o sistema retorna HTTP 400
-  E nenhum Ban é criado
-  E o alvo.is_banned permanece False
+Description (BDD):
+  Given the authenticated user is admin
+  And the target user is also admin
+  When I POST /api/v1/moderation/bans/ with {user_id: target, reason: "x"}
+  Then the system returns HTTP 400
+  And no Ban is created
+  And target.is_banned remains False
 
-  Cenário 2: Dev banindo admin
-  DADO que o usuário autenticado é dev
-  E o usuário alvo é admin
-  QUANDO faço POST /api/v1/moderation/bans/ com {user_id: alvo}
-  ENTÃO o sistema retorna HTTP 201
-  E o alvo.is_banned se torna True
+  Scenario 2: Dev banning admin
+  Given the authenticated user is dev
+  And the target user is admin
+  When I POST /api/v1/moderation/bans/ with {user_id: target}
+  Then the system returns HTTP 201
+  And target.is_banned becomes True
 
-  Cenário 3: Admin banindo editor (regressão — comportamento antigo preservado)
-  DADO que o usuário autenticado é admin
-  E o usuário alvo é editor
-  QUANDO faço POST /api/v1/moderation/bans/ com {user_id: alvo}
-  ENTÃO o sistema retorna HTTP 201
-  E o alvo.is_banned se torna True
+  Scenario 3: Admin banning editor (regression — old behaviour preserved)
+  Given the authenticated user is admin
+  And the target user is editor
+  When I POST /api/v1/moderation/bans/ with {user_id: target}
+  Then the system returns HTTP 201
+  And target.is_banned becomes True
 
-Relacionado a: CA02, CA03, CA06
+Related to: CA02, CA03, CA06
 Story Points: 5
 ```
 
 ### US 3 — Ensure transactional atomicity
 
 ```
-US Garantir que ban_user é atômico (rollback em falha)
+US Ensure ban_user is atomic (rollback on failure)
 
-Descrição (BDD):
-  DADO que ban_user faz duas escritas (Ban + User.is_banned)
-  QUANDO uma das escritas falha (simulado via mock)
-  ENTÃO ambas operações são revertidas
-  E o usuário NÃO fica num estado inconsistente
+Description (BDD):
+  Given ban_user makes two writes (Ban + User.is_banned)
+  When one of the writes fails (simulated via mock)
+  Then both operations are rolled back
+  And the user does NOT end up in an inconsistent state
 
-Relacionado a: CA08
+Related to: CA08
 Story Points: 2
 ```
 
 ### US 4 — Idempotency (re-ban after unban)
 
 ```
-US ban_user reativa Ban existente em vez de criar duplicata
+US ban_user reactivates existing Ban instead of creating a duplicate
 
-Descrição (BDD):
-  DADO que um usuário foi banido (Ban registro X)
-  E foi desbanido (X.is_active = False)
-  QUANDO o usuário é banido de novo
-  ENTÃO o mesmo Ban X é reativado (não criado novo)
-  E X.reason é atualizado para o novo motivo
-  E X.banned_by é atualizado para o novo admin
-  E X.unbanned_by é zerado
-  E o constraint UNIQUE não é violado
+Description (BDD):
+  Given a user was banned (Ban record X)
+  And was unbanned (X.is_active = False)
+  When the user is banned again
+  Then the same Ban X is reactivated (no new one created)
+  And X.reason is updated to the new reason
+  And X.banned_by is updated to the new admin
+  And X.unbanned_by is cleared
+  And the UNIQUE constraint is not violated
 
-Relacionado a: CA07
+Related to: CA07
 Story Points: 3
 ```
 
 ### US 5 — Unban follows the same hierarchy
 
 ```
-US Aplicar can_be_unbanned_by relacional
+US Apply relational can_be_unbanned_by
 
-Descrição (BDD):
-  DADO que um dev baniu um admin (Ban Y)
-  QUANDO um admin comum tenta DELETE /bans/Y/
-  ENTÃO o sistema retorna HTTP 403
-  E o admin permanece banido
+Description (BDD):
+  Given a dev banned an admin (Ban Y)
+  When a regular admin tries DELETE /bans/Y/
+  Then the system returns HTTP 403
+  And the admin remains banned
 
-  DADO que um dev baniu um admin (Ban Y)
-  QUANDO o mesmo dev (ou outro dev) faz DELETE /bans/Y/
-  ENTÃO o sistema retorna HTTP 200 ou 204
-  E o admin é desbanido
+  Given a dev banned an admin (Ban Y)
+  When the same dev (or another dev) does DELETE /bans/Y/
+  Then the system returns HTTP 200 or 204
+  And the admin is unbanned
 
-Relacionado a: CA05
+Related to: CA05
 Story Points: 3
 ```
 
@@ -322,6 +322,7 @@ Applying [07-mudanca-rastreabilidade.md](../references/07-mudanca-rastreabilidad
 
 ```
 Commit 1e0241e: feat(moderation): dev é superadmin — único que bane/desbane admins
+                 ("dev is superadmin — the only one who bans/unbans admins")
 ├─ apps/users/models.py
 │    ├─ can_be_banned_by(actor: User|None) → bool
 │    └─ can_be_unbanned_by(actor: User|None) → bool
@@ -376,7 +377,7 @@ Applying [09-etica-sbc.md](../references/09-etica-sbc.md):
 
 1. **Editorial hierarchy declared in CLAUDE.md** had become an implicit requirement; **making it explicit via ACs** was the missing step
 2. **Defence in depth** beats isolated pre-conditions: model + endpoint + service, all validate
-3. **BDD in pt-BR in the commit message** helps future review ("Regra: dev é imune; admin só por dev")
+3. **A BDD-style rule in the commit message** helps future review ("Rule: dev is immune; admin only by dev")
 4. **Regression testing is part of the requirement** — the AC "admin still bans editor" must be explicit; otherwise a refactor may break it
 5. **ADR-012 (atomic transaction)** became a cross-cutting architectural standard — every ≥2-write operation inherits from it
 6. **Idempotency** came from a requirement (CA07) discovered in production (the original bug); recovering via rewriting ban_user was cheaper than handling the UNIQUE constraint at the caller

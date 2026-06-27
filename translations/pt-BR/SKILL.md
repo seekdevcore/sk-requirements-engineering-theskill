@@ -13,12 +13,12 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.29.0
+version: 1.30.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
 
-> Skill construída a partir das 11 aulas do curso de ERS (*Engenharia de Requisitos de Software* / Software Requirements Engineering) do *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Cap. 4), Pressman, Wiegers, Falbo, BABOK, e o Código de Ética SBC 002/2024. **Nota sobre terminologia**: o curso-fonte original está em português do Brasil; este conteúdo padrão em inglês mantém termos de domínio específicos do Brasil em *"pt-BR com itálico + aspas"* (ex.: *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). As palavras-chave de Gherkin são traduzidas para Given/When/Then; os equivalentes pt-BR (Dado/Quando/Então) estão disponíveis em `translations/pt-BR/`.
+> Skill construída a partir das 11 aulas do curso de ERS (*Engenharia de Requisitos de Software* / Software Requirements Engineering) do *"IFPB"* Campus João Pessoa (Prof. Dr. *"Juliana Dantas Ribeiro Viana de Medeiros"*), Sommerville 10e (Cap. 4), Pressman, Wiegers, Falbo, BABOK, e o Código de Ética SBC 002/2024. **Nota sobre terminologia**: o curso-fonte original está em português do Brasil; este conteúdo padrão em inglês mantém termos de domínio específicos do Brasil em *"pt-BR com itálico + aspas"* (ex.: *"IFPB"*, *"Interpop"*, *"ABCD"*, *"Bolsa Atleta"*). As palavras-chave de Gherkin são traduzidas para Given/When/Then; os equivalentes pt-BR (Dado/Quando/Então) estão disponíveis em `translations/pt-BR/`. **Fallback de idioma**: en-CA é o padrão e o **fallback universal** — tudo que não existir em `translations/<lang>/` resolve para a raiz en-CA, em *tudo* (referências, templates, exemplos, integrações, validadores). Ver [`translations/README.md`](../../translations/README.md).
 
 ---
 
@@ -311,7 +311,7 @@ Aplica-se a TODOS os títulos de Epic/Feature/US/CA/**RF**/RNF/regra de negócio
 
 > **Buckets estruturais de backlog** (default da skill, semeados pelo scaffolder, [`references/10-estrutura-projeto.md §4`](references/10-estrutura-projeto.md)) — pastas en-CA, títulos de Epic pt-BR restaurados pelo adapter no export:
 >
-> - **`melhorias/`** → Epic-raiz **"Melhorias"** — aprimoramentos de coisas que já existem.
+> - **`improvements/`** → Epic-raiz **"Melhorias"** — aprimoramentos de coisas que já existem.
 > - **`bugs/`** → cada `BUG-NN` é um **type "Bug" parented à US/Feature que viola** (NÃO um Epic) — mantém o defeito a um link do `CA`.
 > - **`support-quality-investigation/`** → Epic-raiz **"Atividades de Apoio, Qualidade e Investigação"** com três Epics filhos: **`support/`** ("Apoio" — `TX` transversal, regra 6) · **`qa/`** ("Q&A" — testes, reviews, quality gates) · **`issues/`** ("Issues" — inbox de triagem), com **`issues/spikes/`** ("Spikes" — investigação time-boxed) aninhado.
 >

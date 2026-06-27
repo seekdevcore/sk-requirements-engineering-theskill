@@ -214,7 +214,7 @@ The skill's `docs/backlog/` always has **two mandatory structural bucket directo
 
 | Bucket directory (en-CA) | On export | Holds (children) |
 |---|---|---|
-| `backlog/melhorias/` | root Epic **`Melhorias`** (*Improvements*) | each `*.md` → Feature/User story child |
+| `backlog/improvements/` | root Epic **`Melhorias`** (*Improvements*) | each `*.md` → Feature/User story child |
 | `backlog/bugs/` | **`Bug` TYPE**, parented to the violated US/Feature (NOT an Epic) | each `BUG-NN-*.md` → a Bug under its Feature |
 | `backlog/support-quality-investigation/` | root Epic **`Atividades de Apoio, Qualidade e Investigação`** (umbrella) | three child Epics ↓ |
 | &nbsp;&nbsp;`└ support/` | child Epic **`Apoio`** — cross-cutting **`TX`** (Rule 6) | each `TX-NN-*.md` → Task child |

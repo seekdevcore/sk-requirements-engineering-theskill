@@ -1,27 +1,27 @@
 <!-- GENERIC TEMPLATE — copy the _feature-template/ folder to <feature-slug>/ and fill. -->
 # DESIGN — <Feature>
 
-> **Spec de**: [F-NN](../../backlog/features/F-NN-....md) · **Requisito**: [RF-NNN](../../requirements/RF/RF-NNN-....md)
-> **Status do design**: 📝 Draft | 🔍 Em review | ✅ Locked
+> **Spec of**: [F-NN](../../backlog/features/F-NN-....md) · **Requirement**: [RF-NNN](../../requirements/RF/RF-NNN-....md)
+> **Design status**: 📝 Draft | 🔍 In review | ✅ Locked
 
-## Problema
+## Problem
 
-<o que esta feature resolve, em 1 parágrafo técnico — sem justificativa de produto (essa está no RF)>
+<what this feature solves, in 1 technical paragraph — no product rationale (that lives in the RF)>
 
-## Arquitetura
+## Architecture
 
-<componentes, bounded context, camadas; diagrama se ajudar>
+<components, bounded context, layers; a diagram if it helps>
 
-## Modelo de dados
+## Data model
 
-<entidades, índices, migrations>
+<entities, indexes, migrations>
 
-## Decisões (viram ADRs)
+## Decisions (become ADRs)
 
-| # | Decisão | ADR |
+| # | Decision | ADR |
 | --- | --- | --- |
-| 1 | <decisão> | [ADR-NNN](./adrs/ADR-NNN-....md) |
+| 1 | <decision> | [ADR-NNN](./adrs/ADR-NNN-....md) |
 
-## Fora de escopo
+## Out of scope
 
 - <…>

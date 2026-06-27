@@ -6,59 +6,59 @@
        • Status Final  = GitHub-derived PR state (as in the project's root README):  ✅ Merged/Mergeada · 🔄 In review/Em revisão · 📭 PR open/PR aberta · — (no PR/sem PR)
      BLOCKS = one per person (the block title names WHO does it), mirroring the SIRA root-README roadmap.
      Anything dropped to a later sprint goes to the "Adiados (skipped)" section with a reason — and its Status becomes ⤳ Skipped. -->
-# Sprint N — <meta curta>
+# Sprint N — <short goal>
 
-> **Período**: DD/MM — DD/MM · **Meta**: <objetivo único da sprint>
-> **Time**: <pessoas> · **Gate de cobertura**: <ex.: 40%>
+> **Period**: DD/MM — DD/MM · **Goal**: <single goal of the sprint>
+> **Team**: <people> · **Coverage gate**: <e.g. 40%>
 
-## Referências (não reescrever — apenas linkar)
+## References (do not rewrite — only link)
 
-> O que entra nesta sprint **já está especificado** no backlog/requisitos. Aqui só **referenciamos** os documentos de origem — a rastreabilidade vive neles, não se copia o conteúdo do Epic/Feature/US para cá.
+> What enters this sprint **is already specified** in the backlog/requirements. Here we only **reference** the source documents — traceability lives in them, you do not copy the Epic/Feature/US content here.
 
-| Origem | Documento |
+| Source | Document |
 | --- | --- |
-| Requisitos (RF/RNF) | [requirements/](../../requirements/) |
-| Epic(s) em escopo | [EP-NN](../epics/EP-NN-....md) |
-| Feature(s) em escopo | [F-NN](../features/F-NN-....md) · [F-NN](../features/F-NN-....md) |
+| Requirements (RF/RNF) | [requirements/](../../requirements/) |
+| Epic(s) in scope | [EP-NN](../epics/EP-NN-....md) |
+| Feature(s) in scope | [F-NN](../features/F-NN-....md) · [F-NN](../features/F-NN-....md) |
 
-## Legenda dos dois status (bilíngue — use a língua da pessoa/time)
+## Legend for the two statuses (bilingual — use the person's/team's language)
 
-> O **emoji é o token estável**; a palavra ao lado é **bilíngue** (EN / pt-BR) — escreva no idioma de quem preenche. Misturar idiomas entre blocos é OK (cada pessoa no seu).
+> The **emoji is the stable token**; the word next to it is **bilingual** (EN / pt-BR) — write it in the language of whoever fills it in. Mixing languages across blocks is OK (each person in their own).
 
-- **Status** — progresso na sprint (e implícito *quem*, pelo bloco): **⏳ To do / A fazer** · **🔨 Doing / Fazendo** · **✅ Done / Feito** · **⤳ Skipped / Adiado** (ver [§ Adiados](#adiados-para-outra-sprint-skipped))
-- **Status Final** — estado do PR no GitHub (como no README raiz do projeto): **✅ Merged / Mergeada** · **🔄 In review / Em revisão** · **📭 PR open / PR aberta** · **— (no PR / sem PR)**
+- **Status** — progress within the sprint (and implicitly *who*, via the block): **⏳ To do / A fazer** · **🔨 Doing / Fazendo** · **✅ Done / Feito** · **⤳ Skipped / Adiado** (see [§ Deferred](#deferred-to-another-sprint-skipped))
+- **Status Final** — PR state on GitHub (as in the project's root README): **✅ Merged / Mergeada** · **🔄 In review / Em revisão** · **📭 PR open / PR aberta** · **— (no PR / sem PR)**
 
-## Blocos — quem faz o quê (espelha o README raiz do projeto)
+## Blocks — who does what (mirrors the project's root README)
 
-> Um **bloco por pessoa**; o título do bloco diz **quem**. Cada linha **referencia** a US no documento da Feature (não reescreve a US). A coluna **PR** vem logo após **Status Final**.
+> One **block per person**; the block title says **who**. Each row **references** the US in the Feature document (does not rewrite the US). The **PR** column comes right after **Status Final**.
 
-### Bloco 1 — <tema do bloco> · *<Pessoa EN>*  <!-- exemplo: pessoa de língua inglesa -->
+### Block 1 — <block theme> · *<EN Person>*  <!-- example: English-speaking person -->
 
-| US | Descrição | Status | Status Final | PR |
+| US | Description | Status | Status Final | PR |
 | --- | --- | --- | --- | --- |
-| [US-NN.M](../features/F-NN-....md) | <ref curta — linka a US, não reescreve> | 🔨 Doing | — | — |
+| [US-NN.M](../features/F-NN-....md) | <short ref — links the US, does not rewrite> | 🔨 Doing | — | — |
 | [US-NN.M](../features/F-NN-....md) | <…> | ✅ Done | ✅ Merged | [#NNN](https://github.com/<org>/<repo>/pull/NNN) |
 
-**Conclusão:** X / Y user stories concluídas.
+**Conclusion:** X / Y user stories completed.
 
-### Bloco 2 — <tema do bloco> · *<Pessoa pt-BR>*  <!-- exemplo: pessoa de língua portuguesa -->
+### Block 2 — <block theme> · *<pt-BR Person>*  <!-- example: Portuguese-speaking person -->
 
-| US | Descrição | Status | Status Final | PR |
+| US | Description | Status | Status Final | PR |
 | --- | --- | --- | --- | --- |
 | [US-NN.M](../features/F-NN-....md) | <…> | ⏳ A fazer | 🔄 Em revisão | [#NNN](https://github.com/<org>/<repo>/pull/NNN) |
 
-**Conclusão:** X / Y user stories concluídas.
+**Conclusion:** X / Y user stories completed.
 
-## Adiados para outra sprint (skipped)
+## Deferred to another sprint (skipped)
 
-> Toda US que **não couber** nesta sprint (falta de tempo, dependência, repriorização, qualquer motivo) fica aqui — com **motivo** e **destino**. No bloco acima, o **Status** dela passa a **⤳ Skipped**. Assim ninguém precisa caçar no histórico por que algo não entrou.
+> Every US that **does not fit** in this sprint (lack of time, dependency, reprioritization, any reason) goes here — with a **reason** and a **destination**. In the block above, its **Status** becomes **⤳ Skipped**. That way no one has to dig through history for why something did not make it in.
 
-| US | Bloco / Responsável | Motivo do adiamento | Vai para |
+| US | Block / Owner | Reason for deferral | Goes to |
 | --- | --- | --- | --- |
-| [US-NN.M](../features/F-NN-....md) | Bloco N · *<Pessoa>* | <falta de tempo / bloqueada por US-XX / repriorizada / …> | Sprint N+1 |
+| [US-NN.M](../features/F-NN-....md) | Block N · *<Person>* | <lack of time / blocked by US-XX / reprioritized / …> | Sprint N+1 |
 
-## Retrospectiva (preencher no fim da sprint)
+## Retrospective (fill in at the end of the sprint)
 
-- **Entregue**: <US com Status ✅ Done/Feito · Status Final ✅ Merged/Mergeada>
-- **Adiado (skipped)**: <US + motivo — ver § Adiados>
-- **Aprendizados**: <o que melhorar na próxima>
+- **Delivered**: <US with Status ✅ Done/Feito · Status Final ✅ Merged/Mergeada>
+- **Deferred (skipped)**: <US + reason — see § Deferred>
+- **Learnings**: <what to improve next time>

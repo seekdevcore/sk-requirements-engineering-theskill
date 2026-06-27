@@ -1,34 +1,34 @@
 <!-- GENERIC TEMPLATE — copy to RNF-<slug>.md (perf, security, a11y, lgpd, availability, ...). Metrics MUST be quantitative. -->
-# RNF-<slug> — <Performance | Segurança | Acessibilidade | Privacidade | Disponibilidade | ...>
+# RNF-<slug> — <Performance | Security | Accessibility | Privacy | Availability | ...>
 
-> **Tipo**: Requisito Não-Funcional (transversal)
-> **Prioridade**: 🟠 Alta (gate de release)
-> **Status**: 📝 Proposto | 🚧 Parcial | ✅ Verificado
+> **Type**: Non-Functional Requirement (cross-cutting)
+> **Priority**: 🟠 High (release gate)
+> **Status**: 📝 Proposed | 🚧 Partial | ✅ Verified
 
 ---
 
-## Enunciado
+## Statement
 
-<frase de negócio do atributo de qualidade>
+<business sentence for the quality attribute>
 
-### Métricas obrigatórias (SEMPRE quantitativas)
+### Mandatory metrics (ALWAYS quantitative)
 
-| Métrica | Alvo | Quando/como medir |
+| Metric | Target | When/how to measure |
 | --- | --- | --- |
-| <ex.: p95 resposta server> | <ex.: ≤ 300ms em <escala>> | <ex.: load test> |
+| <e.g. server response p95> | <e.g. ≤ 300ms at <scale>> | <e.g. load test> |
 
-## Realizado por (rastreabilidade ↓)
+## Realized by (traceability ↓)
 
-| Epic / Feature | Como atende |
+| Epic / Feature | How it meets the requirement |
 | --- | --- |
-| [EP-NN → F-NN](../../backlog/features/F-NN-....md) | <quais CAs> |
+| [EP-NN → F-NN](../../backlog/features/F-NN-....md) | <which ACs> |
 
-## Como verificar (gates de CI)
+## How to verify (CI gates)
 
 | Gate | Status |
 | --- | --- |
-| <ex.: build falha se bundle > <limite>> | ⏳ |
+| <e.g. build fails if bundle > <limit>> | ⏳ |
 
-## Restrições
+## Constraints
 
-- <hardware-base de teste, escala-alvo, etc.>
+- <baseline test hardware, target scale, etc.>
