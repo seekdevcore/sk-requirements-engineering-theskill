@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.29.0] — 2026-06-27
+
+Reshapes the **sprint document** into a thin, link-first execution view — modelled on the *"SIRA"* root-README roadmap.
+
+### Changed
+
+- **`assets/templates/backlog/sprints/_TEMPLATE.md` — rewritten.** A sprint doc now:
+  - **References** the Epic/Feature/US documents instead of rewriting them (traceability stays at the source; the sprint is an execution view, not a second copy of the backlog).
+  - Organizes work into **one block per person** (the block title names *who*), mirroring the *"SIRA"* root-README roadmap (`### Bloco N — <tema> · _<Pessoa>_` + a per-block "Conclusão: X / Y").
+  - Carries **two status axes per row**, both with **bilingual values** (the emoji is the stable token; the word follows the person's/team's language, EN / pt-BR): **`Status`** = sprint progress + implicit *who* (**⏳ To do/A fazer · 🔨 Doing/Fazendo · ✅ Done/Feito · ⤳ Skipped/Adiado**) and **`Status Final`** = the GitHub-derived PR state (**✅ Merged/Mergeada · 🔄 In review/Em revisão · 📭 PR open/PR aberta · —**), with the **`PR`** column right after `Status Final` (matching the README's `Status | PR` shape).
+  - Ends with an **"Adiados (skipped)"** section: any US that does not fit the sprint is listed there with its **reason** and **destination**, and its `Status` becomes **⤳ Skipped**.
+- **`references/03-especificacao.md §5.1.2` + pt-BR mirror** — documents the sprint-document model (reference-don't-rewrite · per-person blocks · the two status axes · the skipped section).
+
+### Notes
+
+- **Version**: `1.28.0 → 1.29.0`. pt-BR mirror (`references/03`) synchronized; the template is language-neutral (one copy at the repo root).
+
+---
+
 ## [1.28.0] — 2026-06-23
 
 Adds **postmortems** and **runbooks** as traceability-participating records — closing the RE "after" loop (did the requirement hold in production?), anchored to the dependability `RNF` family.
