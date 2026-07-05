@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.30.0
+version: 1.31.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -259,6 +259,12 @@ bash "$SC" --with-specs --apply  # create/fill/reorganize, with SDD (idempotent)
 bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs)
 # then follow the Adaptation protocol (ref §9): fill the seeds with THIS project's reality
 ```
+
+> **A camada generativa — criar e fechar artefatos é um comando (NÃO copie templates à mão).** O scaffolder monta a estrutura vazia; dois scripts fazem o dia a dia:
+>
+> - **Criar** qualquer artefato → `bash assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: `spike` · `bug` · `issue` · `qa` · `tx` · `epic` · `feature` · `rf` · `rnf` · `pm` · `runbook` · `adr` · `sprint`). Ele **aloca o próximo ID livre** (ADR varre os dois tiers), instancia o `_TEMPLATE.md` certo, coloca no bucket e preenche id/slug/data. É o que faz "criar um spike quando não dá pra estimar" realmente acontecer.
+> - **Fechar** um item → setar `Status: ✅ Done` **no lugar** (nunca `git mv`) e regerar a done view: `bash assets/gen-done-view.sh --root docs --apply` → escreve `docs/backlog/done/README.md`, um ledger read-only dirigido por Status.
+> - **Quando disparar** — a tabela de **gatilhos-reflexo** ([`references/14-triggers.md`](references/14-triggers.md)) traduz todo "a skill manda fazer X" em `QUANDO <condição> → FAÇA <ação> via <ferramenta>` (as decisões `AskUserQuestion` do §0, a regra zero, quantificar-o-RNF, criar-spike-quando-não-dá-pra-estimar, incidente→`pm`, fechar→done view). Trate os determinísticos como **reflexos**. Os mesmos scripts estão expostos como MCP tools (`create_item`, `generate_done_view`, `close_item`).
 
 **Distinção crítica Feature ↔ User Story** (regra dura — anti-padrão "Feature com BDD" em [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):
 

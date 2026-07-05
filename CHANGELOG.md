@@ -13,6 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.31.0] — 2026-07-05
+
+Adds the **generative + imperative layer** the skill was missing: it was 100% declarative/advisory (7 MCP tools, all read/validate), so creating a spike/issue/bug — which the skill *tells* you to do — was a manual copy-template-and-number chore that never happened by itself. Now the skill can **act**, and a **reflex-trigger** inventory maps every "do X" to a tool.
+
+### Added
+
+- **`assets/new-item.sh` — the item generator.** `new-item.sh <kind> <slug> [--title] --apply` allocates the **next free ID** (ADR scans both tiers for the one global sequence), instantiates the correct `_TEMPLATE.md`, places it in the right bucket, and fills id/slug/date. Kinds: `spike bug issue qa tx epic feature rf rnf pm runbook adr sprint`. Tested across all kinds (incremental IDs, H1 gets id+title).
+- **`assets/gen-done-view.sh` — the Status-driven done view.** `done/` is no longer a `git mv` destination; items keep their `Status` **in place** and the generator writes `backlog/done/README.md`, a read-only ledger (Kind · ID · Title · Where) of everything `✅ Done`. No moved files → no rotted links.
+- **3 generative MCP tools** (`server.py`, now 10 tools): `create_item`, `generate_done_view`, `close_item` (set Status Done in place + regenerate) — wrapping the two scripts so an agent can *act*, not just recite. Smoke passes.
+- **`references/14-triggers.md` — the reflex-trigger inventory.** An exhaustive, deduplicated distillation (synthesized from a full read of `SKILL.md` + every reference) of every "the skill says do X" reframed as `WHEN <condition> → THEN <action> [via <tool>]` — including the §0 `AskUserQuestion` decisions, *rule zero*, quantify-the-NFR, create-a-spike-when-you-can't-estimate, incident→postmortem, close→done-view. A callout + pointer added to `SKILL.md §5`.
+
+### Changed
+
+- **`done/` model** across `references/10-estrutura-projeto.md §4`, the backlog `README.md` template (close = set `Status: ✅ Done` + regenerate, **not** `git mv`), and the DoD.
+- **Version**: `1.30.0 → 1.31.0`. (`references/14-triggers.md` is en-CA; pt-BR resolves via the v1.30 fallback.)
+
+---
+
 ## [1.30.0] — 2026-06-27
 
 Makes **en-CA the true default language across the whole repository** and codifies a **universal language-fallback** policy — the long-overdue cleanup the root was only partially honouring.

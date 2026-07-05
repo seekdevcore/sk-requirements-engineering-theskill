@@ -13,7 +13,7 @@ source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.30.0
+version: 1.31.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -264,6 +264,7 @@ bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs
 >
 > - **Create** any artifact → `bash assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: `spike` · `bug` · `issue` · `qa` · `tx` · `epic` · `feature` · `rf` · `rnf` · `pm` · `runbook` · `adr` · `sprint`). It **allocates the next free ID** (ADR scans both tiers for the one global sequence), instantiates the right `_TEMPLATE.md`, places it in the correct bucket, and fills the id/slug/date. This is what makes "create a spike when you can't estimate" actually happen — the manual copy-and-number friction is gone.
 > - **Close** an item → set its `Status` to `✅ Done` **in place** (never `git mv`), then regenerate the done view: `bash assets/gen-done-view.sh --root docs --apply` → writes `docs/backlog/done/README.md`, a read-only Status-driven ledger of everything done. Items never leave their bucket, so `↑/↓` links keep resolving.
+> - **When to fire these** — the full **reflex-trigger table** ([`references/14-triggers.md`](references/14-triggers.md)) turns every "the skill says do X" into `WHEN <condition> → DO <action> via <tool>`: the §0 `AskUserQuestion` decisions, *rule zero* (document before backlog), quantify-the-NFR-the-moment-it's-qualitative, **create a spike the moment you can't estimate**, a defect → `bug`, a raw report → `issue`, an incident → `pm`, a resilience RNF → `runbook`, a decision → `adr`, close → done view. Treat the deterministic ones as **reflexes**: see the condition → act (create the artifact / run the check), don't defer. The same tools are exposed as MCP tools (`create_item`, `generate_done_view`, `close_item`) so an agent can act directly.
 
 > **Tracking the backlog/spec in a tool?** Two optional **integrations** project the spine *outward* (source of truth stays in `docs/`) — index at [`references/integrations/`](references/integrations/README.md): **OpenSpec / Spec Kit** (SDD) via `assets/integrations/project-to-sdd.sh` ([`sdd-interop.md`](references/integrations/sdd-interop.md)); **OpenProject** — pull/push `docs/backlog/` ↔ work packages straight over the **REST API v3** via `assets/integrations/openproject-api.py` (the Excel `.xlsm` is a Windows-only fallback) ([`openproject.md`](references/integrations/openproject.md)).
 
