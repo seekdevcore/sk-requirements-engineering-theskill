@@ -260,6 +260,11 @@ bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs
 # then follow the Adaptation protocol (ref §9): fill the seeds with THIS project's reality
 ```
 
+> **The generative layer — creating and closing artifacts is one command (do NOT hand-copy templates).** The scaffolder builds the empty structure; two companion scripts do the day-to-day:
+>
+> - **Create** any artifact → `bash assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: `spike` · `bug` · `issue` · `qa` · `tx` · `epic` · `feature` · `rf` · `rnf` · `pm` · `runbook` · `adr` · `sprint`). It **allocates the next free ID** (ADR scans both tiers for the one global sequence), instantiates the right `_TEMPLATE.md`, places it in the correct bucket, and fills the id/slug/date. This is what makes "create a spike when you can't estimate" actually happen — the manual copy-and-number friction is gone.
+> - **Close** an item → set its `Status` to `✅ Done` **in place** (never `git mv`), then regenerate the done view: `bash assets/gen-done-view.sh --root docs --apply` → writes `docs/backlog/done/README.md`, a read-only Status-driven ledger of everything done. Items never leave their bucket, so `↑/↓` links keep resolving.
+
 > **Tracking the backlog/spec in a tool?** Two optional **integrations** project the spine *outward* (source of truth stays in `docs/`) — index at [`references/integrations/`](references/integrations/README.md): **OpenSpec / Spec Kit** (SDD) via `assets/integrations/project-to-sdd.sh` ([`sdd-interop.md`](references/integrations/sdd-interop.md)); **OpenProject** — pull/push `docs/backlog/` ↔ work packages straight over the **REST API v3** via `assets/integrations/openproject-api.py` (the Excel `.xlsm` is a Windows-only fallback) ([`openproject.md`](references/integrations/openproject.md)).
 
 **Critical distinction Feature ↔ User Story** (hard rule — anti-pattern "Feature with BDD" in [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):

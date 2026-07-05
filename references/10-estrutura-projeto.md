@@ -139,7 +139,7 @@ backlog/
 │       └── spikes/            → child Epic "Spikes" — SPK-NN (time-boxed investigation)
 ├── sprints/                   one file per Sprint — temporal execution (US/Task mapping)
 │   └── sprint-N-<slug>.md
-└── done/                      closed items (Feature/Bug/QA/ISS/SPK) — MOVED here (git mv), not copied
+└── done/README.md             GENERATED done view — items are NOT moved; Status drives inclusion (assets/gen-done-view.sh)
 ```
 
 > **en-CA folders, pt-BR Epics.** The bucket folders use en-CA names (`support/`, `qa/`, `issues/`, `spikes/`) like `epics/`/`features/`; the adapter's `_BUCKETS` restores the pt-BR Epic title on export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
@@ -159,7 +159,9 @@ backlog/
 >
 > **The rule that places everything: the *type* says what it is; the *parent* says whom it serves.** A Bug/Melhoria/test that affects **one** Feature is parented to that Feature (inheriting its Epic). Work that serves the **whole project** (triage, quality discipline, technical support) is a child Epic under the umbrella. This is why `bugs/` is a *type parented to the feature*, not an Epic of its own — it keeps the defect one link from the `CA` it breaks.
 
-**Why `done/` moves instead of copies.** `git mv` preserves history and keeps `features/` showing only live work. Copying duplicates truth and rots.
+**Why `done/` is a GENERATED VIEW, not a move destination.** Moving a closed file into `done/` rots its relative links and buries history in a folder. Instead every artifact keeps its `Status` field **in place**, and [`assets/gen-done-view.sh`](../assets/gen-done-view.sh) scans the backlog for `Status: ✅ Done` and (re)writes `backlog/done/README.md` — a **read-only ledger** (Kind · ID · Title · Where). Closing an item = set its `Status` to Done, then regenerate the view (no `git mv`). The item never leaves `features/`/`bugs/`/… so every `↑/↓` link keeps resolving.
+
+**The generative layer (creating artifacts is one command).** To *create* any artifact — spike, bug, issue, Q&A, TX, Epic, Feature, RF, RNF, PM, runbook, ADR, sprint — use [`assets/new-item.sh <kind> <slug>`](../assets/new-item.sh): it **allocates the next free ID** (ADR scans both ADR tiers for the one global sequence), instantiates the right `_TEMPLATE.md`, places it in the correct bucket, fills the id/slug/date, and prints the path. This removes the manual "copy template + find next number" friction that made spikes/issues/bugs *not* get created by default.
 
 **Feature file anatomy** (see *"Interpop"* `F-30`):
 

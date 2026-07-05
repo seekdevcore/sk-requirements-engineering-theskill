@@ -27,7 +27,7 @@ backlog/
 │   └── issues/                → child Epic "Issues" — ISS-NN (triage)
 │       └── spikes/            → child Epic "Spikes" — SPK-NN (time-boxed investigation)
 ├── sprints/                   sprint-N-<slug>.md — temporal execution (US/Task mapping)
-└── done/                      closed items (MOVED via git mv: Feature/Bug/QA/ISS/SPK)
+└── done/README.md             GENERATED done view (Status-driven; items are NOT moved) — `assets/gen-done-view.sh`
 ```
 
 > **Depth rule — MAX. 3 Epic levels.** The front (`Web Application`/`Mobile`) is the root Epic (level 1); below it comes the **Module** (level 2) and the **Component** (level 3) — and then the **Feature**. After the module Epic there is **only one more** Epic (the component) before the Feature. Do not nest a 4th Epic level (e.g. `Application › Module › X Management › X Lookup › Feature` is too deep — collapse to `Application › Module › Component › Feature`).
@@ -73,18 +73,20 @@ backlog/
 3. Every Task `done` with commit hash.
 4. Code-review approved.
 5. Coverage ≥ Sprint gate.
-6. Cross-referenced documentation updated (RF/RNF cited; Sprint cites Feature; Feature in `done/`).
+6. Cross-referenced documentation updated (RF/RNF cited; Sprint cites Feature).
 7. Merged via PR (no `--force-push`, no `--no-verify`).
+8. **Status set to `✅ Done`** and the **done view regenerated** (the item appears in `done/README.md`).
 
-## How to close a Feature
+## How to close any item (no move — Status + generated view)
 
 1. Confirm CAs/USs/Tasks `✅ Done`.
-2. Update commit hashes in `features/F-NN-*.md`.
-3. Update the parent Epic.
-4. Update the Sprint.
-5. Update `requirements/RF-*` (`## Realized by`).
-6. `git mv features/F-NN-*.md done/`.
-7. Commit `chore(backlog): F-NN done — close + archive`.
+2. Update commit hashes in the item file (`features/F-NN-*.md`, `bugs/BUG-NN-*.md`, …).
+3. Update the parent Epic / the Sprint / `requirements/RF-*` (`## Realized by`) cross-refs.
+4. Set the item's **`Status` to `✅ Done`** (single value, in place — the file does **not** move).
+5. Regenerate the done view: `bash <skill>/assets/gen-done-view.sh --root docs --apply`.
+6. Commit `chore(backlog): F-NN done — status + done view`.
+
+> **Create a new item** with `bash <skill>/assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: spike · bug · issue · qa · tx · epic · feature · rf · rnf · pm · runbook · adr · sprint) — it allocates the next free ID and instantiates the template.
 
 ## Cross-references
 
