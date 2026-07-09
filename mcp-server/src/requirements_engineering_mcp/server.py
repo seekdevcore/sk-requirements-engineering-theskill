@@ -33,6 +33,8 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+import subprocess
+
 from mcp.server.fastmcp import FastMCP
 
 # ---------------------------------------------------------------------------
@@ -664,6 +666,99 @@ def check_projection_drift(
     EN + pt-BR (`SHALL`/`DEVE`). See references/integrations/sdd-interop.md §5.
     """
     return _check_projection_drift(requirements_dir, projection_dir)
+
+
+# ---------------------------------------------------------------------------
+# Generative tools — the imperative layer (create / close). Wrap the shell
+# generators assets/new-item.sh + assets/gen-done-view.sh so an agent can ACT
+# (allocate an id, instantiate a template, close an item) instead of only
+# reading advice. This is what turns "create a spike when you can't estimate"
+# from a manual chore into a single call.
+# ---------------------------------------------------------------------------
+
+NEW_ITEM_SH = SKILL_ROOT / "assets" / "new-item.sh"
+GEN_DONE_SH = SKILL_ROOT / "assets" / "gen-done-view.sh"
+_ITEM_KINDS = (
+    "spike", "bug", "issue", "qa", "tx", "epic", "feature",
+    "rf", "rnf", "pm", "runbook", "adr", "sprint",
+)
+
+
+def _run(cmd: list[str]) -> dict:
+    try:
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        return {"ok": p.returncode == 0, "stdout": p.stdout.strip(), "stderr": p.stderr.strip()}
+    except Exception as exc:  # noqa: BLE001 — surface any failure as data, never crash the server
+        return {"ok": False, "stdout": "", "stderr": f"{type(exc).__name__}: {exc}"}
+
+
+@mcp.tool()
+def create_item(
+    kind: str,
+    slug: str,
+    project_root: str = "docs",
+    title: str = "",
+    apply: bool = False,
+) -> dict:
+    """Create a backlog/requirements artifact with the next free ID (the generative layer).
+
+    `kind` ∈ spike|bug|issue|qa|tx|epic|feature|rf|rnf|pm|runbook|adr|sprint. Allocates the next
+    free ID (ADR scans BOTH tiers for the one global sequence), instantiates the correct
+    `_TEMPLATE.md`, places it in the right bucket, and fills id/slug/date. `apply=False` → dry-run
+    (returns the resolved id + destination path). Call this the moment the skill says "create a
+    spike/bug/issue/…" instead of hand-copying a template. Wraps `assets/new-item.sh`.
+    """
+    if kind not in _ITEM_KINDS:
+        return {"ok": False, "stdout": "", "stderr": f"unknown kind '{kind}' — one of: {', '.join(_ITEM_KINDS)}"}
+    cmd = ["bash", str(NEW_ITEM_SH), kind, slug, "--root", project_root]
+    if title:
+        cmd += ["--title", title]
+    if apply:
+        cmd += ["--apply"]
+    return _run(cmd)
+
+
+@mcp.tool()
+def generate_done_view(project_root: str = "docs", apply: bool = False) -> dict:
+    """Regenerate the Status-driven DONE VIEW (`<root>/backlog/done/README.md`).
+
+    Scans the backlog for items whose Status is ✅ Done and writes a read-only ledger
+    (Kind · ID · Title · Where). Items are NOT moved — they keep their Status in place, so every
+    ↑/↓ link keeps resolving. `apply=False` → prints the view without writing. Wraps
+    `assets/gen-done-view.sh`.
+    """
+    cmd = ["bash", str(GEN_DONE_SH), "--root", project_root]
+    if apply:
+        cmd += ["--apply"]
+    return _run(cmd)
+
+
+@mcp.tool()
+def close_item(item_file: str, project_root: str = "docs", apply: bool = False) -> dict:
+    """Close a backlog item: set its Status to ✅ Done IN PLACE (no move) + regenerate the done view.
+
+    `item_file` = path to the artifact (e.g. `docs/backlog/features/F-30-....md`). On `apply` it
+    rewrites the item's single `**Status**` line to `✅ Done` and regenerates the done ledger. The
+    file never leaves its bucket. `apply=False` → reports what it would do without writing.
+    """
+    path = Path(item_file)
+    if not path.exists():
+        return {"ok": False, "stdout": "", "stderr": f"not found: {item_file}"}
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    changed = False
+    for i, ln in enumerate(lines):
+        if "**Status**" in ln:
+            lines[i] = re.sub(r"(\*\*Status\*\*\s*:).*", r"\1 ✅ Done", ln)
+            changed = True
+            break
+    if not apply:
+        return {"ok": True, "stdout": f"would set **Status**: ✅ Done in {item_file} and regenerate the done view",
+                "stderr": "" if changed else "warning: no **Status** line found"}
+    if changed:
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    dv = _run(["bash", str(GEN_DONE_SH), "--root", project_root, "--apply"])
+    return {"ok": dv["ok"], "stdout": f"Status set in {item_file}; {dv['stdout']}", "stderr": dv["stderr"]}
 
 
 # ---------------------------------------------------------------------------

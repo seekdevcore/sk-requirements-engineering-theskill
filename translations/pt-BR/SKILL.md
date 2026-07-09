@@ -8,12 +8,12 @@ metadata:
   triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
   en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 6-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
-  pt-BR: complete — espelho fiel da v1.25.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 15 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 10 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
+  pt-BR: complete — espelho fiel da v1.25.0 traduzido para pt-BR (SKILL.md com a checagem §0 de estrutura obrigatória de primeira execução + alinhamento SDD §3.1 + a subseção EARS na Fase B). Os 16 arquivos de referência (incl. 10-estrutura-projeto.md + 11-ears.md + 13-confiabilidade-seguranca.md + 14-triggers.md + integrations/sdd-interop.md + integrations/openproject.md), os exemplos (8, incl. casos SaaS/fintech/governo + feature-step-defs/ — step-defs BDD de 10 stacks), os assets (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — projeção OpenSpec/Spec Kit · integrations/openproject-api.py — round-trip API REST do OpenProject (pull/push) · integrations/project-to-openproject.py — fallback Excel-sync Windows-only) e os validadores MCP permanecem na raiz do repositório como fonte autoritativa em en-CA. Siglas brasileiras (RF, RNF, G, CA, US, EP-NN, etc.) e termos de domínio em *itálico+aspas* preservados por design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.30.0
+version: 1.31.0
 ---
 
 # Engenharia de Requisitos (ERS) + Análise de Negócios + Ética Profissional
@@ -259,6 +259,12 @@ bash "$SC" --with-specs --apply  # create/fill/reorganize, with SDD (idempotent)
 bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs)
 # then follow the Adaptation protocol (ref §9): fill the seeds with THIS project's reality
 ```
+
+> **A camada generativa — criar e fechar artefatos é um comando (NÃO copie templates à mão).** O scaffolder monta a estrutura vazia; dois scripts fazem o dia a dia:
+>
+> - **Criar** qualquer artefato → `bash assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: `spike` · `bug` · `issue` · `qa` · `tx` · `epic` · `feature` · `rf` · `rnf` · `pm` · `runbook` · `adr` · `sprint`). Ele **aloca o próximo ID livre** (ADR varre os dois tiers), instancia o `_TEMPLATE.md` certo, coloca no bucket e preenche id/slug/data. É o que faz "criar um spike quando não dá pra estimar" realmente acontecer.
+> - **Fechar** um item → setar `Status: ✅ Done` **no lugar** (nunca `git mv`) e regerar a done view: `bash assets/gen-done-view.sh --root docs --apply` → escreve `docs/backlog/done/README.md`, um ledger read-only dirigido por Status.
+> - **Quando disparar** — a tabela de **gatilhos-reflexo** ([`references/14-triggers.md`](references/14-triggers.md)) traduz todo "a skill manda fazer X" em `QUANDO <condição> → FAÇA <ação> via <ferramenta>` (as decisões `AskUserQuestion` do §0, a regra zero, quantificar-o-RNF, criar-spike-quando-não-dá-pra-estimar, incidente→`pm`, fechar→done view). Trate os determinísticos como **reflexos**. Os mesmos scripts estão expostos como MCP tools (`create_item`, `generate_done_view`, `close_item`).
 
 **Distinção crítica Feature ↔ User Story** (regra dura — anti-padrão "Feature com BDD" em [04-bdd-criterios-aceitacao.md §7.7](references/04-bdd-criterios-aceitacao.md)):
 

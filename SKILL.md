@@ -7,13 +7,13 @@ available_translations:
 metadata:
   triggers: requirements engineering, engenharia de requisitos, user stories, acceptance criteria, critérios de aceitação, BDD, EARS, backlog, Epic, Feature, RF, RNF, NFR, Planning Poker, story points, elicitation, elicitação, traceability, rastreabilidade, business analysis, AS-IS, TO-BE, stakeholders
 content_status:
-  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (15 files, incl. 10-estrutura-projeto.md + 11-ears.md + integrations/sdd-interop.md + integrations/openproject.md + 13-confiabilidade-seguranca.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 10-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
+  en-CA: complete — entry point (SKILL.md w/ mandatory §0 first-run structure check + §3.1 SDD alignment, README.md, CHANGELOG.md), references/ (16 files, incl. 10-estrutura-projeto.md + 11-ears.md + 13-confiabilidade-seguranca.md + 14-triggers.md + integrations/sdd-interop.md + integrations/openproject.md), examples/ (8 files — incl. worked case studies for SaaS multi-tenant, fintech/payments, and government services + feature-step-defs/ — 10-stack BDD step-def skeletons), and assets/ (scaffold-structure.sh — GREENFIELD/HAS-STRUCTURE/LOOSE-FILES/LEGACY-MONOLITH · integrations/project-to-sdd.sh — OpenSpec/Spec Kit · integrations/openproject-api.py — OpenProject REST API round-trip (pull/push) · integrations/project-to-openproject.py — Windows-only Excel-sync fallback). Brazilian acronyms (RF, RNF, G, CA, US, EP-NN, etc.) and domain terms in *italic+quotes* preserved by design.
   pt-BR: complete — translations/pt-BR/ is now a full pt-BR mirror of v1.25.x: SKILL.md (with the mandatory §0 first-run structure check + §3.1 SDD alignment + the EARS subsection in Phase B), references 01–13, and examples (8 files + feature-step-defs/ 6-stack BDD bindings), all in Brazilian Portuguese. en-CA at the repo root stays the authoritative, linted source; references 01–09 carry only cosmetic blank-line-lint drift from en-CA (structure, headings, code fences and RF/CA identifiers verified identical — no content gap). Brazilian acronyms and *italic+quotes* domain terms preserved by design.
 source: https://github.com/seekdevcore/sk-requirements-engineering-theskill
 risk: safe
 license: CC-BY-SA-4.0
 date_added: 2026-06-01
-version: 1.30.0
+version: 1.31.0
 ---
 
 # Requirements Engineering (RE) + Business Analysis + Professional Ethics
@@ -259,6 +259,12 @@ bash "$SC" --with-specs --apply  # create/fill/reorganize, with SDD (idempotent)
 bash "$SC" --no-specs --apply    # requirements + backlog only (single-tier ADRs)
 # then follow the Adaptation protocol (ref §9): fill the seeds with THIS project's reality
 ```
+
+> **The generative layer — creating and closing artifacts is one command (do NOT hand-copy templates).** The scaffolder builds the empty structure; two companion scripts do the day-to-day:
+>
+> - **Create** any artifact → `bash assets/new-item.sh <kind> <slug> --title "…" --apply` (kinds: `spike` · `bug` · `issue` · `qa` · `tx` · `epic` · `feature` · `rf` · `rnf` · `pm` · `runbook` · `adr` · `sprint`). It **allocates the next free ID** (ADR scans both tiers for the one global sequence), instantiates the right `_TEMPLATE.md`, places it in the correct bucket, and fills the id/slug/date. This is what makes "create a spike when you can't estimate" actually happen — the manual copy-and-number friction is gone.
+> - **Close** an item → set its `Status` to `✅ Done` **in place** (never `git mv`), then regenerate the done view: `bash assets/gen-done-view.sh --root docs --apply` → writes `docs/backlog/done/README.md`, a read-only Status-driven ledger of everything done. Items never leave their bucket, so `↑/↓` links keep resolving.
+> - **When to fire these** — the full **reflex-trigger table** ([`references/14-triggers.md`](references/14-triggers.md)) turns every "the skill says do X" into `WHEN <condition> → DO <action> via <tool>`: the §0 `AskUserQuestion` decisions, *rule zero* (document before backlog), quantify-the-NFR-the-moment-it's-qualitative, **create a spike the moment you can't estimate**, a defect → `bug`, a raw report → `issue`, an incident → `pm`, a resilience RNF → `runbook`, a decision → `adr`, close → done view. Treat the deterministic ones as **reflexes**: see the condition → act (create the artifact / run the check), don't defer. The same tools are exposed as MCP tools (`create_item`, `generate_done_view`, `close_item`) so an agent can act directly.
 
 > **Tracking the backlog/spec in a tool?** Two optional **integrations** project the spine *outward* (source of truth stays in `docs/`) — index at [`references/integrations/`](references/integrations/README.md): **OpenSpec / Spec Kit** (SDD) via `assets/integrations/project-to-sdd.sh` ([`sdd-interop.md`](references/integrations/sdd-interop.md)); **OpenProject** — pull/push `docs/backlog/` ↔ work packages straight over the **REST API v3** via `assets/integrations/openproject-api.py` (the Excel `.xlsm` is a Windows-only fallback) ([`openproject.md`](references/integrations/openproject.md)).
 

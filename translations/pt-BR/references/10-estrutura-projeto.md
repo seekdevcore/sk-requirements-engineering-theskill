@@ -125,7 +125,7 @@ backlog/
 │       └── spikes/            → Epic-filho "Spikes" — SPK-NN (investigação time-boxed)
 ├── sprints/                   um arquivo por Sprint — execução temporal (mapping US/Task)
 │   └── sprint-N-<slug>.md
-└── done/                      itens fechados (Feature/Bug/QA/ISS/SPK) — MOVIDOS aqui (git mv), não copiados
+└── done/README.md             VIEW de done GERADA — itens NÃO são movidos; o Status dirige a inclusão (assets/gen-done-view.sh)
 ```
 
 > **Pastas en-CA, Epics pt-BR.** As pastas usam nomes en-CA (`support/`, `qa/`, `issues/`, `spikes/`) como `epics/`/`features/`; o `_BUCKETS` do adapter restaura o título pt-BR do Epic no export ("Apoio", "Q&A", "Issues", "Spikes", "Atividades de Apoio, Qualidade e Investigação").
@@ -134,7 +134,9 @@ backlog/
 >
 > **Buckets são DIRETÓRIOS estruturais, não arquivos `EP-NN`.** Cada um é filho de `backlog/`; **só no export** um bucket colapsa num Epic. Função: **`improvements/`** = aprimoramentos do que já existe (→ Epic-raiz); **`bugs/`** = cada `BUG-NN` é um **type "Bug" parented à US/Feature violada** (não Epic), mantendo o defeito a um link do `CA`; **`support-quality-investigation/`** = umbrella (→ Epic-raiz com 3 Epics filhos: Apoio/Q&A/Issues, e Spikes sob Issues). Regra-mãe: *o type diz o que é; o parent diz a quem serve*. Os adaptadores em `assets/integrations/` os emitem sozinhos; o scaffolder semeia, migra arquivos pré-v1.21 e **migra um diretório v1.21 `atividades-complementares/` para `support-quality-investigation/support/`** (TX preservados).
 
-**Por que `done/` move em vez de copiar.** O `git mv` preserva o histórico e mantém `features/` mostrando apenas trabalho vivo. Copiar duplica a verdade e apodrece.
+**Por que `done/` é uma VIEW GERADA, não um destino de move.** Mover um arquivo fechado para `done/` apodrece seus links relativos e enterra o histórico numa pasta. Em vez disso, cada artefato mantém o campo `Status` **no lugar**, e [`assets/gen-done-view.sh`](../assets/gen-done-view.sh) varre o backlog por `Status: ✅ Done` e (re)escreve `backlog/done/README.md` — um **ledger read-only**. Fechar = setar `Status` para Done e regerar a view (sem `git mv`). O item nunca sai de `features/`/`bugs/`/… então todo link `↑/↓` continua resolvendo.
+
+**A camada generativa (criar artefatos é um comando).** Para *criar* qualquer artefato — spike, bug, issue, Q&A, TX, Epic, Feature, RF, RNF, PM, runbook, ADR, sprint — use [`assets/new-item.sh <kind> <slug>`](../assets/new-item.sh): ele **aloca o próximo ID livre**, instancia o `_TEMPLATE.md` certo, coloca no bucket correto e preenche id/slug/data. Isso remove o atrito manual que fazia spikes/issues/bugs *não* serem criados por padrão. Inventário de gatilhos: [`14-triggers.md`](14-triggers.md).
 
 **Anatomia do arquivo de Feature** (veja o *"Interpop"* `F-30`):
 
